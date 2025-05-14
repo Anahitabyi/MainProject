@@ -309,7 +309,15 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      StickBug_Squashed_0: 7618792205376640569
+      StickBug_Squashed_1: 8647476628644728642
+      StickBug_Squashed_2: 8609777022297346024
+      StickBug_Squashed_3: -4458716276788968648
+      StickBug_Squashed_4: 4516441310837016504
+      StickBug_Squashed_5: 6483398659169868896
+      StickBug_Squashed_6: -7354613111456277809
+      StickBug_Squashed_7: 7679142611302544286
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
