@@ -309,7 +309,15 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      StickBug_NoticePlayer_StandUp_0: 2721523396470762034
+      StickBug_NoticePlayer_StandUp_1: -2939311025303700983
+      StickBug_NoticePlayer_StandUp_2: 6140659963163997407
+      StickBug_NoticePlayer_StandUp_3: 1622096514740529342
+      StickBug_NoticePlayer_StandUp_4: 4120534700469185707
+      StickBug_NoticePlayer_StandUp_5: 6087610946021470441
+      StickBug_NoticePlayer_StandUp_6: -5172707464268779588
+      StickBug_NoticePlayer_StandUp_7: 2107741672182465621
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

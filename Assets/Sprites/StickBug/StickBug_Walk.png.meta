@@ -309,7 +309,15 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      StickBug_Walk_0: -4336952295204701081
+      StickBug_Walk_1: -8272026339670479795
+      StickBug_Walk_2: -7721723888874983707
+      StickBug_Walk_3: 99910432133779724
+      StickBug_Walk_4: -9067721523481958489
+      StickBug_Walk_5: 142860706380642133
+      StickBug_Walk_6: -431511434214999653
+      StickBug_Walk_7: -6909156144742202806
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
