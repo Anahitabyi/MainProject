@@ -1,0 +1,710 @@
+fileFormatVersion: 2
+guid: 925ea76b5cc14484ebc6153119edaeb6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6912593809635819536
+    second: StickBug_DisguiseStops_0
+  - first:
+      213: -7012571358589826722
+    second: StickBug_DisguiseStops_1
+  - first:
+      213: -8494419899643153956
+    second: StickBug_DisguiseStops_2
+  - first:
+      213: -3564103000003753918
+    second: StickBug_DisguiseStops_3
+  - first:
+      213: -4277759984525109601
+    second: StickBug_DisguiseStops_4
+  - first:
+      213: -3962113451501256484
+    second: StickBug_DisguiseStops_5
+  - first:
+      213: 963397032972907882
+    second: StickBug_DisguiseStops_6
+  - first:
+      213: -4818802117469223673
+    second: StickBug_DisguiseStops_7
+  - first:
+      213: 6637093993630426815
+    second: StickBug_DisguiseStops_8
+  - first:
+      213: 6014788099742256517
+    second: StickBug_DisguiseStops_9
+  - first:
+      213: 788334656675736185
+    second: StickBug_DisguiseStops_10
+  - first:
+      213: -2799569431872413431
+    second: StickBug_DisguiseStops_11
+  - first:
+      213: -3551017767109967454
+    second: StickBug_DisguiseStops_12
+  - first:
+      213: 8939677945455200035
+    second: StickBug_DisguiseStops_13
+  - first:
+      213: 7000546308752847012
+    second: StickBug_DisguiseStops_14
+  - first:
+      213: 94129915545774689
+    second: StickBug_DisguiseStops_15
+  - first:
+      213: -1544375539958345626
+    second: StickBug_DisguiseStops_16
+  - first:
+      213: -2892833621286088056
+    second: StickBug_DisguiseStops_17
+  - first:
+      213: -137484859696086575
+    second: StickBug_DisguiseStops_18
+  - first:
+      213: -3567706208798221486
+    second: StickBug_DisguiseStops_19
+  - first:
+      213: -7651963368144097008
+    second: StickBug_DisguiseStops_20
+  - first:
+      213: -1325528390050696538
+    second: StickBug_DisguiseStops_21
+  - first:
+      213: 7018935252098588508
+    second: StickBug_DisguiseStops_22
+  - first:
+      213: -6387146209191584699
+    second: StickBug_DisguiseStops_23
+  - first:
+      213: 4442187893298047160
+    second: StickBug_DisguiseStops_24
+  - first:
+      213: 6440713102842523529
+    second: StickBug_DisguiseStops_25
+  - first:
+      213: -1013541347153184569
+    second: StickBug_DisguiseStops_26
+  - first:
+      213: 1357283391236508330
+    second: StickBug_DisguiseStops_27
+  - first:
+      213: 872176365738413253
+    second: StickBug_DisguiseStops_28
+  - first:
+      213: -517401826815847858
+    second: StickBug_DisguiseStops_29
+  - first:
+      213: 2248643109536782278
+    second: StickBug_DisguiseStops_30
+  - first:
+      213: 4954081973987070471
+    second: StickBug_DisguiseStops_31
+  - first:
+      213: -8951326718404992578
+    second: StickBug_DisguiseStops_32
+  - first:
+      213: -3818197665226486678
+    second: StickBug_DisguiseStops_33
+  - first:
+      213: 7929884825921047660
+    second: StickBug_DisguiseStops_34
+  - first:
+      213: -9141583217540468229
+    second: StickBug_DisguiseStops_35
+  - first:
+      213: -4880281226582604636
+    second: StickBug_DisguiseStops_36
+  - first:
+      213: 4010259361420788575
+    second: StickBug_DisguiseStops_37
+  - first:
+      213: -5498632765848833141
+    second: StickBug_DisguiseStops_38
+  - first:
+      213: 5814763886703131962
+    second: StickBug_DisguiseStops_39
+  - first:
+      213: 7986325358311496369
+    second: StickBug_DisguiseStops_40
+  - first:
+      213: 5888275201907621225
+    second: StickBug_DisguiseStops_41
+  - first:
+      213: 1664323551790945248
+    second: StickBug_DisguiseStops_42
+  - first:
+      213: -1104316535362471229
+    second: StickBug_DisguiseStops_43
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_8
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb6683782d1bb1c50800000000000000
+      internalID: 6637093993630426815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_19
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25b50a90b16fc7ec0800000000000000
+      internalID: -3567706208798221486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_20
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0113877cbd3cec590800000000000000
+      internalID: -7651963368144097008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_21
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a23553c3f6ca9de0800000000000000
+      internalID: -1325528390050696538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_22
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5f9dc28c64486160800000000000000
+      internalID: 7018935252098588508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_24
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b8229d6a52d5ad30800000000000000
+      internalID: 4442187893298047160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_25
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98fe1235172026950800000000000000
+      internalID: 6440713102842523529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_26
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 1
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c873c5c38d2fe1f0800000000000000
+      internalID: -1013541347153184569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_27
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 1
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aaa803a9d0a06d210800000000000000
+      internalID: 1357283391236508330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_28
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 1
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cc445d98c79a1c00800000000000000
+      internalID: 872176365738413253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_29
+      rect:
+        serializedVersion: 2
+        x: 646
+        y: 1
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e42d082a7c1d1d8f0800000000000000
+      internalID: -517401826815847858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_30
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c7d19a8ef8c43f10800000000000000
+      internalID: 2248643109536782278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_31
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7025aa7be4f60c440800000000000000
+      internalID: 4954081973987070471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_32
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb1e10996cf76c380800000000000000
+      internalID: -8951326718404992578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_33
+      rect:
+        serializedVersion: 2
+        x: 903
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6c03f10479030bc0800000000000000
+      internalID: -3818197665226486678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_34
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 1
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6cc8ce1c3c9c0e60800000000000000
+      internalID: 7929884825921047660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_35
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf1f3d17f72922180800000000000000
+      internalID: -9141583217540468229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_36
+      rect:
+        serializedVersion: 2
+        x: 1095
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a4498dc412c54cb0800000000000000
+      internalID: -4880281226582604636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_37
+      rect:
+        serializedVersion: 2
+        x: 1159
+        y: 0
+        width: 58
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f53cba654ad47a730800000000000000
+      internalID: 4010259361420788575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StickBug_DisguiseStops_38
+      rect:
+        serializedVersion: 2
+        x: 1223
+        y: 0
+        width: 57
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b83b149e1aee0b3b0800000000000000
+      internalID: -5498632765848833141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: d864e48dec5cb37498f958dcd36b5309
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      StickBug_DisguiseStops_19: -3567706208798221486
+      StickBug_DisguiseStops_20: -7651963368144097008
+      StickBug_DisguiseStops_21: -1325528390050696538
+      StickBug_DisguiseStops_22: 7018935252098588508
+      StickBug_DisguiseStops_24: 4442187893298047160
+      StickBug_DisguiseStops_25: 6440713102842523529
+      StickBug_DisguiseStops_26: -1013541347153184569
+      StickBug_DisguiseStops_27: 1357283391236508330
+      StickBug_DisguiseStops_28: 872176365738413253
+      StickBug_DisguiseStops_29: -517401826815847858
+      StickBug_DisguiseStops_30: 2248643109536782278
+      StickBug_DisguiseStops_31: 4954081973987070471
+      StickBug_DisguiseStops_32: -8951326718404992578
+      StickBug_DisguiseStops_33: -3818197665226486678
+      StickBug_DisguiseStops_34: 7929884825921047660
+      StickBug_DisguiseStops_35: -9141583217540468229
+      StickBug_DisguiseStops_36: -4880281226582604636
+      StickBug_DisguiseStops_37: 4010259361420788575
+      StickBug_DisguiseStops_38: -5498632765848833141
+      StickBug_DisguiseStops_43: -1104316535362471229
+      StickBug_DisguiseStops_8: 6637093993630426815
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
