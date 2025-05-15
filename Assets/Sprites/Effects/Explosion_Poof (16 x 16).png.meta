@@ -434,7 +434,20 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Explosion_Poof (16 x 16)_0: -61543477795939298
+      Explosion_Poof (16 x 16)_1: -8329670320306944687
+      Explosion_Poof (16 x 16)_10: -5934079566259775540
+      Explosion_Poof (16 x 16)_11: 2194954933598275004
+      Explosion_Poof (16 x 16)_12: -977382536442534888
+      Explosion_Poof (16 x 16)_2: 4834064383677574690
+      Explosion_Poof (16 x 16)_3: 1316781361483404180
+      Explosion_Poof (16 x 16)_4: 4196588811814065577
+      Explosion_Poof (16 x 16)_5: 614393674917456067
+      Explosion_Poof (16 x 16)_6: 7645965392777686819
+      Explosion_Poof (16 x 16)_7: -4170272331657916100
+      Explosion_Poof (16 x 16)_8: 5682641233524901272
+      Explosion_Poof (16 x 16)_9: 6717797092924629940
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

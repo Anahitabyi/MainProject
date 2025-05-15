@@ -434,7 +434,20 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Cloud_Poof (16 x 16)_0: -5438564911372218881
+      Cloud_Poof (16 x 16)_1: 1507112176311742313
+      Cloud_Poof (16 x 16)_10: 624423401395356316
+      Cloud_Poof (16 x 16)_11: -6069972878307727087
+      Cloud_Poof (16 x 16)_12: 1041287458163488732
+      Cloud_Poof (16 x 16)_2: -2817497781957313752
+      Cloud_Poof (16 x 16)_3: -2458666094783645557
+      Cloud_Poof (16 x 16)_4: 8623368979595225796
+      Cloud_Poof (16 x 16)_5: 3468336437740011171
+      Cloud_Poof (16 x 16)_6: -7193730212035476942
+      Cloud_Poof (16 x 16)_7: -4132249591419638829
+      Cloud_Poof (16 x 16)_8: -6432380842092053396
+      Cloud_Poof (16 x 16)_9: 4763514521390870024
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

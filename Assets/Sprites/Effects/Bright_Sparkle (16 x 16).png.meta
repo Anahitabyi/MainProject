@@ -184,7 +184,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Bright_Sparkle (16 x 16)_0: 7191896071474699807
+      Bright_Sparkle (16 x 16)_1: -4778069369200471357
+      Bright_Sparkle (16 x 16)_2: -583800994399133332
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

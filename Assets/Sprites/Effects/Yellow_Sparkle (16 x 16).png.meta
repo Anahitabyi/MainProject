@@ -184,7 +184,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Yellow_Sparkle (16 x 16)_0: -4109380360305446373
+      Yellow_Sparkle (16 x 16)_1: 5101826527306728700
+      Yellow_Sparkle (16 x 16)_2: -7358090446249745178
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
