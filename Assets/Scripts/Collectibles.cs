@@ -1,20 +1,25 @@
 using UnityEngine;
 
-public class Collectibles : MonoBehaviour
+public class Collectible : MonoBehaviour
 {
-    public int scoreValue;
+    public int scoreValue = 10;
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Triggered with: " + other.name);
+        Debug.Log("Trigger entered by: " + other.name);
 
-        if (other.CompareTag("Player"))
+        var scoreManager = FindFirstObjectByType<ScoreManager>();
+        if (scoreManager != null)
         {
-            Debug.Log("Player touched collectible");
-            Destroy(gameObject);
-            if (ScoreManager.Instance != null)
-            { //calls add score to add the value
-                ScoreManager.Instance.AddScore(scoreValue);
-            }
+            scoreManager.AddScore(scoreValue);
+            Debug.Log("Score added: " + scoreValue);
         }
+
+        Destroy(gameObject);
+    }
+
+    void Update()
+    {
+        Debug.Log("Collectible alive: " + gameObject.name);
     }
 }
