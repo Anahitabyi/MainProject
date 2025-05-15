@@ -9,6 +9,9 @@ public class playerMovement : MonoBehaviour {
 
     [Header("Jumping")]
     public float jumpPower = 10f;
+    public int maxJumps = 2; // Total number of jumps (1 = single, 2 = double)
+    private int jumpsRemaining; // Current jumps left
+
     [Header("GroundCheck")]
     public Transform groundCheckPos;
     public Vector2 groundCheckSizev = new Vector2(0.5f, 0.05f);
@@ -21,33 +24,49 @@ public class playerMovement : MonoBehaviour {
 
     }
     void Update()
-    {
-        rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed,  rb.linearVelocity.y);
+{
+    // Apply horizontal movement
+    rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
 
-        animator.SetFloat("Yvelocity", rb.linearVelocity.y);
-        animator.SetFloat("magnitude", rb.linearVelocity.magnitude);
-        flip();
-        
+    // Handle jump reset in a separate method
+    GroundCheck();
+
+    // Update animator parameters
+    animator.SetFloat("Yvelocity", rb.linearVelocity.y);
+    animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x)); // Use Abs to avoid negative magnitude
+
+    // Flip character direction
+    flip();
+}
+
+private void GroundCheck()
+{
+    if (isGrounded())
+    {
+        jumpsRemaining = maxJumps;
     }
+}
+
+
     public void Move(InputAction.CallbackContext context)
     {
         //moveInput = contex.ReadValue<Vector2>();
         horizontalMovement = context.ReadValue<Vector2>().x;
     }
     public void Jump(InputAction.CallbackContext contex)
+{
+    if (contex.performed && jumpsRemaining > 0)
     {
-        if(isGrounded()) {
-            if(contex.performed) {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
-                animator.SetTrigger("jump");
-            }
-            else if(contex.canceled){
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
-                animator.SetTrigger("jump");
-            }
-        }
-        
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
+        animator.SetTrigger("jump");
+        jumpsRemaining--;
     }
+    else if (contex.canceled)
+    {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
+    }
+}
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;
