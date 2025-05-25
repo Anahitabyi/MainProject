@@ -16,8 +16,14 @@ public class playerMovement : MonoBehaviour {
     public Transform groundCheckPos;
     public Vector2 groundCheckSizev = new Vector2(0.5f, 0.05f);
     public LayerMask groundLayer;
-    
+    [Header("Gravity")]
+    public float baseGravity = 2f;
+    public float maxFallSpeed = 18f;
+    public float fallSpeedMultiplier = 2f;
     Rigidbody2D rb;
+    private bool wasGroundedLastFrame = true;
+    private bool wasFalling = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -28,17 +34,75 @@ public class playerMovement : MonoBehaviour {
     // Apply horizontal movement
     rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
 
-    // Handle jump reset in a separate method
+    // Handle jump reset
     GroundCheck();
 
-    // Update animator parameters
-    animator.SetFloat("Yvelocity", rb.linearVelocity.y);
-    animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x)); // Use Abs to avoid negative magnitude
+    // Apply gravity modifications
+    Gravity();
 
-    // Flip character direction
+    float yVel = rb.linearVelocity.y;
+    bool groundedNow = isGrounded();
+
+    // Set falling flag (can use a falling animation based on Y velocity)
+    if (yVel < -0.1f)
+    {
+        animator.SetBool("falling", true);
+    }
+    else
+    {
+        animator.SetBool("falling", false);
+    }
+
+    // Pre-landing raycast check
+    float preLandDistance = 0.3f; // How early you want to trigger "land"
+    bool nearGround = false;
+
+    if (!groundedNow && yVel < -0.5f)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(groundCheckPos.position, Vector2.down, preLandDistance, groundLayer);
+        if (hit.collider != null)
+        {
+            nearGround = true;
+        }
+    }
+
+    // Trigger "land" before hitting the ground
+    if (nearGround && !wasFalling)
+    {
+        animator.SetTrigger("land");
+        wasFalling = true;
+    }
+
+    // Reset fall flag once grounded
+    if (groundedNow)
+    {
+        wasFalling = false;
+    }
+
+    // Update animator floats
+    animator.SetFloat("Yvelocity", yVel);
+    animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
+
+    // Flip sprite
     flip();
+
+    // Update last frame ground status
+    wasGroundedLastFrame = groundedNow;
 }
 
+
+    private void Gravity()
+    {
+        if (rb.linearVelocity.y < 0)
+        {
+            rb.gravityScale = baseGravity * fallSpeedMultiplier;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -maxFallSpeed));
+        }
+        else
+        {
+            rb.gravityScale = baseGravity;
+        }
+    }
 private void GroundCheck()
 {
     if (isGrounded())
@@ -52,6 +116,7 @@ private void GroundCheck()
     {
         //moveInput = contex.ReadValue<Vector2>();
         horizontalMovement = context.ReadValue<Vector2>().x;
+        Debug.Log("Move Called: " + horizontalMovement);
     }
     public void Jump(InputAction.CallbackContext contex)
 {
