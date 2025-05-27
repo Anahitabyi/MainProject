@@ -1,0 +1,819 @@
+fileFormatVersion: 2
+guid: e9c6c8c0e0f92a34593c0c92b65232b1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5122058066362589758
+    second: Wizzart_A_0
+  - first:
+      213: 3075549507635711530
+    second: Wizzart_A_1
+  - first:
+      213: 2378768760158909588
+    second: Wizzart_A_2
+  - first:
+      213: -490038384746844322
+    second: Wizzart_A_3
+  - first:
+      213: -1826529421891880568
+    second: Wizzart_A_4
+  - first:
+      213: -8453575851804310859
+    second: Wizzart_A_5
+  - first:
+      213: 7277494480441054290
+    second: Wizzart_A_6
+  - first:
+      213: -5482753980380852965
+    second: Wizzart_A_7
+  - first:
+      213: -226242223236623356
+    second: Wizzart_A_8
+  - first:
+      213: 7358413280715700850
+    second: Wizzart_A_9
+  - first:
+      213: -8171979698619417171
+    second: Wizzart_A_10
+  - first:
+      213: -5018863376640210686
+    second: Wizzart_A_11
+  - first:
+      213: 2032695594156715220
+    second: Wizzart_A_12
+  - first:
+      213: -3119687526623506801
+    second: Wizzart_A_13
+  - first:
+      213: -2903288613810519642
+    second: Wizzart_A_14
+  - first:
+      213: 7519450801025019542
+    second: Wizzart_A_15
+  - first:
+      213: 790116745768370743
+    second: Wizzart_A_16
+  - first:
+      213: 4184690856833219491
+    second: Wizzart_A_17
+  - first:
+      213: 6938441595559706480
+    second: Wizzart_A_18
+  - first:
+      213: -1024971834532354015
+    second: Wizzart_A_19
+  - first:
+      213: 7640298621928613116
+    second: Wizzart_A_20
+  - first:
+      213: 4819685213931021529
+    second: Wizzart_A_21
+  - first:
+      213: -819432790216566630
+    second: Wizzart_A_22
+  - first:
+      213: -3634197058786136261
+    second: Wizzart_A_23
+  - first:
+      213: -1561698378625681668
+    second: Wizzart_A_24
+  - first:
+      213: 3013987799468850824
+    second: Wizzart_A_25
+  - first:
+      213: -5170615645065022009
+    second: Wizzart_A_26
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Wizzart_A_0
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 143
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cd9883935bcae8b0800000000000000
+      internalID: -5122058066362589758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_1
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 143
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2e01c37bfb8eaa20800000000000000
+      internalID: 3075549507635711530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_2
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 145
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49471188595130120800000000000000
+      internalID: 2378768760158909588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_3
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 143
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5fabd67fa80339f0800000000000000
+      internalID: -490038384746844322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_4
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 143
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 889b55c0b2dd6a6e0800000000000000
+      internalID: -1826529421891880568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_5
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 143
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b2426f3d8ddeaa80800000000000000
+      internalID: -8453575851804310859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_6
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 145
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2541e811caadef460800000000000000
+      internalID: 7277494480441054290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_7
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 143
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1d4a80cd4859e3b0800000000000000
+      internalID: -5482753980380852965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_8
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 95
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40459ca85e93cdcf0800000000000000
+      internalID: -226242223236623356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_9
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 95
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27a739b64e55e1660800000000000000
+      internalID: 7358413280715700850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_10
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 96
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dadf518d2cb479e80800000000000000
+      internalID: -8171979698619417171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_11
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 95
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 209842b995a695ab0800000000000000
+      internalID: -5018863376640210686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_12
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 95
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dc663a8fd5953c10800000000000000
+      internalID: 2032695594156715220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_13
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 96
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8e836d29b4a4b4d0800000000000000
+      internalID: -3119687526623506801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_14
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 97
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a14365536275b7d0800000000000000
+      internalID: -2903288613810519642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_15
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 96
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69e6f1de9a47a5860800000000000000
+      internalID: 7519450801025019542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_16
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 47
+        width: 33
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7328c9a7efe07fa00800000000000000
+      internalID: 790116745768370743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_17
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 47
+        width: 33
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ab7e50b922031a30800000000000000
+      internalID: 4184690856833219491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_18
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 47
+        width: 33
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07f7126aedb4a4060800000000000000
+      internalID: 6938441595559706480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_19
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 47
+        width: 33
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1282be90c8196c1f0800000000000000
+      internalID: -1024971834532354015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_20
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 47
+        width: 33
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf426f9dd1bc70a60800000000000000
+      internalID: 7640298621928613116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_21
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 47
+        width: 33
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d4af819a26f2e240800000000000000
+      internalID: 4819685213931021529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_22
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 47
+        width: 33
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9895d5083ac0a4f0800000000000000
+      internalID: -819432790216566630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_23
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 47
+        width: 33
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3f6843a70db09dc0800000000000000
+      internalID: -3634197058786136261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_24
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 35
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf676bf499bb35ae0800000000000000
+      internalID: -1561698378625681668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_25
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 0
+        width: 33
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88eb3b05fe5d3d920800000000000000
+      internalID: 3013987799468850824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizzart_A_26
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 0
+        width: 33
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c572d547784e38b0800000000000000
+      internalID: -5170615645065022009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: c9d6f931ec8c3d74a8818833e13b5471
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Wizzart_A_0: -5122058066362589758
+      Wizzart_A_1: 3075549507635711530
+      Wizzart_A_10: -8171979698619417171
+      Wizzart_A_11: -5018863376640210686
+      Wizzart_A_12: 2032695594156715220
+      Wizzart_A_13: -3119687526623506801
+      Wizzart_A_14: -2903288613810519642
+      Wizzart_A_15: 7519450801025019542
+      Wizzart_A_16: 790116745768370743
+      Wizzart_A_17: 4184690856833219491
+      Wizzart_A_18: 6938441595559706480
+      Wizzart_A_19: -1024971834532354015
+      Wizzart_A_2: 2378768760158909588
+      Wizzart_A_20: 7640298621928613116
+      Wizzart_A_21: 4819685213931021529
+      Wizzart_A_22: -819432790216566630
+      Wizzart_A_23: -3634197058786136261
+      Wizzart_A_24: -1561698378625681668
+      Wizzart_A_25: 3013987799468850824
+      Wizzart_A_26: -5170615645065022009
+      Wizzart_A_3: -490038384746844322
+      Wizzart_A_4: -1826529421891880568
+      Wizzart_A_5: -8453575851804310859
+      Wizzart_A_6: 7277494480441054290
+      Wizzart_A_7: -5482753980380852965
+      Wizzart_A_8: -226242223236623356
+      Wizzart_A_9: 7358413280715700850
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

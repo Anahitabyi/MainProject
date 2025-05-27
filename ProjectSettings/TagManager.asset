@@ -12,14 +12,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
   - Ground
   - Player
   - VCam1Layer
   - VCam2Layer
-  - 
+  - light
   - 
   - 
   - 
