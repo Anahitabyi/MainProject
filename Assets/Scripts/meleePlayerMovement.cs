@@ -90,13 +90,20 @@ private void GroundCheck()
     }
 }
     public void flip()
-{
-    if ((isFacingRight && horizontalMovement < 0) || (!isFacingRight && horizontalMovement > 0))
     {
-        isFacingRight = !isFacingRight;
-        Vector3 scale = transform.localScale;
-        scale.x *= -1f;
-        transform.localScale = scale;
+        if ((isFacingRight && horizontalMovement < 0) || (!isFacingRight && horizontalMovement > 0))
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 scale = transform.localScale;
+            scale.x *= -1f;
+            transform.localScale = scale;
+        }
+    }
+public void MeleeAttack(InputAction.CallbackContext context)
+{
+    if (context.performed)
+    {
+        animator.SetTrigger("meleeAttack");
     }
 }
 

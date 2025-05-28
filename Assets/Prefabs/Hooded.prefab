@@ -40,7 +40,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4181548740265867038}
-  - component: {fileID: 8647605244050539003}
+  - component: {fileID: 6717596841553951799}
+  - component: {fileID: 8509036316442811293}
   - component: {fileID: 950395865592157502}
   - component: {fileID: 8596846972474264078}
   - component: {fileID: 8099215595125030331}
@@ -69,7 +70,7 @@ Transform:
   - {fileID: 3443541833231628164}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8647605244050539003
+--- !u!114 &6717596841553951799
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,21 +79,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 7099390637859293862}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c46315c44007c1d46b30d12cdd0db7c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 77468fa4c4c142d46a5b19730fdacaac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  currentHealth: 10
+  damageSound: {fileID: 0}
+--- !u!114 &8509036316442811293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7099390637859293862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e04a765efd2b13489ec374299c3e4ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8596846972474264078}
   movementSpeed: 5
-  jumpPower: 10
-  maxJumps: 2
+  jumpPower: 6
+  maxJumps: 1
   groundCheckPos: {fileID: 3443541833231628164}
-  groundCheckSizev: {x: 0.5, y: 0.1}
+  groundCheckSizev: {x: 0.5, y: 0.05}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  baseGravity: 2
-  maxFallSpeed: 18
-  fallSpeedMultiplier: 2
 --- !u!212 &950395865592157502
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -197,8 +210,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8647605244050539003}
-        m_TargetAssemblyTypeName: playerMovement, Assembly-CSharp
+      - m_Target: {fileID: 8509036316442811293}
+        m_TargetAssemblyTypeName: meleePlayerMovement, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 0
         m_Arguments:
@@ -213,8 +226,8 @@ MonoBehaviour:
     m_ActionName: 'Player/Move[/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8647605244050539003}
-        m_TargetAssemblyTypeName: playerMovement, Assembly-CSharp
+      - m_Target: {fileID: 8509036316442811293}
+        m_TargetAssemblyTypeName: meleePlayerMovement, Assembly-CSharp
         m_MethodName: Jump
         m_Mode: 0
         m_Arguments:
@@ -227,6 +240,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 4f61f66e-37d1-4414-855e-3a0b132a1a6a
     m_ActionName: 'Player/Jump[/Keyboard/upArrow,/Keyboard/w]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4c82787f-6776-4a34-ab7c-8ba3caa8666a
+    m_ActionName: 'Player/Shoot[/Keyboard/e,/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8509036316442811293}
+        m_TargetAssemblyTypeName: meleePlayerMovement, Assembly-CSharp
+        m_MethodName: MeleeAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b73b304f-0b38-4203-a9e1-ea4fb45c851d
+    m_ActionName: 'Player/MeleeAttack[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: keyboardLeft
   m_DefaultActionMap: Player

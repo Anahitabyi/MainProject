@@ -103,37 +103,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hobbit - attack12_0
-      rect:
-        serializedVersion: 2
-        x: 18
-        y: 28
-        width: 7
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3bbeec4f5365e0490800000000000000
-      internalID: -7778184716681811021
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Hobbit - attack12_1
       rect:
         serializedVersion: 2
-        x: 23
+        x: 18
         y: 25
-        width: 34
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 18
+      alignment: 9
+      pivot: {x: 0.39688915, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -150,7 +128,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: a79895eb8b3446047af9a92a0b2e2e70
     internalID: 0
     vertices: []
     indices: 

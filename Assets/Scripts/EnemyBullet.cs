@@ -2,19 +2,23 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    private GameObject player;
-    private Rigidbody2D rb;
+    public int damage = 1;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        rb = GetComponent<Rigidbody2D>();
-        // player = GameObject.findGame
+        if (collision.CompareTag("Player"))
+    {
+        Debug.Log("Bullet hit player!");
+        PlayerHealth health = collision.GetComponent<PlayerHealth>();
+        if (health != null)
+        {
+            health.takeDamge(1);
+        }
+        Destroy(gameObject);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        else if (!collision.isTrigger) // Optional: destroy on hitting anything solid
+        {
+            Destroy(gameObject);
+        }
     }
 }

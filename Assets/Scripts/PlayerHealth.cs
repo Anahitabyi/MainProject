@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
     //HealthUI healthUI;
     public AudioClip damageSound;
 
-    void start()
+    void Start()
     {
         currentHealth = maxHealth;
     }

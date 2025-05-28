@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a7ff4eb552577b64ca614b2c0b415b35
+guid: c053bee226ea46d428bf8ccf86f4071f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2915426506240883038
-    second: Hobbit - attack13_0
+      213: -5512871617722481519
+    second: crosshair064_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hobbit - attack13_0
+      name: crosshair064_0
       rect:
         serializedVersion: 2
-        x: 24
-        y: 24
-        width: 24
-        height: 19
-      alignment: 9
-      pivot: {x: 0.41714302, y: 0.5}
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e59fe39f5fca57820800000000000000
-      internalID: 2915426506240883038
+      spriteID: 194815dd8785e73b0800000000000000
+      internalID: -5512871617722481519
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b7f89a179bd8334478ceb28997687e77
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Hobbit - attack13_0: 2915426506240883038
+      crosshair064_0: -5512871617722481519
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

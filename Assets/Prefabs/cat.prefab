@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3175385973301591175}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: bulletPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 6445001639196853082}
   - component: {fileID: 4251728339980219389}
   - component: {fileID: 4887348244746034656}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: cat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.35, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3175385973301591175}
@@ -82,6 +82,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 2122236317634018336, guid: d1bba228f1a15f34092c50ed82d78134, type: 3}
   bulletPos: {fileID: 3175385973301591175}
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
+  viewBoxSize: {x: 22.8, y: 8.45}
 --- !u!212 &2777192905260212469
 SpriteRenderer:
   m_ObjectHideFlags: 0
