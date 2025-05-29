@@ -15,11 +15,13 @@ public class PauseMenuManager : MonoBehaviour
     private AudioSource audioSource;
 
     public AudioMixer audioMixer;
+    public AudioMixerGroup sfxGroup;
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = sfxGroup;
     }
     void Update()
     {
@@ -43,6 +45,7 @@ public class PauseMenuManager : MonoBehaviour
         }
         isPaused = !isPaused;
         pausePanel.SetActive(isPaused);
+        settingsPanel.SetActive(false);
         Time.timeScale = isPaused ? 0f : 1f;
     }
     public void Resume()
@@ -83,5 +86,12 @@ public class PauseMenuManager : MonoBehaviour
             audioSource.PlayOneShot(resumeToggleClip);
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu"); // Change to your actual main menu scene
+    }
+    public void BackToPause()
+    {
+        settingsPanel.SetActive(false);
+        pausePanel.SetActive(true);
+        if (SettingsClip != null)
+            audioSource.PlayOneShot(SettingsClip);
     }
 }

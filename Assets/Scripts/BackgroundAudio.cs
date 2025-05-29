@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Audio;
 
-public class NightAudio : MonoBehaviour
+public class BackgroundAudio : MonoBehaviour
 {
     public AudioSource nightAmbienceSource;
     public AudioSource dogBarkSource;
@@ -13,6 +14,30 @@ public class NightAudio : MonoBehaviour
 
     private float dogTimer;
     private float owlTimer;
+
+    public AudioMixerGroup musicMixerGroup;
+
+    void Awake()
+    {
+        // Ensure AudioSources exist
+        if (nightAmbienceSource == null)
+        {
+            nightAmbienceSource = gameObject.AddComponent<AudioSource>();
+            nightAmbienceSource.outputAudioMixerGroup = musicMixerGroup;
+        }
+
+        if (dogBarkSource == null)
+        {
+            dogBarkSource = gameObject.AddComponent<AudioSource>();
+            dogBarkSource.outputAudioMixerGroup = musicMixerGroup;
+        }
+
+        if (owlHootSource == null)
+        {
+            owlHootSource = gameObject.AddComponent<AudioSource>();
+            owlHootSource.outputAudioMixerGroup = musicMixerGroup;
+        }
+    }
 
     void Start()
     {

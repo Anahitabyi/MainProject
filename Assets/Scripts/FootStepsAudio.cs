@@ -49,6 +49,16 @@ public class FootstepAudio : MonoBehaviour
             surface = SurfaceType.Stone;
     }
 
+    void Awake()
+    {
+        // Ensure AudioSources exist
+        if (audioSource = null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.outputAudioMixerGroup = sfxMixerGroup;
+        }
+    }
+
     void Update()
     {
         CheckGround();

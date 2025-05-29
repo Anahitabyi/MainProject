@@ -352,15 +352,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 27f292652013a4d4b856784808af63e7, type: 3}
   - {fileID: 8300000, guid: 922dad020b5d6ce4f9dd4453ef305499, type: 3}
   jumpSound: {fileID: 0}
-  landGrassSound: {fileID: 0}
-  landStoneSound: {fileID: 0}
-  groundCheckPoint: {fileID: 0}
+  landGrassSound: {fileID: 8300000, guid: b91bbd5b384bf5a4e81af8cf9f617ab3, type: 3}
+  landStoneSound: {fileID: 8300000, guid: 2288a84fd09285a45b628864ddabdc38, type: 3}
+  groundCheckPoint: {fileID: 7022593869801518836}
   groundCheckRadius: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
   surface: 1
-  sfxMixerGroup: {fileID: 0}
+  sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
   horizontalAxis: Horizontal
   jumpButton: Jump
 --- !u!60 &7125895893738783617
@@ -436,14 +436,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 9
-  currentHealth: 9
-  healthBarsLeft: 3
+  currentHealth: 0
+  sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
   damageSound: {fileID: 0}
-  groundCheckPos: {fileID: 0}
-  groundCheckRadius: 0.1
-  safeGroundLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &3107206396855740295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,7 +477,7 @@ Transform:
   m_GameObject: {fileID: 5331574185590073450}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.091, y: -0.296, z: 0}
+  m_LocalPosition: {x: 0.081, y: -0.298, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

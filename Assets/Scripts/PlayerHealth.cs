@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 9;
     public int currentHealth;
+    public AudioMixerGroup sfxMixerGroup;
     //HealthUI healthUI;
     public AudioClip damageSound;
     void start()
