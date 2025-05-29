@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1920858825760422876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4885518351156721874}
+  - component: {fileID: 1170562170778756247}
+  - component: {fileID: 965630868086893310}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4885518351156721874
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920858825760422876}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 23.29082, y: -4.7025313, z: -10.050536}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1170562170778756247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920858825760422876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a6cf0651e58690468258255ee95f3ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nightAmbienceSource: {fileID: 0}
+  dogBarkSource: {fileID: 0}
+  owlHootSource: {fileID: 0}
+  nightAmbienceClip: {fileID: 8300000, guid: acb7721846e2d1f4a811dd3b88d8034a, type: 3}
+  dogBarkClip: {fileID: 8300000, guid: 3056ec349e8340a489e378b60b25cd97, type: 3}
+  owlHootClip: {fileID: 8300000, guid: 7f106c4ded7715d469278e4e84b5eeef, type: 3}
+  musicMixerGroup: {fileID: 950962248528472476, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
+--- !u!114 &965630868086893310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920858825760422876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f1816aa8bca94244ba6b50c893a21b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
+  sfxSlider: {fileID: 0}
+  musicSlider: {fileID: 0}
+  sfxMuteButton: {fileID: 0}
+  musicMuteButton: {fileID: 0}
+  sfxMuteIcon: {fileID: 0}
+  musicMuteIcon: {fileID: 0}
+  MutedSprite: {fileID: 5421244441580540412, guid: 12a3a712a6070d340bd07c9078adab8e, type: 3}
+  UnmutedSprite: {fileID: 7135915300553875340, guid: 12a3a712a6070d340bd07c9078adab8e, type: 3}

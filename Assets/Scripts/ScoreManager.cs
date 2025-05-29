@@ -24,4 +24,9 @@ public class ScoreManager : MonoBehaviour
         Debug.Log("Score is now: " + CurrentScore);
         //ScoreUI.UpdateScoreText(CurrentScore);
     }
+
+    public void ResetScore()
+    {
+        CurrentScore = 0;
+    }
 }

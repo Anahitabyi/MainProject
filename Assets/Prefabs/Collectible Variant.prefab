@@ -34,11 +34,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090246559032989798, guid: 31ad1c0a594561546ad3289c47a08803, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.654
+      value: 16.074594
       objectReference: {fileID: 0}
     - target: {fileID: 5090246559032989798, guid: 31ad1c0a594561546ad3289c47a08803, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.372
+      value: -17.234535
       objectReference: {fileID: 0}
     - target: {fileID: 5090246559032989798, guid: 31ad1c0a594561546ad3289c47a08803, type: 3}
       propertyPath: m_LocalPosition.z
@@ -114,9 +114,9 @@ MonoBehaviour:
   type: 1
   scoreValue: 100
   healValue: 1
-  audioSource: {fileID: 0}
   healSound: {fileID: 8300000, guid: f44f6b02fb4b15b49bbe86214609adb5, type: 3}
   coinPickupSound: {fileID: 8300000, guid: db40f0c67b612304bb95d48308eef206, type: 3}
+  sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
 --- !u!70 &7849098646352262099
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
