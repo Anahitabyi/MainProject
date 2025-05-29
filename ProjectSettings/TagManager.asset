@@ -21,8 +21,8 @@ TagManager:
   - VCam2Layer
   - light
   - Enemy
-  - 
-  - 
+  - BakgroundPlayer1
+  - BackgroundPlayer2
   - 
   - 
   - 
@@ -44,6 +44,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: background
+    uniqueID: 3973883345
+    locked: 0
+  - name: foreground
+    uniqueID: 2114846285
     locked: 0
   m_RenderingLayers:
   - Default

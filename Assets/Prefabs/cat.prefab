@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2875320954115971766}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.33, y: -0.74, z: 0}
+  m_LocalPosition: {x: 1.74, y: -0.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4775681188648598544}
   - component: {fileID: 803955611506386657}
+  - component: {fileID: 1839605134294050893}
   - component: {fileID: 2777192905260212469}
   - component: {fileID: 6445001639196853082}
   - component: {fileID: 4251728339980219389}
@@ -86,6 +87,21 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   viewBoxSize: {x: 22.8, y: 8.45}
+--- !u!114 &1839605134294050893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5281825669444538878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d306b58b66e7d3242a32395bd16cc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 4
+  animator: {fileID: 6445001639196853082}
+  deathEffectPrefab: {fileID: 0}
 --- !u!212 &2777192905260212469
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -171,7 +187,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5281825669444538878}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

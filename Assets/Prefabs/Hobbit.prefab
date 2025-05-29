@@ -131,6 +131,9 @@ MonoBehaviour:
   hobbitCamera: {fileID: 0}
   shakeDuration: 0.1
   shakeMagnitude: 0.1
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!95 &3073781156953091832
 Animator:
   serializedVersion: 7
@@ -226,6 +229,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 4c82787f-6776-4a34-ab7c-8ba3caa8666a
     m_ActionName: 'Player/Shoot[/Keyboard/e,/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b73b304f-0b38-4203-a9e1-ea4fb45c851d
+    m_ActionName: 'Player/MeleeAttack[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: keyboardLeft
   m_DefaultActionMap: Player
@@ -356,6 +363,7 @@ MonoBehaviour:
   maxHealth: 10
   currentHealth: 10
   damageSound: {fileID: 0}
+  animator: {fileID: 3073781156953091832}
 --- !u!114 &148007022662654773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,8 +409,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b91bbd5b384bf5a4e81af8cf9f617ab3, type: 3}
+  m_Resource: {fileID: 8300000, guid: b91bbd5b384bf5a4e81af8cf9f617ab3, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -536,9 +544,9 @@ PolygonCollider2D:
     m_Paths:
     - - {x: -0.125, y: 0.296875}
       - {x: -0.14877224, y: 0.22730312}
-      - {x: -0.28563786, y: 0.118151546}
-      - {x: -0.3125, y: -0.21181262}
-      - {x: -0.21954966, y: -0.22842407}
+      - {x: -0.2527423, y: 0.041395195}
+      - {x: -0.13157417, y: -0.03088677}
+      - {x: -0.14827587, y: -0.14618506}
       - {x: -0.16479015, y: -0.17316827}
       - {x: -0.045639515, y: -0.21318057}
       - {x: 0.012798309, y: -0.26537585}

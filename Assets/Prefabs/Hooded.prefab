@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4181548740265867038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1511359395231309652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8763489219475030851}
+  m_Layer: 7
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8763489219475030851
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511359395231309652}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.01, y: 0.01, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4181548740265867038}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7099390637859293862
 GameObject:
   m_ObjectHideFlags: 0
@@ -68,6 +99,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3443541833231628164}
+  - {fileID: 8763489219475030851}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6717596841553951799
@@ -85,6 +117,7 @@ MonoBehaviour:
   maxHealth: 10
   currentHealth: 10
   damageSound: {fileID: 0}
+  animator: {fileID: 8596846972474264078}
 --- !u!114 &8509036316442811293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,13 +132,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 8596846972474264078}
   movementSpeed: 5
-  jumpPower: 6
+  jumpPower: 8
   maxJumps: 1
   groundCheckPos: {fileID: 3443541833231628164}
   groundCheckSizev: {x: 0.5, y: 0.05}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  attackPoint: {fileID: 8763489219475030851}
+  attackBoxSize: {x: 2.41, y: 2.64}
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 2048
+  attackDamage: 1
 --- !u!212 &950395865592157502
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -280,7 +319,7 @@ Rigidbody2D:
   m_Mass: 10
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.5
   m_Material: {fileID: 6200000, guid: f2e6b4a95aa0ab3499fa0efcb53a10d0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2

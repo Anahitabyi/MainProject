@@ -150,22 +150,12 @@ private void GroundCheck()
         groundCheckSizev = new Vector2(0.5f, 0.1f);
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSizev);
     }
-    private bool isGrounded()
-{
-    Vector2 pos = groundCheckPos.position;
-    Vector2 size = groundCheckSizev;
+     private bool isGrounded()
+    {
+        Collider2D hit = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSizev, 0f, groundLayer);
+        return hit != null;
+    }
 
-    Collider2D hit = Physics2D.OverlapBox(pos, size, 0f, groundLayer);
-    
-    if (hit != null)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
     public void flip()
     {
         if ((isFacingRight && horizontalMovement < 0) || (!isFacingRight && horizontalMovement > 0))

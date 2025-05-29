@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5762915316611222319}
   - component: {fileID: 7982538277543442202}
   - component: {fileID: -7222930501019638792}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BallPlayer1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -165,3 +165,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac5e4730f3b514c4f8d033cbfd52d214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
