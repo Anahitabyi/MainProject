@@ -108,10 +108,10 @@ TextureImporter:
         serializedVersion: 2
         x: 18
         y: 25
-        width: 21
+        width: 20
         height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.66147196, y: 0.52511835}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -124,33 +124,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Hobbit - death3_1
-      rect:
-        serializedVersion: 2
-        x: 37
-        y: 24
-        width: 7
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5b16edce1e1008400800000000000000
-      internalID: 324261243023942069
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 3c090c8232653df41a9cf7b71b369106
     internalID: 0
     vertices: []
     indices: 

@@ -571,7 +571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1026711825992941632, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: orthographic size
-      value: 7.01
+      value: 3.36
       objectReference: {fileID: 0}
     - target: {fileID: 1026711825992941632, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_NormalizedViewPortRect.x
@@ -591,11 +591,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4135620339002320958, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.5221779
+      value: -2.7550669
       objectReference: {fileID: 0}
     - target: {fileID: 4135620339002320958, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3320003
+      value: 2.602
       objectReference: {fileID: 0}
     - target: {fileID: 4135620339002320958, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -648,7 +648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8312983115829969, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
       propertyPath: Lens.OrthographicSize
-      value: 7.01
+      value: 3.36
       objectReference: {fileID: 0}
     - target: {fileID: 8312983115829969, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
       propertyPath: Target.TrackingTarget
@@ -668,11 +668,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6865242282586098371, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.5221779
+      value: -2.7550669
       objectReference: {fileID: 0}
     - target: {fileID: 6865242282586098371, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3320003
+      value: 2.602
       objectReference: {fileID: 0}
     - target: {fileID: 6865242282586098371, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
       propertyPath: m_LocalPosition.z

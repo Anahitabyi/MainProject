@@ -9549,8 +9549,8 @@ TextureImporter:
         serializedVersion: 2
         x: 543
         y: 183
-        width: 66
-        height: 19
+        width: 32
+        height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -13921,6 +13921,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: All_Fire_Bullet_Pixel_16x16_553
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 183
+        width: 36
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f165942ebd9dd17469eca29d46733786
+      internalID: 1576795842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -14440,6 +14462,7 @@ TextureImporter:
       All_Fire_Bullet_Pixel_16x16_550: 5817298836179706462
       All_Fire_Bullet_Pixel_16x16_551: -8080127670913687739
       All_Fire_Bullet_Pixel_16x16_552: -1346379322886062896
+      All_Fire_Bullet_Pixel_16x16_553: 1576795842
       All_Fire_Bullet_Pixel_16x16_56: 5264267682637413318
       All_Fire_Bullet_Pixel_16x16_57: 7835223375729790073
       All_Fire_Bullet_Pixel_16x16_58: 2592258522901077099

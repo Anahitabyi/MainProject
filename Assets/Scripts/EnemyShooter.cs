@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class EnemyShooter : MonoBehaviour
 {
@@ -14,21 +15,20 @@ public class EnemyShooter : MonoBehaviour
 
     void Start()
     {
-        // Randomly pick one of the players at the start
-        if (players.Length > 0)
-        {
-            int index = Random.Range(0, players.Length);
-            target = players[index].transform;
-        }
         anim = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if (target == null) return;
+        if (players.Length == 0) return;
 
-        // Check if target is in view box
-        if (IsInViewBox(target.position))
+        // Check for current target status
+        if (target == null || !IsInViewBox(target.position))
+        {
+            target = FindRandomVisiblePlayer();
+        }
+
+        if (target != null && IsInViewBox(target.position))
         {
             timer += Time.deltaTime;
 
@@ -38,6 +38,27 @@ public class EnemyShooter : MonoBehaviour
                 ShootAtTarget();
             }
         }
+    }
+
+    private Transform FindRandomVisiblePlayer()
+    {
+        List<Transform> visiblePlayers = new List<Transform>();
+
+        foreach (GameObject player in players)
+        {
+            if (player != null && IsInViewBox(player.transform.position))
+            {
+                visiblePlayers.Add(player.transform);
+            }
+        }
+
+        if (visiblePlayers.Count > 0)
+        {
+            int index = Random.Range(0, visiblePlayers.Count);
+            return visiblePlayers[index];
+        }
+
+        return null;
     }
 
     private void ShootAtTarget()
@@ -52,7 +73,7 @@ public class EnemyShooter : MonoBehaviour
         Rigidbody2D rb = b.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.linearVelocity = direction * 10f; // adjust bullet speed
+            rb.linearVelocity = direction * 7f;
         }
     }
 
@@ -70,7 +91,6 @@ public class EnemyShooter : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        // Draw the view box in editor
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position, viewBoxSize);
     }

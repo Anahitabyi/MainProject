@@ -1,74 +1,117 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Tilemaps;
 
 public class ChunkGenerator : MonoBehaviour
 {
-    [SerializeField] private int chunkWidth = 10;
-
     [SerializeField] private float generateDistance = 25f;
-    [SerializeField] private int maxChunks = 10;
-
     [SerializeField] private int initialChunks = 3;
     [SerializeField] private GameObject[] chunkPrefabs;
+    [SerializeField] private GameObject finalChunkPrefab;
+    [SerializeField] private GameObject backgroundPrefab;
+    [SerializeField] private Transform[] players;
+    public float positionY = 0;
 
-    [SerializeField] private Transform player;
-
+    private List<GameObject> unusedChunkPrefabs = new List<GameObject>();
     private List<GameObject> activeChunks = new List<GameObject>();
-    private int currentChunk = 0;
-    private float chunkWorldWidth;
-    
+    private List<GameObject> activeBackgrounds = new List<GameObject>();
+    private int currentChunkIndex = 0;
+    private bool finalChunkSpawned = false;
+
     void Start()
     {
-        if (chunkPrefabs.Length == 0)
+        unusedChunkPrefabs = new List<GameObject>(chunkPrefabs);
+
+        for (int i = 0; i < initialChunks && unusedChunkPrefabs.Count > 0; i++)
         {
-            Debug.LogError("Chunk Prefabs are empty");
-        }
-        chunkWorldWidth = chunkWidth;
-        
-        // generating initial chunks
-        for (int i = 0; i < initialChunks; i++)
-        {
-            GameObject newChunk = GenerateChunk(i);
-            activeChunks.Add(newChunk);
-        }
-    }
-    
-    void Update()
-    {
-        // check whether we need to generate more chunks
-        float playerX = player.position.x;
-        float furthestChunkEndX = (currentChunk - 1 + activeChunks.Count) * chunkWorldWidth;
-        if (playerX + generateDistance > furthestChunkEndX)
-        {
-            GameObject newChunk = GenerateChunk(currentChunk - 1 + activeChunks.Count);
-            activeChunks.Add(newChunk);
-        }
-        
-        // remove chunks if far enough
-        if (activeChunks.Count > maxChunks)
-        {
-            GameObject firstChunk = activeChunks[0];
-            activeChunks.RemoveAt(0);
-            Destroy(firstChunk);
-            currentChunk++;
+            GameObject newChunk = GenerateChunk();
+            if (newChunk != null)
+                activeChunks.Add(newChunk);
         }
     }
 
-    GameObject GenerateChunk(int chunkIndex)
+    void Update()
     {
-        // randomly select one chunk from the prefabs.
-        int randomChunk = Random.Range(0, chunkPrefabs.Length);
-        GameObject selectedChunk = chunkPrefabs[randomChunk];
-        
-        // now instantiate the selected chunk
-        GameObject chunk = Instantiate(selectedChunk, transform);
-        chunk.name = "Chunk_" + chunkIndex + "_Type_" + randomChunk;
-        
-        // position the chunk in the index
-        float positionX = chunkWorldWidth * chunkIndex;
+        if (players == null || players.Length == 0 || finalChunkSpawned) return;
+
+        float maxPlayerX = float.MinValue;
+        float minPlayerX = float.MaxValue;
+
+        foreach (Transform player in players)
+        {
+            if (player != null)
+            {
+                float x = player.position.x;
+                if (x > maxPlayerX) maxPlayerX = x;
+                if (x < minPlayerX) minPlayerX = x;
+            }
+        }
+
+        GameObject lastChunk = activeChunks[activeChunks.Count - 1];
+        float lastChunkEndX = lastChunk.transform.position.x + GetChunkWidth(lastChunk);
+
+        // Generate next chunk if needed
+        if (maxPlayerX + generateDistance > lastChunkEndX)
+        {
+            GameObject newChunk = GenerateChunk();
+            if (newChunk != null)
+                activeChunks.Add(newChunk);
+        }
+    }
+
+    GameObject GenerateChunk()
+    {
+        float positionX = 0f;
+        if (activeChunks.Count > 0)
+        {
+            GameObject lastChunk = activeChunks[activeChunks.Count - 1];
+            float lastChunkEndX = lastChunk.transform.position.x + GetChunkWidth(lastChunk);
+            positionX = lastChunkEndX;
+        }
+
+        GameObject chunkToSpawn = null;
+
+        if (unusedChunkPrefabs.Count > 0)
+        {
+            int randomIndex = Random.Range(0, unusedChunkPrefabs.Count);
+            chunkToSpawn = unusedChunkPrefabs[randomIndex];
+            unusedChunkPrefabs.RemoveAt(randomIndex);
+        }
+        else if (!finalChunkSpawned && finalChunkPrefab != null)
+        {
+            chunkToSpawn = finalChunkPrefab;
+            finalChunkSpawned = true;
+        }
+
+        if (chunkToSpawn == null)
+            return null;
+
+        GameObject chunk = Instantiate(chunkToSpawn, transform);
+        chunk.name = "Chunk_" + currentChunkIndex;
         chunk.transform.position = new Vector3(positionX, 0, 0);
+        currentChunkIndex++;
+
+        // Background
+        if (backgroundPrefab != null)
+        {
+            GameObject background = Instantiate(backgroundPrefab);
+            background.transform.position = new Vector3(positionX, positionY, -1);
+            activeBackgrounds.Add(background);
+        }
+
         return chunk;
+    }
+
+    float GetChunkWidth(GameObject chunk)
+    {
+        Renderer[] renderers = chunk.GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0) return 0;
+
+        Bounds bounds = renderers[0].bounds;
+        foreach (Renderer r in renderers)
+        {
+            bounds.Encapsulate(r.bounds);
+        }
+
+        return bounds.size.x;
     }
 }

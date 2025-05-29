@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class playerMovement : MonoBehaviour {
@@ -23,6 +24,17 @@ public class playerMovement : MonoBehaviour {
     Rigidbody2D rb;
     private bool wasGroundedLastFrame = true;
     private bool wasFalling = false;
+
+    [Header("Shooting")]
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public float bulletSpeed = 15f;
+    public float bulletSpawnDelay = 0.2f; 
+
+    public Camera hobbitCamera;
+    public float shakeDuration;
+    public float shakeMagnitude;
+
 
     void Start()
     {
@@ -138,32 +150,69 @@ private void GroundCheck()
         groundCheckSizev = new Vector2(0.5f, 0.1f);
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSizev);
     }
-    private bool isGrounded()
-{
-    Vector2 pos = groundCheckPos.position;
-    Vector2 size = groundCheckSizev;
+     private bool isGrounded()
+    {
+        Collider2D hit = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSizev, 0f, groundLayer);
+        return hit != null;
+    }
 
-    Collider2D hit = Physics2D.OverlapBox(pos, size, 0f, groundLayer);
-    
-    if (hit != null)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
     public void flip()
-{
-    if ((isFacingRight && horizontalMovement < 0) || (!isFacingRight && horizontalMovement > 0))
     {
-        isFacingRight = !isFacingRight;
-        Vector3 scale = transform.localScale;
-        scale.x *= -1f;
-        transform.localScale = scale;
+        if ((isFacingRight && horizontalMovement < 0) || (!isFacingRight && horizontalMovement > 0))
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 scale = transform.localScale;
+            scale.x *= -1f;
+            transform.localScale = scale;
+        }
     }
+public void Shoot(InputAction.CallbackContext context)
+{
+    if (!context.performed) return;
+
+    animator.SetTrigger("shoot"); // Trigger the shoot animation
+
+    StartCoroutine(DelayedBulletSpawn()); // Wait and spawn bullet
 }
+private IEnumerator DelayedBulletSpawn()
+{
+    yield return new WaitForSeconds(bulletSpawnDelay); // Wait for animation to play
+
+    Vector3 mousePosition = hobbitCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+    Vector2 shootDirection = (mousePosition - firePoint.position).normalized;
+
+    GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+    Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+    if (rb != null)
+    {
+        rb.linearVelocity = shootDirection * bulletSpeed;
+    }
+
+    StartCoroutine(ShakeCamera()); // Optional camera shake
+}
+
+
+private System.Collections.IEnumerator ShakeCamera()
+{
+    Vector3 originalPos = hobbitCamera.transform.position;
+
+    float elapsed = 0f;
+    while (elapsed < shakeDuration)
+    {
+        float offsetX = Random.Range(-1f, 1f) * shakeMagnitude;
+        float offsetY = Random.Range(-1f, 1f) * shakeMagnitude;
+        hobbitCamera.transform.position = originalPos + new Vector3(offsetX, offsetY, 0f);
+        elapsed += Time.deltaTime;
+        yield return null;
+    }
+
+    hobbitCamera.transform.position = originalPos;
+}
+public void DebugRightClick(InputAction.CallbackContext context)
+{
+    Debug.Log("Right click detected");
+}
+
 
 }
 
