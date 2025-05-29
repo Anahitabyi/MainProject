@@ -82,4 +82,8 @@ public class PlayerHealth : MonoBehaviour
         // Hide or disable the player
         gameObject.SetActive(false);
     }
+    public void setHealth(int n)
+    {
+        
+    }
 }
