@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio; 
 
 public class Collectible : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class Collectible : MonoBehaviour
     public int healValue = 1;
     public AudioClip healSound;
     public AudioClip coinPickupSound;
-
+    public AudioMixerGroup sfxMixerGroup;
     void Awake()
     {
         // set the type based on the gameobject's tag
@@ -45,7 +46,7 @@ public class Collectible : MonoBehaviour
                 }
                 if (healSound != null)
                 {
-                    StartCoroutine(PlaySoundAtVolume(healSound, 1.5f));
+                    StartCoroutine(PlaySoundWithMixer(healSound));
                     Debug.Log("Heal sound played. If you don't hear it you're deaf.");
                 }
                 Destroy(gameObject);
@@ -60,7 +61,7 @@ public class Collectible : MonoBehaviour
 
                 if (coinPickupSound != null)
                 {
-                    StartCoroutine(PlaySoundAtVolume(coinPickupSound, 1.5f));
+                    StartCoroutine(PlaySoundWithMixer(coinPickupSound));
                     Debug.Log("Coin pickup sound played. If you don't hear it you're deaf.");
                 }
                 Destroy(gameObject);
@@ -70,13 +71,13 @@ public class Collectible : MonoBehaviour
                 break;
         }
     }
-    IEnumerator PlaySoundAtVolume(AudioClip clip, float volume)
+    IEnumerator PlaySoundWithMixer(AudioClip clip)
     {
         GameObject tempGO = new GameObject("TempAudio");
         AudioSource source = tempGO.AddComponent<AudioSource>();
         source.clip = clip;
-        source.volume = volume; // e.g. 1.5f for louder
-        source.spatialBlend = 0f; // 2D sound
+        source.outputAudioMixerGroup = sfxMixerGroup; 
+        source.spatialBlend = 0f;
         source.Play();
         Destroy(tempGO, clip.length);
         yield return null;

@@ -116,7 +116,7 @@ private void GroundCheck()
     {
         //moveInput = contex.ReadValue<Vector2>();
         horizontalMovement = context.ReadValue<Vector2>().x;
-        Debug.Log("Move Called: " + horizontalMovement);
+        //Debug.Log("Move Called: " + horizontalMovement);
     }
     public void Jump(InputAction.CallbackContext contex)
 {

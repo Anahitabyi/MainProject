@@ -8,6 +8,8 @@ TagManager:
   - Coin
   - Food
   - Powerup
+  - Spikes
+  - Ladder
   layers:
   - Default
   - TransparentFX

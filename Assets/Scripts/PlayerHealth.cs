@@ -6,7 +6,6 @@ public class PlayerHealth : MonoBehaviour
     public int currentHealth;
     //HealthUI healthUI;
     public AudioClip damageSound;
-
     void start()
     {
         currentHealth = maxHealth;
@@ -26,5 +25,10 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         Debug.Log("Player healed. Current health: " + currentHealth);
         //healthUI.update();
+    }
+
+    public void setHealth(int health)
+    {
+        this.currentHealth = health;
     }
 }

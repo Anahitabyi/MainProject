@@ -19,3 +19,5 @@
 .vs/
 *.apk
 *.unitypackage
+.plastic/
+*.plastic
