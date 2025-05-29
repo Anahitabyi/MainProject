@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      UI_TravelBook_Marker01aHide_4_0: 2651072218435713
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

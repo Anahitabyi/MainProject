@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      UI_TravelBook_MouseCursorClick01a_1_0: 8808213579851482454
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

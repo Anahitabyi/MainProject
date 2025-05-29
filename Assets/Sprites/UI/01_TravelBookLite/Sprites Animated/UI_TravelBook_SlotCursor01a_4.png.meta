@@ -209,7 +209,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      UI_TravelBook_SlotCursor01a_4_0: 4252405463100013216
+      UI_TravelBook_SlotCursor01a_4_1: -2827034590203943853
+      UI_TravelBook_SlotCursor01a_4_2: 3045534450009247493
+      UI_TravelBook_SlotCursor01a_4_3: -5221347658682754001
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
