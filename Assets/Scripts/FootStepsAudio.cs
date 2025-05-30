@@ -12,16 +12,6 @@ public class FootstepAudio : MonoBehaviour
     public AudioClip[] stoneFootsteps;
     
     public AudioClip[] grassFootsteps;
-    
-    private bool isGrounded;
-    private bool wasGrounded;
-
-    public AudioClip jumpSound;
-    public AudioClip landGrassSound;
-    public AudioClip landStoneSound;
-    public Transform groundCheckPoint;
-    public float groundCheckRadius = 0.2f;
-    public LayerMask groundLayer;
 
     [Header("Current Surface Type (Auto-set per scene)")]
     public SurfaceType surface = SurfaceType.Grass;
@@ -32,7 +22,6 @@ public class FootstepAudio : MonoBehaviour
     
     public AudioMixerGroup sfxMixerGroup;
     public string horizontalAxis = "Horizontal";
-    public string jumpButton = "Jump";
 
     void Start()
     {
@@ -61,7 +50,6 @@ public class FootstepAudio : MonoBehaviour
 
     void Update()
     {
-        CheckGround();
         
         // Footsteps
         if (IsMoving())
@@ -77,42 +65,13 @@ public class FootstepAudio : MonoBehaviour
         {
             stepTimer = 0f;
         }
-
-        // Jump sound
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            audioSource.PlayOneShot(jumpSound);
-        }
-
-        // Landing sound (surface-based)
-        if (!wasGrounded && isGrounded)
-        {
-            PlayLandingSound();
-        }
-
-        wasGrounded = isGrounded;
     }
-
-    private void PlayLandingSound()
-    {
-        AudioClip landClip = surface == SurfaceType.Stone ? landStoneSound : landGrassSound;
-        if (landClip != null)
-        {
-            audioSource.PlayOneShot(landClip);
-        }
-    }
-
-
+    
     private bool IsMoving()
     {
         float moveInput = Input.GetAxisRaw(horizontalAxis);
         return Mathf.Abs(moveInput) > 0.1f;
     }
-    void CheckGround()
-    {
-        isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundLayer);
-    }
-
     private void PlayFootstep()
     {
         AudioClip[] clips = surface == SurfaceType.Stone ? stoneFootsteps : grassFootsteps;
