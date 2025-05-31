@@ -29,7 +29,7 @@ public class Collectible : MonoBehaviour
         }
         if (CompareTag("Powerup"))
         {
-            type = collectibleType.Coin;
+            type = collectibleType.Powerup;
         }
     }
 

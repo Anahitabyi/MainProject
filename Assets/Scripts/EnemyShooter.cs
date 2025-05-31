@@ -5,12 +5,11 @@ public class EnemyShooter : MonoBehaviour
 {
     public GameObject bullet;
     public Transform bulletPos;
-    public GameObject[] players; // Assign both players in the Inspector
+    public GameObject[] players; // Will be assigned dynamically
     public Vector2 viewBoxSize = new Vector2(10f, 5f); // Width x Height of view area
 
     private Transform target;
     private float timer;
-
     private Animator anim;
 
     void Start()
@@ -19,26 +18,30 @@ public class EnemyShooter : MonoBehaviour
     }
 
     void Update()
+{
+    if (players == null || players.Length == 0) return;
+
+    // Stop everything if enemy is dead
+    EnemyHealth health = GetComponent<EnemyHealth>();
+    if (health != null && health.IsDead) return;
+
+    // Target logic...
+    if (target == null || !IsInViewBox(target.position))
     {
-        if (players.Length == 0) return;
+        target = FindRandomVisiblePlayer();
+    }
 
-        // Check for current target status
-        if (target == null || !IsInViewBox(target.position))
+    if (target != null && IsInViewBox(target.position))
+    {
+        timer += Time.deltaTime;
+
+        if (timer > 2f)
         {
-            target = FindRandomVisiblePlayer();
-        }
-
-        if (target != null && IsInViewBox(target.position))
-        {
-            timer += Time.deltaTime;
-
-            if (timer > 2f)
-            {
-                timer = 0;
-                ShootAtTarget();
-            }
+            timer = 0;
+            ShootAtTarget();
         }
     }
+}
 
     private Transform FindRandomVisiblePlayer()
     {
@@ -93,5 +96,11 @@ public class EnemyShooter : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position, viewBoxSize);
+    }
+
+    // New method for assigning players
+    public void SetPlayers(GameObject[] players)
+    {
+        this.players = players;
     }
 }

@@ -9,6 +9,8 @@ public class ChunkGenerator : MonoBehaviour
     [SerializeField] private GameObject finalChunkPrefab;
     [SerializeField] private GameObject backgroundPrefab;
     [SerializeField] private Transform[] players;
+    [SerializeField] private GameObject[] collectiblePrefabs; // Assign your Food, Coin, Powerup prefabs
+
     public float positionY = 0;
 
     private List<GameObject> unusedChunkPrefabs = new List<GameObject>();
@@ -34,22 +36,16 @@ public class ChunkGenerator : MonoBehaviour
         if (players == null || players.Length == 0 || finalChunkSpawned) return;
 
         float maxPlayerX = float.MinValue;
-        float minPlayerX = float.MaxValue;
 
         foreach (Transform player in players)
         {
             if (player != null)
-            {
-                float x = player.position.x;
-                if (x > maxPlayerX) maxPlayerX = x;
-                if (x < minPlayerX) minPlayerX = x;
-            }
+                maxPlayerX = Mathf.Max(maxPlayerX, player.position.x);
         }
 
         GameObject lastChunk = activeChunks[activeChunks.Count - 1];
         float lastChunkEndX = lastChunk.transform.position.x + GetChunkWidth(lastChunk);
 
-        // Generate next chunk if needed
         if (maxPlayerX + generateDistance > lastChunkEndX)
         {
             GameObject newChunk = GenerateChunk();
@@ -61,6 +57,7 @@ public class ChunkGenerator : MonoBehaviour
     GameObject GenerateChunk()
     {
         float positionX = 0f;
+
         if (activeChunks.Count > 0)
         {
             GameObject lastChunk = activeChunks[activeChunks.Count - 1];
@@ -90,12 +87,31 @@ public class ChunkGenerator : MonoBehaviour
         chunk.transform.position = new Vector3(positionX, 0, 0);
         currentChunkIndex++;
 
+        // Set players to any enemy shooters
+        EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
+        foreach (EnemyShooter shooter in shooters)
+        {
+            shooter.SetPlayers(GetPlayerGameObjects());
+        }
+
         // Background
         if (backgroundPrefab != null)
         {
             GameObject background = Instantiate(backgroundPrefab);
             background.transform.position = new Vector3(positionX, positionY, -1);
             activeBackgrounds.Add(background);
+        }
+        // === Spawn a collectible at a random spawn point in the chunk ===
+        Transform spawnPointsParent = chunk.transform.Find("SpawnPoints");
+        if (spawnPointsParent != null && collectiblePrefabs.Length > 0)
+        {
+            int spawnCount = spawnPointsParent.childCount;
+            if (spawnCount > 0)
+            {
+                Transform randomSpawnPoint = spawnPointsParent.GetChild(Random.Range(0, spawnCount));
+                GameObject collectibleToSpawn = collectiblePrefabs[Random.Range(0, collectiblePrefabs.Length)];
+                Instantiate(collectibleToSpawn, randomSpawnPoint.position, Quaternion.identity, chunk.transform);
+            }
         }
 
         return chunk;
@@ -113,5 +129,16 @@ public class ChunkGenerator : MonoBehaviour
         }
 
         return bounds.size.x;
+    }
+
+    private GameObject[] GetPlayerGameObjects()
+    {
+        List<GameObject> playerList = new List<GameObject>();
+        foreach (Transform t in players)
+        {
+            if (t != null)
+                playerList.Add(t.gameObject);
+        }
+        return playerList.ToArray();
     }
 }

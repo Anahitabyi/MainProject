@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      UI_TravelBook_CommandActionDirect01a_3_0: 2100113738762867337
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
