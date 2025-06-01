@@ -10,18 +10,18 @@ public class PlayerLivesUI : MonoBehaviour
 
     void Start()
 {
-    Debug.Log("PlayerLivesUI Start() called.");
+    //Debug.Log("PlayerLivesUI Start() called.");
 
     if (playerHealth != null)
     {
         playerHealth.OnLivesChanged += UpdateHearts;
-        Debug.Log($"Initial Lives: {playerHealth.currentLives}/{playerHealth.maxLives}");
+        //Debug.Log($"Initial Lives: {playerHealth.currentLives}/{playerHealth.maxLives}");
 
         UpdateHearts(playerHealth.currentLives, playerHealth.maxLives);
     }
     else
     {
-        Debug.LogWarning("PlayerHealth reference is missing!");
+        //Debug.LogWarning("PlayerHealth reference is missing!");
     }
 }
 
@@ -36,18 +36,18 @@ public class PlayerLivesUI : MonoBehaviour
 
     void UpdateHearts(int lives, int maxLives)
 {
-    Debug.Log($"UpdateHearts() called with lives = {lives}, maxLives = {maxLives}");
+    //Debug.Log($"UpdateHearts() called with lives = {lives}, maxLives = {maxLives}");
 
     for (int i = 0; i < heartImages.Length; i++)
     {
         if (i < lives)
         {
-            Debug.Log($"Heart {i}: FULL");
+            //Debug.Log($"Heart {i}: FULL");
             heartImages[i].sprite = fullHeart;
         }
         else
         {
-            Debug.Log($"Heart {i}: EMPTY");
+            //Debug.Log($"Heart {i}: EMPTY");
             heartImages[i].sprite = emptyHeart;
         }
 

@@ -121,8 +121,12 @@ MonoBehaviour:
   currentHealth: 3
   maxLives: 3
   currentLives: 3
+  invincibilityDuration: 2
+  flashInterval: 0.1
   damageSound: {fileID: 0}
   animator: {fileID: 8596846972474264078}
+  playerCollider: {fileID: 4896806908539722067}
+  spriteRenderer: {fileID: 950395865592157502}
 --- !u!114 &8509036316442811293
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -28,21 +28,29 @@ public class meleePlayerMovement : MonoBehaviour
 
     Rigidbody2D rb;
 
+    [Header("Input Blocking")]
+    public bool isInputBlocked = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
+{
+    if (isInputBlocked)
     {
-        rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
-        GroundCheck();
-
+        rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
         animator.SetFloat("Yvelocity", rb.linearVelocity.y);
-        animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
-
-        flip();
+        animator.SetFloat("magnitude", 0);
+        return;
     }
+    rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
+    GroundCheck();
+    animator.SetFloat("Yvelocity", rb.linearVelocity.y);
+    animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
+    flip();
+}
 
     private void GroundCheck()
     {
@@ -54,11 +62,14 @@ public class meleePlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
+        if (isInputBlocked) return;
         horizontalMovement = context.ReadValue<Vector2>().x;
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if (isInputBlocked) return;
+
         if (context.performed && jumpsRemaining > 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
@@ -73,6 +84,8 @@ public class meleePlayerMovement : MonoBehaviour
 
     public void MeleeAttack(InputAction.CallbackContext context)
     {
+        if (isInputBlocked) return;
+
         if (context.performed)
         {
             animator.SetTrigger("meleeAttack"); // Start animation
@@ -81,7 +94,9 @@ public class meleePlayerMovement : MonoBehaviour
 
     // Called by animation event
     public void PerformAttack()
+
     {
+        if (isInputBlocked) return;
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackBoxSize, 0f, enemyLayers);
 
         foreach (Collider2D enemy in hitEnemies)
@@ -96,6 +111,7 @@ public class meleePlayerMovement : MonoBehaviour
 
     private void flip()
     {
+        if (isInputBlocked) return;
         if ((isFacingRight && horizontalMovement < 0) || (!isFacingRight && horizontalMovement > 0))
         {
             isFacingRight = !isFacingRight;
