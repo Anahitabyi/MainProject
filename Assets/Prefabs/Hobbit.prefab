@@ -131,9 +131,6 @@ MonoBehaviour:
   hobbitCamera: {fileID: 0}
   shakeDuration: 0.1
   shakeMagnitude: 0.1
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!95 &3073781156953091832
 Animator:
   serializedVersion: 7
@@ -360,8 +357,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77468fa4c4c142d46a5b19730fdacaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  currentHealth: 10
+  maxHealth: 3
+  currentHealth: 3
+  maxLives: 3
+  currentLives: 3
   damageSound: {fileID: 0}
   animator: {fileID: 3073781156953091832}
 --- !u!114 &148007022662654773
@@ -398,7 +397,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f3643e061f43b2446876425ce8bbf320, type: 3}
   - {fileID: 8300000, guid: 9248e8c8d35b30f4686a053670e9d53e, type: 3}
   - {fileID: 8300000, guid: f641065dd3ecfed4e954efdcfda8faad, type: 3}
+  jumpSound: {fileID: 8300000, guid: b26fd44bc23e80f43bdaa8bab015a5a0, type: 3}
+  landGrassSound: {fileID: 8300000, guid: b26fd44bc23e80f43bdaa8bab015a5a0, type: 3}
+  landStoneSound: {fileID: 8300000, guid: b26fd44bc23e80f43bdaa8bab015a5a0, type: 3}
+  groundCheckPoint: {fileID: 7022593869801518836}
+  groundCheckRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   surface: 1
+  sfxMixerGroup: {fileID: 0}
+  horizontalAxis: Horizontal
+  jumpButton: Jump
 --- !u!82 &-7030039299230297641
 AudioSource:
   m_ObjectHideFlags: 0

@@ -1,19 +1,30 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 9;
     public int currentHealth;
 
+    public int maxLives = 3;
+    public int currentLives;
+
     public AudioClip damageSound;
 
-    public Animator animator; // Assign in Inspector
-    private bool isDead = false; // Prevent multiple deaths
+    public Animator animator;
+    private bool isDead = false;
+
+    public event Action<int, int> OnHealthChanged;
+    public event Action<int, int> OnLivesChanged;
 
     void Start()
     {
+        currentLives = maxLives;
         currentHealth = maxHealth;
+
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        OnLivesChanged?.Invoke(currentLives, maxLives);
     }
 
     public void takeDamge(int damage)
@@ -22,23 +33,18 @@ public class PlayerHealth : MonoBehaviour
 
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
         Debug.Log("Player took damage. Current health: " + currentHealth);
+
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
         {
-            Die(); // Only play death animation if dead
+            LoseLife();
         }
-        else
+        else if (animator != null)
         {
-            if (animator != null)
-            {
-                animator.SetTrigger("Hurt"); // Only play Hurt if still alive
-            }
+            animator.SetTrigger("Hurt");
         }
-
-        // Optionally play damage sound
-        // AudioSource.PlayClipAtPoint(damageSound, transform.position);
     }
 
     public void heal(int amount)
@@ -47,42 +53,76 @@ public class PlayerHealth : MonoBehaviour
 
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
-        Debug.Log("Player healed. Current health: " + currentHealth);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
-    private void Die()
+    public void setHealth(int newHealth)
+    {
+        currentHealth = Mathf.Clamp(newHealth, 0, maxHealth);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    }
+
+    private void LoseLife()
+{
+    Debug.Log($"LoseLife called. Lives before: {currentLives}");
+
+    currentLives = Mathf.Max(0, currentLives - 1);
+    Debug.Log($"Lives after decrement: {currentLives}");
+
+    OnLivesChanged?.Invoke(currentLives, maxLives);
+
+    if (currentLives <= 0)
+    {
+        Die(true);
+    }
+    else
+    {
+        StartCoroutine(RespawnAfterDelay(1f));
+    }
+}
+
+
+    private IEnumerator RespawnAfterDelay(float delay)
     {
         isDead = true;
-        Debug.Log("Player has died.");
 
         if (animator != null)
         {
-            animator.SetTrigger("Die"); // Trigger death animation
+            animator.SetTrigger("Die");
         }
 
-        // Optionally: Disable player movement here
-        // GetComponent<PlayerMovement>().enabled = false;
+        yield return new WaitForSeconds(delay);
+
+        currentHealth = maxHealth;
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
+        isDead = false;
+        gameObject.SetActive(true); // Reactivate if needed
+    }
+
+    private void Die(bool final)
+    {
+        isDead = true;
+        Debug.Log("Player is permanently dead.");
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Die");
+        }
 
         StartCoroutine(RemoveAfterDeathAnimation());
     }
 
     private IEnumerator RemoveAfterDeathAnimation()
     {
-        // Wait until the death animation starts playing
         while (!animator.GetCurrentAnimatorStateInfo(0).IsTag("Death"))
         {
             yield return null;
         }
 
-        // Wait for the duration of the death animation
         float deathDuration = animator.GetCurrentAnimatorStateInfo(0).length;
         yield return new WaitForSeconds(deathDuration);
 
-        // Hide or disable the player
-        gameObject.SetActive(false);
-    }
-    public void setHealth(int n){
-        
+        gameObject.SetActive(false); // Or call a respawn manager here
     }
 }

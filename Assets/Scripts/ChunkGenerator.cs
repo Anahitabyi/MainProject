@@ -1,29 +1,43 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+[System.Serializable]
+public class ChunkData
+{
+    public GameObject chunkPrefab;
+    public float yPosition;   // Custom Y for this chunk
+    public float width;       // Custom width for X spacing
+}
+
 public class ChunkGenerator : MonoBehaviour
 {
     [SerializeField] private float generateDistance = 25f;
     [SerializeField] private int initialChunks = 3;
-    [SerializeField] private GameObject[] chunkPrefabs;
+    [SerializeField] private List<ChunkData> chunkDataList = new List<ChunkData>();
+
     [SerializeField] private GameObject finalChunkPrefab;
+    [SerializeField] private float finalChunkYPosition = 0f;
+    [SerializeField] private float finalChunkWidth = 20f;
+
     [SerializeField] private GameObject backgroundPrefab;
+    [SerializeField] private float backgroundYPosition = 0f;
+
     [SerializeField] private Transform[] players;
-    [SerializeField] private GameObject[] collectiblePrefabs; // Assign your Food, Coin, Powerup prefabs
+    [SerializeField] private GameObject[] collectiblePrefabs;
 
-    public float positionY = 0;
-
-    private List<GameObject> unusedChunkPrefabs = new List<GameObject>();
+    private List<ChunkData> unusedChunks = new List<ChunkData>();
     private List<GameObject> activeChunks = new List<GameObject>();
     private List<GameObject> activeBackgrounds = new List<GameObject>();
+
     private int currentChunkIndex = 0;
     private bool finalChunkSpawned = false;
 
     void Start()
     {
-        unusedChunkPrefabs = new List<GameObject>(chunkPrefabs);
+        unusedChunks = new List<ChunkData>(chunkDataList);
+        ShuffleChunks(unusedChunks);
 
-        for (int i = 0; i < initialChunks && unusedChunkPrefabs.Count > 0; i++)
+        for (int i = 0; i < initialChunks && unusedChunks.Count > 0; i++)
         {
             GameObject newChunk = GenerateChunk();
             if (newChunk != null)
@@ -36,7 +50,6 @@ public class ChunkGenerator : MonoBehaviour
         if (players == null || players.Length == 0 || finalChunkSpawned) return;
 
         float maxPlayerX = float.MinValue;
-
         foreach (Transform player in players)
         {
             if (player != null)
@@ -44,7 +57,15 @@ public class ChunkGenerator : MonoBehaviour
         }
 
         GameObject lastChunk = activeChunks[activeChunks.Count - 1];
-        float lastChunkEndX = lastChunk.transform.position.x + GetChunkWidth(lastChunk);
+        float lastChunkX = lastChunk.transform.position.x;
+
+        float lastChunkWidth = 0f;
+        if (currentChunkIndex - 1 < chunkDataList.Count)
+            lastChunkWidth = chunkDataList[currentChunkIndex - 1].width;
+        else if (finalChunkSpawned)
+            lastChunkWidth = finalChunkWidth;
+
+        float lastChunkEndX = lastChunkX + lastChunkWidth;
 
         if (maxPlayerX + generateDistance > lastChunkEndX)
         {
@@ -61,33 +82,45 @@ public class ChunkGenerator : MonoBehaviour
         if (activeChunks.Count > 0)
         {
             GameObject lastChunk = activeChunks[activeChunks.Count - 1];
-            float lastChunkEndX = lastChunk.transform.position.x + GetChunkWidth(lastChunk);
-            positionX = lastChunkEndX;
+            float lastChunkX = lastChunk.transform.position.x;
+
+            float lastChunkWidth = 0f;
+            if (currentChunkIndex - 1 < chunkDataList.Count)
+                lastChunkWidth = chunkDataList[currentChunkIndex - 1].width;
+            else if (finalChunkSpawned)
+                lastChunkWidth = finalChunkWidth;
+
+            positionX = lastChunkX + lastChunkWidth;
         }
 
         GameObject chunkToSpawn = null;
+        float chunkY = 0f;
+        float chunkWidth = 0f;
 
-        if (unusedChunkPrefabs.Count > 0)
+        if (unusedChunks.Count > 0)
         {
-            int randomIndex = Random.Range(0, unusedChunkPrefabs.Count);
-            chunkToSpawn = unusedChunkPrefabs[randomIndex];
-            unusedChunkPrefabs.RemoveAt(randomIndex);
+            ChunkData data = unusedChunks[0];
+            chunkToSpawn = data.chunkPrefab;
+            chunkY = data.yPosition;
+            chunkWidth = data.width;
+            unusedChunks.RemoveAt(0);
         }
         else if (!finalChunkSpawned && finalChunkPrefab != null)
         {
             chunkToSpawn = finalChunkPrefab;
+            chunkY = finalChunkYPosition;
+            chunkWidth = finalChunkWidth;
             finalChunkSpawned = true;
         }
 
         if (chunkToSpawn == null)
             return null;
 
-        GameObject chunk = Instantiate(chunkToSpawn, transform);
+        GameObject chunk = Instantiate(chunkToSpawn, new Vector3(positionX, chunkY, 0), Quaternion.identity, transform);
         chunk.name = "Chunk_" + currentChunkIndex;
-        chunk.transform.position = new Vector3(positionX, 0, 0);
         currentChunkIndex++;
 
-        // Set players to any enemy shooters
+        // Set players to enemy shooters
         EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
         foreach (EnemyShooter shooter in shooters)
         {
@@ -98,10 +131,11 @@ public class ChunkGenerator : MonoBehaviour
         if (backgroundPrefab != null)
         {
             GameObject background = Instantiate(backgroundPrefab);
-            background.transform.position = new Vector3(positionX, positionY, -1);
+            background.transform.position = new Vector3(positionX, backgroundYPosition, -1);
             activeBackgrounds.Add(background);
         }
-        // === Spawn a collectible at a random spawn point in the chunk ===
+
+        // Collectibles
         Transform spawnPointsParent = chunk.transform.Find("SpawnPoints");
         if (spawnPointsParent != null && collectiblePrefabs.Length > 0)
         {
@@ -117,20 +151,6 @@ public class ChunkGenerator : MonoBehaviour
         return chunk;
     }
 
-    float GetChunkWidth(GameObject chunk)
-    {
-        Renderer[] renderers = chunk.GetComponentsInChildren<Renderer>();
-        if (renderers.Length == 0) return 0;
-
-        Bounds bounds = renderers[0].bounds;
-        foreach (Renderer r in renderers)
-        {
-            bounds.Encapsulate(r.bounds);
-        }
-
-        return bounds.size.x;
-    }
-
     private GameObject[] GetPlayerGameObjects()
     {
         List<GameObject> playerList = new List<GameObject>();
@@ -140,5 +160,16 @@ public class ChunkGenerator : MonoBehaviour
                 playerList.Add(t.gameObject);
         }
         return playerList.ToArray();
+    }
+
+    private void ShuffleChunks(List<ChunkData> list)
+    {
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            ChunkData temp = list[i];
+            list[i] = list[randomIndex];
+            list[randomIndex] = temp;
+        }
     }
 }

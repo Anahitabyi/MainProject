@@ -79,7 +79,6 @@ GameObject:
   - component: {fileID: 2082189300949548363}
   - component: {fileID: 4896806908539722067}
   - component: {fileID: 7604358647056835986}
-  - component: {fileID: 8823743616079476377}
   - component: {fileID: -8179423667763921623}
   - component: {fileID: -5310316931670057863}
   m_Layer: 7
@@ -118,8 +117,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77468fa4c4c142d46a5b19730fdacaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  currentHealth: 10
+  maxHealth: 3
+  currentHealth: 3
+  maxLives: 3
+  currentLives: 3
   damageSound: {fileID: 0}
   animator: {fileID: 8596846972474264078}
 --- !u!114 &8509036316442811293
@@ -415,22 +416,6 @@ MonoBehaviour:
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
   horizontalAxis: Horizontal
   jumpButton: Jump
---- !u!114 &8823743616079476377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7099390637859293862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77468fa4c4c142d46a5b19730fdacaac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 9
-  currentHealth: 0
-  damageSound: {fileID: 0}
-  animator: {fileID: 0}
 --- !u!82 &-8179423667763921623
 AudioSource:
   m_ObjectHideFlags: 0
