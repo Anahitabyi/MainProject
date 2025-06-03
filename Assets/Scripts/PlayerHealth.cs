@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviour
     public int currentLives;
 
     [Header("Invincibility")]
-    public float invincibilityDuration = 4f;
+    public float invincibilityDuration = 3f;
     public float flashInterval = 0.1f;
 
     [Header("References")]
@@ -143,20 +143,31 @@ public class PlayerHealth : MonoBehaviour
         gameObject.SetActive(false); // Or trigger game over, reload level, etc.
     }
 
-    public void heal(int amount)
-    {
-        if (isDead) return;
-
-        currentHealth += amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
-    }
 
     public void setHealth(int newHealth)
     {
         currentHealth = Mathf.Clamp(newHealth, 0, maxHealth);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    } 
+    public void AddLives(int amount)
+    {
+    // if (amount <= 0 || isDead) return;
+
+    currentLives += amount;
+    currentLives = Mathf.Clamp(currentLives, 0, maxLives);
+    OnLivesChanged?.Invoke(currentLives, maxLives);
     }
+
+    public void AddHealth(int amount)
+    {
+    // if (amount <= 0 || isDead) return;
+
+    currentHealth += amount;
+    //Debug.Log("Added the heealth.");
+    currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+    OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    }
+
 
     public bool IsDead() => isDead;
     public bool IsInvincible() => isInvincible;

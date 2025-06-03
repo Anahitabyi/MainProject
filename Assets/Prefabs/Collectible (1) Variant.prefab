@@ -72,13 +72,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6057926542365291778, guid: 31ad1c0a594561546ad3289c47a08803, type: 3}
+      propertyPath: type
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6157776353644550334, guid: 31ad1c0a594561546ad3289c47a08803, type: 3}
       propertyPath: m_Name
       value: Collectible (1) Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6157776353644550334, guid: 31ad1c0a594561546ad3289c47a08803, type: 3}
       propertyPath: m_TagString
-      value: Food
+      value: Health
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -162,9 +166,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7bf89a87c4385540bac962719034203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  scoreValue: 100
-  healValue: 1
+  type: 3
+  scoreValue: 0
+  lifevalue: 0
+  healthValue: 1
   healSound: {fileID: 8300000, guid: f44f6b02fb4b15b49bbe86214609adb5, type: 3}
   coinPickupSound: {fileID: 8300000, guid: db40f0c67b612304bb95d48308eef206, type: 3}
+  healthPickupSound: {fileID: 0}
+  lifePickupSound: {fileID: 0}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
