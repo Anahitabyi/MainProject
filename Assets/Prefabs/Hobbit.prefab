@@ -113,8 +113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3073781156953091832}
-  movementSpeed: 5
-  jumpPower: 10
+  movementSpeed: 4.5
+  jumpPower: 13
   maxJumps: 2
   groundCheckPos: {fileID: 7022593869801518836}
   groundCheckSizev: {x: 0.5, y: 0.1}
@@ -131,9 +131,6 @@ MonoBehaviour:
   hobbitCamera: {fileID: 0}
   shakeDuration: 0.1
   shakeMagnitude: 0.1
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!95 &3073781156953091832
 Animator:
   serializedVersion: 7
@@ -360,10 +357,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77468fa4c4c142d46a5b19730fdacaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  currentHealth: 10
-  damageSound: {fileID: 0}
+  maxHealth: 3
+  currentHealth: 3
+  maxLives: 3
+  currentLives: 3
+  invincibilityDuration: 2
+  flashInterval: 0.1
   animator: {fileID: 3073781156953091832}
+  playerCollider: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  rb: {fileID: 0}
+  movementScript: {fileID: 0}
 --- !u!114 &148007022662654773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,7 +402,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f3643e061f43b2446876425ce8bbf320, type: 3}
   - {fileID: 8300000, guid: 9248e8c8d35b30f4686a053670e9d53e, type: 3}
   - {fileID: 8300000, guid: f641065dd3ecfed4e954efdcfda8faad, type: 3}
+  jumpSound: {fileID: 8300000, guid: b26fd44bc23e80f43bdaa8bab015a5a0, type: 3}
+  landGrassSound: {fileID: 8300000, guid: b26fd44bc23e80f43bdaa8bab015a5a0, type: 3}
+  landStoneSound: {fileID: 8300000, guid: b26fd44bc23e80f43bdaa8bab015a5a0, type: 3}
+  groundCheckPoint: {fileID: 7022593869801518836}
+  groundCheckRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   surface: 1
+  sfxMixerGroup: {fileID: 0}
+  horizontalAxis: Horizontal
+  jumpButton: Jump
 --- !u!82 &-7030039299230297641
 AudioSource:
   m_ObjectHideFlags: 0
@@ -542,19 +557,22 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.125, y: 0.296875}
-      - {x: -0.14877224, y: 0.22730312}
-      - {x: -0.2527423, y: 0.041395195}
-      - {x: -0.13157417, y: -0.03088677}
+    - - {x: 0.21180151, y: 0.2650876}
+      - {x: -0.054835804, y: 0.27348685}
+      - {x: -0.053843975, y: 0.20391497}
+      - {x: -0.053254604, y: 0.035892136}
+      - {x: -0.07241584, y: -0.040517088}
       - {x: -0.14827587, y: -0.14618506}
-      - {x: -0.16479015, y: -0.17316827}
+      - {x: -0.097377315, y: -0.12776765}
       - {x: -0.045639515, y: -0.21318057}
-      - {x: 0.012798309, y: -0.26537585}
-      - {x: 0.20970726, y: -0.27449012}
-      - {x: 0.2811613, y: -0.18521714}
-      - {x: 0.27282143, y: -0.03803052}
-      - {x: 0.2922988, y: 0.050794497}
-      - {x: 0.27668428, y: 0.296875}
+      - {x: -0.0016670227, y: -0.26622677}
+      - {x: 0.18701409, y: -0.26489124}
+      - {x: 0.186733, y: -0.17408335}
+      - {x: 0.24797608, y: -0.07970513}
+      - {x: 0.25239992, y: -0.032074228}
+      - {x: 0.2579043, y: 0.050794497}
+      - {x: 0.25566098, y: 0.20442629}
+      - {x: 0.24916863, y: 0.24321961}
   m_UseDelaunayMesh: 0
 --- !u!1 &5331574185590073450
 GameObject:

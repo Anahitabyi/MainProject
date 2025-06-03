@@ -79,7 +79,6 @@ GameObject:
   - component: {fileID: 2082189300949548363}
   - component: {fileID: 4896806908539722067}
   - component: {fileID: 7604358647056835986}
-  - component: {fileID: 8823743616079476377}
   - component: {fileID: -8179423667763921623}
   - component: {fileID: -5310316931670057863}
   m_Layer: 7
@@ -99,7 +98,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.47, y: 4.7, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3443541833231628164}
@@ -118,10 +117,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77468fa4c4c142d46a5b19730fdacaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  currentHealth: 10
-  damageSound: {fileID: 0}
+  maxHealth: 3
+  currentHealth: 3
+  maxLives: 3
+  currentLives: 3
+  invincibilityDuration: 6
+  flashInterval: 0.1
   animator: {fileID: 8596846972474264078}
+  playerCollider: {fileID: 4896806908539722067}
+  spriteRenderer: {fileID: 950395865592157502}
+  rb: {fileID: 2082189300949548363}
+  movementScript: {fileID: 8509036316442811293}
 --- !u!114 &8509036316442811293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 8596846972474264078}
   movementSpeed: 5
-  jumpPower: 8
+  jumpPower: 10
   maxJumps: 1
   groundCheckPos: {fileID: 3443541833231628164}
   groundCheckSizev: {x: 0.5, y: 0.05}
@@ -149,6 +155,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   attackDamage: 1
+  isInputBlocked: 0
 --- !u!212 &950395865592157502
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -403,34 +410,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b91bbd5b384bf5a4e81af8cf9f617ab3, type: 3}
   - {fileID: 8300000, guid: 27f292652013a4d4b856784808af63e7, type: 3}
   - {fileID: 8300000, guid: 922dad020b5d6ce4f9dd4453ef305499, type: 3}
-  jumpSound: {fileID: 0}
+  jumpSound: {fileID: 8300000, guid: a431053ede092b741abc1b9a9dd862b9, type: 3}
   landGrassSound: {fileID: 8300000, guid: b91bbd5b384bf5a4e81af8cf9f617ab3, type: 3}
   landStoneSound: {fileID: 8300000, guid: 2288a84fd09285a45b628864ddabdc38, type: 3}
   groundCheckPoint: {fileID: 3443541833231628164}
   groundCheckRadius: 0.2
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   surface: 0
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
   horizontalAxis: Horizontal
   jumpButton: Jump
---- !u!114 &8823743616079476377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7099390637859293862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77468fa4c4c142d46a5b19730fdacaac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 9
-  currentHealth: 0
-  sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
-  damageSound: {fileID: 0}
 --- !u!82 &-8179423667763921623
 AudioSource:
   m_ObjectHideFlags: 0

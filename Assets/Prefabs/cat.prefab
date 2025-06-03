@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 4
   animator: {fileID: 6445001639196853082}
-  deathEffectPrefab: {fileID: 0}
+  deathEffectPrefab: {fileID: 50476677937739099, guid: 56dba9852748f9d46975730fbbed3e74, type: 3}
 --- !u!212 &2777192905260212469
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -35,6 +35,9 @@ public class playerMovement : MonoBehaviour {
     public float shakeDuration;
     public float shakeMagnitude;
 
+    [Header("Attack")]
+    public int attackDamage = 1; // Default bullet damage
+
 
     void Start()
     {
@@ -188,8 +191,16 @@ private IEnumerator DelayedBulletSpawn()
         rb.linearVelocity = shootDirection * bulletSpeed;
     }
 
+    // Set the bullet's damage based on the player's current attackDamage
+    Bullet bulletScript = bullet.GetComponent<Bullet>();
+    if (bulletScript != null)
+    {
+        bulletScript.damage = attackDamage;
+    }
+
     StartCoroutine(ShakeCamera()); // Optional camera shake
 }
+
 
 
 private System.Collections.IEnumerator ShakeCamera()

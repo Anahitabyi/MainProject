@@ -1,31 +1,57 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+[System.Serializable]
+public class ChunkData
+{
+    public GameObject chunkPrefab;
+    public float yPosition;
+}
+
 public class ChunkGenerator : MonoBehaviour
 {
     [SerializeField] private float generateDistance = 25f;
     [SerializeField] private int initialChunks = 3;
-    [SerializeField] private GameObject[] chunkPrefabs;
-    [SerializeField] private GameObject finalChunkPrefab;
-    [SerializeField] private GameObject backgroundPrefab;
-    [SerializeField] private Transform[] players;
-    public float positionY = 0;
+    [SerializeField] private List<ChunkData> chunkDataList = new List<ChunkData>();
 
-    private List<GameObject> unusedChunkPrefabs = new List<GameObject>();
-    private List<GameObject> activeChunks = new List<GameObject>();
+    [SerializeField] private GameObject finalChunkPrefab;
+    [SerializeField] private float finalChunkYPosition = 0f;
+
+    [SerializeField] private GameObject backgroundPrefab;
+    [SerializeField] private float backgroundYPosition = 0f;
+
+    [SerializeField] private Transform[] players;
+    [SerializeField] private GameObject[] collectiblePrefabs;
+
+    private List<ChunkData> unusedChunks = new List<ChunkData>();
+
+    private class SpawnedChunk
+    {
+        public GameObject chunkObject;
+        public float width;
+
+        public SpawnedChunk(GameObject obj, float width)
+        {
+            this.chunkObject = obj;
+            this.width = width;
+        }
+    }
+
+    private List<SpawnedChunk> activeChunks = new List<SpawnedChunk>();
     private List<GameObject> activeBackgrounds = new List<GameObject>();
+
     private int currentChunkIndex = 0;
     private bool finalChunkSpawned = false;
 
     void Start()
     {
-        unusedChunkPrefabs = new List<GameObject>(chunkPrefabs);
+        unusedChunks = new List<ChunkData>(chunkDataList);
+        ShuffleList(unusedChunks);
 
-        for (int i = 0; i < initialChunks && unusedChunkPrefabs.Count > 0; i++)
+
+        for (int i = 0; i < initialChunks && unusedChunks.Count > 0; i++)
         {
-            GameObject newChunk = GenerateChunk();
-            if (newChunk != null)
-                activeChunks.Add(newChunk);
+            GenerateChunk();
         }
     }
 
@@ -34,27 +60,20 @@ public class ChunkGenerator : MonoBehaviour
         if (players == null || players.Length == 0 || finalChunkSpawned) return;
 
         float maxPlayerX = float.MinValue;
-        float minPlayerX = float.MaxValue;
-
         foreach (Transform player in players)
         {
             if (player != null)
-            {
-                float x = player.position.x;
-                if (x > maxPlayerX) maxPlayerX = x;
-                if (x < minPlayerX) minPlayerX = x;
-            }
+                maxPlayerX = Mathf.Max(maxPlayerX, player.position.x);
         }
 
-        GameObject lastChunk = activeChunks[activeChunks.Count - 1];
-        float lastChunkEndX = lastChunk.transform.position.x + GetChunkWidth(lastChunk);
+        if (activeChunks.Count == 0) return;
 
-        // Generate next chunk if needed
+        SpawnedChunk lastChunk = activeChunks[activeChunks.Count - 1];
+        float lastChunkEndX = lastChunk.chunkObject.transform.position.x + lastChunk.width;
+
         if (maxPlayerX + generateDistance > lastChunkEndX)
         {
-            GameObject newChunk = GenerateChunk();
-            if (newChunk != null)
-                activeChunks.Add(newChunk);
+            GenerateChunk();
         }
     }
 
@@ -63,48 +82,85 @@ public class ChunkGenerator : MonoBehaviour
         float positionX = 0f;
         if (activeChunks.Count > 0)
         {
-            GameObject lastChunk = activeChunks[activeChunks.Count - 1];
-            float lastChunkEndX = lastChunk.transform.position.x + GetChunkWidth(lastChunk);
-            positionX = lastChunkEndX;
+            SpawnedChunk lastChunk = activeChunks[activeChunks.Count - 1];
+            positionX = lastChunk.chunkObject.transform.position.x + lastChunk.width;
         }
 
         GameObject chunkToSpawn = null;
+        float chunkY = 0f;
+        float chunkWidth = 0f;
 
-        if (unusedChunkPrefabs.Count > 0)
+        if (unusedChunks.Count > 0)
         {
-            int randomIndex = Random.Range(0, unusedChunkPrefabs.Count);
-            chunkToSpawn = unusedChunkPrefabs[randomIndex];
-            unusedChunkPrefabs.RemoveAt(randomIndex);
+            ChunkData data = unusedChunks[0];
+            chunkToSpawn = data.chunkPrefab;
+            chunkY = data.yPosition;
+            chunkWidth = GetPrefabWidth(data.chunkPrefab);
+            unusedChunks.RemoveAt(0);
         }
         else if (!finalChunkSpawned && finalChunkPrefab != null)
         {
             chunkToSpawn = finalChunkPrefab;
+            chunkY = finalChunkYPosition;
+            chunkWidth = GetPrefabWidth(finalChunkPrefab);
             finalChunkSpawned = true;
         }
 
         if (chunkToSpawn == null)
             return null;
 
-        GameObject chunk = Instantiate(chunkToSpawn, transform);
+        GameObject chunk = Instantiate(chunkToSpawn, new Vector3(positionX, chunkY, 0), Quaternion.identity, transform);
         chunk.name = "Chunk_" + currentChunkIndex;
-        chunk.transform.position = new Vector3(positionX, 0, 0);
         currentChunkIndex++;
+
+        activeChunks.Add(new SpawnedChunk(chunk, chunkWidth));
+
+        // Set players to enemy shooters
+        EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
+        foreach (EnemyShooter shooter in shooters)
+        {
+            shooter.SetPlayers(GetPlayerGameObjects());
+        }
 
         // Background
         if (backgroundPrefab != null)
         {
             GameObject background = Instantiate(backgroundPrefab);
-            background.transform.position = new Vector3(positionX, positionY, -1);
+            background.transform.position = new Vector3(positionX, backgroundYPosition, -1);
             activeBackgrounds.Add(background);
+        }
+
+        // Collectibles
+        Transform spawnPointsParent = chunk.transform.Find("SpawnPoints");
+        if (spawnPointsParent != null && collectiblePrefabs.Length > 0)
+        {
+            int spawnCount = spawnPointsParent.childCount;
+            if (spawnCount > 0)
+            {
+                Transform randomSpawnPoint = spawnPointsParent.GetChild(Random.Range(0, spawnCount));
+                GameObject collectibleToSpawn = collectiblePrefabs[Random.Range(0, collectiblePrefabs.Length)];
+                Instantiate(collectibleToSpawn, randomSpawnPoint.position, Quaternion.identity, chunk.transform);
+            }
         }
 
         return chunk;
     }
 
-    float GetChunkWidth(GameObject chunk)
+    private GameObject[] GetPlayerGameObjects()
     {
-        Renderer[] renderers = chunk.GetComponentsInChildren<Renderer>();
-        if (renderers.Length == 0) return 0;
+        List<GameObject> playerList = new List<GameObject>();
+        foreach (Transform t in players)
+        {
+            if (t != null)
+                playerList.Add(t.gameObject);
+        }
+        return playerList.ToArray();
+    }
+
+    private float GetPrefabWidth(GameObject prefab)
+    {
+        Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0) return 1f;
 
         Bounds bounds = renderers[0].bounds;
         foreach (Renderer r in renderers)
@@ -114,4 +170,15 @@ public class ChunkGenerator : MonoBehaviour
 
         return bounds.size.x;
     }
+    private void ShuffleList<T>(List<T> list)
+{
+    for (int i = 0; i < list.Count; i++)
+    {
+        T temp = list[i];
+        int randomIndex = Random.Range(i, list.Count);
+        list[i] = list[randomIndex];
+        list[randomIndex] = temp;
+    }
+}
+
 }
