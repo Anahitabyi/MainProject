@@ -48,9 +48,9 @@ MonoBehaviour:
   nightAmbienceSource: {fileID: 0}
   dogBarkSource: {fileID: 0}
   owlHootSource: {fileID: 0}
-  nightAmbienceClip: {fileID: 8300000, guid: acb7721846e2d1f4a811dd3b88d8034a, type: 3}
-  dogBarkClip: {fileID: 8300000, guid: 3056ec349e8340a489e378b60b25cd97, type: 3}
-  owlHootClip: {fileID: 8300000, guid: 7f106c4ded7715d469278e4e84b5eeef, type: 3}
+  nightAmbienceClip: {fileID: 8300000, guid: 391d3f15b556c1e45b53754a15f082cc, type: 3}
+  dogBarkClip: {fileID: 0}
+  owlHootClip: {fileID: 8300000, guid: 716021031f90fd44c8eeba3a22162c55, type: 3}
   musicMixerGroup: {fileID: 950962248528472476, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
 --- !u!114 &965630868086893310
 MonoBehaviour:
