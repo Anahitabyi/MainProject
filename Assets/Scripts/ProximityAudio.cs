@@ -1,68 +1,58 @@
 using UnityEngine;
-using UnityEngine.Audio;
+using System.Collections.Generic;
 
-public class ProximityAudio : MonoBehaviour
+public class ProximitySoundManager : MonoBehaviour
 {
-    [Header("Audio Clips")]
-    public AudioClip waterClip;
-    public AudioClip waterfallClip;
+    public float waterRadius = 10f;
+    public float waterfallRadius = 15f;
 
-    [Header("Audio Settings")]
-    public float maxDistance = 10f;
-    public float minVolume = 0f;
-    public float maxVolume = 1f;
-    public AudioMixerGroup outputMixerGroup;
-
-    private AudioSource waterSource;
-    private AudioSource waterfallSource;
+    private Transform listener;
+    private List<AudioSource> waterSources = new List<AudioSource>();
+    private List<AudioSource> waterfallSources = new List<AudioSource>();
 
     void Start()
     {
-        waterSource = CreateAudioSource(waterClip);
-        waterfallSource = CreateAudioSource(waterfallClip);
+        listener = Camera.main?.GetComponent<AudioListener>()?.transform ?? transform;
+
+        // Gather all Water AudioSources
+        foreach (var go in GameObject.FindGameObjectsWithTag("Water"))
+        {
+            var src = go.GetComponent<AudioSource>();
+            if (src) waterSources.Add(src);
+        }
+        foreach (var go in GameObject.FindGameObjectsWithTag("Waterfall"))
+        {
+            var src = go.GetComponent<AudioSource>();
+            if (src) waterfallSources.Add(src);
+        }
     }
 
     void Update()
     {
-        waterSource.volume = CalculateVolumeForTag("Water");
-        waterfallSource.volume = CalculateVolumeForTag("Waterfall");
+        Vector3 pos = listener.position;
+
+        // Activate water sounds based on distance
+        foreach (var src in waterSources)
+            ManageSource(src, pos, waterRadius);
+
+        foreach (var src in waterfallSources)
+            ManageSource(src, pos, waterfallRadius);
     }
 
-    AudioSource CreateAudioSource(AudioClip clip)
+    private void ManageSource(AudioSource src, Vector3 listenerPos, float radius)
     {
-        AudioSource source = gameObject.AddComponent<AudioSource>();
-        source.clip = clip;
-        source.loop = true;
-        source.playOnAwake = false;
-        source.spatialBlend = 0f;
-        if (outputMixerGroup != null)
-            source.outputAudioMixerGroup = outputMixerGroup;
-        source.Play();
-        return source;
-    }
+        if (!src) return;
 
-    float CalculateVolumeForTag(string tag)
-    {
-        GameObject[] objs = GameObject.FindGameObjectsWithTag(tag);
-        if (objs.Length == 0) return 0f;
+        float sqrDist = (src.transform.position - listenerPos).sqrMagnitude;
+        float sqrRadius = radius * radius;
 
-        float closestDist = Mathf.Infinity;
-        Vector2 playerPos = new Vector2(transform.position.x, transform.position.y);
-
-        foreach (GameObject obj in objs)
+        if (sqrDist <= sqrRadius)
         {
-            Vector2 objPos = new Vector2(obj.transform.position.x, obj.transform.position.y);
-            float dist = Vector2.Distance(playerPos, objPos);
-            if (dist < closestDist)
-                closestDist = dist;
+            if (!src.isPlaying) src.Play();  // start looping spatial sound
         }
-
-        if (closestDist <= maxDistance)
+        else
         {
-            float t = Mathf.Clamp01(closestDist / maxDistance);
-            return Mathf.Lerp(maxVolume, minVolume, t);
+            if (src.isPlaying) src.Stop();
         }
-
-        return 0f;
     }
 }

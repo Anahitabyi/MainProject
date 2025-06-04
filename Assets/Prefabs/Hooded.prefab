@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: 8823743616079476377}
   - component: {fileID: -8179423667763921623}
   - component: {fileID: -5310316931670057863}
+  - component: {fileID: 3566104808865268407}
   m_Layer: 7
   m_Name: Hooded
   m_TagString: Player
@@ -403,18 +404,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b91bbd5b384bf5a4e81af8cf9f617ab3, type: 3}
   - {fileID: 8300000, guid: 27f292652013a4d4b856784808af63e7, type: 3}
   - {fileID: 8300000, guid: 922dad020b5d6ce4f9dd4453ef305499, type: 3}
-  jumpSound: {fileID: 0}
-  landGrassSound: {fileID: 8300000, guid: b91bbd5b384bf5a4e81af8cf9f617ab3, type: 3}
-  landStoneSound: {fileID: 8300000, guid: 2288a84fd09285a45b628864ddabdc38, type: 3}
-  groundCheckPoint: {fileID: 3443541833231628164}
-  groundCheckRadius: 0.2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
   surface: 0
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
   horizontalAxis: Horizontal
-  jumpButton: Jump
 --- !u!114 &8823743616079476377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,8 +421,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 9
   currentHealth: 0
-  sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
   damageSound: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!82 &-8179423667763921623
 AudioSource:
   m_ObjectHideFlags: 0
@@ -541,3 +533,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   climbSpeed: 3
+--- !u!114 &3566104808865268407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7099390637859293862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e43064a4e4249404fbc3bb6fdf72b02a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
