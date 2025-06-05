@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Health_Indicator_Black_Outline (8 x 8)_0: 1890335662453018
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -409,7 +409,19 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Timer_Coin_Numbers_Drop-shadowed (8 x 8)_0: 5145889956640211723
+      Timer_Coin_Numbers_Drop-shadowed (8 x 8)_1: 7236601822301817013
+      Timer_Coin_Numbers_Drop-shadowed (8 x 8)_10: 8839027103135138597
+      Timer_Coin_Numbers_Drop-shadowed (8 x 8)_11: 4127217716662404483
+      Timer_Coin_Numbers_Drop-shadowed (8 x 8)_2: -6999503453982281214
+      Timer_Coin_Numbers_Drop-shadowed (8 x 8)_3: 4906001291225414230
+      Timer_Coin_Numbers_Drop-shadowed (8 x 8)_4: 3829737433002554404
+      Timer_Coin_Numbers_Drop-shadowed (8 x 8)_5: -7909821886515901623
+      Timer_Coin_Numbers_Drop-shadowed (8 x 8)_6: -155745387510532994
+      Timer_Coin_Numbers_Drop-shadowed (8 x 8)_7: -4584653332179049665
+      Timer_Coin_Numbers_Drop-shadowed (8 x 8)_8: -523708150350499849
+      Timer_Coin_Numbers_Drop-shadowed (8 x 8)_9: 5131810622809711443
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

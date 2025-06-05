@@ -159,7 +159,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Timer_Coin_Numbers_Outlined (8 x 8)_0: 8178722568716508807
+      Timer_Coin_Numbers_Outlined (8 x 8)_1: 5823981534189145066
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
