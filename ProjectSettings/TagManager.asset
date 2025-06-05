@@ -15,6 +15,7 @@ TagManager:
   - Life
   - Water
   - Waterfall
+  - Jumpscare
   layers:
   - Default
   - TransparentFX
