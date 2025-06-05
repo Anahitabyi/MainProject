@@ -166,3 +166,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  keyPrefab: {fileID: 3086250306561819672, guid: 9bebc7700447c134a976ef32d2190012, type: 3}

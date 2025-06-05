@@ -65,6 +65,29 @@ public class FootstepAudio : MonoBehaviour
         {
             stepTimer = 0f;
         }
+
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            audioSource.PlayOneShot(jumpSound);
+        }
+
+        if (!wasGrounded && isGrounded)
+        {
+            //animator.SetTrigger("falling");
+            PlayLandingSound();
+        }
+
+        wasGrounded = isGrounded;
+    }
+
+    private void PlayLandingSound()
+    {
+        AudioClip landClip = surface == SurfaceType.Stone ? landStoneSound : landGrassSound;
+        if (landClip != null)
+        {
+            audioSource.PlayOneShot(landClip);
+        }
     }
     
     private bool IsMoving()

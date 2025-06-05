@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class meleePlayerMovement : MonoBehaviour
 {
@@ -20,70 +21,81 @@ public class meleePlayerMovement : MonoBehaviour
     public Vector2 groundCheckSizev = new Vector2(0.5f, 0.05f);
     public LayerMask groundLayer;
 
+    [Header("Gravity")]
+    public float baseGravity = 2f;
+    public float maxFallSpeed = 18f;
+    public float fallSpeedMultiplier = 2f;
+
     [Header("Attack")]
     public Transform attackPoint;
     public Vector2 attackBoxSize = new Vector2(1f, 1f);
     public LayerMask enemyLayers;
     public int attackDamage = 1;
 
-    Rigidbody2D rb;
-
     [Header("Input Blocking")]
     public bool isInputBlocked = false;
 
     public WeaponUIIndicator weaponUIIndicator;
+
+    Rigidbody2D rb;
     private bool wasGroundedLastFrame = true;
-    private bool wasFalling = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        jumpsRemaining = maxJumps;
     }
 
     void Update()
-{
-    if (isInputBlocked)
     {
-        rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-        animator.SetFloat("Yvelocity", rb.linearVelocity.y);
-        animator.SetFloat("magnitude", 0);
-        return;
+        if (isInputBlocked)
+        {
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            animator.SetFloat("Yvelocity", rb.linearVelocity.y);
+            animator.SetFloat("magnitude", 0);
+            animator.SetBool("isJumping", false);
+            return;
+        }
+
+        rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
+
+        GroundCheck();
+        ApplyGravity();
+
+        float yVel = rb.linearVelocity.y;
+        bool groundedNow = isGrounded();
+
+        animator.SetFloat("Yvelocity", yVel);
+        animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
+
+        // NEW: Update isJumping parameter
+        animator.SetBool("isJumping", !groundedNow);
+
+        flip();
+
+        wasGroundedLastFrame = groundedNow;
     }
 
-    rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
-
-    float yVel = rb.linearVelocity.y;
-    bool groundedNow = isGrounded();
-
-    // Set jump animation when leaving ground and moving upward
-    if (wasGroundedLastFrame && !groundedNow && yVel > 0.1f)
+    private void ApplyGravity()
     {
-        animator.SetTrigger("jump");
+        if (rb.linearVelocity.y < 0)
+        {
+            rb.gravityScale = baseGravity * fallSpeedMultiplier;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -maxFallSpeed));
+        }
+        else
+        {
+            rb.gravityScale = baseGravity;
+        }
     }
 
-    // Trigger "falling" animation as soon as falling begins
-    if (!groundedNow && yVel < -0.1f && !wasFalling)
+    private void GroundCheck()
     {
-        animator.SetTrigger("land");
+        if (isGrounded())
+        {
+            jumpsRemaining = maxJumps;
+        }
     }
-
-    // Update animator parameters
-    animator.SetFloat("Yvelocity", yVel);
-    animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
-
-    flip();
-
-    // Update states
-    wasGroundedLastFrame = groundedNow;
-    wasFalling = yVel < -0.1f && !groundedNow;
-
-    // Reset jumps if grounded
-    if (groundedNow)
-    {
-        jumpsRemaining = maxJumps;
-    }
-}
-
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -140,7 +152,6 @@ public class meleePlayerMovement : MonoBehaviour
         if ((isFacingRight && horizontalMovement < 0) || (!isFacingRight && horizontalMovement > 0))
         {
             isFacingRight = !isFacingRight;
-
             Vector3 scale = transform.localScale;
             scale.x *= -1f;
             transform.localScale = scale;
@@ -159,8 +170,6 @@ public class meleePlayerMovement : MonoBehaviour
         Collider2D hit = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSizev, 0f, groundLayer);
         return hit != null;
     }
-
-
 
     private void OnDrawGizmosSelected()
     {

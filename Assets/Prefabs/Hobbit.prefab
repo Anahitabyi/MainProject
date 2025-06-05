@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 1835985753181678702}
   - component: {fileID: -7030039299230297641}
   - component: {fileID: 7125895893738783617}
+  - component: {fileID: 6547759979433465101}
   m_Layer: 7
   m_Name: Hobbit
   m_TagString: Player
@@ -132,6 +133,7 @@ MonoBehaviour:
   shakeDuration: 0.1
   shakeMagnitude: 0.1
   attackDamage: 1
+  weaponUIIndicator: {fileID: 0}
 --- !u!95 &3073781156953091832
 Animator:
   serializedVersion: 7
@@ -412,6 +414,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   surface: 1
+  animator: {fileID: 0}
   sfxMixerGroup: {fileID: 0}
   horizontalAxis: Horizontal
   jumpButton: Jump
@@ -575,6 +578,19 @@ PolygonCollider2D:
       - {x: 0.25566098, y: 0.20442629}
       - {x: 0.24916863, y: 0.24321961}
   m_UseDelaunayMesh: 0
+--- !u!114 &6547759979433465101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490634895448124012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add70b04fad691f4eaade879677d68c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasKey: 0
 --- !u!1 &5331574185590073450
 GameObject:
   m_ObjectHideFlags: 0
