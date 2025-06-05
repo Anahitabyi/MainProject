@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Animations/smoke.meta
+guid: 8fb2ce7784792f94cb967a9998c42349
+folderAsset: yes
+========
 guid: 06053dd5daf433d459abc3c77389a17c
+>>>>>>>> ramona:Assets/Scenes/MainMenu.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

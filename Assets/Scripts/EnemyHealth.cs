@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    public bool IsDead => isDead; // Add this line at the class level (public getter)
+
     [Header("Health Settings")]
     public int maxHealth = 100;               // Maximum health of the enemy
     protected int currentHealth;              // Current health that changes during gameplay
@@ -49,6 +51,6 @@ public class EnemyHealth : MonoBehaviour
             rb.constraints = RigidbodyConstraints2D.FreezeAll; // Freeze physics to stop interactions
         }
 
-        Destroy(gameObject, 1.2f);            // Destroy the enemy object after the animation plays
+        Destroy(gameObject, 0.5f);            // Destroy the enemy object after the animation plays
     }
 }

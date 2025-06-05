@@ -28,37 +28,73 @@ public class meleePlayerMovement : MonoBehaviour
 
     Rigidbody2D rb;
 
+    [Header("Input Blocking")]
+    public bool isInputBlocked = false;
+
+    public WeaponUIIndicator weaponUIIndicator;
+    private bool wasGroundedLastFrame = true;
+    private bool wasFalling = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
+{
+    if (isInputBlocked)
     {
-        rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
-        GroundCheck();
-
+        rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
         animator.SetFloat("Yvelocity", rb.linearVelocity.y);
-        animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
-
-        flip();
+        animator.SetFloat("magnitude", 0);
+        return;
     }
 
-    private void GroundCheck()
+    rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
+
+    float yVel = rb.linearVelocity.y;
+    bool groundedNow = isGrounded();
+
+    // Set jump animation when leaving ground and moving upward
+    if (wasGroundedLastFrame && !groundedNow && yVel > 0.1f)
     {
-        if (isGrounded())
-        {
-            jumpsRemaining = maxJumps;
-        }
+        animator.SetTrigger("jump");
     }
+
+    // Trigger "falling" animation as soon as falling begins
+    if (!groundedNow && yVel < -0.1f && !wasFalling)
+    {
+        animator.SetTrigger("land");
+    }
+
+    // Update animator parameters
+    animator.SetFloat("Yvelocity", yVel);
+    animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
+
+    flip();
+
+    // Update states
+    wasGroundedLastFrame = groundedNow;
+    wasFalling = yVel < -0.1f && !groundedNow;
+
+    // Reset jumps if grounded
+    if (groundedNow)
+    {
+        jumpsRemaining = maxJumps;
+    }
+}
+
 
     public void Move(InputAction.CallbackContext context)
     {
+        if (isInputBlocked) return;
         horizontalMovement = context.ReadValue<Vector2>().x;
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if (isInputBlocked) return;
+
         if (context.performed && jumpsRemaining > 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
@@ -73,15 +109,18 @@ public class meleePlayerMovement : MonoBehaviour
 
     public void MeleeAttack(InputAction.CallbackContext context)
     {
+        if (isInputBlocked) return;
+
         if (context.performed)
         {
-            animator.SetTrigger("meleeAttack"); // Start animation
+            animator.SetTrigger("meleeAttack");
         }
     }
 
-    // Called by animation event
     public void PerformAttack()
     {
+        if (isInputBlocked) return;
+
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackBoxSize, 0f, enemyLayers);
 
         foreach (Collider2D enemy in hitEnemies)
@@ -96,14 +135,16 @@ public class meleePlayerMovement : MonoBehaviour
 
     private void flip()
     {
+        if (isInputBlocked) return;
+
         if ((isFacingRight && horizontalMovement < 0) || (!isFacingRight && horizontalMovement > 0))
         {
             isFacingRight = !isFacingRight;
+
             Vector3 scale = transform.localScale;
             scale.x *= -1f;
             transform.localScale = scale;
 
-            // Flip attack point
             if (attackPoint != null)
             {
                 Vector3 localPos = attackPoint.localPosition;
@@ -118,6 +159,8 @@ public class meleePlayerMovement : MonoBehaviour
         Collider2D hit = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSizev, 0f, groundLayer);
         return hit != null;
     }
+
+
 
     private void OnDrawGizmosSelected()
     {

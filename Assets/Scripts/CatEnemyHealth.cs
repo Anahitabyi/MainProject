@@ -13,8 +13,20 @@ public class CatEnemyHealth : EnemyHealth
 
         if (deathEffectPrefab != null)
         {
-            Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
+            GameObject effect = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
             Debug.Log("Death effect instantiated."); // Confirm that effect was spawned
+
+            Animator anim = effect.GetComponent<Animator>();
+            if (anim != null)
+            {
+                float animTime = anim.GetCurrentAnimatorStateInfo(0).length;
+                Destroy(effect, animTime);
+            }
+            else
+            {
+                Destroy(effect, 2f); // Fallback time if Animator not found
+                Debug.LogWarning("No Animator found on death effect. Destroying after 2 seconds.");
+            }
         }
         else
         {

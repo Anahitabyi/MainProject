@@ -1,26 +1,31 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class playerMovement : MonoBehaviour {
+
+public class playerMovement : MonoBehaviour
+{
     public Animator animator;
     bool isFacingRight = true;
+
     [Header("Movement")]
     float horizontalMovement;
     [SerializeField] private float movementSpeed = 5f;
 
     [Header("Jumping")]
     public float jumpPower = 10f;
-    public int maxJumps = 2; // Total number of jumps (1 = single, 2 = double)
-    private int jumpsRemaining; // Current jumps left
+    public int maxJumps = 2;
+    private int jumpsRemaining;
 
     [Header("GroundCheck")]
     public Transform groundCheckPos;
     public Vector2 groundCheckSizev = new Vector2(0.5f, 0.05f);
     public LayerMask groundLayer;
+
     [Header("Gravity")]
     public float baseGravity = 2f;
     public float maxFallSpeed = 18f;
     public float fallSpeedMultiplier = 2f;
+
     Rigidbody2D rb;
     private bool wasGroundedLastFrame = true;
     private bool wasFalling = false;
@@ -29,79 +34,52 @@ public class playerMovement : MonoBehaviour {
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float bulletSpeed = 15f;
-    public float bulletSpawnDelay = 0.2f; 
+    public float bulletSpawnDelay = 0.2f;
 
     public Camera hobbitCamera;
     public float shakeDuration;
     public float shakeMagnitude;
 
+    [Header("Attack")]
+    public int attackDamage = 1;
+
+    public WeaponUIIndicator weaponUIIndicator;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
+        jumpsRemaining = maxJumps; // ✅ Fix: Ensure jump is initialized
     }
+
     void Update()
-{
-    // Apply horizontal movement
-    rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
-
-    // Handle jump reset
-    GroundCheck();
-
-    // Apply gravity modifications
-    Gravity();
-
-    float yVel = rb.linearVelocity.y;
-    bool groundedNow = isGrounded();
-
-    // Set falling flag (can use a falling animation based on Y velocity)
-    if (yVel < -0.1f)
     {
-        animator.SetBool("falling", true);
-    }
-    else
-    {
-        animator.SetBool("falling", false);
-    }
+        rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
 
-    // Pre-landing raycast check
-    float preLandDistance = 0.3f; // How early you want to trigger "land"
-    bool nearGround = false;
+        GroundCheck();
+        Gravity();
 
-    if (!groundedNow && yVel < -0.5f)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(groundCheckPos.position, Vector2.down, preLandDistance, groundLayer);
-        if (hit.collider != null)
+        float yVel = rb.linearVelocity.y;
+        bool groundedNow = isGrounded();
+
+        if (wasGroundedLastFrame && !groundedNow && yVel > 0.1f)
         {
-            nearGround = true;
+            animator.SetTrigger("jump");
         }
+
+        if (!wasGroundedLastFrame && groundedNow && wasFalling)
+        {
+            animator.SetTrigger("falling");
+            Debug.Log("Landing triggered");
+        }
+
+        animator.SetFloat("Yvelocity", yVel);
+        animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
+
+        flip();
+
+        wasGroundedLastFrame = groundedNow;
+        wasFalling = yVel < -0.1f && !groundedNow;
     }
-
-    // Trigger "land" before hitting the ground
-    if (nearGround && !wasFalling)
-    {
-        animator.SetTrigger("land");
-        wasFalling = true;
-    }
-
-    // Reset fall flag once grounded
-    if (groundedNow)
-    {
-        wasFalling = false;
-    }
-
-    // Update animator floats
-    animator.SetFloat("Yvelocity", yVel);
-    animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
-
-    // Flip sprite
-    flip();
-
-    // Update last frame ground status
-    wasGroundedLastFrame = groundedNow;
-}
-
 
     private void Gravity()
     {
@@ -115,42 +93,40 @@ public class playerMovement : MonoBehaviour {
             rb.gravityScale = baseGravity;
         }
     }
-private void GroundCheck()
-{
-    if (isGrounded())
-    {
-        jumpsRemaining = maxJumps;
-    }
-}
 
+    private void GroundCheck()
+    {
+        if (isGrounded())
+        {
+            jumpsRemaining = maxJumps; // Reset jumps when grounded
+        }
+    }
 
     public void Move(InputAction.CallbackContext context)
     {
-        //moveInput = contex.ReadValue<Vector2>();
         horizontalMovement = context.ReadValue<Vector2>().x;
-        //Debug.Log("Move Called: " + horizontalMovement);
     }
-    public void Jump(InputAction.CallbackContext contex)
-{
-    if (contex.performed && jumpsRemaining > 0)
+
+    public void Jump(InputAction.CallbackContext context)
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
-        animator.SetTrigger("jump");
-        jumpsRemaining--;
+        if (context.performed && jumpsRemaining > 0)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
+            jumpsRemaining--;
+        }
+        else if (context.canceled)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
+        }
     }
-    else if (contex.canceled)
-    {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
-    }
-}
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;
-        groundCheckSizev = new Vector2(0.5f, 0.1f);
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSizev);
     }
-     private bool isGrounded()
+
+    private bool isGrounded()
     {
         Collider2D hit = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSizev, 0f, groundLayer);
         return hit != null;
@@ -166,53 +142,57 @@ private void GroundCheck()
             transform.localScale = scale;
         }
     }
-public void Shoot(InputAction.CallbackContext context)
-{
-    if (!context.performed) return;
 
-    animator.SetTrigger("shoot"); // Trigger the shoot animation
-
-    StartCoroutine(DelayedBulletSpawn()); // Wait and spawn bullet
-}
-private IEnumerator DelayedBulletSpawn()
-{
-    yield return new WaitForSeconds(bulletSpawnDelay); // Wait for animation to play
-
-    Vector3 mousePosition = hobbitCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-    Vector2 shootDirection = (mousePosition - firePoint.position).normalized;
-
-    GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-    Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-    if (rb != null)
+    public void Shoot(InputAction.CallbackContext context)
     {
-        rb.linearVelocity = shootDirection * bulletSpeed;
+        if (!context.performed) return;
+
+        animator.SetTrigger("shoot");
+        StartCoroutine(DelayedBulletSpawn());
     }
 
-    StartCoroutine(ShakeCamera()); // Optional camera shake
-}
-
-
-private System.Collections.IEnumerator ShakeCamera()
-{
-    Vector3 originalPos = hobbitCamera.transform.position;
-
-    float elapsed = 0f;
-    while (elapsed < shakeDuration)
+    private IEnumerator DelayedBulletSpawn()
     {
-        float offsetX = Random.Range(-1f, 1f) * shakeMagnitude;
-        float offsetY = Random.Range(-1f, 1f) * shakeMagnitude;
-        hobbitCamera.transform.position = originalPos + new Vector3(offsetX, offsetY, 0f);
-        elapsed += Time.deltaTime;
-        yield return null;
+        yield return new WaitForSeconds(bulletSpawnDelay);
+
+        Vector3 mousePosition = hobbitCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 shootDirection = (mousePosition - firePoint.position).normalized;
+
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = shootDirection * bulletSpeed;
+        }
+
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        if (bulletScript != null)
+        {
+            bulletScript.damage = attackDamage;
+        }
+
+        StartCoroutine(ShakeCamera());
     }
 
-    hobbitCamera.transform.position = originalPos;
-}
-public void DebugRightClick(InputAction.CallbackContext context)
-{
-    Debug.Log("Right click detected");
-}
+    private IEnumerator ShakeCamera()
+    {
+        Vector3 originalPos = hobbitCamera.transform.position;
+        float elapsed = 0f;
 
+        while (elapsed < shakeDuration)
+        {
+            float offsetX = Random.Range(-1f, 1f) * shakeMagnitude;
+            float offsetY = Random.Range(-1f, 1f) * shakeMagnitude;
+            hobbitCamera.transform.position = originalPos + new Vector3(offsetX, offsetY, 0f);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
 
+        hobbitCamera.transform.position = originalPos;
+    }
+
+    public void DebugRightClick(InputAction.CallbackContext context)
+    {
+        Debug.Log("Right click detected");
+    }
 }
-

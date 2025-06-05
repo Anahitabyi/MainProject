@@ -10,6 +10,10 @@ TagManager:
   - Powerup
   - Spikes
   - Ladder
+  - Health
+  - Life
+  - Health
+  - Life
   - Water
   - Waterfall
   layers:
@@ -27,6 +31,9 @@ TagManager:
   - Enemy
   - BakgroundPlayer1
   - BackgroundPlayer2
+  - Traps
+  - Player1UI
+  - Player2UI
   - Interactable with hooded
   - 
   - 
