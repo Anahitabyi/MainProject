@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 1085350739288797557}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.56, y: 0.56, z: 0}
+  m_LocalPosition: {x: 7.15, y: 1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2302,7 +2302,7 @@ GameObject:
   - component: {fileID: 3542450624194058200}
   - component: {fileID: 2806631080810181244}
   - component: {fileID: 8111153104444526427}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3021,7 +3021,7 @@ Transform:
   m_GameObject: {fileID: 5466972104040159678}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.91, y: 12.34, z: 0}
+  m_LocalPosition: {x: -11.97, y: 2.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8135,10 +8135,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bf703cf0bf73d46811ddc461435389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectiblePrefabs:
-  - {fileID: 5946122058466584501, guid: 4753064c7d38d3a4eaae4cb43eb93aea, type: 3}
-  - {fileID: 9154606277984578669, guid: c53005f127333eb419a1d7516637f69f, type: 3}
-  - {fileID: 7692611730812150688, guid: 83d60f4737c70254987081126ad4abea, type: 3}
+  collectibleEntries:
+  - prefab: {fileID: 9154606277984578669, guid: c53005f127333eb419a1d7516637f69f, type: 3}
+    weight: 4
+  - prefab: {fileID: 5946122058466584501, guid: 4753064c7d38d3a4eaae4cb43eb93aea, type: 3}
+    weight: 3
+  - prefab: {fileID: 4899340590451318059, guid: b8b4b9d2f9dad3549be71242e83ea546, type: 3}
+    weight: 2
+  - prefab: {fileID: 7692611730812150688, guid: 83d60f4737c70254987081126ad4abea, type: 3}
+    weight: 0
   collectiblesToSpawn: 2
   spawnPoints:
   - {fileID: 6028577910559085546}

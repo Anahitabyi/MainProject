@@ -148,7 +148,7 @@ MonoBehaviour:
   groundCheckSizev: {x: 0.5, y: 0.05}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 16448
   attackPoint: {fileID: 8763489219475030851}
   attackBoxSize: {x: 2.41, y: 2.64}
   enemyLayers:
