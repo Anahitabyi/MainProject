@@ -160,12 +160,12 @@ public class PlayerHealth : MonoBehaviour
 
     public void AddHealth(int amount)
     {
-    // if (amount <= 0 || isDead) return;
+        // if (amount <= 0 || isDead) return;
 
-    currentHealth += amount;
-    //Debug.Log("Added the heealth.");
-    currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-    OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        currentHealth += amount;
+        //Debug.Log("Added the heealth.");
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
 

@@ -45,10 +45,6 @@ public class EnemyActivator : MonoBehaviour
 
                     Invoke(nameof(ActivatePatrolling), 1f); // Match the appear animation
                 }
-                else
-                {
-                    Debug.Log("No player detected.");
-                }
             }
 
     }

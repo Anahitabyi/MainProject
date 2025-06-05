@@ -13,6 +13,10 @@ TagManager:
   - Health
   - Life
   - GoalPoint
+  - Health
+  - Life
+  - Water
+  - Waterfall
   layers:
   - Default
   - TransparentFX
@@ -31,6 +35,9 @@ TagManager:
   - Traps
   - Player1UI
   - Player2UI
+  - Interactable with hooded
+  - 
+  - 
   - 
   - 
   - 
