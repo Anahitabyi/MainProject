@@ -1,89 +1,174 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [Header("Health & Lives")]
     public int maxHealth = 9;
     public int currentHealth;
+    public int maxLives = 3;
+    public int currentLives;
 
-    public AudioClip damageSound;
+    [Header("Invincibility")]
+    public float invincibilityDuration = 3f;
+    public float flashInterval = 0.1f;
 
-    public Animator animator; // Assign in Inspector
-    private bool isDead = false; // Prevent multiple deaths
+    [Header("References")]
+    public Animator animator;
+    public Collider2D playerCollider;
+    public SpriteRenderer spriteRenderer;
+    public Rigidbody2D rb;
+    public meleePlayerMovement movementScript;
+
+    private bool isDead = false;
+    private bool isInvincible = false;
+
+    public event Action<int, int> OnHealthChanged;
+    public event Action<int, int> OnLivesChanged;
 
     void Start()
     {
+        currentLives = maxLives;
         currentHealth = maxHealth;
+
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        OnLivesChanged?.Invoke(currentLives, maxLives);
     }
 
     public void takeDamge(int damage)
     {
-        if (isDead) return;
+        if (isDead || isInvincible) return;
 
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
-        Debug.Log("Player took damage. Current health: " + currentHealth);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
         {
-            Die(); // Only play death animation if dead
+            LoseLife();
         }
         else
         {
-            if (animator != null)
-            {
-                animator.SetTrigger("Hurt"); // Only play Hurt if still alive
-            }
+            animator?.SetTrigger("Hurt");
         }
-
-        // Optionally play damage sound
-        // AudioSource.PlayClipAtPoint(damageSound, transform.position);
     }
 
-    public void heal(int amount)
+    private void LoseLife()
     {
-        if (isDead) return;
+        currentLives = Mathf.Max(0, currentLives - 1);
+        OnLivesChanged?.Invoke(currentLives, maxLives);
 
-        currentHealth += amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
-        Debug.Log("Player healed. Current health: " + currentHealth);
+        if (currentLives <= 0)
+        {
+            Die(final: true);
+        }
+        else
+        {
+            StartCoroutine(FlashDuringInvincibility());
+            StartCoroutine(RespawnAfterDelay(4f));
+        }
     }
 
-    private void Die()
+    private void Die(bool final)
     {
         isDead = true;
-        Debug.Log("Player has died.");
+        isInvincible = true;
 
-        if (animator != null)
-        {
-            animator.SetTrigger("Die"); // Trigger death animation
-        }
+        animator?.SetTrigger("Die");
 
-        // Optionally: Disable player movement here
-        // GetComponent<PlayerMovement>().enabled = false;
+        movementScript.isInputBlocked = true;
+        rb.linearVelocity = Vector2.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        rb.simulated = false;
+        playerCollider.enabled = false;
 
         StartCoroutine(RemoveAfterDeathAnimation());
     }
 
-    private IEnumerator RemoveAfterDeathAnimation()
+    private IEnumerator RespawnAfterDelay(float delay)
     {
-        // Wait until the death animation starts playing
-        while (!animator.GetCurrentAnimatorStateInfo(0).IsTag("Death"))
+        isDead = true;
+        isInvincible = true;
+
+        animator?.SetTrigger("Die");
+
+        movementScript.isInputBlocked = true;
+        rb.linearVelocity = Vector2.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        rb.simulated = false;
+        playerCollider.enabled = false;
+
+        yield return new WaitForSeconds(delay);
+
+        // Respawn logic
+        currentHealth = maxHealth;
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
+        playerCollider.enabled = true;
+        rb.simulated = true;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        movementScript.isInputBlocked = false;
+
+
+        yield return new WaitForSeconds(2f);
+
+        isInvincible = false;
+        isDead = false;
+    }
+
+    private IEnumerator FlashDuringInvincibility()
+    {
+        if (spriteRenderer == null) yield break;
+
+        float elapsed = 0f;
+        while (elapsed < invincibilityDuration)
         {
-            yield return null;
+            spriteRenderer.enabled = !spriteRenderer.enabled;
+            yield return new WaitForSeconds(flashInterval);
+            elapsed += flashInterval;
         }
 
-        // Wait for the duration of the death animation
+        spriteRenderer.enabled = true;
+    }
+
+    private IEnumerator RemoveAfterDeathAnimation()
+    {
+        while (!animator.GetCurrentAnimatorStateInfo(0).IsTag("Death"))
+            yield return null;
+
         float deathDuration = animator.GetCurrentAnimatorStateInfo(0).length;
         yield return new WaitForSeconds(deathDuration);
 
-        // Hide or disable the player
-        gameObject.SetActive(false);
+        gameObject.SetActive(false); // Or trigger game over, reload level, etc.
     }
-    public void setHealth(int n)
+
+
+    public void setHealth(int newHealth)
     {
-        
+        currentHealth = Mathf.Clamp(newHealth, 0, maxHealth);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    } 
+    public void AddLives(int amount)
+    {
+    // if (amount <= 0 || isDead) return;
+
+    currentLives += amount;
+    currentLives = Mathf.Clamp(currentLives, 0, maxLives);
+    OnLivesChanged?.Invoke(currentLives, maxLives);
     }
+
+    public void AddHealth(int amount)
+    {
+        // if (amount <= 0 || isDead) return;
+
+        currentHealth += amount;
+        //Debug.Log("Added the heealth.");
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    }
+
+
+    public bool IsDead() => isDead;
+    public bool IsInvincible() => isInvincible;
 }

@@ -209,7 +209,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Mouse_Icons_Outlined (16 x 16)_0: 5645537405835996489
+      Mouse_Icons_Outlined (16 x 16)_1: -4826938012549228745
+      Mouse_Icons_Outlined (16 x 16)_2: 5276875764821727107
+      Mouse_Icons_Outlined (16 x 16)_3: 4488285682915743829
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

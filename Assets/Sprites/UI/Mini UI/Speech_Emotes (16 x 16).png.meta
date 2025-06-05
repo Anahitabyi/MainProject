@@ -334,7 +334,16 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Speech_Emotes (16 x 16)_0: 8862161151565122545
+      Speech_Emotes (16 x 16)_1: 8234179704075312592
+      Speech_Emotes (16 x 16)_2: -1279461750136515348
+      Speech_Emotes (16 x 16)_3: 4893958454254869775
+      Speech_Emotes (16 x 16)_4: -2341262979796990598
+      Speech_Emotes (16 x 16)_5: 7902533402744816643
+      Speech_Emotes (16 x 16)_6: 8454114107504022404
+      Speech_Emotes (16 x 16)_7: -8429255931891344929
+      Speech_Emotes (16 x 16)_8: 6836037258137598126
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
