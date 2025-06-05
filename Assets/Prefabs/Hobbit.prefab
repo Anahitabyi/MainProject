@@ -120,7 +120,7 @@ MonoBehaviour:
   groundCheckSizev: {x: 0.5, y: 0.1}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 16448
   baseGravity: 2
   maxFallSpeed: 18
   fallSpeedMultiplier: 2
@@ -131,6 +131,7 @@ MonoBehaviour:
   hobbitCamera: {fileID: 0}
   shakeDuration: 0.1
   shakeMagnitude: 0.1
+  attackDamage: 1
 --- !u!95 &3073781156953091832
 Animator:
   serializedVersion: 7

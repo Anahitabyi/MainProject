@@ -5,14 +5,13 @@ using UnityEngine.Audio;
 public class FootstepAudio : MonoBehaviour
 {
     public AudioSource audioSource;
-    
-    public float stepInterval = 0.5f; //footstep timing
+
+    public float stepInterval = 0.5f;
     private float stepTimer;
-    
+
     public AudioClip[] stoneFootsteps;
-    
     public AudioClip[] grassFootsteps;
-    
+
     private bool isGrounded;
     private bool wasGrounded;
 
@@ -27,12 +26,15 @@ public class FootstepAudio : MonoBehaviour
     public SurfaceType surface = SurfaceType.Grass;
 
     private Rigidbody2D rb;
+    public Animator animator;
 
     public enum SurfaceType { Grass, Stone }
-    
+
     public AudioMixerGroup sfxMixerGroup;
     public string horizontalAxis = "Horizontal";
     public string jumpButton = "Jump";
+
+    private bool allowFootsteps = true;
 
     void Start()
     {
@@ -42,17 +44,22 @@ public class FootstepAudio : MonoBehaviour
         {
             audioSource.outputAudioMixerGroup = sfxMixerGroup;
         }
+
         string sceneName = SceneManager.GetActiveScene().name;
         if (sceneName.Equals("Level1"))
+        {
             surface = SurfaceType.Grass;
+            allowFootsteps = false; // Disable footsteps in Level1
+        }
         else if (sceneName.Equals("Level2"))
+        {
             surface = SurfaceType.Stone;
+        }
     }
 
     void Awake()
     {
-        // Ensure AudioSources exist
-        if (audioSource = null)
+        if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.outputAudioMixerGroup = sfxMixerGroup;
@@ -62,9 +69,8 @@ public class FootstepAudio : MonoBehaviour
     void Update()
     {
         CheckGround();
-        
-        // Footsteps
-        if (IsMoving())
+
+        if (allowFootsteps && IsMoving())
         {
             stepTimer -= Time.deltaTime;
             if (stepTimer <= 0f)
@@ -78,15 +84,14 @@ public class FootstepAudio : MonoBehaviour
             stepTimer = 0f;
         }
 
-        // Jump sound
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             audioSource.PlayOneShot(jumpSound);
         }
 
-        // Landing sound (surface-based)
         if (!wasGrounded && isGrounded)
         {
+            animator.SetTrigger("falling");
             PlayLandingSound();
         }
 
@@ -102,12 +107,12 @@ public class FootstepAudio : MonoBehaviour
         }
     }
 
-
     private bool IsMoving()
     {
         float moveInput = Input.GetAxisRaw(horizontalAxis);
         return Mathf.Abs(moveInput) > 0.1f;
     }
+
     void CheckGround()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundLayer);
