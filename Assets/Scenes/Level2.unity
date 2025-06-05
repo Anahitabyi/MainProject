@@ -1175,7 +1175,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1085164908796191870, guid: f6ed78452ea9e0340a3453d9dbe12bef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.548893
+      value: 16.55261
       objectReference: {fileID: 0}
     - target: {fileID: 1085164908796191870, guid: f6ed78452ea9e0340a3453d9dbe12bef, type: 3}
       propertyPath: m_LocalPosition.y
@@ -65141,7 +65141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6865242282586098371, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.7791929
+      value: -1.7718086
       objectReference: {fileID: 0}
     - target: {fileID: 6865242282586098371, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -74196,7 +74196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7221113656925418214, guid: 147174d52237951409994b0420153ff1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.548893
+      value: 16.55261
       objectReference: {fileID: 0}
     - target: {fileID: 7221113656925418214, guid: 147174d52237951409994b0420153ff1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -75112,8 +75112,6 @@ GameObject:
   - component: {fileID: 811091431}
   - component: {fileID: 811091430}
   - component: {fileID: 811091429}
-  - component: {fileID: 811091428}
-  - component: {fileID: 811091427}
   - component: {fileID: 811091432}
   m_Layer: 0
   m_Name: MiniGhost_Idle_0 (1)
@@ -75122,42 +75120,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &811091427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811091426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf249ebf0594d8046bd47d5bccc47190, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRadius: 5
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  anim: {fileID: 811091429}
-  patrolScript: {fileID: 811091428}
-  audioSource: {fileID: 0}
-  appearSound: {fileID: 8300000, guid: e60d2433352e282459dc1923dbf859bd, type: 3}
-  sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
---- !u!114 &811091428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811091426}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 794f20074c5aa4a4c8235d07d05317a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pointA: {fileID: 466391891}
-  pointB: {fileID: 1698776997}
-  speed: 5
 --- !u!95 &811091429
 Animator:
   serializedVersion: 7
@@ -75226,7 +75188,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 3765618723317658782, guid: 00828e7abd2494d459202b4f394fa553, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1.8125, y: 2}
@@ -75298,15 +75260,15 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.90625, y: -0.25}
-      - {x: -0.71875, y: -0.5}
-      - {x: -0.21875, y: -1}
-      - {x: 0.28125, y: -1}
-      - {x: 0.59375, y: -0.8125}
-      - {x: 0.59375, y: 0.5}
-      - {x: 0.40625, y: 0.8125}
-      - {x: -0.59375, y: 0.8125}
-      - {x: -0.90625, y: 0.375}
+    - - {x: -0.778146, y: -1.2578602}
+      - {x: -0.5390171, y: -1.413908}
+      - {x: 0.027458906, y: -1.2606907}
+      - {x: 0.7157364, y: -1.3765545}
+      - {x: 2.3751438, y: -1.2469864}
+      - {x: 2.3751438, y: 0.7317257}
+      - {x: -0.61131763, y: 0.94675255}
+      - {x: -0.8481989, y: -0.19833374}
+      - {x: -0.96945167, y: -0.97117996}
   m_UseDelaunayMesh: 0
 --- !u!1 &815326108
 GameObject:
@@ -90054,7 +90016,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4135620339002320958, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.7791929
+      value: -1.7718086
       objectReference: {fileID: 0}
     - target: {fileID: 4135620339002320958, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_LocalPosition.y
