@@ -866,7 +866,7 @@ MonoBehaviour:
   - chunkPrefab: {fileID: 4125708976815931793, guid: 72f82a18a6c7d2347a032ebe70e8d076, type: 3}
     yPosition: -4
   finalChunkPrefab: {fileID: 7091617549630125815, guid: ae5e9592e4f1d854a95847adef8ce4c6, type: 3}
-  finalChunkYPosition: -2
+  finalChunkYPosition: -5
   backgroundPrefab: {fileID: 3835103202223498735, guid: 4129ad455ec4d58469230fc1e4b7970a, type: 3}
   backgroundYPosition: 0
   players:
