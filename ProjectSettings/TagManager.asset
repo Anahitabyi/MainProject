@@ -10,8 +10,6 @@ TagManager:
   - Powerup
   - Spikes
   - Ladder
-  - Health
-  - Life
   - GoalPoint
   - Health
   - Life
@@ -36,9 +34,6 @@ TagManager:
   - Player1UI
   - Player2UI
   - Interactable with hooded
-  - 
-  - 
-  - 
   - 
   - 
   - 

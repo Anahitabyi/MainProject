@@ -184,6 +184,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7604358647056835986, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 1325405877}
+    - target: {fileID: 7604358647056835986, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
       propertyPath: landGrassSound
       value: 
       objectReference: {fileID: 0}
@@ -865,9 +869,6 @@ MonoBehaviour:
   players:
   - {fileID: 1527228248}
   - {fileID: 989635140}
-  collectiblePrefabs:
-  - {fileID: 5946122058466584501, guid: 4753064c7d38d3a4eaae4cb43eb93aea, type: 3}
-  - {fileID: 9154606277984578669, guid: c53005f127333eb419a1d7516637f69f, type: 3}
 --- !u!4 &756020906
 Transform:
   m_ObjectHideFlags: 0
@@ -1924,6 +1925,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 989635150}
   healthSlider: {fileID: 1316776867}
+--- !u!4 &1325405877 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3443541833231628164, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
+  m_PrefabInstance: {fileID: 11213738}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1336686305
 GameObject:
   m_ObjectHideFlags: 0
@@ -2015,6 +2021,10 @@ PrefabInstance:
       propertyPath: jumpSound
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1835985753181678702, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 1714159512}
     - target: {fileID: 1835985753181678702, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
       propertyPath: landGrassSound
       value: 
@@ -2246,6 +2256,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1690224239}
   m_CullTransparentMesh: 1
+--- !u!4 &1714159512 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7022593869801518836, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
+  m_PrefabInstance: {fileID: 1440778346}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1733941438
 GameObject:
   m_ObjectHideFlags: 0

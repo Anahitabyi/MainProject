@@ -681,7 +681,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 10
-      m_TileSpriteIndex: 11
+      m_TileSpriteIndex: 14
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -691,7 +691,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 9
-      m_TileSpriteIndex: 10
+      m_TileSpriteIndex: 11
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -911,7 +911,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 2
-      m_TileSpriteIndex: 9
+      m_TileSpriteIndex: 10
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -921,7 +921,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 2
+      m_TileSpriteIndex: 9
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -966,8 +966,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 1761732525, guid: 03d6e2acc41ef324b9d9177d03a91ca4, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 2
@@ -981,17 +981,17 @@ Tilemap:
   - m_RefCount: 3
     m_Data: {fileID: -8343358190331538739, guid: c5a6be4acf3638c4e9f13a7e7e5555f0, type: 3}
   - m_RefCount: 1
+    m_Data: {fileID: 1761732525, guid: 03d6e2acc41ef324b9d9177d03a91ca4, type: 3}
+  - m_RefCount: 1
     m_Data: {fileID: -244334033, guid: 03d6e2acc41ef324b9d9177d03a91ca4, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -65024167, guid: e459d3bffe1f6144f89e79b83c744745, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -522243744, guid: e459d3bffe1f6144f89e79b83c744745, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 661917629, guid: e459d3bffe1f6144f89e79b83c744745, type: 3}
   - m_RefCount: 10
     m_Data: {fileID: 2638214335656429675, guid: c5a6be4acf3638c4e9f13a7e7e5555f0, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -522243744, guid: e459d3bffe1f6144f89e79b83c744745, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 1055623288, guid: e459d3bffe1f6144f89e79b83c744745, type: 3}
   m_TileMatrixArray:
@@ -9462,7 +9462,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bf703cf0bf73d46811ddc461435389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectibleEntries: []
+  collectibleEntries:
+  - prefab: {fileID: 9154606277984578669, guid: c53005f127333eb419a1d7516637f69f, type: 3}
+    weight: 4
+  - prefab: {fileID: 5946122058466584501, guid: 4753064c7d38d3a4eaae4cb43eb93aea, type: 3}
+    weight: 3
+  - prefab: {fileID: 4899340590451318059, guid: b8b4b9d2f9dad3549be71242e83ea546, type: 3}
+    weight: 2
+  - prefab: {fileID: 7692611730812150688, guid: 83d60f4737c70254987081126ad4abea, type: 3}
+    weight: 0
   collectiblesToSpawn: 3
   spawnPoints:
   - {fileID: 6124319215720177823}

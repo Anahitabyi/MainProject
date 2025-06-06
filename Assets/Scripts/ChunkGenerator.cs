@@ -21,7 +21,6 @@ public class ChunkGenerator : MonoBehaviour
     [SerializeField] private float backgroundYPosition = 0f;
 
     [SerializeField] private Transform[] players;
-    [SerializeField] private GameObject[] collectiblePrefabs;
 
     private List<ChunkData> unusedChunks = new List<ChunkData>();
 
@@ -47,7 +46,6 @@ public class ChunkGenerator : MonoBehaviour
     {
         unusedChunks = new List<ChunkData>(chunkDataList);
         ShuffleList(unusedChunks);
-
 
         for (int i = 0; i < initialChunks && unusedChunks.Count > 0; i++)
         {
@@ -130,19 +128,6 @@ public class ChunkGenerator : MonoBehaviour
             activeBackgrounds.Add(background);
         }
 
-        // Collectibles
-        Transform spawnPointsParent = chunk.transform.Find("SpawnPoints");
-        if (spawnPointsParent != null && collectiblePrefabs.Length > 0)
-        {
-            int spawnCount = spawnPointsParent.childCount;
-            if (spawnCount > 0)
-            {
-                Transform randomSpawnPoint = spawnPointsParent.GetChild(Random.Range(0, spawnCount));
-                GameObject collectibleToSpawn = collectiblePrefabs[Random.Range(0, collectiblePrefabs.Length)];
-                Instantiate(collectibleToSpawn, randomSpawnPoint.position, Quaternion.identity, chunk.transform);
-            }
-        }
-
         return chunk;
     }
 
@@ -170,15 +155,15 @@ public class ChunkGenerator : MonoBehaviour
 
         return bounds.size.x;
     }
-    private void ShuffleList<T>(List<T> list)
-{
-    for (int i = 0; i < list.Count; i++)
-    {
-        T temp = list[i];
-        int randomIndex = Random.Range(i, list.Count);
-        list[i] = list[randomIndex];
-        list[randomIndex] = temp;
-    }
-}
 
+    private void ShuffleList<T>(List<T> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            T temp = list[i];
+            int randomIndex = Random.Range(i, list.Count);
+            list[i] = list[randomIndex];
+            list[randomIndex] = temp;
+        }
+    }
 }
