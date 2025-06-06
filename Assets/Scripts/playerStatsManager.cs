@@ -33,10 +33,10 @@ public class playerStatsManager : MonoBehaviour
         player.currentLives = currentLives;
         player.maxLives = maxLives;
     }
-    public void ResetStats()
-{
-    currentHealth = maxHealth;
-    currentLives = maxLives;
-}
 
+    public void ResetStats()
+    {
+        currentHealth = maxHealth;
+        currentLives = maxLives;
+    }
 }

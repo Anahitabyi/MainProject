@@ -856,15 +856,15 @@ MonoBehaviour:
   initialChunks: 5
   chunkDataList:
   - chunkPrefab: {fileID: 2687530794239811398, guid: cb835d19cce39dc458762087100a7775, type: 3}
-    yPosition: -3
+    yPosition: -5
   - chunkPrefab: {fileID: 1365659677952301900, guid: 1df0159093c94aa47a4d44ad3a855d1d, type: 3}
-    yPosition: 0
+    yPosition: -2
   - chunkPrefab: {fileID: 8944976424232185208, guid: 7b901a78a6fc0b246b8dbd180be7b166, type: 3}
-    yPosition: -1
+    yPosition: -3
   - chunkPrefab: {fileID: 6241553512780886521, guid: 26763317917487546a5d58c155bba8ad, type: 3}
-    yPosition: -2
+    yPosition: -4
   - chunkPrefab: {fileID: 4125708976815931793, guid: 72f82a18a6c7d2347a032ebe70e8d076, type: 3}
-    yPosition: -2
+    yPosition: -4
   finalChunkPrefab: {fileID: 7091617549630125815, guid: ae5e9592e4f1d854a95847adef8ce4c6, type: 3}
   finalChunkYPosition: -2
   backgroundPrefab: {fileID: 3835103202223498735, guid: 4129ad455ec4d58469230fc1e4b7970a, type: 3}
