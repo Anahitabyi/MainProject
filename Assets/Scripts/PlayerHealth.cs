@@ -29,16 +29,19 @@ public class PlayerHealth : MonoBehaviour
     public event Action<int, int> OnLivesChanged;
 
     void Start()
+{
+    inputBlocker = movementScriptMono as IPlayerInputBlocker;
+
+    // Load from persistent data if available
+    if (playerStatsManager.Instance != null)
     {
-        currentLives = maxLives;
-        currentHealth = maxHealth;
-
-        // Try to get input blocker interface
-        inputBlocker = movementScriptMono as IPlayerInputBlocker;
-
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
-        OnLivesChanged?.Invoke(currentLives, maxLives);
+        playerStatsManager.Instance.LoadIntoPlayer(this);
     }
+
+    OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    OnLivesChanged?.Invoke(currentLives, maxLives);
+}
+
 
     public void TakeDamage(int damage)
     {
@@ -57,6 +60,7 @@ public class PlayerHealth : MonoBehaviour
             animator?.SetTrigger("Hurt");
             StartCoroutine(FlashDuringInvincibility());
         }
+        playerStatsManager.Instance?.SaveFromPlayer(this);
     }
 
     private void LoseLife()
@@ -72,6 +76,7 @@ public class PlayerHealth : MonoBehaviour
         {
             StartCoroutine(RespawnAfterDelay(4f));
         }
+        playerStatsManager.Instance?.SaveFromPlayer(this);
     }
 
     private void Die(bool final)
@@ -112,6 +117,7 @@ public class PlayerHealth : MonoBehaviour
         isDead = false;
 
         yield return StartCoroutine(FlashDuringInvincibility());
+        playerStatsManager.Instance?.SaveFromPlayer(this);
     }
 
     private IEnumerator FlashDuringInvincibility()
@@ -152,6 +158,7 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = Mathf.Clamp(newHealth, 0, maxHealth);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        playerStatsManager.Instance?.SaveFromPlayer(this);
     }
 
     public void AddHealth(int amount)
@@ -161,6 +168,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        playerStatsManager.Instance?.SaveFromPlayer(this);
     }
 
     public void AddLives(int amount)
@@ -170,6 +178,7 @@ public class PlayerHealth : MonoBehaviour
         currentLives += amount;
         currentLives = Mathf.Clamp(currentLives, 0, maxLives);
         OnLivesChanged?.Invoke(currentLives, maxLives);
+        playerStatsManager.Instance?.SaveFromPlayer(this);
     }
 
     public bool IsDead() => isDead;
