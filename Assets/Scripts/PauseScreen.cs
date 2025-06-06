@@ -66,7 +66,7 @@ public class PauseMenuManager : MonoBehaviour
         PlayerHealth[] players = GameObject.FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
         foreach (PlayerHealth p in players)
         {
-            p.setHealth(9);
+            p.SetHealth(9);
         }
         ScoreManager.Instance.ResetScore();
     }

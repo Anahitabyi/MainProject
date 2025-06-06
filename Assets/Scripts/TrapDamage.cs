@@ -21,7 +21,7 @@ public class TrapDamage : MonoBehaviour
         PlayerHealth player = col.GetComponent<PlayerHealth>();
         if (player != null && CanDamage(player))
         {
-            player.takeDamge(damage);
+            player.TakeDamage(damage);
             StartCoroutine(DamageCooldown(player));
         }
     }

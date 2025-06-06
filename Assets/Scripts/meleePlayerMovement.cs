@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 
-public class meleePlayerMovement : MonoBehaviour
+public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
 {
+    public bool isInputBlocked { get; set; } = false;
     public Animator animator;
     bool isFacingRight = true;
 
@@ -31,9 +32,6 @@ public class meleePlayerMovement : MonoBehaviour
     public Vector2 attackBoxSize = new Vector2(1f, 1f);
     public LayerMask enemyLayers;
     public int attackDamage = 1;
-
-    [Header("Input Blocking")]
-    public bool isInputBlocked = false;
 
     public WeaponUIIndicator weaponUIIndicator;
 

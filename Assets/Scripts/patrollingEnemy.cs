@@ -74,7 +74,7 @@ public class patrollingEnemy : MonoBehaviour
 
             PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
             if (playerHealth != null)
-                playerHealth.takeDamge(1);
+                playerHealth.TakeDamage(1);
         }
     }
 

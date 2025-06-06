@@ -2,9 +2,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class playerMovement : MonoBehaviour
+public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 {
-    public Animator animator;
+
+    public bool isInputBlocked { get; set; } = false;    public Animator animator;
     bool isFacingRight = true;
 
     [Header("Movement")]
