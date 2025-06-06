@@ -12,6 +12,7 @@ TagManager:
   - Ladder
   - Health
   - Life
+  - GoalPoint
   layers:
   - Default
   - TransparentFX

@@ -91,7 +91,7 @@ public class FootstepAudio : MonoBehaviour
 
         if (!wasGrounded && isGrounded)
         {
-            animator.SetTrigger("falling");
+            //animator.SetTrigger("falling");
             PlayLandingSound();
         }
 

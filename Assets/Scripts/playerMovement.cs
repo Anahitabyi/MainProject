@@ -69,7 +69,7 @@ public class playerMovement : MonoBehaviour
         if (!wasGroundedLastFrame && groundedNow && wasFalling)
         {
             animator.SetTrigger("falling");
-            Debug.Log("Landing triggered");
+            //Debug.Log("Landing triggered");
         }
 
         animator.SetFloat("Yvelocity", yVel);
@@ -195,4 +195,4 @@ public class playerMovement : MonoBehaviour
     {
         Debug.Log("Right click detected");
     }
-}
+} 
