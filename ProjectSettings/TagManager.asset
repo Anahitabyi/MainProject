@@ -16,6 +16,7 @@ TagManager:
   - Water
   - Waterfall
   - Jumpscare
+  - Door
   layers:
   - Default
   - TransparentFX
