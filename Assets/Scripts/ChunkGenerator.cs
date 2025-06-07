@@ -1,21 +1,22 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[System.Serializable]
-public class ChunkData
-{
-    public GameObject chunkPrefab;
-    public float yPosition;
-}
-
 public class ChunkGenerator : MonoBehaviour
 {
+    [System.Serializable]
+    public class ChunkData
+    {
+    public GameObject chunkPrefab;
+    public float yPosition;
+    public float width; // ✅ Manually set this in the Inspector
+    }
     [SerializeField] private float generateDistance = 25f;
     [SerializeField] private int initialChunks = 3;
     [SerializeField] private List<ChunkData> chunkDataList = new List<ChunkData>();
 
     [SerializeField] private GameObject finalChunkPrefab;
     [SerializeField] private float finalChunkYPosition = 0f;
+    [SerializeField] private float finalChunkWidth = 20f; // ✅ Manually assigned
 
     [SerializeField] private GameObject backgroundPrefab;
     [SerializeField] private float backgroundYPosition = 0f;
@@ -93,14 +94,14 @@ public class ChunkGenerator : MonoBehaviour
             ChunkData data = unusedChunks[0];
             chunkToSpawn = data.chunkPrefab;
             chunkY = data.yPosition;
-            chunkWidth = GetPrefabWidth(data.chunkPrefab);
+            chunkWidth = data.width; // ✅ use manually assigned width
             unusedChunks.RemoveAt(0);
         }
         else if (!finalChunkSpawned && finalChunkPrefab != null)
         {
             chunkToSpawn = finalChunkPrefab;
             chunkY = finalChunkYPosition;
-            chunkWidth = GetPrefabWidth(finalChunkPrefab);
+            chunkWidth = finalChunkWidth; // ✅ use manually assigned width
             finalChunkSpawned = true;
         }
 
@@ -113,14 +114,14 @@ public class ChunkGenerator : MonoBehaviour
 
         activeChunks.Add(new SpawnedChunk(chunk, chunkWidth));
 
-        // Set players to enemy shooters
+        // Assign players to enemy shooters
         EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
         foreach (EnemyShooter shooter in shooters)
         {
             shooter.SetPlayers(GetPlayerGameObjects());
         }
 
-        // Background
+        // Background generation
         if (backgroundPrefab != null)
         {
             GameObject background = Instantiate(backgroundPrefab);
@@ -140,20 +141,6 @@ public class ChunkGenerator : MonoBehaviour
                 playerList.Add(t.gameObject);
         }
         return playerList.ToArray();
-    }
-
-    private float GetPrefabWidth(GameObject prefab)
-    {
-        Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
-        if (renderers.Length == 0) return 1f;
-
-        Bounds bounds = renderers[0].bounds;
-        foreach (Renderer r in renderers)
-        {
-            bounds.Encapsulate(r.bounds);
-        }
-
-        return bounds.size.x;
     }
 
     private void ShuffleList<T>(List<T> list)

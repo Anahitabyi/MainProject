@@ -171,6 +171,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6717596841553951799, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
+      propertyPath: movementScriptMono
+      value: 
+      objectReference: {fileID: 1782135459}
+    - target: {fileID: 6717596841553951799, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
+      propertyPath: invincibilityDuration
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7099390637859293862, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
       propertyPath: m_Name
       value: Hooded
@@ -197,7 +205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8509036316442811293, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
       propertyPath: jumpPower
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8509036316442811293, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
       propertyPath: weaponUIIndicator
@@ -853,20 +861,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generateDistance: 100
-  initialChunks: 5
+  initialChunks: 6
   chunkDataList:
   - chunkPrefab: {fileID: 2687530794239811398, guid: cb835d19cce39dc458762087100a7775, type: 3}
     yPosition: -5
+    width: 45
   - chunkPrefab: {fileID: 1365659677952301900, guid: 1df0159093c94aa47a4d44ad3a855d1d, type: 3}
     yPosition: -2
+    width: 45
   - chunkPrefab: {fileID: 8944976424232185208, guid: 7b901a78a6fc0b246b8dbd180be7b166, type: 3}
     yPosition: -3
+    width: 45
   - chunkPrefab: {fileID: 6241553512780886521, guid: 26763317917487546a5d58c155bba8ad, type: 3}
     yPosition: -4
+    width: 45
   - chunkPrefab: {fileID: 4125708976815931793, guid: 72f82a18a6c7d2347a032ebe70e8d076, type: 3}
+    yPosition: -2
+    width: 45
+  - chunkPrefab: {fileID: 3990096502412340579, guid: faff5ab72bbc3f64da5e63b610f89d63, type: 3}
     yPosition: -4
+    width: 50
   finalChunkPrefab: {fileID: 7091617549630125815, guid: ae5e9592e4f1d854a95847adef8ce4c6, type: 3}
   finalChunkYPosition: -5
+  finalChunkWidth: 20
   backgroundPrefab: {fileID: 3835103202223498735, guid: 4129ad455ec4d58469230fc1e4b7970a, type: 3}
   backgroundYPosition: 0
   players:
@@ -2054,6 +2071,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 70811835}
     - target: {fileID: 3727483765937510447, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
+      propertyPath: movementSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3727483765937510447, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
       propertyPath: weaponUIIndicator
       value: 
       objectReference: {fileID: 313531143}
@@ -2077,6 +2098,10 @@ PrefabInstance:
       propertyPath: movementScriptMono
       value: 
       objectReference: {fileID: 2054277538}
+    - target: {fileID: 5756303170342946381, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
+      propertyPath: invincibilityDuration
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5994522201415092766, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15.86
@@ -2450,9 +2475,20 @@ MonoBehaviour:
   jumpSound: {fileID: 0}
   landSound: {fileID: 0}
   hurtSound: {fileID: 8300000, guid: 53848bf28ea89c74898f21f17f072488, type: 3}
-  deathSound: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: 53848bf28ea89c74898f21f17f072488, type: 3}
   attackSound: {fileID: 8300000, guid: c0bb9aae25502854c81a7551d11d453a, type: 3}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
+--- !u!114 &1782135459 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8509036316442811293, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
+  m_PrefabInstance: {fileID: 11213738}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875654109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e04a765efd2b13489ec374299c3e4ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1824536276
 GameObject:
   m_ObjectHideFlags: 0
@@ -2845,7 +2881,7 @@ MonoBehaviour:
   jumpSound: {fileID: 0}
   landSound: {fileID: 0}
   hurtSound: {fileID: 8300000, guid: 98d7588c9b699d74189ae9a992d02165, type: 3}
-  deathSound: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: 98d7588c9b699d74189ae9a992d02165, type: 3}
   attackSound: {fileID: 8300000, guid: f2326e2051544ed4d82c5286e00955dc, type: 3}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
 --- !u!1 &2098080725

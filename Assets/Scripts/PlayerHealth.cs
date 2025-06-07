@@ -58,7 +58,6 @@ public class PlayerHealth : MonoBehaviour
         else
         {
             animator?.SetTrigger("Hurt");
-            StartCoroutine(FlashDuringInvincibility());
         }
         playerStatsManager.Instance?.SaveFromPlayer(this);
     }
@@ -102,7 +101,7 @@ public class PlayerHealth : MonoBehaviour
     private IEnumerator RespawnAfterDelay(float delay)
     {
         Die(final: false);
-
+        StartCoroutine(FlashDuringInvincibility());
         yield return new WaitForSeconds(delay);
 
         currentHealth = maxHealth;
@@ -116,7 +115,6 @@ public class PlayerHealth : MonoBehaviour
 
         isDead = false;
 
-        yield return StartCoroutine(FlashDuringInvincibility());
         playerStatsManager.Instance?.SaveFromPlayer(this);
     }
 

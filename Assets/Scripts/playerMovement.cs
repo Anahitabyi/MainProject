@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 {
 
-    public bool isInputBlocked { get; set; } = false;    public Animator animator;
+    public bool isInputBlocked { get; set; } = false;
+    public Animator animator;
     bool isFacingRight = true;
 
     [Header("Movement")]
@@ -54,6 +55,13 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 
     void Update()
     {
+        if (isInputBlocked)
+        {
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            animator.SetFloat("Yvelocity", rb.linearVelocity.y);
+            animator.SetFloat("magnitude", 0);
+            return;
+        }
         rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
 
         GroundCheck();
@@ -105,11 +113,13 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 
     public void Move(InputAction.CallbackContext context)
     {
+        if (isInputBlocked) return;
         horizontalMovement = context.ReadValue<Vector2>().x;
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if (isInputBlocked) return;
         if (context.performed && jumpsRemaining > 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
@@ -135,6 +145,7 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 
     public void flip()
     {
+        if (isInputBlocked) return;
         if ((isFacingRight && horizontalMovement < 0) || (!isFacingRight && horizontalMovement > 0))
         {
             isFacingRight = !isFacingRight;
@@ -146,6 +157,7 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 
     public void Shoot(InputAction.CallbackContext context)
     {
+        if (isInputBlocked) return;
         if (!context.performed) return;
 
         animator.SetTrigger("shoot");
