@@ -864,19 +864,19 @@ MonoBehaviour:
   initialChunks: 6
   chunkDataList:
   - chunkPrefab: {fileID: 2687530794239811398, guid: cb835d19cce39dc458762087100a7775, type: 3}
-    yPosition: -5
-    width: 45
-  - chunkPrefab: {fileID: 1365659677952301900, guid: 1df0159093c94aa47a4d44ad3a855d1d, type: 3}
-    yPosition: -2
-    width: 45
-  - chunkPrefab: {fileID: 8944976424232185208, guid: 7b901a78a6fc0b246b8dbd180be7b166, type: 3}
-    yPosition: -3
-    width: 45
-  - chunkPrefab: {fileID: 6241553512780886521, guid: 26763317917487546a5d58c155bba8ad, type: 3}
     yPosition: -4
     width: 45
+  - chunkPrefab: {fileID: 1365659677952301900, guid: 1df0159093c94aa47a4d44ad3a855d1d, type: 3}
+    yPosition: -4
+    width: 45
+  - chunkPrefab: {fileID: 8944976424232185208, guid: 7b901a78a6fc0b246b8dbd180be7b166, type: 3}
+    yPosition: -4
+    width: 45
+  - chunkPrefab: {fileID: 6241553512780886521, guid: 26763317917487546a5d58c155bba8ad, type: 3}
+    yPosition: -7
+    width: 45
   - chunkPrefab: {fileID: 4125708976815931793, guid: 72f82a18a6c7d2347a032ebe70e8d076, type: 3}
-    yPosition: -2
+    yPosition: -4
     width: 45
   - chunkPrefab: {fileID: 3990096502412340579, guid: faff5ab72bbc3f64da5e63b610f89d63, type: 3}
     yPosition: -4
