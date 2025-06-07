@@ -27,12 +27,12 @@ public class PlayerHealth : MonoBehaviour
 
     public event Action<int, int> OnHealthChanged;
     public event Action<int, int> OnLivesChanged;
+    public int playerId = 1;
 
     void Start()
 {
     inputBlocker = movementScriptMono as IPlayerInputBlocker;
 
-    // Load from persistent data if available
     if (playerStatsManager.Instance != null)
     {
         playerStatsManager.Instance.LoadIntoPlayer(this);

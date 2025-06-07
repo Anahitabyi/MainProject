@@ -3,25 +3,34 @@ using UnityEngine.UI;
 
 public class PlayerLivesUI : MonoBehaviour
 {
-    public PlayerHealth playerHealth;     // Assign in Inspector
-    public Image[] heartImages;           // Should be size 3
-    public Sprite fullHeart;              // Assign in Inspector
-    public Sprite emptyHeart;             // Assign in Inspector
+    public int playerId = 1;                  // Set this in the Inspector (1 or 2)
+    public Image[] heartImages;              // Assign in Inspector
+    public Sprite fullHeart;                 // Assign in Inspector
+    public Sprite emptyHeart;                // Assign in Inspector
+
+    private PlayerHealth playerHealth;
 
     void Start()
 {
-    //Debug.Log("PlayerLivesUI Start() called.");
+    // Find the correct PlayerHealth component based on playerId
+    PlayerHealth[] players = FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
+    foreach (PlayerHealth ph in players)
+    {
+        if (ph.playerId == playerId)
+        {
+            playerHealth = ph;
+            break;
+        }
+    }
 
     if (playerHealth != null)
     {
         playerHealth.OnLivesChanged += UpdateHearts;
-        //Debug.Log($"Initial Lives: {playerHealth.currentLives}/{playerHealth.maxLives}");
-
         UpdateHearts(playerHealth.currentLives, playerHealth.maxLives);
     }
     else
     {
-        //Debug.LogWarning("PlayerHealth reference is missing!");
+        Debug.LogWarning("PlayerLivesUI: No PlayerHealth found with ID: " + playerId);
     }
 }
 
@@ -35,24 +44,19 @@ public class PlayerLivesUI : MonoBehaviour
     }
 
     void UpdateHearts(int lives, int maxLives)
-{
-    //Debug.Log($"UpdateHearts() called with lives = {lives}, maxLives = {maxLives}");
-
-    for (int i = 0; i < heartImages.Length; i++)
     {
-        if (i < lives)
+        for (int i = 0; i < heartImages.Length; i++)
         {
-            //Debug.Log($"Heart {i}: FULL");
-            heartImages[i].sprite = fullHeart;
-        }
-        else
-        {
-            //Debug.Log($"Heart {i}: EMPTY");
-            heartImages[i].sprite = emptyHeart;
-        }
+            if (i < lives)
+            {
+                heartImages[i].sprite = fullHeart;
+            }
+            else
+            {
+                heartImages[i].sprite = emptyHeart;
+            }
 
-        heartImages[i].enabled = i < maxLives;
+            heartImages[i].enabled = i < maxLives;
+        }
     }
-}
-
 }

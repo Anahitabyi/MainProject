@@ -3,24 +3,38 @@ using UnityEngine.UI;
 
 public class PlayerHealthUI : MonoBehaviour
 {
-    public PlayerHealth playerHealth;  // Assign in Inspector
-    public Slider healthSlider;        // Assign in Inspector
+    public int playerId = 1;  // Set in Inspector: 1 for Player 1, 2 for Player 2
+    public Slider healthSlider; // Set in Inspector
+
+    private PlayerHealth playerHealth;
 
     void Start()
     {
+        PlayerHealth[] players = FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
+
+        // Find the correct PlayerHealth instance by ID
+        foreach (PlayerHealth ph in players)
+        {
+            if (ph.playerId == playerId)
+            {
+                playerHealth = ph;
+                break;
+            }
+        }
+
         if (playerHealth != null)
         {
-            // ✅ Subscribe to the event
             playerHealth.OnHealthChanged += UpdateSlider;
-
-            // Initial update
             UpdateSlider(playerHealth.currentHealth, playerHealth.maxHealth);
+        }
+        else
+        {
+            Debug.LogWarning("No PlayerHealth found with ID: " + playerId);
         }
     }
 
     void OnDestroy()
     {
-        // ✅ Unsubscribe to avoid memory leaks
         if (playerHealth != null)
         {
             playerHealth.OnHealthChanged -= UpdateSlider;
