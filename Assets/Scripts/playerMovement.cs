@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 {
-
     public bool isInputBlocked { get; set; } = false;
     public Animator animator;
     bool isFacingRight = true;
@@ -17,6 +16,7 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
     public float jumpPower = 10f;
     public int maxJumps = 2;
     private int jumpsRemaining;
+    private const float fallThreshold = -0.2f;
 
     [Header("GroundCheck")]
     public Transform groundCheckPos;
@@ -29,7 +29,6 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
     public float fallSpeedMultiplier = 2f;
 
     Rigidbody2D rb;
-    private bool wasGroundedLastFrame = true;
     private bool wasFalling = false;
 
     [Header("Shooting")]
@@ -50,7 +49,7 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        jumpsRemaining = maxJumps; // ✅ Fix: Ensure jump is initialized
+        jumpsRemaining = maxJumps;
     }
 
     void Update()
@@ -62,6 +61,7 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
             animator.SetFloat("magnitude", 0);
             return;
         }
+
         rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
 
         GroundCheck();
@@ -70,24 +70,22 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
         float yVel = rb.linearVelocity.y;
         bool groundedNow = isGrounded();
 
-        if (wasGroundedLastFrame && !groundedNow && yVel > 0.1f)
-        {
-            animator.SetTrigger("jump");
-        }
-
-        if (!wasGroundedLastFrame && groundedNow && wasFalling)
-        {
-            animator.SetTrigger("falling");
-            //Debug.Log("Landing triggered");
-        }
+        // if (groundedNow && wasFalling)
+        // {
+        //     animator.SetTrigger("falling");
+        // }
 
         animator.SetFloat("Yvelocity", yVel);
         animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
 
         flip();
 
-        wasGroundedLastFrame = groundedNow;
-        wasFalling = yVel < -0.1f && !groundedNow;
+        wasFalling = yVel < fallThreshold && !groundedNow;
+
+        // Reset jump bool when falling starts
+        if (wasFalling)
+            animator.SetBool("isJumping", false);
+        
     }
 
     private void Gravity()
@@ -105,11 +103,19 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 
     private void GroundCheck()
     {
-        if (isGrounded())
+        bool groundedNow = isGrounded();
+
+        if (groundedNow)
         {
-            jumpsRemaining = maxJumps; // Reset jumps when grounded
+            if (wasFalling)
+            {
+                animator.SetTrigger("falling");
+            }
+            animator.SetBool("isJumping", false); // Reset jump state
+            jumpsRemaining = maxJumps;
         }
     }
+
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -120,10 +126,14 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
     public void Jump(InputAction.CallbackContext context)
     {
         if (isInputBlocked) return;
+
         if (context.performed && jumpsRemaining > 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
             jumpsRemaining--;
+
+            animator.SetTrigger("jump"); // ✅ Animation only on actual jump input
+            animator.SetBool("isJumping", true);
         }
         else if (context.canceled)
         {
@@ -146,6 +156,7 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
     public void flip()
     {
         if (isInputBlocked) return;
+
         if ((isFacingRight && horizontalMovement < 0) || (!isFacingRight && horizontalMovement > 0))
         {
             isFacingRight = !isFacingRight;
@@ -157,8 +168,7 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 
     public void Shoot(InputAction.CallbackContext context)
     {
-        if (isInputBlocked) return;
-        if (!context.performed) return;
+        if (isInputBlocked || !context.performed) return;
 
         animator.SetTrigger("shoot");
         StartCoroutine(DelayedBulletSpawn());
@@ -208,4 +218,4 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
     {
         Debug.Log("Right click detected");
     }
-} 
+}
