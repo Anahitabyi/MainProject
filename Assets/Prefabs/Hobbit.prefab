@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5994522201415092766}
   - component: {fileID: 4390754354144911849}
+  - component: {fileID: 4120984144414234695}
   - component: {fileID: 3727483765937510447}
   - component: {fileID: 3073781156953091832}
   - component: {fileID: 6905117903011282704}
@@ -22,6 +23,7 @@ GameObject:
   - component: {fileID: -7030039299230297641}
   - component: {fileID: 7125895893738783617}
   - component: {fileID: 6547759979433465101}
+  - component: {fileID: 8050403861404859550}
   m_Layer: 7
   m_Name: Hobbit
   m_TagString: Player
@@ -101,6 +103,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4120984144414234695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490634895448124012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c34ccd4976c30a34497bb7fe2fadf375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: -7030039299230297641}
+  jumpSound: {fileID: 0}
+  landSound: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: 98d7588c9b699d74189ae9a992d02165, type: 3}
+  deathSound: {fileID: 8300000, guid: 98d7588c9b699d74189ae9a992d02165, type: 3}
+  attackSound: {fileID: 8300000, guid: f2326e2051544ed4d82c5286e00955dc, type: 3}
+  sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
 --- !u!114 &3727483765937510447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,14 +135,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3073781156953091832}
-  movementSpeed: 4.5
+  movementSpeed: 5
   jumpPower: 13
   maxJumps: 2
   groundCheckPos: {fileID: 7022593869801518836}
   groundCheckSizev: {x: 0.5, y: 0.1}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 16448
+    m_Bits: 16576
   baseGravity: 2
   maxFallSpeed: 18
   fallSpeedMultiplier: 2
@@ -364,13 +385,14 @@ MonoBehaviour:
   currentHealth: 3
   maxLives: 3
   currentLives: 3
-  invincibilityDuration: 2
+  invincibilityDuration: 3
   flashInterval: 0.1
   animator: {fileID: 3073781156953091832}
-  playerCollider: {fileID: 0}
-  spriteRenderer: {fileID: 0}
-  rb: {fileID: 0}
-  movementScript: {fileID: 0}
+  playerCollider: {fileID: 7125895893738783617}
+  spriteRenderer: {fileID: 4390754354144911849}
+  rb: {fileID: 3886881576966377435}
+  movementScriptMono: {fileID: 3727483765937510447}
+  playerId: 1
 --- !u!114 &148007022662654773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,19 +427,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f3643e061f43b2446876425ce8bbf320, type: 3}
   - {fileID: 8300000, guid: 9248e8c8d35b30f4686a053670e9d53e, type: 3}
   - {fileID: 8300000, guid: f641065dd3ecfed4e954efdcfda8faad, type: 3}
-  jumpSound: {fileID: 8300000, guid: b26fd44bc23e80f43bdaa8bab015a5a0, type: 3}
-  landGrassSound: {fileID: 8300000, guid: b26fd44bc23e80f43bdaa8bab015a5a0, type: 3}
-  landStoneSound: {fileID: 8300000, guid: b26fd44bc23e80f43bdaa8bab015a5a0, type: 3}
-  groundCheckPoint: {fileID: 7022593869801518836}
-  groundCheckRadius: 0.2
+  sfxMixerGroup: {fileID: 0}
+  horizontalAxis: Horizontal
+  groundCheck: {fileID: 7022593869801518836}
+  groundCheckSize: {x: 0.5, y: 0.05}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   surface: 1
-  animator: {fileID: 0}
-  sfxMixerGroup: {fileID: 0}
-  horizontalAxis: Horizontal
-  jumpButton: Jump
 --- !u!82 &-7030039299230297641
 AudioSource:
   m_ObjectHideFlags: 0
@@ -428,8 +445,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b91bbd5b384bf5a4e81af8cf9f617ab3, type: 3}
-  m_Resource: {fileID: 8300000, guid: b91bbd5b384bf5a4e81af8cf9f617ab3, type: 3}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -591,6 +608,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasKey: 0
+--- !u!114 &8050403861404859550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490634895448124012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a43bf828af8034389e9b24117d0425, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  climbSpeed: 4
 --- !u!1 &5331574185590073450
 GameObject:
   m_ObjectHideFlags: 0
