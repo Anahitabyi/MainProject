@@ -3,19 +3,11 @@ using System.Collections.Generic;
 
 public class RandomCollectibleSpawner : MonoBehaviour
 {
-    [System.Serializable]
-    public class SpawnEntry
-    {
-        public GameObject prefab;
-        [Range(1, 10)]
-        public int weight = 1;
-    }
+    [Header("Collectibles")]
+    public GameObject[] collectibles; // Just drag your 4 collectible prefabs here
 
-    [Header("Collectible Settings")]
-    public List<SpawnEntry> collectibleEntries;
+    [Header("Spawn Settings")]
     public int collectiblesToSpawn = 3;
-
-    [Header("Spawn Points")]
     public Transform[] spawnPoints;
 
     void Start()
@@ -25,44 +17,29 @@ public class RandomCollectibleSpawner : MonoBehaviour
 
     void SpawnCollectiblesRandomly()
     {
-        if (spawnPoints.Length == 0 || collectibleEntries.Count == 0) return;
+        if (collectibles.Length == 0 || spawnPoints.Length == 0) return;
 
+        // Shuffle collectibles
+        List<GameObject> shuffledCollectibles = new List<GameObject>(collectibles);
+        Shuffle(shuffledCollectibles);
+
+        // Shuffle spawn points
         List<Transform> availablePoints = new List<Transform>(spawnPoints);
+        Shuffle(availablePoints);
 
-        for (int i = 0; i < collectiblesToSpawn && availablePoints.Count > 0; i++)
+        // Spawn collectibles
+        for (int i = 0; i < collectiblesToSpawn && i < shuffledCollectibles.Count && i < availablePoints.Count; i++)
         {
-            Transform spawnPoint = GetRandomSpawnPoint(ref availablePoints);
-            GameObject collectible = GetRandomCollectible();
-
-            Instantiate(collectible, spawnPoint.position, Quaternion.identity);
+            Instantiate(shuffledCollectibles[i], availablePoints[i].position, Quaternion.identity);
         }
     }
 
-    Transform GetRandomSpawnPoint(ref List<Transform> points)
+    void Shuffle<T>(List<T> list)
     {
-        int index = Random.Range(0, points.Count);
-        Transform point = points[index];
-        points.RemoveAt(index);
-        return point;
-    }
-
-    GameObject GetRandomCollectible()
-    {
-        int totalWeight = 0;
-        foreach (var entry in collectibleEntries)
-            totalWeight += entry.weight;
-
-        int roll = Random.Range(0, totalWeight);
-        int current = 0;
-
-        foreach (var entry in collectibleEntries)
+        for (int i = 0; i < list.Count; i++)
         {
-            current += entry.weight;
-            if (roll < current)
-                return entry.prefab;
+            int rand = Random.Range(i, list.Count);
+            (list[i], list[rand]) = (list[rand], list[i]);
         }
-
-        // fallback
-        return collectibleEntries[0].prefab;
     }
 }

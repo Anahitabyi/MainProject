@@ -66,7 +66,14 @@ public class CastleDoorOpen : MonoBehaviour
                     audioSource.PlayOneShot(lockedDoorClip);
 
                 if (messageText != null)
-                    StartCoroutine(ShowMessage(lockedMessage, messageDuration));
+                    {
+                        Debug.Log("Message text is set: " + messageText.name);
+                        StartCoroutine(ShowMessage(lockedMessage, messageDuration));
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Message text reference is NULL!");
+                    }
             }
         }
     }
@@ -94,14 +101,19 @@ public class CastleDoorOpen : MonoBehaviour
     }
 
     private IEnumerator ShowMessage(string message, float duration)
-    {
-        Debug.Log("Showing locked door message: " + message);
+{
+    Debug.Log("Showing locked door message: " + message);
 
-        messageText.text = message;
-        messageText.enabled = true;
-        yield return new WaitForSeconds(duration);
-        messageText.enabled = false;
-    }
+    messageText.gameObject.SetActive(true);  // Ensure GameObject is active
+    messageText.text = message;
+    messageText.enabled = true;
+
+    yield return new WaitForSeconds(duration);
+
+    messageText.enabled = false;
+    messageText.gameObject.SetActive(false); // Optional: hide it again
+}
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
