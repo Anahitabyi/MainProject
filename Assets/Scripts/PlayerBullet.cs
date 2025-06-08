@@ -4,6 +4,7 @@ public class Bullet : MonoBehaviour
 {
     public int damage = 1;                 // Damage dealt to enemies
     public GameObject keyPrefab;          // Assign your key prefab in the Inspector
+    public Vector2 keySpawnOffset = new Vector2(0, 2f);  // Offset above the GoalPoint
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -21,8 +22,8 @@ public class Bullet : MonoBehaviour
         {
             if (keyPrefab != null)
             {
-                // Spawn the key at the goal point's position
-                Instantiate(keyPrefab, other.transform.position, Quaternion.identity);
+                Vector3 spawnPosition = other.transform.position + (Vector3)keySpawnOffset;
+                Instantiate(keyPrefab, spawnPosition, Quaternion.identity);
             }
 
             Destroy(other.gameObject); // Optionally remove the goal point object

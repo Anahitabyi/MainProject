@@ -11127,6 +11127,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2289773481954874664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5066729990933044268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7043404487836882169}
+  m_Layer: 0
+  m_Name: 'PointBCat '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7043404487836882169
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5066729990933044268}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -15.07, y: 10.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6004856531612563330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6130656993193880747
 GameObject:
   m_ObjectHideFlags: 0
@@ -11888,6 +11919,37 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!1 &6476589682977846774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2677603982006022137}
+  m_Layer: 0
+  m_Name: PointACat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2677603982006022137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476589682977846774}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.91, y: 10.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6004856531612563330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6499914818647604683
 GameObject:
   m_ObjectHideFlags: 0
@@ -16907,6 +16969,8 @@ Transform:
   - {fileID: 5643849385024834156}
   - {fileID: 3461725720950166275}
   - {fileID: 2706136349243935357}
+  - {fileID: 2677603982006022137}
+  - {fileID: 7043404487836882169}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &5604834742504317470
@@ -17060,6 +17124,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6004856531612563330}
     m_Modifications:
+    - target: {fileID: 803955611506386657, guid: a77de3d83bfabf64e86fee437954cfa5, type: 3}
+      propertyPath: pointA
+      value: 
+      objectReference: {fileID: 6476589682977846774}
+    - target: {fileID: 803955611506386657, guid: a77de3d83bfabf64e86fee437954cfa5, type: 3}
+      propertyPath: pointB
+      value: 
+      objectReference: {fileID: 5066729990933044268}
+    - target: {fileID: 4775681188648598544, guid: a77de3d83bfabf64e86fee437954cfa5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4775681188648598544, guid: a77de3d83bfabf64e86fee437954cfa5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13.7

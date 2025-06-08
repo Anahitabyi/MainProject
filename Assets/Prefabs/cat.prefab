@@ -83,12 +83,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93679f4db74cbfc4f84e56f69a0e8504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 2122236317634018336, guid: d1bba228f1a15f34092c50ed82d78134, type: 3}
-  bulletPos: {fileID: 3175385973301591175}
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
+  bulletPrefab: {fileID: 2122236317634018336, guid: d1bba228f1a15f34092c50ed82d78134, type: 3}
+  bulletSpawnPoint: {fileID: 3175385973301591175}
   players:
   - {fileID: 0}
   - {fileID: 0}
-  viewBoxSize: {x: 22.8, y: 8.45}
+  viewBoxSize: {x: 36.5, y: 9.28}
+  patrolSpeed: 3
+  shootCooldown: 2
 --- !u!114 &1839605134294050893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +193,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5281825669444538878}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -204,9 +208,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 6
 --- !u!61 &4887348244746034656
 BoxCollider2D:
@@ -218,7 +222,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f2e6b4a95aa0ab3499fa0efcb53a10d0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -242,7 +246,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.061286688, y: 0.023571968}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -252,7 +256,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.90625, y: 2.46875}
+  m_Size: {x: 2.783678, y: 2.421606}
   m_EdgeRadius: 0
 --- !u!114 &-4314850413416088735
 MonoBehaviour:

@@ -3,139 +3,190 @@ using System.Collections.Generic;
 
 public class EnemyShooter : MonoBehaviour
 {
-    public GameObject bullet;
-    public Transform bulletPos;
+    public GameObject pointA;
+    public GameObject pointB;
+    public GameObject bulletPrefab;
+    public Transform bulletSpawnPoint;
     public GameObject[] players;
     public Vector2 viewBoxSize = new Vector2(10f, 5f);
+    public float patrolSpeed = 3f;
+    public float shootCooldown = 2f;
 
+    private Rigidbody2D rb;
+    private Animator anim;
+    private Transform currentPoint;
     private Transform target;
     private float timer;
-    private Animator anim;
-
-    // Track last validity state for logging
-    private Dictionary<GameObject, bool> lastValidity = new Dictionary<GameObject, bool>();
+    private bool isDead = false;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        currentPoint = pointB.transform;
     }
 
     void Update()
     {
-        if (players == null || players.Length == 0) return;
+        if (isDead) return;
 
-        EnemyHealth health = GetComponent<EnemyHealth>();
-        if (health != null && health.IsDead) return;
-
-        // Log status changes
-        foreach (GameObject player in players)
+        // If player is detected, stop and shoot
+        target = FindClosestVisiblePlayer();
+        if (IsValidTarget(target))
         {
-            if (player == null) continue;
+            FaceTarget(target.position);
+            rb.linearVelocity = Vector2.zero;
+            anim.SetBool("isRunning", false);
 
-            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
-            if (playerHealth == null) continue;
-
-            bool isNowValid = !playerHealth.IsDead() && !playerHealth.IsInvincible() && IsInViewBox(player.transform.position);
-
-            if (lastValidity.ContainsKey(player))
-            {
-                if (!lastValidity[player] && isNowValid)
-                {
-                    Debug.Log($"EnemyShooter: Player {player.name} became a valid target again.");
-                }
-            }
-            lastValidity[player] = isNowValid;
-        }
-
-        // If target is null or invalid, re-acquire
-        if (target == null || !IsValidTarget(target))
-        {
-            target = FindRandomVisiblePlayer();
-        }
-
-        // Shoot if target is valid
-        if (target != null && IsValidTarget(target))
-        {
             timer += Time.deltaTime;
-            if (timer > 2f)
+            if (timer >= shootCooldown)
             {
                 timer = 0;
-                ShootAtTarget();
+                anim.SetTrigger("shoot");
+                Shoot();
             }
+        }
+        else
+        {
+            Patrol();
+        }
+        //Debug.Log($"Velocity: {rb.linearVelocity}, Position: {transform.position}, Target: {currentPoint.position}");
+
+    }
+
+   void Patrol()
+{
+    //Debug.Log("Patrolling...");
+
+    Vector2 direction = (currentPoint.position - transform.position).normalized;
+    rb.linearVelocity = new Vector2(direction.x * patrolSpeed, rb.linearVelocity.y);
+    anim.SetBool("isRunning", true);
+
+    //Debug.Log($"Moving towards: {currentPoint.name}");
+
+        float distanceX = Mathf.Abs(transform.position.x - currentPoint.position.x);
+    //Debug.Log($"DistanceX to {currentPoint.name}: {distanceX}");
+
+    if (distanceX < 0.1f)
+    {
+        //Debug.Log($"Reached {currentPoint.name}, flipping...");
+        Flip();
+        currentPoint = currentPoint == pointA.transform ? pointB.transform : pointA.transform;
+        //Debug.Log($"Now targeting: {currentPoint.name}");
+    }
+}
+
+
+    void Flip()
+    {
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+        //Debug.Log($"Flipping! New scale: {transform.localScale}");
+    }
+
+    void FaceTarget(Vector3 targetPos)
+    {
+        if ((targetPos.x < transform.position.x && transform.localScale.x > 0) ||
+            (targetPos.x > transform.position.x && transform.localScale.x < 0))
+        {
+            Flip();
         }
     }
 
-    private Transform FindRandomVisiblePlayer()
+    void Shoot()
     {
-        List<Transform> validTargets = new List<Transform>();
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+        Rigidbody2D rbBullet = bullet.GetComponent<Rigidbody2D>();
+        if (rbBullet && target != null)
+        {
+            Vector2 dir = (target.position - bulletSpawnPoint.position).normalized;
+            rbBullet.linearVelocity = dir * 7f;
+        }
+    }
+
+    Transform FindClosestVisiblePlayer()
+    {
+        float closestDist = Mathf.Infinity;
+        Transform closest = null;
 
         foreach (GameObject player in players)
         {
             if (player == null) continue;
-
-            PlayerHealth health = player.GetComponent<PlayerHealth>();
-            if (health == null || health.IsDead() || health.IsInvincible()) continue;
+            PlayerHealth ph = player.GetComponent<PlayerHealth>();
+            if (ph == null || ph.IsDead() || ph.IsInvincible()) continue;
 
             if (IsInViewBox(player.transform.position))
             {
-                validTargets.Add(player.transform);
+                float dist = Vector2.Distance(transform.position, player.transform.position);
+                if (dist < closestDist)
+                {
+                    closestDist = dist;
+                    closest = player.transform;
+                }
             }
         }
-
-        if (validTargets.Count > 0)
-        {
-            int index = Random.Range(0, validTargets.Count);
-            return validTargets[index];
-        }
-
-        return null;
+        return closest;
     }
 
-    private bool IsValidTarget(Transform t)
+    bool IsValidTarget(Transform t)
     {
         if (t == null) return false;
-
-        PlayerHealth health = t.GetComponent<PlayerHealth>();
-        if (health == null || health.IsDead() || health.IsInvincible()) return false;
-
-        return IsInViewBox(t.position);
+        PlayerHealth ph = t.GetComponent<PlayerHealth>();
+        return ph != null && !ph.IsDead() && !ph.IsInvincible() && IsInViewBox(t.position);
     }
 
-    private void ShootAtTarget()
-    {
-        if (anim != null)
-            anim.SetTrigger("shoot");
-
-        GameObject b = Instantiate(bullet, bulletPos.position, Quaternion.identity);
-        Vector2 direction = (target.position - bulletPos.position).normalized;
-
-        Rigidbody2D rb = b.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.linearVelocity = direction * 7f;
-        }
-    }
-
-    private bool IsInViewBox(Vector3 playerPos)
+    bool IsInViewBox(Vector3 pos)
     {
         Vector2 enemyPos = transform.position;
-        Vector2 boxHalfSize = viewBoxSize / 2;
+        Vector2 half = viewBoxSize / 2f;
 
-        return
-            playerPos.x >= enemyPos.x - boxHalfSize.x &&
-            playerPos.x <= enemyPos.x + boxHalfSize.x &&
-            playerPos.y >= enemyPos.y - boxHalfSize.y &&
-            playerPos.y <= enemyPos.y + boxHalfSize.y;
+        return pos.x >= enemyPos.x - half.x && pos.x <= enemyPos.x + half.x &&
+               pos.y >= enemyPos.y - half.y && pos.y <= enemyPos.y + half.y;
     }
 
-    private void OnDrawGizmosSelected()
+    void OnDrawGizmosSelected()
+{
+    Gizmos.color = Color.red;
+    Gizmos.DrawWireCube(transform.position, viewBoxSize);
+
+    if (pointA && pointB)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, viewBoxSize);
+        // Draw patrol path
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
+
+        // Draw spheres at pointA and pointB
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(pointA.transform.position, 0.2f);
+        Gizmos.DrawSphere(pointB.transform.position, 0.2f);
     }
 
-    public void SetPlayers(GameObject[] players)
+    // Draw cat's current position
+    Gizmos.color = Color.magenta;
+    Gizmos.DrawSphere(transform.position, 0.15f);
+
+    // Draw target position
+    if (Application.isPlaying && currentPoint != null)
     {
-        this.players = players;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(currentPoint.position, 0.25f);
+    }
+}
+
+
+    public void Die()
+    {
+        isDead = true;
+        rb.linearVelocity = Vector2.zero;
+        anim.SetTrigger("Die");
+        GetComponent<Collider2D>().enabled = false;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        Destroy(gameObject, 1.5f);
+    }
+
+    public void SetPlayers(GameObject[] newPlayers)
+    {
+        players = newPlayers;
     }
 }
