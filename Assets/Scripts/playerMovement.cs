@@ -33,6 +33,7 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 
     [Header("Shooting")]
     public GameObject bulletPrefab;
+    private GameObject activeBullet = null;
     public Transform firePoint;
     public float bulletSpeed = 15f;
     public float bulletSpawnDelay = 0.2f;
@@ -175,27 +176,34 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
     }
 
     private IEnumerator DelayedBulletSpawn()
+{
+    yield return new WaitForSeconds(bulletSpawnDelay);
+
+    if (activeBullet != null) yield break; // Don't shoot if bullet still exists
+
+    Vector3 mousePosition = hobbitCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+    Vector2 shootDirection = (mousePosition - firePoint.position).normalized;
+
+    activeBullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+    Rigidbody2D rb = activeBullet.GetComponent<Rigidbody2D>();
+    if (rb != null)
     {
-        yield return new WaitForSeconds(bulletSpawnDelay);
-
-        Vector3 mousePosition = hobbitCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector2 shootDirection = (mousePosition - firePoint.position).normalized;
-
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.linearVelocity = shootDirection * bulletSpeed;
-        }
-
-        Bullet bulletScript = bullet.GetComponent<Bullet>();
-        if (bulletScript != null)
-        {
-            bulletScript.damage = attackDamage;
-        }
-
-        StartCoroutine(ShakeCamera());
+        rb.linearVelocity = shootDirection * bulletSpeed;
     }
+
+    Bullet bulletScript = activeBullet.GetComponent<Bullet>();
+    if (bulletScript != null)
+    {
+        bulletScript.damage = attackDamage;
+        bulletScript.OnDestroyed += HandleBulletDestroyed;
+    }
+
+    StartCoroutine(ShakeCamera());
+}
+private void HandleBulletDestroyed()
+{
+    activeBullet = null;
+}
 
     private IEnumerator ShakeCamera()
     {

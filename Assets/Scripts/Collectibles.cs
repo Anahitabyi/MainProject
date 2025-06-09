@@ -39,7 +39,8 @@ public class Collectible : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+        GameObject player = other.gameObject;
+        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
 
         switch (type)
         {
@@ -85,30 +86,22 @@ public class Collectible : MonoBehaviour
                 break;
 
             case collectibleType.Powerup:
-                meleePlayerMovement meleePlayer = other.GetComponent<meleePlayerMovement>();
-                playerMovement rangedPlayer = other.GetComponent<playerMovement>();
+                // Use the DamageBoostHandler component
+                DamageBoostHandler boostHandler = player.GetComponent<DamageBoostHandler>();
+                if (boostHandler == null)
+                    boostHandler = player.AddComponent<DamageBoostHandler>();
 
-                if (meleePlayer != null)
-                {
-                    StartCoroutine(ApplyDamageBoostForDuration(meleePlayer, powerupValue, powerupDuration));
+                boostHandler.ApplyBoost(player, powerupValue, powerupDuration);
 
-                    // Trigger UI effect for melee player
-                    if (meleePlayer.weaponUIIndicator != null)
-                    {
-                        meleePlayer.weaponUIIndicator.ShowForDuration(powerupDuration);
-                    }
-                }
+                // Show powerup UI effect (if player has it)
+                meleePlayerMovement meleePlayer = player.GetComponent<meleePlayerMovement>();
+                playerMovement rangedPlayer = player.GetComponent<playerMovement>();
 
-                if (rangedPlayer != null)
-                {
-                    StartCoroutine(ApplyDamageBoostForDuration(rangedPlayer, powerupValue, powerupDuration));
+                if (meleePlayer != null && meleePlayer.weaponUIIndicator != null)
+                    meleePlayer.weaponUIIndicator.ShowForDuration(powerupDuration);
 
-                    // Trigger UI effect for ranged player
-                    if (rangedPlayer.weaponUIIndicator != null)
-                    {
-                        rangedPlayer.weaponUIIndicator.ShowForDuration(powerupDuration);
-                    }
-                }
+                if (rangedPlayer != null && rangedPlayer.weaponUIIndicator != null)
+                    rangedPlayer.weaponUIIndicator.ShowForDuration(powerupDuration);
 
                 if (healSound != null)
                     StartCoroutine(PlaySoundWithMixer(healSound));
@@ -116,20 +109,6 @@ public class Collectible : MonoBehaviour
                 Destroy(gameObject);
                 break;
         }
-    }
-
-    IEnumerator ApplyDamageBoostForDuration(meleePlayerMovement player, int amount, float duration)
-    {
-        player.attackDamage += amount;
-        yield return new WaitForSeconds(duration);
-        player.attackDamage -= amount;
-    }
-
-    IEnumerator ApplyDamageBoostForDuration(playerMovement player, int amount, float duration)
-    {
-        player.attackDamage += amount;
-        yield return new WaitForSeconds(duration);
-        player.attackDamage -= amount;
     }
 
     IEnumerator PlaySoundWithMixer(AudioClip clip)

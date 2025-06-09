@@ -6,6 +6,10 @@ public class Bullet : MonoBehaviour
     public GameObject keyPrefab;          // Assign your key prefab in the Inspector
     public Vector2 keySpawnOffset = new Vector2(0, 2f);  // Offset above the GoalPoint
 
+    // Event to notify when the bullet is destroyed
+    public delegate void BulletDestroyed();
+    public event BulletDestroyed OnDestroyed;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Check if it hit an enemy
@@ -13,7 +17,7 @@ public class Bullet : MonoBehaviour
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
-            Destroy(gameObject); // Destroy the bullet after hitting an enemy
+            DestroyBullet();
             return;
         }
 
@@ -26,12 +30,23 @@ public class Bullet : MonoBehaviour
                 Instantiate(keyPrefab, spawnPosition, Quaternion.identity);
             }
 
-            Destroy(other.gameObject); // Optionally remove the goal point object
-            Destroy(gameObject);       // Destroy the bullet
+            Destroy(other.gameObject);
+            DestroyBullet();
             return;
         }
 
-        // If it hit anything else (e.g., wall), destroy the bullet
+        // Hit something else
+        DestroyBullet();
+    }
+
+    private void DestroyBullet()
+    {
+        // Trigger the event before the bullet is destroyed
+        if (OnDestroyed != null)
+        {
+            OnDestroyed.Invoke();
+        }
+
         Destroy(gameObject);
     }
 }

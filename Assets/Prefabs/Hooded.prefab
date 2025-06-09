@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: -8179423667763921623}
   - component: {fileID: -5310316931670057863}
   - component: {fileID: 3402884669614538185}
+  - component: {fileID: 6378297807979700514}
   m_Layer: 7
   m_Name: Hooded
   m_TagString: Player
@@ -128,7 +129,8 @@ MonoBehaviour:
   playerCollider: {fileID: 4896806908539722067}
   spriteRenderer: {fileID: 950395865592157502}
   rb: {fileID: 2082189300949548363}
-  movementScript: {fileID: 8509036316442811293}
+  movementScriptMono: {fileID: 0}
+  playerId: 1
 --- !u!114 &8509036316442811293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +161,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   attackDamage: 1
-  isInputBlocked: 0
   weaponUIIndicator: {fileID: 0}
 --- !u!212 &950395865592157502
 SpriteRenderer:
@@ -415,19 +416,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b91bbd5b384bf5a4e81af8cf9f617ab3, type: 3}
   - {fileID: 8300000, guid: 27f292652013a4d4b856784808af63e7, type: 3}
   - {fileID: 8300000, guid: 922dad020b5d6ce4f9dd4453ef305499, type: 3}
-  jumpSound: {fileID: 8300000, guid: a431053ede092b741abc1b9a9dd862b9, type: 3}
-  landGrassSound: {fileID: 8300000, guid: b91bbd5b384bf5a4e81af8cf9f617ab3, type: 3}
-  landStoneSound: {fileID: 8300000, guid: 2288a84fd09285a45b628864ddabdc38, type: 3}
-  groundCheckPoint: {fileID: 3443541833231628164}
-  groundCheckRadius: 0.2
+  sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
+  horizontalAxis: Horizontal
+  groundCheck: {fileID: 0}
+  groundCheckSize: {x: 0.5, y: 0.05}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   surface: 0
-  animator: {fileID: 0}
-  sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
-  horizontalAxis: Horizontal
-  jumpButton: Jump
 --- !u!82 &-8179423667763921623
 AudioSource:
   m_ObjectHideFlags: 0
@@ -551,3 +547,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasKey: 0
+--- !u!114 &6378297807979700514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7099390637859293862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e3805f67d4eb84458922f1d89264c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
