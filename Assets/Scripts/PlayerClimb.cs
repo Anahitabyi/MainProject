@@ -10,7 +10,7 @@ public class PlayerClimb : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>(); //player's rigidbody
         originalGravity = rb.gravityScale;
     }
 
@@ -20,7 +20,7 @@ public class PlayerClimb : MonoBehaviour
         {
             float vertical = Input.GetAxisRaw("Vertical");
 
-            if (Mathf.Abs(vertical) > 0.1f)
+            if (Mathf.Abs(vertical) > 0.1f) // Climb while pressing the key
             {
                 isClimbing = true;
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, vertical * climbSpeed);
@@ -32,7 +32,7 @@ public class PlayerClimb : MonoBehaviour
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             }
         }
-        else
+        else // Not climbing anymore, gravity back to normal
         {
             if (isClimbing)
             {
