@@ -68,8 +68,9 @@ public class PauseMenuManager : MonoBehaviour
         {
             p.SetHealth(9);
         }
-        ScoreManager.Instance.ResetScore();
-        playerStatsManager.Instance.ResetAllStats();
+        if (ScoreManager.Instance!= null){ScoreManager.Instance.ResetScore();}
+        if (playerStatsManager.Instance != null){playerStatsManager.Instance.ResetAllStats();}
+        
     }
 
 

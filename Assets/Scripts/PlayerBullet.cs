@@ -10,6 +10,11 @@ public class Bullet : MonoBehaviour
     public delegate void BulletDestroyed();
     public event BulletDestroyed OnDestroyed;
 
+    private void Start()
+    {
+    Destroy(gameObject, 3f); // Automatically destroy bullet after 2 seconds
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Check if it hit an enemy
