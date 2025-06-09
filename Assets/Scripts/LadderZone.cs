@@ -8,7 +8,7 @@ public class LadderZone : MonoBehaviour
         {
             PlayerClimb climb = other.GetComponent<PlayerClimb>();
             if (climb != null)
-                climb.SetOnLadder(true);
+                climb.SetOnLadder(true); // Calls the method form the PlayerClimb so player can start climbing after the setter.
         }
     }
 
@@ -18,7 +18,7 @@ public class LadderZone : MonoBehaviour
         {
             PlayerClimb climb = other.GetComponent<PlayerClimb>();
             if (climb != null)
-                climb.SetOnLadder(false);
+                climb.SetOnLadder(false); // No longer climbing
         }
     }
 }

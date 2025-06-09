@@ -1,7 +1,9 @@
 using UnityEngine;
 
 public class LeverPuzzle : MonoBehaviour
-{
+{ 
+    //CODE NOT USED NOR WORKING
+    
     public GameObject leverButtonUI; // UI button shown when player is near
     public Animator leverAnimator;   // Animator for the lever
     public GameObject bridge;        // Bridge to activate
