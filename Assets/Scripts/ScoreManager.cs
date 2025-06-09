@@ -7,7 +7,7 @@ public class ScoreManager : MonoBehaviour
     //public ScoreUI ScoreUI;
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance == null) //Singleton
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); //keeps ScoreManager across scenes

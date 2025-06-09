@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TogglePlayerControls : MonoBehaviour
 {
-    [SerializeField] private MonoBehaviour movementScript; // Reference to your movement script
+    [SerializeField] private MonoBehaviour movementScript; // Reference to movement script
 
     public void EnableControls()
     {

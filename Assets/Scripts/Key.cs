@@ -26,7 +26,7 @@ public class Key : MonoBehaviour
         if (collected) return; // Already collected, do nothing
         if (!other.CompareTag("Player")) return;
 
-        collected = true; // Prevent re-triggering
+        collected = true; // Prevent triggering again falsely
 
         keyTracker.GotKey();
 

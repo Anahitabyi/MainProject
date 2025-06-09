@@ -64,7 +64,7 @@ public class BackgroundAudio : MonoBehaviour
         }
 
         // owl audio
-        owlTimer -= Time.deltaTime;
+        owlTimer -= Time.deltaTime; //check if the delay between playing the audios has been over
         if (owlTimer <= 0f)
         {
             owlHootSource.PlayOneShot(owlHootClip);
