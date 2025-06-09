@@ -52,9 +52,13 @@ public class PauseMenuManager : MonoBehaviour
     {
         if (resumeToggleClip != null)
             audioSource.PlayOneShot(resumeToggleClip);
+    
+        Time.timeScale = 1f; 
+
         pausePanel.SetActive(false);
         isPaused = false;
     }
+
     
     public void RestartLevel()
     {

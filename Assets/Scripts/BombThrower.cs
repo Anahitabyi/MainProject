@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BombThrower : MonoBehaviour
 {
-    public float spawnInterval = 0.1f;
+    public float spawnInterval = 5f;
     public float bombSpeed = 20f;
 
     public enum Direction { Up, Down, Left, Right }
