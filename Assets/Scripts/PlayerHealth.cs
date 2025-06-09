@@ -94,9 +94,10 @@ public class PlayerHealth : MonoBehaviour
 
         if (final)
         {
-            StartCoroutine(RemoveAfterDeathAnimation());
+            StartCoroutine(LoadGameOverAfterDeathAnimation());
         }
     }
+
 
     private IEnumerator RespawnAfterDelay(float delay)
     {
@@ -178,6 +179,20 @@ public class PlayerHealth : MonoBehaviour
         OnLivesChanged?.Invoke(currentLives, maxLives);
         playerStatsManager.Instance?.SaveFromPlayer(this);
     }
+    private IEnumerator LoadGameOverAfterDeathAnimation()
+    {
+        while (!animator.GetCurrentAnimatorStateInfo(0).IsTag("Death"))
+            yield return null;
+
+        float deathDuration = animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(deathDuration);
+
+        // Optional: reset stats if you want
+        // playerStatsManager.Instance?.ResetAllStats();
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
+    }
+
 
     public bool IsDead() => isDead;
     public bool IsInvincible() => isInvincible;

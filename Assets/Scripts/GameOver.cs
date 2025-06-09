@@ -8,18 +8,22 @@ public class GameOver : MonoBehaviour
     {
         Debug.Log("Restart button pressed");
 
-        /*PlayerHealth[] players = GameObject.FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
-        foreach (PlayerHealth p in players)
+        if (playerStatsManager.Instance != null)
         {
-            p.setHealth(9);
+            playerStatsManager.Instance.ResetAllStats();
         }
-        ScoreManager.Instance.ResetScore();*/
+
         SceneManager.LoadScene("Level1");
     }
 
     // Called when Exit button is clicked
     public void ExitToMainMenu()
+{
+    if (playerStatsManager.Instance != null)
     {
-        SceneManager.LoadScene("MainMenu");
+        playerStatsManager.Instance.ResetAllStats();
     }
+
+    SceneManager.LoadScene("MainMenu");
+}
 }

@@ -69,6 +69,7 @@ public class PauseMenuManager : MonoBehaviour
             p.SetHealth(9);
         }
         ScoreManager.Instance.ResetScore();
+        playerStatsManager.Instance.ResetAllStats();
     }
 
 

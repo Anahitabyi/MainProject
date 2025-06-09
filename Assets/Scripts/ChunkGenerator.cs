@@ -6,22 +6,25 @@ public class ChunkGenerator : MonoBehaviour
     [System.Serializable]
     public class ChunkData
     {
-    public GameObject chunkPrefab;
-    public float yPosition;
-    public float width; // ✅ Manually set this in the Inspector
+        public GameObject chunkPrefab;
+        public float yPosition;
+        public float width;
     }
+
     [SerializeField] private float generateDistance = 25f;
     [SerializeField] private int initialChunks = 3;
     [SerializeField] private List<ChunkData> chunkDataList = new List<ChunkData>();
 
     [SerializeField] private GameObject finalChunkPrefab;
     [SerializeField] private float finalChunkYPosition = 0f;
-    [SerializeField] private float finalChunkWidth = 20f; // ✅ Manually assigned
+    [SerializeField] private float finalChunkWidth = 20f;
 
     [SerializeField] private GameObject backgroundPrefab;
     [SerializeField] private float backgroundYPosition = 0f;
 
     [SerializeField] private Transform[] players;
+
+    public Transform FirstSpawnPoint { get; private set; } // ✅ Spawn point of the first chunk
 
     private List<ChunkData> unusedChunks = new List<ChunkData>();
 
@@ -94,14 +97,14 @@ public class ChunkGenerator : MonoBehaviour
             ChunkData data = unusedChunks[0];
             chunkToSpawn = data.chunkPrefab;
             chunkY = data.yPosition;
-            chunkWidth = data.width; // ✅ use manually assigned width
+            chunkWidth = data.width;
             unusedChunks.RemoveAt(0);
         }
         else if (!finalChunkSpawned && finalChunkPrefab != null)
         {
             chunkToSpawn = finalChunkPrefab;
             chunkY = finalChunkYPosition;
-            chunkWidth = finalChunkWidth; // ✅ use manually assigned width
+            chunkWidth = finalChunkWidth;
             finalChunkSpawned = true;
         }
 
@@ -112,16 +115,28 @@ public class ChunkGenerator : MonoBehaviour
         chunk.name = "Chunk_" + currentChunkIndex;
         currentChunkIndex++;
 
+        // ✅ Store spawn point from first chunk
+        if (activeChunks.Count == 0)
+        {
+            Transform spawn = chunk.transform.Find("SpawnPoint");
+            if (spawn != null)
+            {
+                FirstSpawnPoint = spawn;
+            }
+            else
+            {
+                Debug.LogWarning("SpawnPoint not found in the first chunk!");
+            }
+        }
+
         activeChunks.Add(new SpawnedChunk(chunk, chunkWidth));
 
-        // Assign players to enemy shooters
         EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
         foreach (EnemyShooter shooter in shooters)
         {
             shooter.SetPlayers(GetPlayerGameObjects());
         }
 
-        // Background generation
         if (backgroundPrefab != null)
         {
             GameObject background = Instantiate(backgroundPrefab);
