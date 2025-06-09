@@ -15,7 +15,7 @@ public class ProximityAudio : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.outputAudioMixerGroup = SfxMixerGroup;
-        audioSource.loop = true;
+        audioSource.loop = true; // Plays audio on loop and whenever the listener is close, it will hear it
         audioSource.spatialBlend = 1f; // Fully 3D
 
         switch (type)
