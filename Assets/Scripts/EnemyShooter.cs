@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class EnemyShooter : MonoBehaviour
 {
@@ -30,7 +29,6 @@ public class EnemyShooter : MonoBehaviour
     {
         if (isDead) return;
 
-        // If player is detected, stop and shoot
         target = FindClosestVisiblePlayer();
         if (IsValidTarget(target))
         {
@@ -50,54 +48,46 @@ public class EnemyShooter : MonoBehaviour
         {
             Patrol();
         }
-        //Debug.Log($"Velocity: {rb.linearVelocity}, Position: {transform.position}, Target: {currentPoint.position}");
-
     }
 
-   void Patrol()
-{
-    //Debug.Log("Patrolling...");
-
-    Vector2 direction = (currentPoint.position - transform.position).normalized;
-    rb.linearVelocity = new Vector2(direction.x * patrolSpeed, rb.linearVelocity.y);
-    anim.SetBool("isRunning", true);
-
-    //Debug.Log($"Moving towards: {currentPoint.name}");
+    void Patrol()
+    {
+        Vector2 direction = (currentPoint.position - transform.position).normalized;
+        rb.linearVelocity = new Vector2(direction.x * patrolSpeed, rb.linearVelocity.y);
+        anim.SetBool("isRunning", true);
 
         float distanceX = Mathf.Abs(transform.position.x - currentPoint.position.x);
-    //Debug.Log($"DistanceX to {currentPoint.name}: {distanceX}");
-
-    if (distanceX < 0.1f)
-    {
-        //Debug.Log($"Reached {currentPoint.name}, flipping...");
-        Flip();
-        currentPoint = currentPoint == pointA.transform ? pointB.transform : pointA.transform;
-        //Debug.Log($"Now targeting: {currentPoint.name}");
+        if (distanceX < 0.1f)
+        {
+            Flip();
+            currentPoint = currentPoint == pointA.transform ? pointB.transform : pointA.transform;
+        }
     }
-}
-
 
     void Flip()
     {
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
-        //Debug.Log($"Flipping! New scale: {transform.localScale}");
     }
 
     void FaceTarget(Vector3 targetPos)
     {
-        if ((targetPos.x < transform.position.x && transform.localScale.x > 0) ||
-            (targetPos.x > transform.position.x && transform.localScale.x < 0))
-        {
-            Flip();
-        }
+        Vector3 scale = transform.localScale;
+
+        if (targetPos.x < transform.position.x)
+            scale.x = -Mathf.Abs(scale.x);
+        else
+            scale.x = Mathf.Abs(scale.x);
+
+        transform.localScale = scale;
     }
 
     void Shoot()
     {
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
         Rigidbody2D rbBullet = bullet.GetComponent<Rigidbody2D>();
+
         if (rbBullet && target != null)
         {
             Vector2 dir = (target.position - bulletSpawnPoint.position).normalized;
@@ -146,34 +136,28 @@ public class EnemyShooter : MonoBehaviour
     }
 
     void OnDrawGizmosSelected()
-{
-    Gizmos.color = Color.red;
-    Gizmos.DrawWireCube(transform.position, viewBoxSize);
-
-    if (pointA && pointB)
     {
-        // Draw patrol path
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, viewBoxSize);
 
-        // Draw spheres at pointA and pointB
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(pointA.transform.position, 0.2f);
-        Gizmos.DrawSphere(pointB.transform.position, 0.2f);
+        if (pointA && pointB)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(pointA.transform.position, 0.2f);
+            Gizmos.DrawSphere(pointB.transform.position, 0.2f);
+        }
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawSphere(transform.position, 0.15f);
+
+        if (Application.isPlaying && currentPoint != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(currentPoint.position, 0.25f);
+        }
     }
-
-    // Draw cat's current position
-    Gizmos.color = Color.magenta;
-    Gizmos.DrawSphere(transform.position, 0.15f);
-
-    // Draw target position
-    if (Application.isPlaying && currentPoint != null)
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(currentPoint.position, 0.25f);
-    }
-}
-
 
     public void Die()
     {
