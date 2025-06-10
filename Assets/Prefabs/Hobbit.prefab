@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: -7030039299230297641}
-  jumpSound: {fileID: 0}
+  jumpSound: {fileID: 8300000, guid: f58c13761450bcb45892104cdd27b1d4, type: 3}
   landSound: {fileID: 0}
   hurtSound: {fileID: 8300000, guid: 98d7588c9b699d74189ae9a992d02165, type: 3}
   deathSound: {fileID: 8300000, guid: 98d7588c9b699d74189ae9a992d02165, type: 3}

@@ -82,7 +82,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 5302385323135332784, guid: 7e6f5acd11e99a14493b11936b5f37bf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -223,8 +223,8 @@ MonoBehaviour:
   audioSource: {fileID: -801660744962706890}
   jumpSound: {fileID: 0}
   landSound: {fileID: 0}
-  hurtSound: {fileID: 8300000, guid: b80e1c2924e0e1448b4f102d4bcfdff7, type: 3}
-  deathSound: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: 205ae38f985c1dd49a948eaf96813c17, type: 3}
+  deathSound: {fileID: 8300000, guid: 205ae38f985c1dd49a948eaf96813c17, type: 3}
   attackSound: {fileID: 8300000, guid: f77c80894ccd24b4c9de653eb258701c, type: 3}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
 --- !u!82 &-801660744962706890

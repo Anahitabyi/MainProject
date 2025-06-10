@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.Audio;
 
 public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
 {
@@ -16,6 +17,11 @@ public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
     public float jumpPower = 10f;
     public int maxJumps = 1;
     private int jumpsRemaining;
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip jumpSound;
+    public AudioMixerGroup sfxMixerGroup;
+
 
     [Header("Ground Check")]
     public Transform groundCheckPos;
@@ -46,6 +52,10 @@ public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
     {
         rb = GetComponent<Rigidbody2D>();
         jumpsRemaining = maxJumps;
+        if (audioSource != null && sfxMixerGroup != null)
+    {
+        audioSource.outputAudioMixerGroup = sfxMixerGroup;
+    }
     }
 
     void Update()
@@ -121,7 +131,10 @@ public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
             animator.SetTrigger("jump");
             jumpsRemaining--;
-
+            if (jumpSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(jumpSound);
+            }
             // Reset grounded timer on successful jump
             groundedTime = 0f;
         }
