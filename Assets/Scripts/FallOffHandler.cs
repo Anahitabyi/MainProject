@@ -15,7 +15,7 @@ public class FallOffHandler : MonoBehaviour
 
         if (chunkGenerator == null)
         {
-            Debug.LogError("ChunkGenerator not found!");
+            Debug.Log("ChunkGenerator not found!");
         }
     }
 

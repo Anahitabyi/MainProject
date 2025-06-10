@@ -20,7 +20,7 @@ public class patrollingEnemy : MonoBehaviour
 
         if (pointA == null || pointB == null)
         {
-            Debug.LogError($"{name}: pointA or pointB not assigned.");
+            Debug.Log($"{name}: pointA or pointB not assigned.");
             enabled = false;
             return;
         }

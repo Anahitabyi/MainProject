@@ -389,10 +389,10 @@ MonoBehaviour:
   invincibilityDuration: 3
   flashInterval: 0.1
   animator: {fileID: 3073781156953091832}
-  playerCollider: {fileID: 0}
-  spriteRenderer: {fileID: 0}
-  rb: {fileID: 0}
-  movementScriptMono: {fileID: 0}
+  playerCollider: {fileID: 7125895893738783617}
+  spriteRenderer: {fileID: 4390754354144911849}
+  rb: {fileID: 3886881576966377435}
+  movementScriptMono: {fileID: 3727483765937510447}
   playerId: 1
 --- !u!114 &148007022662654773
 MonoBehaviour:

@@ -109,6 +109,14 @@ PrefabInstance:
       value: Collectible (1) Variant Variant Variant Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6425799081268647266, guid: a10bc66097fcf334590eb57d3d050a56, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425799081268647266, guid: a10bc66097fcf334590eb57d3d050a56, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425799081268647266, guid: a10bc66097fcf334590eb57d3d050a56, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.405
       objectReference: {fileID: 0}
