@@ -43,6 +43,8 @@ public class BackgroundAudio : MonoBehaviour
     {
         // start night ambience
         nightAmbienceSource.clip = nightAmbienceClip;
+        owlHootSource.clip = owlHootClip;
+        dogBarkSource.clip = dogBarkClip;
         nightAmbienceSource.loop = true;
         nightAmbienceSource.Play();
 
@@ -72,11 +74,11 @@ public class BackgroundAudio : MonoBehaviour
 
     float GetRandomDogDelay()
     {
-        return Random.Range(50f, 80f);
+        return Random.Range(40f, 70f);
     }
 
     float GetRandomOwlDelay()
     {
-        return Random.Range(30f, 50f);
+        return Random.Range(25f, 50f);
     }
 }
