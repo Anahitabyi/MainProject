@@ -18,6 +18,10 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
     private int jumpsRemaining;
     private const float fallThreshold = -0.2f;
 
+    [Header("Jump Buffering")]
+    private float groundTime = 0f;
+    private float minGroundTime = 0.1f;
+
     [Header("GroundCheck")]
     public Transform groundCheckPos;
     public Vector2 groundCheckSizev = new Vector2(0.5f, 0.05f);
@@ -71,11 +75,6 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
         float yVel = rb.linearVelocity.y;
         bool groundedNow = isGrounded();
 
-        // if (groundedNow && wasFalling)
-        // {
-        //     animator.SetTrigger("falling");
-        // }
-
         animator.SetFloat("Yvelocity", yVel);
         animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
 
@@ -83,10 +82,14 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 
         wasFalling = yVel < fallThreshold && !groundedNow;
 
-        // Reset jump bool when falling starts
         if (wasFalling)
             animator.SetBool("isJumping", false);
-        
+
+        // Update ground time
+        if (groundedNow)
+            groundTime += Time.deltaTime;
+        else
+            groundTime = 0f;
     }
 
     private void Gravity()
@@ -112,11 +115,10 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
             {
                 animator.SetTrigger("falling");
             }
-            animator.SetBool("isJumping", false); // Reset jump state
+            animator.SetBool("isJumping", false);
             jumpsRemaining = maxJumps;
         }
     }
-
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -128,13 +130,27 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
     {
         if (isInputBlocked) return;
 
-        if (context.performed && jumpsRemaining > 0)
+        if (context.performed)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
-            jumpsRemaining--;
+            if (groundTime > minGroundTime)
+            {
+                // Grounded jump
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
+                jumpsRemaining = maxJumps - 1; // Use one jump now
+                groundTime = 0f;
 
-            animator.SetTrigger("jump"); // ✅ Animation only on actual jump input
-            animator.SetBool("isJumping", true);
+                animator.SetTrigger("jump");
+                animator.SetBool("isJumping", true);
+            }
+            else if (jumpsRemaining > 0)
+            {
+                // Air jump
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
+                jumpsRemaining--;
+
+                animator.SetTrigger("jump");
+                animator.SetBool("isJumping", true);
+            }
         }
         else if (context.canceled)
         {
@@ -142,16 +158,23 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
         }
     }
 
+    private bool isGrounded()
+    {
+        Collider2D[] hits = Physics2D.OverlapBoxAll(groundCheckPos.position, groundCheckSizev, 0f, groundLayer);
+        foreach (Collider2D hit in hits)
+        {
+            if (hit != null && hit.gameObject != this.gameObject && hit.transform.root != transform)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSizev);
-    }
-
-    private bool isGrounded()
-    {
-        Collider2D hit = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSizev, 0f, groundLayer);
-        return hit != null;
     }
 
     public void flip()
@@ -176,34 +199,35 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
     }
 
     private IEnumerator DelayedBulletSpawn()
-{
-    yield return new WaitForSeconds(bulletSpawnDelay);
-
-    if (activeBullet != null) yield break; // Don't shoot if bullet still exists
-
-    Vector3 mousePosition = hobbitCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-    Vector2 shootDirection = (mousePosition - firePoint.position).normalized;
-
-    activeBullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-    Rigidbody2D rb = activeBullet.GetComponent<Rigidbody2D>();
-    if (rb != null)
     {
-        rb.linearVelocity = shootDirection * bulletSpeed;
+        yield return new WaitForSeconds(bulletSpawnDelay);
+
+        if (activeBullet != null) yield break;
+
+        Vector3 mousePosition = hobbitCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 shootDirection = (mousePosition - firePoint.position).normalized;
+
+        activeBullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        Rigidbody2D rb = activeBullet.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = shootDirection * bulletSpeed;
+        }
+
+        Bullet bulletScript = activeBullet.GetComponent<Bullet>();
+        if (bulletScript != null)
+        {
+            bulletScript.damage = attackDamage;
+            bulletScript.OnDestroyed += HandleBulletDestroyed;
+        }
+
+        StartCoroutine(ShakeCamera());
     }
 
-    Bullet bulletScript = activeBullet.GetComponent<Bullet>();
-    if (bulletScript != null)
+    private void HandleBulletDestroyed()
     {
-        bulletScript.damage = attackDamage;
-        bulletScript.OnDestroyed += HandleBulletDestroyed;
+        activeBullet = null;
     }
-
-    StartCoroutine(ShakeCamera());
-}
-private void HandleBulletDestroyed()
-{
-    activeBullet = null;
-}
 
     private IEnumerator ShakeCamera()
     {

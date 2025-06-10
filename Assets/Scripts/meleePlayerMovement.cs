@@ -38,6 +38,10 @@ public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
     Rigidbody2D rb;
     private bool wasGroundedLastFrame = true;
 
+    // ✳️ New jump buffer timer
+    private float groundedTime = 0f;
+    private float groundedResetThreshold = 0.04f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -65,8 +69,6 @@ public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
 
         animator.SetFloat("Yvelocity", yVel);
         animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
-
-        // NEW: Update isJumping parameter
         animator.SetBool("isJumping", !groundedNow);
 
         flip();
@@ -91,7 +93,16 @@ public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
     {
         if (isGrounded())
         {
-            jumpsRemaining = maxJumps;
+            groundedTime += Time.deltaTime;
+
+            if (groundedTime > groundedResetThreshold)
+            {
+                jumpsRemaining = maxJumps;
+            }
+        }
+        else
+        {
+            groundedTime = 0f;
         }
     }
 
@@ -110,6 +121,9 @@ public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
             animator.SetTrigger("jump");
             jumpsRemaining--;
+
+            // Reset grounded timer on successful jump
+            groundedTime = 0f;
         }
         else if (context.canceled)
         {
@@ -165,8 +179,15 @@ public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
 
     private bool isGrounded()
     {
-        Collider2D hit = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSizev, 0f, groundLayer);
-        return hit != null;
+        Collider2D[] hits = Physics2D.OverlapBoxAll(groundCheckPos.position, groundCheckSizev, 0f, groundLayer);
+        foreach (Collider2D hit in hits)
+        {
+            if (hit != null && hit.gameObject != this.gameObject && hit.transform.root != transform)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void OnDrawGizmosSelected()
