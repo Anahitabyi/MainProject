@@ -17,6 +17,7 @@ public class GhostEnemy : MonoBehaviour
 
     private bool hasAppeared = false;
     private bool isChasing = false;
+    private bool hasDamagedPlayer = false;
     private Vector2 movement;
 
     void Update()
@@ -88,6 +89,33 @@ public class GhostEnemy : MonoBehaviour
     {
         isChasing = true;
         animator?.SetBool("IsChasing", true);
+    }
+
+    // Called when the ghost hits a player
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!hasAppeared || hasDamagedPlayer)
+            return;
+
+        PlayerHealth player = collision.GetComponent<PlayerHealth>();
+        if (player != null)
+        {
+            player.TakeDamage(1); // Damage the player
+            hasDamagedPlayer = true;
+
+            // Stop chasing and movement
+            isChasing = false;
+            movement = Vector2.zero;
+
+            // Trigger disappear animation
+            animator?.SetTrigger("Disappear");
+        }
+    }
+
+    // Called by Animation Event at end of "Disappear" animation
+    public void OnDisappearFinished()
+    {
+        Destroy(gameObject);
     }
 
     Transform GetClosestPlayer()

@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87fabe2718e81794194d5041ba59baed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 1
   chaseDistance: 10
   player1: {fileID: 0}
   player2: {fileID: 0}
