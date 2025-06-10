@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class OpenDoor : MonoBehaviour
 {
-    public TMP_Text _text;  // Assign in inspector - your UI text to show keys or subtitles
+    public TMP_Text _text;
     KeyTracker keyTracker;
 
     public AudioClip openDoorSound;
@@ -67,7 +67,7 @@ public class OpenDoor : MonoBehaviour
     {
         if (_text != null)
         {
-            _text.text = $"Keys: {currentKey}/4";
+            _text.text = $"Keys: {currentKey}/4"; // Show the number of keys when in door zone
             _text.gameObject.SetActive(true);
         }
     }
@@ -78,7 +78,7 @@ public class OpenDoor : MonoBehaviour
 
         if (currentKey >= 4)
         {
-            if (openDoorSound != null)
+            if (openDoorSound != null) // Open door (with or without sound)
             {
                 audioSource.PlayOneShot(openDoorSound);
                 StartCoroutine(WaitAndLoadScene(openDoorSound.length));
@@ -88,7 +88,7 @@ public class OpenDoor : MonoBehaviour
                 SceneManager.LoadScene("MainMenu");
             }
         }
-        else
+        else // Not enough keys, won't let player in. 
         {
             if (lockedDoorSound != null)
                 audioSource.PlayOneShot(lockedDoorSound);
@@ -103,7 +103,7 @@ public class OpenDoor : MonoBehaviour
         }
     }
 
-    private IEnumerator ShowSubtitle(string message, float duration)
+    private IEnumerator ShowSubtitle(string message, float duration) // Method to say that we don't have enough keys.
     {
         if (_text != null)
         {
@@ -115,7 +115,7 @@ public class OpenDoor : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitAndLoadScene(float waitTime)
+    private IEnumerator WaitAndLoadScene(float waitTime) 
     {
         yield return new WaitForSeconds(waitTime);
         SceneManager.LoadScene("MainMenu");

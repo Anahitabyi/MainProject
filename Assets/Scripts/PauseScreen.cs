@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
 {
-    public GameObject pauseMenuUI;    // Reference to your Canvas
+    public GameObject pauseMenuUI;    // Reference to Canvas
     public GameObject pausePanel;     // Resume / Settings / Quit
     public GameObject settingsPanel;  // Settings menu
     private bool isPaused = false;
@@ -25,7 +25,7 @@ public class PauseMenuManager : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape)) // Pause and unpause with esc
         {
             TogglePause();
         }
@@ -46,7 +46,7 @@ public class PauseMenuManager : MonoBehaviour
         isPaused = !isPaused;
         pausePanel.SetActive(isPaused);
         settingsPanel.SetActive(false);
-        Time.timeScale = isPaused ? 0f : 1f;
+        Time.timeScale = isPaused ? 0f : 1f; // Everything time based changes with pause and unpause
     }
     public void Resume()
     {
@@ -66,7 +66,8 @@ public class PauseMenuManager : MonoBehaviour
             audioSource.PlayOneShot(resumeToggleClip);
         Time.timeScale = 1f;
         Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
+        SceneManager.LoadScene("Level1"); 
+        // Reset health and score when restarting
         PlayerHealth[] players = GameObject.FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
         foreach (PlayerHealth p in players)
         {
@@ -95,7 +96,7 @@ public class PauseMenuManager : MonoBehaviour
     }
     public void BackToPause()
     {
-        settingsPanel.SetActive(false);
+        settingsPanel.SetActive(false); // Close setting and go back to pause
         pausePanel.SetActive(true);
         if (SettingsClip != null)
             audioSource.PlayOneShot(SettingsClip);
