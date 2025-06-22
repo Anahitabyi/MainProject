@@ -77,7 +77,7 @@ public class BossEnemy : MonoBehaviour
 
             if (animator != null)
                 animator.SetTrigger(attackAnimationName);
-                
+
         }
     }
 
@@ -89,7 +89,7 @@ public class BossEnemy : MonoBehaviour
             shooterDevice.currentTarget = minionsTargetPlayer1 ? player2 : player1;
             damagedPlayersThisWave.Clear();
             shooterDevice.TriggerAttack();
-            
+
         }
     }
 
@@ -128,8 +128,10 @@ public class BossEnemy : MonoBehaviour
         }
     }
 
-    public bool Registerdamage(Transform player){
-        if(!damagedPlayersThisWave.Contains(player)){
+    public bool Registerdamage(Transform player)
+    {
+        if (!damagedPlayersThisWave.Contains(player))
+        {
             damagedPlayersThisWave.Add(player);
             return true;
         }
@@ -149,6 +151,7 @@ public class BossEnemy : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= amount;
+        //Debug.Log("boss health : " + currentHealth);
         if (currentHealth <= 0)
         {
             Die();
@@ -169,5 +172,9 @@ public class BossEnemy : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
     }
 }

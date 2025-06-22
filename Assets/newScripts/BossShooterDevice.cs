@@ -74,6 +74,7 @@ public class BossShooterDevice : MonoBehaviour
                     //Debug.Log("ortho null!");
                 }
 
+
             if (bossRef != null)
                 bossRef.StartAttackWithDelay();
         }
