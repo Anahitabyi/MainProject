@@ -1,0 +1,855 @@
+fileFormatVersion: 2
+guid: 6cd0244672f8d154fad9fa79494b3378
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2141235977039813255
+    second: Flying Brain Monster Sprite Sheet_0
+  - first:
+      213: 9096530267094054715
+    second: Flying Brain Monster Sprite Sheet_1
+  - first:
+      213: -4356511592200726907
+    second: Flying Brain Monster Sprite Sheet_2
+  - first:
+      213: -4471279861218483982
+    second: Flying Brain Monster Sprite Sheet_3
+  - first:
+      213: -6804572128468458711
+    second: Flying Brain Monster Sprite Sheet_4
+  - first:
+      213: 2242609651159436259
+    second: Flying Brain Monster Sprite Sheet_5
+  - first:
+      213: 8168060841981124466
+    second: Flying Brain Monster Sprite Sheet_6
+  - first:
+      213: 2524336076827468201
+    second: Flying Brain Monster Sprite Sheet_7
+  - first:
+      213: -6026167205511365300
+    second: Flying Brain Monster Sprite Sheet_8
+  - first:
+      213: 2873168408778007510
+    second: Flying Brain Monster Sprite Sheet_9
+  - first:
+      213: 7143927980062656158
+    second: Flying Brain Monster Sprite Sheet_10
+  - first:
+      213: -6951655419720301177
+    second: Flying Brain Monster Sprite Sheet_11
+  - first:
+      213: -7561804680570116618
+    second: Flying Brain Monster Sprite Sheet_12
+  - first:
+      213: 8611178911059829602
+    second: Flying Brain Monster Sprite Sheet_13
+  - first:
+      213: 8908364774505782533
+    second: Flying Brain Monster Sprite Sheet_14
+  - first:
+      213: -3373686372027447255
+    second: Flying Brain Monster Sprite Sheet_15
+  - first:
+      213: -8153676105626038295
+    second: Flying Brain Monster Sprite Sheet_16
+  - first:
+      213: 7980480954702419600
+    second: Flying Brain Monster Sprite Sheet_17
+  - first:
+      213: 228728097053346548
+    second: Flying Brain Monster Sprite Sheet_18
+  - first:
+      213: -7513914262477972659
+    second: Flying Brain Monster Sprite Sheet_19
+  - first:
+      213: 2588802665256390049
+    second: Flying Brain Monster Sprite Sheet_20
+  - first:
+      213: -7357713914249887913
+    second: Flying Brain Monster Sprite Sheet_21
+  - first:
+      213: -6692144820162518399
+    second: Flying Brain Monster Sprite Sheet_22
+  - first:
+      213: 7232911539560060198
+    second: Flying Brain Monster Sprite Sheet_23
+  - first:
+      213: -3138262542217395688
+    second: Flying Brain Monster Sprite Sheet_24
+  - first:
+      213: -5294948884048890181
+    second: Flying Brain Monster Sprite Sheet_25
+  - first:
+      213: 7547461586122010695
+    second: Flying Brain Monster Sprite Sheet_26
+  - first:
+      213: 8092351278262439377
+    second: Flying Brain Monster Sprite Sheet_27
+  - first:
+      213: 7244916906284606745
+    second: Flying Brain Monster Sprite Sheet_28
+  - first:
+      213: 6054113246356946848
+    second: Flying Brain Monster Sprite Sheet_29
+  - first:
+      213: -6987145969063439907
+    second: Flying Brain Monster Sprite Sheet_30
+  - first:
+      213: 6062542592179659567
+    second: Flying Brain Monster Sprite Sheet_31
+  - first:
+      213: 6935636298921930651
+    second: Flying Brain Monster Sprite Sheet_32
+  - first:
+      213: 1728851805174674111
+    second: Flying Brain Monster Sprite Sheet_33
+  - first:
+      213: 2183646660022097894
+    second: Flying Brain Monster Sprite Sheet_34
+  - first:
+      213: -6307872492857206816
+    second: Flying Brain Monster Sprite Sheet_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 108
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9756140493dc842e0800000000000000
+      internalID: -2141235977039813255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 109
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b37faba151e5d3e70800000000000000
+      internalID: 9096530267094054715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 110
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5861107e9cf8a83c0800000000000000
+      internalID: -4356511592200726907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 111
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f0e6b4f7a2d2f1c0800000000000000
+      internalID: -4471279861218483982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 112
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9232d1a83bd4191a0800000000000000
+      internalID: -6804572128468458711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 110
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3eb883b88995f1f10800000000000000
+      internalID: 2242609651159436259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 109
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27f101e3f08ca5170800000000000000
+      internalID: 8168060841981124466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 107
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a12101994e380320800000000000000
+      internalID: 2524336076827468201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 76
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4df266cad0ce5ca0800000000000000
+      internalID: -6026167205511365300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 77
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d36611f17b8fd720800000000000000
+      internalID: 2873168408778007510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 77
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e96cb90d5a4542360800000000000000
+      internalID: 7143927980062656158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 77
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78507aa2a32c68f90800000000000000
+      internalID: -6951655419720301177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 76
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f56bb905b21f0790800000000000000
+      internalID: -7561804680570116618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 45
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2636e0b789d018770800000000000000
+      internalID: 8611178911059829602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 45
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50d150a509ed0ab70800000000000000
+      internalID: 8908364774505782533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 45
+        width: 31
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9284ab38e124e21d0800000000000000
+      internalID: -3373686372027447255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 45
+        width: 31
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9efc19e28c258de80800000000000000
+      internalID: -8153676105626038295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 39
+        width: 38
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 096dec9552d50ce60800000000000000
+      internalID: 7980480954702419600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 46
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fa040f0efa9c2300800000000000000
+      internalID: 228728097053346548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 44
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 812c73758d6a274d0800000000000000
+      internalID: -3138262542217395688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 11
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0afb717ebe7840450800000000000000
+      internalID: 6054113246356946848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 12
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd1db28b2cba80f90800000000000000
+      internalID: -6987145969063439907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 11
+        width: 17
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f236b8aed5a722450800000000000000
+      internalID: 6062542592179659567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 11
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9feb80a774504060800000000000000
+      internalID: 6935636298921930651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 10
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb2bab49e8d1ef710800000000000000
+      internalID: 1728851805174674111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_34
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 11
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e7d59d511fdd4e10800000000000000
+      internalID: 2183646660022097894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flying Brain Monster Sprite Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 12
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e7d9c6636fe578a0800000000000000
+      internalID: -6307872492857206816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 441ed976caaea374a80221f289fad16d
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Flying Brain Monster Sprite Sheet_0: -2141235977039813255
+      Flying Brain Monster Sprite Sheet_1: 9096530267094054715
+      Flying Brain Monster Sprite Sheet_10: 7143927980062656158
+      Flying Brain Monster Sprite Sheet_11: -6951655419720301177
+      Flying Brain Monster Sprite Sheet_12: -7561804680570116618
+      Flying Brain Monster Sprite Sheet_13: 8611178911059829602
+      Flying Brain Monster Sprite Sheet_14: 8908364774505782533
+      Flying Brain Monster Sprite Sheet_15: -3373686372027447255
+      Flying Brain Monster Sprite Sheet_16: -8153676105626038295
+      Flying Brain Monster Sprite Sheet_17: 7980480954702419600
+      Flying Brain Monster Sprite Sheet_18: 228728097053346548
+      Flying Brain Monster Sprite Sheet_19: -7513914262477972659
+      Flying Brain Monster Sprite Sheet_2: -4356511592200726907
+      Flying Brain Monster Sprite Sheet_20: 2588802665256390049
+      Flying Brain Monster Sprite Sheet_21: -7357713914249887913
+      Flying Brain Monster Sprite Sheet_22: -6692144820162518399
+      Flying Brain Monster Sprite Sheet_23: 7232911539560060198
+      Flying Brain Monster Sprite Sheet_24: -3138262542217395688
+      Flying Brain Monster Sprite Sheet_25: -5294948884048890181
+      Flying Brain Monster Sprite Sheet_26: 7547461586122010695
+      Flying Brain Monster Sprite Sheet_27: 8092351278262439377
+      Flying Brain Monster Sprite Sheet_28: 7244916906284606745
+      Flying Brain Monster Sprite Sheet_29: 6054113246356946848
+      Flying Brain Monster Sprite Sheet_3: -4471279861218483982
+      Flying Brain Monster Sprite Sheet_30: -6987145969063439907
+      Flying Brain Monster Sprite Sheet_31: 6062542592179659567
+      Flying Brain Monster Sprite Sheet_32: 6935636298921930651
+      Flying Brain Monster Sprite Sheet_33: 1728851805174674111
+      Flying Brain Monster Sprite Sheet_34: 2183646660022097894
+      Flying Brain Monster Sprite Sheet_35: -6307872492857206816
+      Flying Brain Monster Sprite Sheet_4: -6804572128468458711
+      Flying Brain Monster Sprite Sheet_5: 2242609651159436259
+      Flying Brain Monster Sprite Sheet_6: 8168060841981124466
+      Flying Brain Monster Sprite Sheet_7: 2524336076827468201
+      Flying Brain Monster Sprite Sheet_8: -6026167205511365300
+      Flying Brain Monster Sprite Sheet_9: 2873168408778007510
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

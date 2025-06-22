@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class Bullet : MonoBehaviour
 {
     public int damage = 1;                 // Damage dealt to enemies
@@ -9,6 +10,8 @@ public class Bullet : MonoBehaviour
     // Event to notify when the bullet is destroyed
     public delegate void BulletDestroyed();
     public event BulletDestroyed OnDestroyed;
+    public GameObject impactEffect;
+
 
     private void Start()
     {
@@ -17,6 +20,11 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log($"Bullet hit: {other.gameObject.name}, Tag: {other.tag}, Layer: {LayerMask.LayerToName(other.gameObject.layer)} ");
+        if(impactEffect != null){
+            GameObject flash = Instantiate(impactEffect, transform.position, Quaternion.identity);
+            //Destroy(flash, 0.5f);
+            }
         // Check if it hit an enemy
         EnemyHealth enemy = other.GetComponent<EnemyHealth>();
         if (enemy != null)
@@ -25,7 +33,13 @@ public class Bullet : MonoBehaviour
             DestroyBullet();
             return;
         }
-
+        BossEnemy boss = other.GetComponent<BossEnemy>();
+        if (boss != null)
+        {
+            boss.TakeDamage(damage);
+            DestroyBullet();
+            return;
+        }
         // Check if it hit a GoalPoint
         if (other.CompareTag("GoalPoint"))
         {
@@ -36,6 +50,7 @@ public class Bullet : MonoBehaviour
             }
 
             Destroy(other.gameObject);
+        
             DestroyBullet();
             return;
         }

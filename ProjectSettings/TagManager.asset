@@ -17,6 +17,7 @@ TagManager:
   - Waterfall
   - Jumpscare
   - Door
+  - Gun
   layers:
   - Default
   - TransparentFX
@@ -37,9 +38,9 @@ TagManager:
   - Player2UI
   - Interactable with hooded
   - Bomb
-  - 
-  - 
-  - 
+  - Gun
+  - ZoneTrigger
+  - Bullet
   - 
   - 
   - 

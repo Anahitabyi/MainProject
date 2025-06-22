@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using Unity.Cinemachine;
 
 public class newShooterPlayerMovement : MonoBehaviour
 {
@@ -20,14 +21,17 @@ public class newShooterPlayerMovement : MonoBehaviour
 
     [Header("Shooting")]
     public GameObject bulletPrefab;
-    private GameObject activeBullet = null;
+    //private GameObject activeBullet = null;
     public Transform firePoint;
     public float bulletSpeed = 15f;
-    public float bulletSpawnDelay = 0.2f;
-
+    //public float bulletSpawnDelay = 0.15f;
+    public GameObject impactEffect;
+    //public LineRenderer lineRenderer;
+    private bool isShooting;
+    private Coroutine shootingCoroutine;
+    public float fireRate = 0.1f;
+    private CinemachineImpulseSource impulseSource;
     public Camera hobbitCamera;
-    public float shakeDuration;
-    public float shakeMagnitude;
 
     [Header("Attack")]
     public int attackDamage = 1;
@@ -44,6 +48,7 @@ public class newShooterPlayerMovement : MonoBehaviour
         {
             audioSource.outputAudioMixerGroup = sfxMixerGroup;
         }
+        impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     void Update()
@@ -81,63 +86,53 @@ public class newShooterPlayerMovement : MonoBehaviour
     {
         if (isInputBlocked) return;
         moveInput = context.ReadValue<Vector2>();  // Get movement input
-        Debug.Log("Move Input: " + moveInput);
+        //Debug.Log("Move Input: " + moveInput);
     }
 
 
-    public void Shoot(InputAction.CallbackContext context)
-    {
-        if (isInputBlocked || !context.performed) return;
+    // public void OnShootStarted(InputAction.CallbackContext context)
+    // {
+    //     if (!isShooting)
+    //     {
+    //         isShooting = true;
+    //         shootingCoroutine = StartCoroutine(ShootContinuously());
+    //     }
+    // }
+    // public void OnShootCanceled(InputAction.CallbackContext context)
+    // {
+    //     Debug.Log("shoot canceled!");
+    //     isShooting = false;
+    //     if (shootingCoroutine != null)
+    //         StopCoroutine(shootingCoroutine);
+    // }
 
-        animator.SetTrigger("shoot");
-        StartCoroutine(DelayedBulletSpawn());
+    public void OnShoot(InputAction.CallbackContext context){
+        if(context.performed){
+            Shoot();
+        }
+
     }
 
-    private IEnumerator DelayedBulletSpawn()
+    private void Shoot()
     {
-        yield return new WaitForSeconds(bulletSpawnDelay);
+        //Debug.Log("shoot started! 2");
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 direction = (mousePosition - (Vector2)firePoint.position).normalized;
 
-        if (activeBullet != null) yield break;
-
-        Vector3 mousePosition = hobbitCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector2 shootDirection = (mousePosition - firePoint.position).normalized;
-
-        activeBullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        Rigidbody2D rb = activeBullet.GetComponent<Rigidbody2D>();
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        if(impactEffect != null){
+            GameObject flash = Instantiate(impactEffect, firePoint.position, firePoint.rotation);
+            //Destroy(flash, 0.5f);
+        }
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         if (rb != null)
-        {
-            rb.linearVelocity = shootDirection * bulletSpeed;
-        }
+            rb.linearVelocity = direction * bulletSpeed;
 
-        Bullet bulletScript = activeBullet.GetComponent<Bullet>();
-        if (bulletScript != null)
-        {
-            bulletScript.damage = attackDamage;
-            bulletScript.OnDestroyed += HandleBulletDestroyed;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        bullet.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        if (impulseSource != null){
+            impulseSource.GenerateImpulse(-direction * 0.2f);
         }
-
-        StartCoroutine(ShakeCamera());
     }
 
-    private void HandleBulletDestroyed()
-    {
-        activeBullet = null;
-    }
-
-    private IEnumerator ShakeCamera()
-    {
-        Vector3 originalPos = hobbitCamera.transform.position;
-        float elapsed = 0f;
-
-        while (elapsed < shakeDuration)
-        {
-            float offsetX = Random.Range(-1f, 1f) * shakeMagnitude;
-            float offsetY = Random.Range(-1f, 1f) * shakeMagnitude;
-            hobbitCamera.transform.position = originalPos + new Vector3(offsetX, offsetY, 0f);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        hobbitCamera.transform.position = originalPos;
-    }
 }

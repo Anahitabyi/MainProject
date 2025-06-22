@@ -72,7 +72,7 @@ public class newMeleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
     {
         if (isInputBlocked) return;
         moveInput = context.ReadValue<Vector2>();  // Get movement input
-        Debug.Log("Move Input: " + moveInput);
+        //Debug.Log("Move Input: " + moveInput);
     }
 
     public void MeleeAttack(InputAction.CallbackContext context)

@@ -1,0 +1,2507 @@
+fileFormatVersion: 2
+guid: 236c0980daab748478773f2e43700a7c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2632767102608497876
+    second: nuclear throne 2_0
+  - first:
+      213: -7238130363299983225
+    second: nuclear throne 2_1
+  - first:
+      213: 3761042681769669345
+    second: nuclear throne 2_2
+  - first:
+      213: -1887785098388926856
+    second: nuclear throne 2_3
+  - first:
+      213: 7387979459950110491
+    second: nuclear throne 2_4
+  - first:
+      213: -5566621188633070076
+    second: nuclear throne 2_5
+  - first:
+      213: 7857888403183080941
+    second: nuclear throne 2_6
+  - first:
+      213: -2715808072942206526
+    second: nuclear throne 2_7
+  - first:
+      213: 4800333896524994838
+    second: nuclear throne 2_8
+  - first:
+      213: 4193755305592762645
+    second: nuclear throne 2_9
+  - first:
+      213: 2208822095663831342
+    second: nuclear throne 2_10
+  - first:
+      213: -1721638919406599671
+    second: nuclear throne 2_11
+  - first:
+      213: 5270590009248648647
+    second: nuclear throne 2_12
+  - first:
+      213: -4752169518907504280
+    second: nuclear throne 2_13
+  - first:
+      213: -591563678860782571
+    second: nuclear throne 2_14
+  - first:
+      213: -8242558079489426932
+    second: nuclear throne 2_15
+  - first:
+      213: 8089873772438995975
+    second: nuclear throne 2_16
+  - first:
+      213: 6280289921485968252
+    second: nuclear throne 2_17
+  - first:
+      213: -180415168593644884
+    second: nuclear throne 2_18
+  - first:
+      213: -3270043795407217042
+    second: nuclear throne 2_19
+  - first:
+      213: 7419594508851229718
+    second: nuclear throne 2_20
+  - first:
+      213: 6331213063340810833
+    second: nuclear throne 2_21
+  - first:
+      213: -2789535592054654141
+    second: nuclear throne 2_22
+  - first:
+      213: 6959104791520848974
+    second: nuclear throne 2_23
+  - first:
+      213: 8782340084224050215
+    second: nuclear throne 2_24
+  - first:
+      213: -7036515023291345803
+    second: nuclear throne 2_25
+  - first:
+      213: 2419534199972283328
+    second: nuclear throne 2_26
+  - first:
+      213: 8722599355731072359
+    second: nuclear throne 2_27
+  - first:
+      213: 7898281683520645746
+    second: nuclear throne 2_28
+  - first:
+      213: -2918683198197042397
+    second: nuclear throne 2_29
+  - first:
+      213: -3845998249623939552
+    second: nuclear throne 2_30
+  - first:
+      213: 2515734405302406432
+    second: nuclear throne 2_31
+  - first:
+      213: -4973533768484161693
+    second: nuclear throne 2_32
+  - first:
+      213: -3891346011015223958
+    second: nuclear throne 2_33
+  - first:
+      213: -3096342365346201284
+    second: nuclear throne 2_34
+  - first:
+      213: 3723525894822495568
+    second: nuclear throne 2_35
+  - first:
+      213: -8291956770625885220
+    second: nuclear throne 2_36
+  - first:
+      213: -4121418970256878097
+    second: nuclear throne 2_37
+  - first:
+      213: -4794064617017402889
+    second: nuclear throne 2_38
+  - first:
+      213: -8679245621068156369
+    second: nuclear throne 2_39
+  - first:
+      213: -8492224813994202738
+    second: nuclear throne 2_40
+  - first:
+      213: 5036972957064070073
+    second: nuclear throne 2_41
+  - first:
+      213: -8651958633612974906
+    second: nuclear throne 2_42
+  - first:
+      213: 1268337112878381327
+    second: nuclear throne 2_43
+  - first:
+      213: -9023490542024249362
+    second: nuclear throne 2_44
+  - first:
+      213: -1539396924931517526
+    second: nuclear throne 2_45
+  - first:
+      213: 6903119756035372805
+    second: nuclear throne 2_46
+  - first:
+      213: 1301367453004548915
+    second: nuclear throne 2_47
+  - first:
+      213: -7947790322636582981
+    second: nuclear throne 2_48
+  - first:
+      213: 693967897371916837
+    second: nuclear throne 2_49
+  - first:
+      213: -893209010363629230
+    second: nuclear throne 2_50
+  - first:
+      213: 1357967236668489497
+    second: nuclear throne 2_51
+  - first:
+      213: 334099463559847094
+    second: nuclear throne 2_52
+  - first:
+      213: -8158613403918537936
+    second: nuclear throne 2_53
+  - first:
+      213: -4694354583497722869
+    second: nuclear throne 2_54
+  - first:
+      213: -7305078042638453764
+    second: nuclear throne 2_55
+  - first:
+      213: 8806812946773800895
+    second: nuclear throne 2_56
+  - first:
+      213: -2166791824076760421
+    second: nuclear throne 2_57
+  - first:
+      213: -3133359789522970182
+    second: nuclear throne 2_58
+  - first:
+      213: -321796252628695440
+    second: nuclear throne 2_59
+  - first:
+      213: -7967288385871810626
+    second: nuclear throne 2_60
+  - first:
+      213: -3967713967050155488
+    second: nuclear throne 2_61
+  - first:
+      213: -5366757542072526258
+    second: nuclear throne 2_62
+  - first:
+      213: 8165546589171527632
+    second: nuclear throne 2_63
+  - first:
+      213: -6095399335900746663
+    second: nuclear throne 2_64
+  - first:
+      213: -1429304458928823320
+    second: nuclear throne 2_65
+  - first:
+      213: 2684212700952638909
+    second: nuclear throne 2_66
+  - first:
+      213: -5008738547194985250
+    second: nuclear throne 2_67
+  - first:
+      213: 2437924939545129257
+    second: nuclear throne 2_68
+  - first:
+      213: -80558926028315742
+    second: nuclear throne 2_69
+  - first:
+      213: -5630151693221093960
+    second: nuclear throne 2_70
+  - first:
+      213: 7500805640247203492
+    second: nuclear throne 2_71
+  - first:
+      213: 3965277679017758053
+    second: nuclear throne 2_72
+  - first:
+      213: -338711716438076341
+    second: nuclear throne 2_73
+  - first:
+      213: 4073610269440593441
+    second: nuclear throne 2_74
+  - first:
+      213: -4258866927562828407
+    second: nuclear throne 2_75
+  - first:
+      213: -4624912300927058143
+    second: nuclear throne 2_76
+  - first:
+      213: -5174305557556688733
+    second: nuclear throne 2_77
+  - first:
+      213: -8992468240801914906
+    second: nuclear throne 2_78
+  - first:
+      213: -6674538204382341517
+    second: nuclear throne 2_79
+  - first:
+      213: -5429106816905398075
+    second: nuclear throne 2_80
+  - first:
+      213: -6928809997809824799
+    second: nuclear throne 2_81
+  - first:
+      213: 909949824698561730
+    second: nuclear throne 2_82
+  - first:
+      213: -820103544294144866
+    second: nuclear throne 2_83
+  - first:
+      213: 6360794348697902186
+    second: nuclear throne 2_84
+  - first:
+      213: -5745272808697796450
+    second: nuclear throne 2_85
+  - first:
+      213: 1047733666353799336
+    second: nuclear throne 2_86
+  - first:
+      213: -916191861780812148
+    second: nuclear throne 2_87
+  - first:
+      213: -30780653329532202
+    second: nuclear throne 2_88
+  - first:
+      213: 5830697561336005927
+    second: nuclear throne 2_89
+  - first:
+      213: 8376794967590078635
+    second: nuclear throne 2_90
+  - first:
+      213: 7372189718192710859
+    second: nuclear throne 2_91
+  - first:
+      213: 7960112618210044
+    second: nuclear throne 2_92
+  - first:
+      213: 237720344871433641
+    second: nuclear throne 2_93
+  - first:
+      213: -5618278309952623576
+    second: nuclear throne 2_94
+  - first:
+      213: 2284731188270437329
+    second: nuclear throne 2_95
+  - first:
+      213: 324230925306302293
+    second: nuclear throne 2_96
+  - first:
+      213: -530757208431580537
+    second: nuclear throne 2_97
+  - first:
+      213: 7657127213259243684
+    second: nuclear throne 2_98
+  - first:
+      213: -4553012395486120265
+    second: nuclear throne 2_99
+  - first:
+      213: 8949047301357582202
+    second: nuclear throne 2_100
+  - first:
+      213: -2269545859325141861
+    second: nuclear throne 2_101
+  - first:
+      213: 8843030375604252874
+    second: nuclear throne 2_102
+  - first:
+      213: 2015791978093415854
+    second: nuclear throne 2_103
+  - first:
+      213: -2343996830328647091
+    second: nuclear throne 2_104
+  - first:
+      213: 820667029862337416
+    second: nuclear throne 2_105
+  - first:
+      213: -979678699749912875
+    second: nuclear throne 2_106
+  - first:
+      213: -8771238531666919556
+    second: nuclear throne 2_107
+  - first:
+      213: -5955125518144328844
+    second: nuclear throne 2_108
+  - first:
+      213: 6732912382830541768
+    second: nuclear throne 2_109
+  - first:
+      213: 4424744566184250571
+    second: nuclear throne 2_110
+  - first:
+      213: -7587943185059750863
+    second: nuclear throne 2_111
+  - first:
+      213: -1680558376792267799
+    second: nuclear throne 2_112
+  - first:
+      213: -5688763838152897762
+    second: nuclear throne 2_113
+  - first:
+      213: -3805702241157432242
+    second: nuclear throne 2_114
+  - first:
+      213: 1787209440486170556
+    second: nuclear throne 2_115
+  - first:
+      213: -5152603937982178027
+    second: nuclear throne 2_116
+  - first:
+      213: 1188751863863956329
+    second: nuclear throne 2_117
+  - first:
+      213: 4400629749979861320
+    second: nuclear throne 2_118
+  - first:
+      213: 7086278643531459895
+    second: nuclear throne 2_119
+  - first:
+      213: 8483905526595068791
+    second: nuclear throne 2_120
+  - first:
+      213: 8345718258196041206
+    second: nuclear throne 2_121
+  - first:
+      213: -6843923865545608912
+    second: nuclear throne 2_122
+  - first:
+      213: 4166865251558878432
+    second: nuclear throne 2_123
+  - first:
+      213: 1072288049913850004
+    second: nuclear throne 2_124
+  - first:
+      213: 2415737261190785451
+    second: nuclear throne 2_125
+  - first:
+      213: -924266205537072770
+    second: nuclear throne 2_126
+  - first:
+      213: 2938889938246851821
+    second: nuclear throne 2_127
+  - first:
+      213: 5012247865722852045
+    second: nuclear throne 2_128
+  - first:
+      213: 4940170649639418740
+    second: nuclear throne 2_129
+  - first:
+      213: 2423421793932016033
+    second: nuclear throne 2_130
+  - first:
+      213: 8419693288523509093
+    second: nuclear throne 2_131
+  - first:
+      213: -4502278014895869956
+    second: nuclear throne 2_132
+  - first:
+      213: 950132822735620510
+    second: nuclear throne 2_133
+  - first:
+      213: -8157063612233358405
+    second: nuclear throne 2_134
+  - first:
+      213: 4565442972501714983
+    second: nuclear throne 2_135
+  - first:
+      213: 5715335751318635100
+    second: nuclear throne 2_136
+  - first:
+      213: 9126601487889436645
+    second: nuclear throne 2_137
+  - first:
+      213: -6705659030824433599
+    second: nuclear throne 2_138
+  - first:
+      213: 2761232400350752104
+    second: nuclear throne 2_139
+  - first:
+      213: -2921306814563144564
+    second: nuclear throne 2_140
+  - first:
+      213: -2380138117900775100
+    second: nuclear throne 2_141
+  - first:
+      213: -4879815721234361773
+    second: nuclear throne 2_142
+  - first:
+      213: -8701040256137486567
+    second: nuclear throne 2_143
+  - first:
+      213: 5390553595451216731
+    second: nuclear throne 2_144
+  - first:
+      213: 9044301192324724731
+    second: nuclear throne 2_145
+  - first:
+      213: -1208686599470154222
+    second: nuclear throne 2_146
+  - first:
+      213: 704488675574077445
+    second: nuclear throne 2_147
+  - first:
+      213: -8049424642489125181
+    second: nuclear throne 2_148
+  - first:
+      213: -3316818181493607027
+    second: nuclear throne 2_149
+  - first:
+      213: -4633501735843707107
+    second: nuclear throne 2_150
+  - first:
+      213: 4052278225738355275
+    second: nuclear throne 2_151
+  - first:
+      213: -8960182879821918932
+    second: nuclear throne 2_152
+  - first:
+      213: 2254416877432440311
+    second: nuclear throne 2_153
+  - first:
+      213: 7851552016493624530
+    second: nuclear throne 2_154
+  - first:
+      213: 8253154372107990443
+    second: nuclear throne 2_155
+  - first:
+      213: 5760208070829114355
+    second: nuclear throne 2_156
+  - first:
+      213: 883592479718244531
+    second: nuclear throne 2_157
+  - first:
+      213: -3067490088573297147
+    second: nuclear throne 2_158
+  - first:
+      213: 6047702380865051905
+    second: nuclear throne 2_159
+  - first:
+      213: -3023127347206369192
+    second: nuclear throne 2_160
+  - first:
+      213: 8654371444545133050
+    second: nuclear throne 2_161
+  - first:
+      213: -1269822836036539662
+    second: nuclear throne 2_162
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: nuclear throne 2_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1055
+        width: 176
+        height: 164
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7801989a8cefc8b90800000000000000
+      internalID: -7238130363299983225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_11
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 1055
+        width: 354
+        height: 164
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 902484146828b18e0800000000000000
+      internalID: -1721638919406599671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_21
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 1056
+        width: 218
+        height: 163
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 152edb5acbcfcd750800000000000000
+      internalID: 6331213063340810833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_22
+      rect:
+        serializedVersion: 2
+        x: 1309
+        y: 1056
+        width: 261
+        height: 162
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34bf54b98249949d0800000000000000
+      internalID: -2789535592054654141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_24
+      rect:
+        serializedVersion: 2
+        x: 1573
+        y: 1065
+        width: 445
+        height: 154
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72449d896c321e970800000000000000
+      internalID: 8782340084224050215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_29
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 893
+        width: 529
+        height: 164
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32370975811ce77d0800000000000000
+      internalID: -2918683198197042397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_30
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 1057
+        width: 189
+        height: 162
+      alignment: 9
+      pivot: {x: 0.4890789, y: 0.4990189}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 026146c08f440aac0800000000000000
+      internalID: -3845998249623939552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_31
+      rect:
+        serializedVersion: 2
+        x: 1050
+        y: 1056
+        width: 261
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02d4749dc1fa9e220800000000000000
+      internalID: 2515734405302406432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_32
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 859
+        width: 261
+        height: 163
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 367771373657afab0800000000000000
+      internalID: -4973533768484161693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_33
+      rect:
+        serializedVersion: 2
+        x: 791
+        y: 859
+        width: 261
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a65ed439b692ff9c0800000000000000
+      internalID: -3891346011015223958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_34
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 859
+        width: 254
+        height: 162
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c310c8a16059705d0800000000000000
+      internalID: -3096342365346201284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_35
+      rect:
+        serializedVersion: 2
+        x: 1313
+        y: 859
+        width: 252
+        height: 163
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0550dd0c21f9ca330800000000000000
+      internalID: 3723525894822495568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_36
+      rect:
+        serializedVersion: 2
+        x: 1573
+        y: 881
+        width: 224
+        height: 170
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdbe2f1ff3d0dec80800000000000000
+      internalID: -8291956770625885220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_37
+      rect:
+        serializedVersion: 2
+        x: 1795
+        y: 913
+        width: 223
+        height: 138
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe558436847cdc6c0800000000000000
+      internalID: -4121418970256878097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_38
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 731
+        width: 353
+        height: 164
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f9986081af087db0800000000000000
+      internalID: -4794064617017402889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_39
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 662
+        width: 252
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f223edd97102d8780800000000000000
+      internalID: -8679245621068156369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_40
+      rect:
+        serializedVersion: 2
+        x: 795
+        y: 662
+        width: 252
+        height: 162
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e892e11868e852a80800000000000000
+      internalID: -8492224813994202738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_41
+      rect:
+        serializedVersion: 2
+        x: 1054
+        y: 662
+        width: 252
+        height: 163
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b38d09a73ce6e540800000000000000
+      internalID: 5036972957064070073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_42
+      rect:
+        serializedVersion: 2
+        x: 1315
+        y: 655
+        width: 248
+        height: 167
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c4ef1876711ee780800000000000000
+      internalID: -8651958633612974906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_43
+      rect:
+        serializedVersion: 2
+        x: 1573
+        y: 741
+        width: 445
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f097f8c52e90a9110800000000000000
+      internalID: 1268337112878381327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_44
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 668
+        width: 49
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eef2c88192f16c280800000000000000
+      internalID: -9023490542024249362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_45
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 669
+        width: 47
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa3d02127a6f2aae0800000000000000
+      internalID: -1539396924931517526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_46
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 667
+        width: 50
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 507387408decccf50800000000000000
+      internalID: 6903119756035372805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_47
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 668
+        width: 49
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33b4796bdc26f0210800000000000000
+      internalID: 1301367453004548915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_52
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 597
+        width: 50
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bc122521b5f2a400800000000000000
+      internalID: 334099463559847094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_53
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 598
+        width: 52
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03be1b7d558c6ce80800000000000000
+      internalID: -8158613403918537936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_54
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 599
+        width: 53
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0434e8c06d4adeb0800000000000000
+      internalID: -4694354583497722869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_55
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 600
+        width: 52
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf3770469362f9a90800000000000000
+      internalID: -7305078042638453764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_56
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 447
+        width: 252
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb773cfe6b5183a70800000000000000
+      internalID: 8806812946773800895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_57
+      rect:
+        serializedVersion: 2
+        x: 795
+        y: 447
+        width: 252
+        height: 181
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9a1fafe0520ee1e0800000000000000
+      internalID: -2166791824076760421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_58
+      rect:
+        serializedVersion: 2
+        x: 1054
+        y: 447
+        width: 252
+        height: 178
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab99df76fd11484d0800000000000000
+      internalID: -3133359789522970182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_59
+      rect:
+        serializedVersion: 2
+        x: 1313
+        y: 447
+        width: 252
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 076c3006300c88bf0800000000000000
+      internalID: -321796252628695440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_60
+      rect:
+        serializedVersion: 2
+        x: 1573
+        y: 574
+        width: 224
+        height: 141
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebfe301fc618e6190800000000000000
+      internalID: -7967288385871810626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_61
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 531
+        width: 47
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02a9e973b29dfe8c0800000000000000
+      internalID: -3967713967050155488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_62
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 512
+        width: 49
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4a5e1523727585b0800000000000000
+      internalID: -5366757542072526258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_63
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 488
+        width: 18
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dfa8742c59d15170800000000000000
+      internalID: 8165546589171527632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_64
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 488
+        width: 18
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95ceb7b499ac86ba0800000000000000
+      internalID: -6095399335900746663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_65
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 481
+        width: 20
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e36aa9da271a2ce0800000000000000
+      internalID: -1429304458928823320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_72
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 498
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56d83a54a0f770730800000000000000
+      internalID: 3965277679017758053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_73
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 468
+        width: 22
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b44127c0d77ac4bf0800000000000000
+      internalID: -338711716438076341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_74
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 488
+        width: 19
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12ec36705fe588830800000000000000
+      internalID: 4073610269440593441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_75
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 436
+        width: 18
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98555f4081775e4c0800000000000000
+      internalID: -4258866927562828407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_76
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 436
+        width: 18
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12f78e124c201dfb0800000000000000
+      internalID: -4624912300927058143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_77
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 436
+        width: 25
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a80182928c2138b0800000000000000
+      internalID: -5174305557556688733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_78
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 436
+        width: 23
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ef150577c5543380800000000000000
+      internalID: -8992468240801914906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_79
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 436
+        width: 22
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3765408cdd64f53a0800000000000000
+      internalID: -6674538204382341517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 336
+        width: 85
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c8b3ba5d10f7a4b0800000000000000
+      internalID: -5429106816905398075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_81
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 336
+        width: 86
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ebce54740ce7df90800000000000000
+      internalID: -6928809997809824799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_82
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 336
+        width: 86
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c436906b8ac0ac00800000000000000
+      internalID: 909949824698561730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_83
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 336
+        width: 86
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e940f4beb286e94f0800000000000000
+      internalID: -820103544294144866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_89
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 250
+        width: 252
+        height: 181
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7254b282a8ccae050800000000000000
+      internalID: 5830697561336005927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_90
+      rect:
+        serializedVersion: 2
+        x: 795
+        y: 242
+        width: 252
+        height: 186
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba88c7f04aa504470800000000000000
+      internalID: 8376794967590078635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_91
+      rect:
+        serializedVersion: 2
+        x: 1054
+        y: 240
+        width: 252
+        height: 190
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc4e9a93d774f4660800000000000000
+      internalID: 7372189718192710859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_92
+      rect:
+        serializedVersion: 2
+        x: 1313
+        y: 236
+        width: 252
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf20bf42ea74c1000800000000000000
+      internalID: 7960112618210044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_102
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 239
+        width: 85
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac071e33641c8ba70800000000000000
+      internalID: 8843030375604252874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_103
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 142
+        width: 85
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ead075bbf1889fb10800000000000000
+      internalID: 2015791978093415854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_104
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 239
+        width: 86
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d429e954d43787fd0800000000000000
+      internalID: -2343996830328647091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_105
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 142
+        width: 86
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88bc1d9c058936b00800000000000000
+      internalID: 820667029862337416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_106
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 239
+        width: 86
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dec363c96b7762f0800000000000000
+      internalID: -979678699749912875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_107
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 142
+        width: 86
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7f36c7070d464680800000000000000
+      internalID: -8771238531666919556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_108
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 239
+        width: 86
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47ba42294e42b5da0800000000000000
+      internalID: -5955125518144328844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_109
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 142
+        width: 86
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cb7172c32c107d50800000000000000
+      internalID: 6732912382830541768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_110
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 45
+        width: 85
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcc80495db9d76d30800000000000000
+      internalID: 4424744566184250571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_111
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 45
+        width: 86
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13cdaa630e532b690800000000000000
+      internalID: -7587943185059750863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_112
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 45
+        width: 86
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e36dfe6f057da8e0800000000000000
+      internalID: -1680558376792267799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_113
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 35
+        width: 252
+        height: 189
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1b0fc7fd637d01b0800000000000000
+      internalID: -5688763838152897762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_135
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2
+        width: 19
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 728a44ad136bb5f30800000000000000
+      internalID: 4565442972501714983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_136
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 20
+        width: 18
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c52007da593f05f40800000000000000
+      internalID: 5715335751318635100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_137
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 33
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ef833cc2b338ae70800000000000000
+      internalID: 9126601487889436645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_138
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 33
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 148c1dab3a6b0f2a0800000000000000
+      internalID: -6705659030824433599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_139
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 33
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86da43d0d3ed15620800000000000000
+      internalID: 2761232400350752104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_140
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 33
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8c290e0eee6577d0800000000000000
+      internalID: -2921306814563144564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_141
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 33
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44158260efc08fed0800000000000000
+      internalID: -2380138117900775100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_142
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 33
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3529576b479674cb0800000000000000
+      internalID: -4879815721234361773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_143
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 33
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91f1d84bcf1bf3780800000000000000
+      internalID: -8701040256137486567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_144
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 33
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5313974fe71fca40800000000000000
+      internalID: 5390553595451216731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_160
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 850def6e1b1bb06d0800000000000000
+      internalID: -3023127347206369192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_161
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 11
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af9956ad9f08a1870800000000000000
+      internalID: 8654371444545133050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nuclear throne 2_162
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 3
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2faec52cbdea06ee0800000000000000
+      internalID: -1269822836036539662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: d0b1f643d3b2a104cace727fd2329de6
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      nuclear throne 2_0: -2632767102608497876
+      nuclear throne 2_1: -7238130363299983225
+      nuclear throne 2_10: 2208822095663831342
+      nuclear throne 2_100: 8949047301357582202
+      nuclear throne 2_101: -2269545859325141861
+      nuclear throne 2_102: 8843030375604252874
+      nuclear throne 2_103: 2015791978093415854
+      nuclear throne 2_104: -2343996830328647091
+      nuclear throne 2_105: 820667029862337416
+      nuclear throne 2_106: -979678699749912875
+      nuclear throne 2_107: -8771238531666919556
+      nuclear throne 2_108: -5955125518144328844
+      nuclear throne 2_109: 6732912382830541768
+      nuclear throne 2_11: -1721638919406599671
+      nuclear throne 2_110: 4424744566184250571
+      nuclear throne 2_111: -7587943185059750863
+      nuclear throne 2_112: -1680558376792267799
+      nuclear throne 2_113: -5688763838152897762
+      nuclear throne 2_114: -3805702241157432242
+      nuclear throne 2_115: 1787209440486170556
+      nuclear throne 2_116: -5152603937982178027
+      nuclear throne 2_117: 1188751863863956329
+      nuclear throne 2_118: 4400629749979861320
+      nuclear throne 2_119: 7086278643531459895
+      nuclear throne 2_12: 5270590009248648647
+      nuclear throne 2_120: 8483905526595068791
+      nuclear throne 2_121: 8345718258196041206
+      nuclear throne 2_122: -6843923865545608912
+      nuclear throne 2_123: 4166865251558878432
+      nuclear throne 2_124: 1072288049913850004
+      nuclear throne 2_125: 2415737261190785451
+      nuclear throne 2_126: -924266205537072770
+      nuclear throne 2_127: 2938889938246851821
+      nuclear throne 2_128: 5012247865722852045
+      nuclear throne 2_129: 4940170649639418740
+      nuclear throne 2_13: -4752169518907504280
+      nuclear throne 2_130: 2423421793932016033
+      nuclear throne 2_131: 8419693288523509093
+      nuclear throne 2_132: -4502278014895869956
+      nuclear throne 2_133: 950132822735620510
+      nuclear throne 2_134: -8157063612233358405
+      nuclear throne 2_135: 4565442972501714983
+      nuclear throne 2_136: 5715335751318635100
+      nuclear throne 2_137: 9126601487889436645
+      nuclear throne 2_138: -6705659030824433599
+      nuclear throne 2_139: 2761232400350752104
+      nuclear throne 2_14: -591563678860782571
+      nuclear throne 2_140: -2921306814563144564
+      nuclear throne 2_141: -2380138117900775100
+      nuclear throne 2_142: -4879815721234361773
+      nuclear throne 2_143: -8701040256137486567
+      nuclear throne 2_144: 5390553595451216731
+      nuclear throne 2_145: 9044301192324724731
+      nuclear throne 2_146: -1208686599470154222
+      nuclear throne 2_147: 704488675574077445
+      nuclear throne 2_148: -8049424642489125181
+      nuclear throne 2_149: -3316818181493607027
+      nuclear throne 2_15: -8242558079489426932
+      nuclear throne 2_150: -4633501735843707107
+      nuclear throne 2_151: 4052278225738355275
+      nuclear throne 2_152: -8960182879821918932
+      nuclear throne 2_153: 2254416877432440311
+      nuclear throne 2_154: 7851552016493624530
+      nuclear throne 2_155: 8253154372107990443
+      nuclear throne 2_156: 5760208070829114355
+      nuclear throne 2_157: 883592479718244531
+      nuclear throne 2_158: -3067490088573297147
+      nuclear throne 2_159: 6047702380865051905
+      nuclear throne 2_16: 8089873772438995975
+      nuclear throne 2_160: -3023127347206369192
+      nuclear throne 2_161: 8654371444545133050
+      nuclear throne 2_162: -1269822836036539662
+      nuclear throne 2_17: 6280289921485968252
+      nuclear throne 2_18: -180415168593644884
+      nuclear throne 2_19: -3270043795407217042
+      nuclear throne 2_2: 3761042681769669345
+      nuclear throne 2_20: 7419594508851229718
+      nuclear throne 2_21: 6331213063340810833
+      nuclear throne 2_22: -2789535592054654141
+      nuclear throne 2_23: 6959104791520848974
+      nuclear throne 2_24: 8782340084224050215
+      nuclear throne 2_25: -7036515023291345803
+      nuclear throne 2_26: 2419534199972283328
+      nuclear throne 2_27: 8722599355731072359
+      nuclear throne 2_28: 7898281683520645746
+      nuclear throne 2_29: -2918683198197042397
+      nuclear throne 2_3: -1887785098388926856
+      nuclear throne 2_30: -3845998249623939552
+      nuclear throne 2_31: 2515734405302406432
+      nuclear throne 2_32: -4973533768484161693
+      nuclear throne 2_33: -3891346011015223958
+      nuclear throne 2_34: -3096342365346201284
+      nuclear throne 2_35: 3723525894822495568
+      nuclear throne 2_36: -8291956770625885220
+      nuclear throne 2_37: -4121418970256878097
+      nuclear throne 2_38: -4794064617017402889
+      nuclear throne 2_39: -8679245621068156369
+      nuclear throne 2_4: 7387979459950110491
+      nuclear throne 2_40: -8492224813994202738
+      nuclear throne 2_41: 5036972957064070073
+      nuclear throne 2_42: -8651958633612974906
+      nuclear throne 2_43: 1268337112878381327
+      nuclear throne 2_44: -9023490542024249362
+      nuclear throne 2_45: -1539396924931517526
+      nuclear throne 2_46: 6903119756035372805
+      nuclear throne 2_47: 1301367453004548915
+      nuclear throne 2_48: -7947790322636582981
+      nuclear throne 2_49: 693967897371916837
+      nuclear throne 2_5: -5566621188633070076
+      nuclear throne 2_50: -893209010363629230
+      nuclear throne 2_51: 1357967236668489497
+      nuclear throne 2_52: 334099463559847094
+      nuclear throne 2_53: -8158613403918537936
+      nuclear throne 2_54: -4694354583497722869
+      nuclear throne 2_55: -7305078042638453764
+      nuclear throne 2_56: 8806812946773800895
+      nuclear throne 2_57: -2166791824076760421
+      nuclear throne 2_58: -3133359789522970182
+      nuclear throne 2_59: -321796252628695440
+      nuclear throne 2_6: 7857888403183080941
+      nuclear throne 2_60: -7967288385871810626
+      nuclear throne 2_61: -3967713967050155488
+      nuclear throne 2_62: -5366757542072526258
+      nuclear throne 2_63: 8165546589171527632
+      nuclear throne 2_64: -6095399335900746663
+      nuclear throne 2_65: -1429304458928823320
+      nuclear throne 2_66: 2684212700952638909
+      nuclear throne 2_67: -5008738547194985250
+      nuclear throne 2_68: 2437924939545129257
+      nuclear throne 2_69: -80558926028315742
+      nuclear throne 2_7: -2715808072942206526
+      nuclear throne 2_70: -5630151693221093960
+      nuclear throne 2_71: 7500805640247203492
+      nuclear throne 2_72: 3965277679017758053
+      nuclear throne 2_73: -338711716438076341
+      nuclear throne 2_74: 4073610269440593441
+      nuclear throne 2_75: -4258866927562828407
+      nuclear throne 2_76: -4624912300927058143
+      nuclear throne 2_77: -5174305557556688733
+      nuclear throne 2_78: -8992468240801914906
+      nuclear throne 2_79: -6674538204382341517
+      nuclear throne 2_8: 4800333896524994838
+      nuclear throne 2_80: -5429106816905398075
+      nuclear throne 2_81: -6928809997809824799
+      nuclear throne 2_82: 909949824698561730
+      nuclear throne 2_83: -820103544294144866
+      nuclear throne 2_84: 6360794348697902186
+      nuclear throne 2_85: -5745272808697796450
+      nuclear throne 2_86: 1047733666353799336
+      nuclear throne 2_87: -916191861780812148
+      nuclear throne 2_88: -30780653329532202
+      nuclear throne 2_89: 5830697561336005927
+      nuclear throne 2_9: 4193755305592762645
+      nuclear throne 2_90: 8376794967590078635
+      nuclear throne 2_91: 7372189718192710859
+      nuclear throne 2_92: 7960112618210044
+      nuclear throne 2_93: 237720344871433641
+      nuclear throne 2_94: -5618278309952623576
+      nuclear throne 2_95: 2284731188270437329
+      nuclear throne 2_96: 324230925306302293
+      nuclear throne 2_97: -530757208431580537
+      nuclear throne 2_98: 7657127213259243684
+      nuclear throne 2_99: -4553012395486120265
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

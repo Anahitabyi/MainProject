@@ -1,0 +1,810 @@
+fileFormatVersion: 2
+guid: c020f68f1a8694f4aa651faddd892b29
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4367549702959988830
+    second: PC Computer - Nuclear Throne - Sewer Tiles_0
+  - first:
+      213: 6153733278815984169
+    second: PC Computer - Nuclear Throne - Sewer Tiles_1
+  - first:
+      213: -2995795171934833845
+    second: PC Computer - Nuclear Throne - Sewer Tiles_2
+  - first:
+      213: -7224666603366037057
+    second: PC Computer - Nuclear Throne - Sewer Tiles_3
+  - first:
+      213: 7166231910215077893
+    second: PC Computer - Nuclear Throne - Sewer Tiles_4
+  - first:
+      213: 7910450774670867297
+    second: PC Computer - Nuclear Throne - Sewer Tiles_5
+  - first:
+      213: -9212159365242019715
+    second: PC Computer - Nuclear Throne - Sewer Tiles_6
+  - first:
+      213: 6709572909944579997
+    second: PC Computer - Nuclear Throne - Sewer Tiles_7
+  - first:
+      213: 6074088465236794945
+    second: PC Computer - Nuclear Throne - Sewer Tiles_8
+  - first:
+      213: -457513646114743292
+    second: PC Computer - Nuclear Throne - Sewer Tiles_9
+  - first:
+      213: 5157595234670285582
+    second: PC Computer - Nuclear Throne - Sewer Tiles_10
+  - first:
+      213: 6619256242453585109
+    second: PC Computer - Nuclear Throne - Sewer Tiles_11
+  - first:
+      213: -7790332963182165315
+    second: PC Computer - Nuclear Throne - Sewer Tiles_12
+  - first:
+      213: 76128336771696405
+    second: PC Computer - Nuclear Throne - Sewer Tiles_13
+  - first:
+      213: 1279463259652559708
+    second: PC Computer - Nuclear Throne - Sewer Tiles_14
+  - first:
+      213: -4406770455950108462
+    second: PC Computer - Nuclear Throne - Sewer Tiles_15
+  - first:
+      213: 3798743347797487688
+    second: PC Computer - Nuclear Throne - Sewer Tiles_16
+  - first:
+      213: -2835512696584220739
+    second: PC Computer - Nuclear Throne - Sewer Tiles_17
+  - first:
+      213: -4321199404407302548
+    second: PC Computer - Nuclear Throne - Sewer Tiles_18
+  - first:
+      213: 8699337668764658604
+    second: PC Computer - Nuclear Throne - Sewer Tiles_19
+  - first:
+      213: 2889237452885786606
+    second: PC Computer - Nuclear Throne - Sewer Tiles_20
+  - first:
+      213: -7522146511221125166
+    second: PC Computer - Nuclear Throne - Sewer Tiles_21
+  - first:
+      213: 4036772377888879485
+    second: PC Computer - Nuclear Throne - Sewer Tiles_22
+  - first:
+      213: 1734650261515050561
+    second: PC Computer - Nuclear Throne - Sewer Tiles_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 102
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2aff4387fa85363c0800000000000000
+      internalID: -4367549702959988830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_1
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 58
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92a935e20d3766550800000000000000
+      internalID: 6153733278815984169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_2
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 58
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b437efcd92ccc66d0800000000000000
+      internalID: -2995795171934833845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 58
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb94dbd8004dcbb90800000000000000
+      internalID: -7224666603366037057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_4
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 58
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 500507a34f1937360800000000000000
+      internalID: 7166231910215077893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_5
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 58
+        width: 40
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16b7875711197cd60800000000000000
+      internalID: 7910450774670867297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_6
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 58
+        width: 40
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d70267c8dd5d72080800000000000000
+      internalID: -9212159365242019715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_7
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 58
+        width: 40
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d97a4d343013d1d50800000000000000
+      internalID: 6709572909944579997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_8
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 58
+        width: 40
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14e9cb8f64f7b4450800000000000000
+      internalID: 6074088465236794945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_9
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 4
+        width: 130
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40cdf6b43c596a9f0800000000000000
+      internalID: -457513646114743292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_10
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 23
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0315c13a85739740800000000000000
+      internalID: 5157595234670285582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_11
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 23
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dc9bb07b725cdb50800000000000000
+      internalID: 6619256242453585109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_12
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 41
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db2c287e17d23e390800000000000000
+      internalID: -7790332963182165315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_13
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 41
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5174e96a1567e0100800000000000000
+      internalID: 76128336771696405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_14
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 41
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5311c64e0191c110800000000000000
+      internalID: 1279463259652559708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_15
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 41
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d8586e4e9108d2c0800000000000000
+      internalID: -4406770455950108462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_16
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 41
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 840f85eb2f8d7b430800000000000000
+      internalID: 3798743347797487688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_17
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 33
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbfccf3c93c36a8d0800000000000000
+      internalID: -2835512696584220739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_18
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 33
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c665ca059040804c0800000000000000
+      internalID: -4321199404407302548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_19
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 33
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cab64e7c4814ab870800000000000000
+      internalID: 8699337668764658604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_20
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 33
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeff203d722a81820800000000000000
+      internalID: 2889237452885786606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_21
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 33
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2df88322a97fb9790800000000000000
+      internalID: -7522146511221125166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_22
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 4
+        width: 66
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d73fc27071f750830800000000000000
+      internalID: 4036772377888879485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_23
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 4
+        width: 66
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14e9427e837b21810800000000000000
+      internalID: 1734650261515050561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_24
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 102
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f181608eb31fdd48ac29164b199cd39
+      internalID: 1862674503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_25
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 102
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc17a4d48e48e0e47ba464bfc76b145c
+      internalID: -1337846642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC Computer - Nuclear Throne - Sewer Tiles_26
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 102
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04bb119b96442434fa2b3f4ed1fbac2f
+      internalID: 414929903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 2b8b5370d3133c241a4aac59b2ab9224
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      PC Computer - Nuclear Throne - Sewer Tiles_0: -4367549702959988830
+      PC Computer - Nuclear Throne - Sewer Tiles_1: 6153733278815984169
+      PC Computer - Nuclear Throne - Sewer Tiles_10: 5157595234670285582
+      PC Computer - Nuclear Throne - Sewer Tiles_11: 6619256242453585109
+      PC Computer - Nuclear Throne - Sewer Tiles_12: -7790332963182165315
+      PC Computer - Nuclear Throne - Sewer Tiles_13: 76128336771696405
+      PC Computer - Nuclear Throne - Sewer Tiles_14: 1279463259652559708
+      PC Computer - Nuclear Throne - Sewer Tiles_15: -4406770455950108462
+      PC Computer - Nuclear Throne - Sewer Tiles_16: 3798743347797487688
+      PC Computer - Nuclear Throne - Sewer Tiles_17: -2835512696584220739
+      PC Computer - Nuclear Throne - Sewer Tiles_18: -4321199404407302548
+      PC Computer - Nuclear Throne - Sewer Tiles_19: 8699337668764658604
+      PC Computer - Nuclear Throne - Sewer Tiles_2: -2995795171934833845
+      PC Computer - Nuclear Throne - Sewer Tiles_20: 2889237452885786606
+      PC Computer - Nuclear Throne - Sewer Tiles_21: -7522146511221125166
+      PC Computer - Nuclear Throne - Sewer Tiles_22: 4036772377888879485
+      PC Computer - Nuclear Throne - Sewer Tiles_23: 1734650261515050561
+      PC Computer - Nuclear Throne - Sewer Tiles_24: 1862674503
+      PC Computer - Nuclear Throne - Sewer Tiles_25: -1337846642
+      PC Computer - Nuclear Throne - Sewer Tiles_26: 414929903
+      PC Computer - Nuclear Throne - Sewer Tiles_3: -7224666603366037057
+      PC Computer - Nuclear Throne - Sewer Tiles_4: 7166231910215077893
+      PC Computer - Nuclear Throne - Sewer Tiles_5: 7910450774670867297
+      PC Computer - Nuclear Throne - Sewer Tiles_6: -9212159365242019715
+      PC Computer - Nuclear Throne - Sewer Tiles_7: 6709572909944579997
+      PC Computer - Nuclear Throne - Sewer Tiles_8: 6074088465236794945
+      PC Computer - Nuclear Throne - Sewer Tiles_9: -457513646114743292
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

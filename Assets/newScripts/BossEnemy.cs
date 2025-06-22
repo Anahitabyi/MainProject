@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BossEnemy : MonoBehaviour
 {
@@ -9,17 +10,24 @@ public class BossEnemy : MonoBehaviour
     [Header("Players")]
     public Transform player1;
     public Transform player2;
-    private Transform currentTarget;
 
     [Header("Attack")]
     public float timeToSwitchTarget = 10f;
     public float attackRange = 5f;
-    public int attackDamage = 10;
+    private bool isAttacking = false;
+    private bool isSpawning = false;
+    private bool minionsTargetPlayer1 = true;
+
+    [Header("Attack Delay")]
+    public float attackStartDelay = 3f; // Delay after alert animation
+    private bool canStartAttacking = false;
 
     [Header("Minion Spawning")]
-    public GameObject minionPrefab;
+    public GameObject minionPrefab1;
+    public GameObject minionPrefab2;
     public Transform[] spawnPoints;
-    public float spawnInterval = 20f;
+    public int attacksPerMinionSpawn = 3;
+    private int attackCount = 0;
 
     [Header("Animation")]
     public Animator animator;
@@ -27,63 +35,113 @@ public class BossEnemy : MonoBehaviour
     public string spawnAnimationName = "SpawnMinions";
     public string deathAnimationName = "Death";
 
-    [Header("UI")]
-    //public BossHealthBar healthBar; // ← Hook for health bar UI
+    [Header("Shooter Device")]
+    public BossShooterDevice shooterDevice;
 
-    private float switchTimer;
-    private float spawnTimer;
     private bool isDead = false;
+
+    private HashSet<Transform> damagedPlayersThisWave = new HashSet<Transform>();
 
     void Start()
     {
         currentHealth = maxHealth;
-        currentTarget = player1;
-        switchTimer = timeToSwitchTarget;
-        spawnTimer = spawnInterval;
+        shooterDevice.bossRef = this; // Register boss in device
+    }
 
-        //healthBar?.SetMaxHealth(maxHealth);
+    public void StartAttackWithDelay()
+    {
+        Invoke(nameof(EnableAttacking), attackStartDelay);
+    }
+
+    void EnableAttacking()
+    {
+        canStartAttacking = true;
     }
 
     void Update()
     {
-        if (isDead) return;
+        if (isDead || !canStartAttacking)
+            return;
 
-        HandleTargetSwitching();
-        HandleMinionSpawning();
         HandleAttacking();
-    }
-
-    void HandleTargetSwitching()
-    {
-        switchTimer -= Time.deltaTime;
-        if (switchTimer <= 0f)
-        {
-            currentTarget = (currentTarget == player1) ? player2 : player1;
-            switchTimer = timeToSwitchTarget;
-        }
-    }
-
-    void HandleMinionSpawning()
-    {
-        spawnTimer -= Time.deltaTime;
-        if (spawnTimer <= 0f)
-        {
-            animator.SetTrigger(spawnAnimationName); // Play spawn animation
-            foreach (Transform point in spawnPoints)
-            {
-                Instantiate(minionPrefab, point.position, Quaternion.identity);
-            }
-            spawnTimer = spawnInterval;
-        }
     }
 
     void HandleAttacking()
     {
-        if (Vector2.Distance(transform.position, currentTarget.position) <= attackRange)
+        Transform bulletTarget = minionsTargetPlayer1 ? player2 : player1;
+        float distance = Vector2.Distance(transform.position, bulletTarget.position);
+
+        if (!isAttacking && !isSpawning && distance <= attackRange)
         {
-            animator.SetTrigger(attackAnimationName); // Play attack animation
-            // Damage logic can go here or be triggered by animation event
+            isAttacking = true;
+
+            if (animator != null)
+                animator.SetTrigger(attackAnimationName);
+                
         }
+    }
+
+    // 🔔 Called in the middle of the boss attack animation
+    public void TriggerShooter()
+    {
+        if (shooterDevice != null)
+        {
+            shooterDevice.currentTarget = minionsTargetPlayer1 ? player2 : player1;
+            damagedPlayersThisWave.Clear();
+            shooterDevice.TriggerAttack();
+            
+        }
+    }
+
+    // 🔔 Called during the boss attack animation
+    public void SpawnMinions()
+    {
+        Transform minionTarget = minionsTargetPlayer1 ? player1 : player2;
+        GameObject[] playerObjects = { player1.gameObject, player2.gameObject };
+
+        bool useFirstMinion = true;
+        foreach (Transform point in spawnPoints)
+        {
+            GameObject chosenPrefab = useFirstMinion ? minionPrefab1 : minionPrefab2;
+            useFirstMinion = !useFirstMinion;
+
+            GameObject minion = Instantiate(chosenPrefab, point.position, Quaternion.identity);
+            MinionEnemy minionScript = minion.GetComponent<MinionEnemy>();
+            if (minionScript != null)
+            {
+                minionScript.SetPlayers(playerObjects, minionTarget.gameObject);
+            }
+        }
+    }
+
+    // 🔔 Called at the end of boss attack animation
+    public void OnAttackAnimationEnd()
+    {
+        isAttacking = false;
+        attackCount++;
+
+        if (attackCount >= attacksPerMinionSpawn)
+        {
+            attackCount = 0;
+            isSpawning = true;
+            animator.SetTrigger(spawnAnimationName);
+        }
+    }
+
+    public bool Registerdamage(Transform player){
+        if(!damagedPlayersThisWave.Contains(player)){
+            damagedPlayersThisWave.Add(player);
+            return true;
+        }
+        return false;
+    }
+
+    // 🔔 Called at the end of spawn animation
+    public void OnSpawnAnimationEnd()
+    {
+        isSpawning = false;
+        isAttacking = false;
+        minionsTargetPlayer1 = !minionsTargetPlayer1;
     }
 
     public void TakeDamage(float amount)
@@ -91,8 +149,6 @@ public class BossEnemy : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= amount;
-        //healthBar?.SetHealth(currentHealth);
-
         if (currentHealth <= 0)
         {
             Die();
@@ -102,8 +158,16 @@ public class BossEnemy : MonoBehaviour
     void Die()
     {
         isDead = true;
-        animator.SetTrigger(deathAnimationName);
-        // Optional: destroy after animation
+        isAttacking = false;
+        isSpawning = false;
+        if (animator != null)
+            animator.SetTrigger(deathAnimationName);
         Destroy(gameObject, 2f);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }
