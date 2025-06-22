@@ -57,7 +57,7 @@ public class CharacterSFX : MonoBehaviour
     }
 
     // === Internal helper ===
-    private void PlaySound(AudioClip clip, float pitchMin = 1f, float pitchMax = 1f)
+    public void PlaySound(AudioClip clip, float pitchMin = 1f, float pitchMax = 1f)
     {
         if (clip != null)
         {

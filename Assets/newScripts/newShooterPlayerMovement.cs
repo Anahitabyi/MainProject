@@ -19,6 +19,10 @@ public class newShooterPlayerMovement : MonoBehaviour
     public AudioClip jumpSound;
     public AudioMixerGroup sfxMixerGroup;
 
+    public CharacterSFX sfx;
+
+
+
     [Header("Shooting")]
     public GameObject bulletPrefab;
     //private GameObject activeBullet = null;
@@ -49,6 +53,8 @@ public class newShooterPlayerMovement : MonoBehaviour
             audioSource.outputAudioMixerGroup = sfxMixerGroup;
         }
         impulseSource = GetComponent<CinemachineImpulseSource>();
+
+        sfx = GetComponent<CharacterSFX>();
     }
 
     void Update()
@@ -120,7 +126,8 @@ public class newShooterPlayerMovement : MonoBehaviour
         Vector2 direction = (mousePosition - (Vector2)firePoint.position).normalized;
 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        if(impactEffect != null){
+        if (impactEffect != null)
+        {
             GameObject flash = Instantiate(impactEffect, firePoint.position, firePoint.rotation);
             //Destroy(flash, 0.5f);
         }
@@ -130,9 +137,11 @@ public class newShooterPlayerMovement : MonoBehaviour
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         bullet.transform.rotation = Quaternion.Euler(0f, 0f, angle);
-        if (impulseSource != null){
+        if (impulseSource != null)
+        {
             impulseSource.GenerateImpulse(-direction * 0.2f);
         }
+        sfx.PlaySound(sfx.attackSound);
     }
 
 }

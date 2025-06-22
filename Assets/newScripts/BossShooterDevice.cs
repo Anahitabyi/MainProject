@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Audio;
 
 public class BossShooterDevice : MonoBehaviour
 {
@@ -30,6 +31,10 @@ public class BossShooterDevice : MonoBehaviour
     public BossEnemy bossRef;
 
     private bool hasPlayedAlert = false;
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioMixerGroup sfxMixerGroup;
+    public BossSFX sfx;
 
 
     [Header("Camera Shake")]
@@ -45,6 +50,8 @@ public class BossShooterDevice : MonoBehaviour
     void Start()
     {
         impulseSource = GetComponent<CinemachineImpulseSource>();
+        audioSource = GetComponent<AudioSource>();
+        sfx = GetComponent<BossSFX>();
 
     }
 
@@ -65,15 +72,17 @@ public class BossShooterDevice : MonoBehaviour
             hasPlayedAlert = true;
             if (deviceAnimator != null)
                 deviceAnimator.SetTrigger(alertTrigger);
+            sfx.PlayAlertSound();
                 
-                if(orthoSizeChanger!=null){
-                   // Debug.Log("ortho not null!");
-                    orthoSizeChanger.StartChangeOrthoSize();
-                }
-                else{
-                    //Debug.Log("ortho null!");
-                }
-
+                if (orthoSizeChanger != null)
+            {
+                // Debug.Log("ortho not null!");
+                orthoSizeChanger.StartChangeOrthoSize();
+            }
+            else
+            {
+                //Debug.Log("ortho null!");
+            }
 
             if (bossRef != null)
                 bossRef.StartAttackWithDelay();
@@ -94,6 +103,7 @@ public class BossShooterDevice : MonoBehaviour
     {
         if (deviceAnimator != null)
             deviceAnimator.SetTrigger(attackTrigger);
+        
     }
 
     // 🔔 Call this from animation event during device attack animation
@@ -132,9 +142,10 @@ public class BossShooterDevice : MonoBehaviour
                 closestDistance = dist;
             }
         }
-
+        sfx.PlayAttackSound();
         for (int wave = 0; wave < numberOfWaves; wave++)
         {
+            
             for (int i = -1; i <= 1; i++)
             {
                 //damagedPlayersTHisWave.Clear();
@@ -153,6 +164,7 @@ public class BossShooterDevice : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, pos, rot);
         BossBullet bossBulletScript = bullet.GetComponent<BossBullet>();
         bossBulletScript.bossEnemy = bossRef;
+        
     }
     private void OnDrawGizmosSelected()
     {

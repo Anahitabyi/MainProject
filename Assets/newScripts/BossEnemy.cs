@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Audio;
 
 public class BossEnemy : MonoBehaviour
 {
@@ -39,6 +40,10 @@ public class BossEnemy : MonoBehaviour
     public BossShooterDevice shooterDevice;
 
     private bool isDead = false;
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioMixerGroup sfxMixerGroup;
+    public BossSFX sfx;
 
     private HashSet<Transform> damagedPlayersThisWave = new HashSet<Transform>();
 
@@ -46,6 +51,8 @@ public class BossEnemy : MonoBehaviour
     {
         currentHealth = maxHealth;
         shooterDevice.bossRef = this; // Register boss in device
+        audioSource = GetComponent<AudioSource>();
+        sfx = GetComponent<BossSFX>();
     }
 
     public void StartAttackWithDelay()
@@ -96,6 +103,7 @@ public class BossEnemy : MonoBehaviour
     // 🔔 Called during the boss attack animation
     public void SpawnMinions()
     {
+        sfx.PlaySpawnSound();
         Transform minionTarget = minionsTargetPlayer1 ? player1 : player2;
         GameObject[] playerObjects = { player1.gameObject, player2.gameObject };
 
