@@ -11,7 +11,7 @@ public class BossHealthTextUI : MonoBehaviour
     {
         if (boss != null && healthText != null)
         {
-            healthText.text = $"HP: {Mathf.Max(0, boss.GetCurrentHealth())} / {boss.maxHealth}";
+            healthText.text = $"HP: {Mathf.Max(0, boss.GetCurrentHealth())}/{boss.maxHealth}";
         }
     }
 }
