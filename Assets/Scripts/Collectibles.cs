@@ -17,14 +17,16 @@ public class Collectible : MonoBehaviour
     public int scoreValue = 100;
     public int lifevalue = 1;
     public int healthValue = 1;
-    public int powerupValue = 1;              // How much damage to add
-    public float powerupDuration = 10f;       // Duration in seconds
+    public int powerupValue = 1;
+    public float powerupDuration = 10f;
 
     public AudioClip healSound;
     public AudioClip coinPickupSound;
     public AudioClip healthPickupSound;
     public AudioClip lifePickupSound;
     public AudioMixerGroup sfxMixerGroup;
+
+    public UniqueID uniqueID;
 
     void Awake()
     {
@@ -33,6 +35,16 @@ public class Collectible : MonoBehaviour
         if (CompareTag("Powerup")) type = collectibleType.Powerup;
         if (CompareTag("Health")) type = collectibleType.Health;
         if (CompareTag("Life")) type = collectibleType.Life;
+
+        uniqueID = GetComponent<UniqueID>();
+    }
+
+    void Start()
+    {
+        if (SaveTracker.Instance != null && SaveTracker.Instance.IsCollected(uniqueID.id))
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -42,73 +54,51 @@ public class Collectible : MonoBehaviour
         GameObject player = other.gameObject;
         PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
 
+        SaveTracker.Instance?.MarkCollected(uniqueID.id); // ✅ Mark as collected before doing anything
+
         switch (type)
         {
             case collectibleType.Food:
-                if (playerHealth != null)
-                    playerHealth.AddHealth(healthValue);
-
-                if (healSound != null)
-                    StartCoroutine(PlaySoundWithMixer(healSound));
-
-                Destroy(gameObject);
+                playerHealth?.AddHealth(healthValue);
+                PlaySound(healSound);
                 break;
 
             case collectibleType.Coin:
-                var scoreManager = FindFirstObjectByType<ScoreManager>();
-                if (scoreManager != null)
-                    scoreManager.AddScore(scoreValue);
-
-                if (coinPickupSound != null)
-                    StartCoroutine(PlaySoundWithMixer(coinPickupSound));
-
-                Destroy(gameObject);
+                FindFirstObjectByType<ScoreManager>()?.AddScore(scoreValue);
+                PlaySound(coinPickupSound);
                 break;
 
             case collectibleType.Health:
-                if (playerHealth != null)
-                    playerHealth.AddHealth(healthValue);
-
-                if (healthPickupSound != null)
-                    StartCoroutine(PlaySoundWithMixer(healthPickupSound));
-
-                Destroy(gameObject);
+                playerHealth?.AddHealth(healthValue);
+                PlaySound(healthPickupSound);
                 break;
 
             case collectibleType.Life:
-                if (playerHealth != null)
-                    playerHealth.AddLives(lifevalue);
-
-                if (lifePickupSound != null)
-                    StartCoroutine(PlaySoundWithMixer(lifePickupSound));
-
-                Destroy(gameObject);
+                playerHealth?.AddLives(lifevalue);
+                PlaySound(lifePickupSound);
                 break;
 
             case collectibleType.Powerup:
-                // Use the DamageBoostHandler component
                 DamageBoostHandler boostHandler = player.GetComponent<DamageBoostHandler>();
                 if (boostHandler == null)
                     boostHandler = player.AddComponent<DamageBoostHandler>();
 
                 boostHandler.ApplyBoost(player, powerupValue, powerupDuration);
 
-                // Show powerup UI effect (if player has it)
-                meleePlayerMovement meleePlayer = player.GetComponent<meleePlayerMovement>();
-                playerMovement rangedPlayer = player.GetComponent<playerMovement>();
+                player.GetComponent<meleePlayerMovement>()?.weaponUIIndicator?.ShowForDuration(powerupDuration);
+                player.GetComponent<playerMovement>()?.weaponUIIndicator?.ShowForDuration(powerupDuration);
 
-                if (meleePlayer != null && meleePlayer.weaponUIIndicator != null)
-                    meleePlayer.weaponUIIndicator.ShowForDuration(powerupDuration);
-
-                if (rangedPlayer != null && rangedPlayer.weaponUIIndicator != null)
-                    rangedPlayer.weaponUIIndicator.ShowForDuration(powerupDuration);
-
-                if (healSound != null)
-                    StartCoroutine(PlaySoundWithMixer(healSound));
-
-                Destroy(gameObject);
+                PlaySound(healSound);
                 break;
         }
+
+        Destroy(gameObject);
+    }
+
+    void PlaySound(AudioClip clip)
+    {
+        if (clip == null) return;
+        StartCoroutine(PlaySoundWithMixer(clip));
     }
 
     IEnumerator PlaySoundWithMixer(AudioClip clip)

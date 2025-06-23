@@ -19,6 +19,11 @@ public static class SaveSystem
         string json = File.ReadAllText(savePath);
         return JsonUtility.FromJson<GameData>(json);
     }
+    public static void DeleteSave()
+        {
+            if (File.Exists(savePath))
+                File.Delete(savePath);
+        }
 
     public static bool SaveExists() => File.Exists(savePath);
 }
