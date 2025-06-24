@@ -8,7 +8,7 @@ public class PauseMenuManager : MonoBehaviour
     public GameObject pausePanel;     // Resume / Settings / Quit
     public GameObject settingsPanel;  // Settings menu
     private bool isPaused = false;
-    
+
     public AudioClip pauseToggleClip;
     public AudioClip resumeToggleClip;
     public AudioClip SettingsClip;
@@ -52,30 +52,30 @@ public class PauseMenuManager : MonoBehaviour
     {
         if (resumeToggleClip != null)
             audioSource.PlayOneShot(resumeToggleClip);
-    
-        Time.timeScale = 1f; 
+
+        Time.timeScale = 1f;
 
         pausePanel.SetActive(false);
         isPaused = false;
     }
 
-    
+
     public void RestartLevel()
     {
         if (resumeToggleClip != null)
             audioSource.PlayOneShot(resumeToggleClip);
         Time.timeScale = 1f;
         Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene("Level1"); 
+        SceneManager.LoadScene("Level1");
         // Reset health and score when restarting
         PlayerHealth[] players = GameObject.FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
         foreach (PlayerHealth p in players)
         {
             p.SetHealth(9);
         }
-        if (ScoreManager.Instance!= null){ScoreManager.Instance.ResetScore();}
-        if (playerStatsManager.Instance != null){playerStatsManager.Instance.ResetAllStats();}
-        
+        if (ScoreManager.Instance != null) { ScoreManager.Instance.ResetScore(); }
+        if (playerStatsManager.Instance != null) { playerStatsManager.Instance.ResetAllStats(); }
+
     }
 
 
@@ -101,4 +101,23 @@ public class PauseMenuManager : MonoBehaviour
         if (SettingsClip != null)
             audioSource.PlayOneShot(SettingsClip);
     }
+      public void SaveGame()
+        {
+            if (GameSaveController.Instance != null)
+            {
+                GameSaveController.Instance.SaveToFile();
+
+                // Show feedback
+                SaveFeedback feedback = FindFirstObjectByType<SaveFeedback>();
+
+                if (feedback != null)
+                    feedback.Show("Game Saved!");
+            }
+            else
+            {
+                Debug.LogWarning("GameSaveController not found!");
+            }
+        }
+
+
 }
