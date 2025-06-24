@@ -37,4 +37,5 @@ public class ChunkRecord
     public int chunkIndex;      // position in sequence
     public float posX;          // if dynamically placed
     public float posY;
+    public float width;
 }

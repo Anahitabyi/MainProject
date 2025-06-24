@@ -23,7 +23,7 @@ public class GameSaveController : MonoBehaviour
     {
         GameData data = new GameData();
 
-        // Save player stats
+        // ✅ Save player stats
         var p1 = playerStatsManager.Instance.player1Stats;
         var p2 = playerStatsManager.Instance.player2Stats;
 
@@ -45,34 +45,13 @@ public class GameSaveController : MonoBehaviour
 
         data.currentSceneName = SceneManager.GetActiveScene().name;
 
-        // Save spawned chunks
-        ChunkGenerator chunkGen = FindAnyObjectByType<ChunkGenerator>();
-        if (chunkGen != null)
-        {
-            data.spawnedChunks = new List<ChunkRecord>();
-            int index = 0;
-
-            foreach (Transform chunk in chunkGen.transform)
-            {
-                string chunkID = chunk.name.Split('(')[0]; // Or use UniqueID if preferred
-                data.spawnedChunks.Add(new ChunkRecord
-                {
-                    chunkID = chunkID,
-                    chunkIndex = index++,
-                    posX = chunk.position.x,
-                    posY = chunk.position.y
-                });
-            }
-        }
-
-        // Save collected collectibles and defeated enemies
+        // ✅ Save chunks and collectibles (but not enemies)
         if (SaveTracker.Instance != null)
         {
+            data.spawnedChunks = new List<ChunkRecord>(SaveTracker.Instance.spawnedChunks);
             data.collectedIDs = new List<string>(SaveTracker.Instance.collectedIDs);
-            //data.defeatedEnemyIDs = new List<string>(SaveTracker.Instance.killedEnemyIDs);
         }
 
-        // Save game to file
         SaveSystem.SaveGame(data);
     }
 
@@ -86,11 +65,13 @@ public class GameSaveController : MonoBehaviour
 
     private IEnumerator LoadSceneAfterFrame(GameData data)
     {
+        GameStateFlags.IsLoadingFromSave = true;
         yield return null;
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(data.currentSceneName);
         yield return new WaitUntil(() => asyncLoad.isDone);
 
-        // Restore player stats
+        // ✅ Restore player stats
         var p1 = playerStatsManager.Instance.player1Stats;
         var p2 = playerStatsManager.Instance.player2Stats;
 
@@ -104,18 +85,19 @@ public class GameSaveController : MonoBehaviour
         p2.maxHealth = data.player2Stats.maxHealth;
         p2.maxLives = data.player2Stats.maxLives;
 
-        // Restore chunks
+        // ✅ Restore collectibles (no enemies)
+        if (SaveTracker.Instance != null)
+        {
+            SaveTracker.Instance.collectedIDs = new HashSet<string>(data.collectedIDs);
+        }
+
+        // ✅ Restore chunks
         ChunkGenerator chunkGen = FindAnyObjectByType<ChunkGenerator>();
         if (chunkGen != null && data.spawnedChunks != null)
         {
             chunkGen.SpawnFromSavedData(data.spawnedChunks);
         }
 
-        // Restore collectibles and enemies
-        if (SaveTracker.Instance != null)
-        {
-            SaveTracker.Instance.collectedIDs = new HashSet<string>(data.collectedIDs);
-            //SaveTracker.Instance.killedEnemyIDs = new HashSet<string>(data.defeatedEnemyIDs);
-        }
+        GameStateFlags.IsLoadingFromSave = false;
     }
 }

@@ -35,22 +35,30 @@ public class EnemyHealth : MonoBehaviour
 
     // Called when the enemy dies
     protected virtual void Die()
+{
+    isDead = true;
+    Debug.Log($"{gameObject.name} has died.");
+
+    // ✅ Save defeated enemy ID
+    UniqueID unique = GetComponent<UniqueID>();
+    if (unique != null)
     {
-        isDead = true;                        // Mark enemy as dead
-        Debug.Log($"{gameObject.name} has died."); // Log death event
-
-        animator.SetTrigger("Die");           // Trigger the 'Die' animation
-
-        Collider2D col = GetComponent<Collider2D>();
-        if (col) col.enabled = false;         // Disable the collider so it doesn't interact anymore
-
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb)
-        {
-            rb.linearVelocity = Vector2.zero; // Stop all movement
-            rb.constraints = RigidbodyConstraints2D.FreezeAll; // Freeze physics to stop interactions
-        }
-
-        Destroy(gameObject, 0.5f);            // Destroy the enemy object after the animation plays
+        SaveTracker.Instance.MarkEnemyDefeated(unique.id);
     }
+
+    animator.SetTrigger("Die");
+
+    Collider2D col = GetComponent<Collider2D>();
+    if (col) col.enabled = false;
+
+    Rigidbody2D rb = GetComponent<Rigidbody2D>();
+    if (rb)
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    Destroy(gameObject, 0.5f); // or any delay you want
+}
+
 }

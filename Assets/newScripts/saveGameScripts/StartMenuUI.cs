@@ -1,15 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class StartMenuUI : MonoBehaviour
 {
     public GameObject startOptionsPanel;
     public string firstLevelSceneName = "Level1";
 
-    public GameObject otherButton1; // assign in Inspector
-    public GameObject otherButton2; // assign in Inspector
-    public GameObject startButton;  // optional: assign if you're manually hiding Start
+    public GameObject otherButton1;
+    public GameObject otherButton2;
+    public GameObject startButton;
 
     private void Start()
     {
@@ -32,11 +31,17 @@ public class StartMenuUI : MonoBehaviour
 
     public void OnNewGamePressed()
     {
+        // Reset all relevant data
         playerStatsManager.Instance.ResetAllStats();
-        SaveTracker.Instance.collectedIDs.Clear();
-        SaveTracker.Instance.defeatedEnemyIDs.Clear();
-        SaveSystem.DeleteSave();
 
+        if (SaveTracker.Instance != null)
+        {
+            SaveTracker.Instance.collectedIDs.Clear();
+            SaveTracker.Instance.defeatedEnemyIDs.Clear();
+            SaveTracker.Instance.ClearChunks(); // ✅ Important!
+        }
+
+        SaveSystem.DeleteSave();
         SceneManager.LoadScene(firstLevelSceneName);
     }
 
@@ -51,20 +56,18 @@ public class StartMenuUI : MonoBehaviour
             Debug.Log("No saved game found.");
         }
     }
+
     public void OnBackToStartScreen()
-{
-    // Hide the options panel
-    startOptionsPanel.SetActive(false);
+    {
+        startOptionsPanel.SetActive(false);
 
-    // Show Start and other buttons again
-    if (startButton != null)
-        startButton.SetActive(true);
+        if (startButton != null)
+            startButton.SetActive(true);
 
-    if (otherButton1 != null)
-        otherButton1.SetActive(true);
+        if (otherButton1 != null)
+            otherButton1.SetActive(true);
 
-    if (otherButton2 != null)
-        otherButton2.SetActive(true);
-}
-
+        if (otherButton2 != null)
+            otherButton2.SetActive(true);
+    }
 }

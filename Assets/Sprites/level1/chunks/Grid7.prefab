@@ -1011,7 +1011,7 @@ GameObject:
   - component: {fileID: 488099689575434842}
   m_Layer: 0
   m_Name: Grid7
-  m_TagString: Untagged
+  m_TagString: Chunk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1092,6 +1092,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6078346721405226216}
+  - component: {fileID: 8368026933584902332}
   m_Layer: 0
   m_Name: PatrolPair_2
   m_TagString: Untagged
@@ -1116,6 +1117,19 @@ Transform:
   - {fileID: 4526541364735720647}
   m_Father: {fileID: 1747457776236274830}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8368026933584902332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6492395571149714432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efde82564566d274bb013cdda1a9988e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 76bfdb76-c898-4f05-86c9-09795bda5770
 --- !u!1 &7499319039591867242
 GameObject:
   m_ObjectHideFlags: 0
