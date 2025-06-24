@@ -105,6 +105,7 @@ public class PauseMenuManager : MonoBehaviour
         {
             if (GameSaveController.Instance != null)
             {
+            Debug.Log("saved the game!");
                 GameSaveController.Instance.SaveToFile();
 
                 // Show feedback

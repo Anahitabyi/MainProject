@@ -168,4 +168,59 @@ public class ChunkGenerator : MonoBehaviour
             list[randomIndex] = temp;
         }
     }
+    public void SpawnFromSavedData(List<ChunkRecord> savedChunks)
+{
+    foreach (var record in savedChunks)
+    {
+        GameObject prefab = FindChunkPrefabByID(record.chunkID);
+        if (prefab == null)
+        {
+            Debug.LogWarning($"Chunk prefab with ID {record.chunkID} not found!");
+            continue;
+        }
+
+        GameObject chunk = Instantiate(prefab, new Vector3(record.posX, record.posY, 0), Quaternion.identity, transform);
+        chunk.name = $"Chunk_{record.chunkIndex}";
+        activeChunks.Add(new SpawnedChunk(chunk, record.chunkIndex)); // width is not used here, or use prefab width
+
+        // Store first spawn point
+        if (record.chunkIndex == 0)
+        {
+            Transform spawn = chunk.transform.Find("SpawnPoint");
+            if (spawn != null)
+                FirstSpawnPoint = spawn;
+        }
+
+        // Set enemy targets
+        EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
+        foreach (EnemyShooter shooter in shooters)
+        {
+            shooter.SetPlayers(GetPlayerGameObjects());
+        }
+
+        // Backgrounds (optional)
+        if (backgroundPrefab != null)
+        {
+            GameObject background = Instantiate(backgroundPrefab);
+            background.transform.position = new Vector3(record.posX, backgroundYPosition, -1);
+            activeBackgrounds.Add(background);
+        }
+    }
+
+    finalChunkSpawned = true; // Prevent more spawning
+}
+private GameObject FindChunkPrefabByID(string id)
+{
+    foreach (var chunk in chunkDataList)
+    {
+        if (chunk.chunkPrefab.name == id)
+            return chunk.chunkPrefab;
+    }
+
+    if (finalChunkPrefab != null && finalChunkPrefab.name == id)
+        return finalChunkPrefab;
+
+    return null;
+}
+
 }

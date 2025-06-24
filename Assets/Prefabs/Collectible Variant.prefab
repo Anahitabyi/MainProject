@@ -105,6 +105,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6157776353644550334, guid: 31ad1c0a594561546ad3289c47a08803, type: 3}
       insertIndex: -1
       addedObject: {fileID: 140600594432378923}
+    - targetCorrespondingSourceObject: {fileID: 6157776353644550334, guid: 31ad1c0a594561546ad3289c47a08803, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7723744762871274077}
   m_SourcePrefab: {fileID: 100100000, guid: 31ad1c0a594561546ad3289c47a08803, type: 3}
 --- !u!1 &9154606277984578669 stripped
 GameObject:
@@ -125,11 +128,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   scoreValue: 100
-  healValue: 1
+  lifevalue: 1
+  healthValue: 1
+  powerupValue: 1
+  powerupDuration: 10
   healSound: {fileID: 8300000, guid: f44f6b02fb4b15b49bbe86214609adb5, type: 3}
   coinPickupSound: {fileID: 8300000, guid: db40f0c67b612304bb95d48308eef206, type: 3}
   healthPickupSound: {fileID: 0}
+  lifePickupSound: {fileID: 0}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
+  uniqueID: {fileID: 0}
 --- !u!70 &7849098646352262099
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -179,3 +187,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aa4f4ddd019c5e4986259b8516c16e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-7723744762871274077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9154606277984578669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efde82564566d274bb013cdda1a9988e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: f626338c-8f3c-468b-a509-b40eec1e1956

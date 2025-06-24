@@ -6,6 +6,13 @@ public class UniqueID : MonoBehaviour
 
     private void Reset()
     {
-        id = System.Guid.NewGuid().ToString();
+        if (string.IsNullOrEmpty(id))
+            id = System.Guid.NewGuid().ToString();
+    }
+
+    private void Awake()
+    {
+        if (string.IsNullOrEmpty(id))
+            id = System.Guid.NewGuid().ToString();
     }
 }

@@ -17,7 +17,7 @@ public class SaveFeedback : MonoBehaviour
     {
         messageText.text = msg;
         panel.SetActive(true);
-        yield return new WaitForSeconds(displayTime);
+        yield return new WaitForSecondsRealtime(displayTime); // ✅ Works during pause
         panel.SetActive(false);
     }
 }
