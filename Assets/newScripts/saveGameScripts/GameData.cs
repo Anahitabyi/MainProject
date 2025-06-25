@@ -32,6 +32,9 @@ public class PlayerStatsData
     public int currentLives;
     public int maxHealth;
     public int maxLives;
+     public float posX;
+    public float posY;
+    
 }
 
 [System.Serializable]

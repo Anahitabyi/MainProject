@@ -27,12 +27,20 @@ public class GameSaveController : MonoBehaviour
         var p1 = playerStatsManager.Instance.player1Stats;
         var p2 = playerStatsManager.Instance.player2Stats;
 
+        var player2GO = FindFirstObjectByType<meleePlayerMovement>()?.gameObject;
+        var player1GO = FindFirstObjectByType<playerMovement>()?.gameObject;
+
+        Vector2 p1Pos = player1GO != null ? (Vector2)player1GO.transform.position : Vector2.zero;
+        Vector2 p2Pos = player2GO != null ? (Vector2)player2GO.transform.position : Vector2.zero;
+
         data.player1Stats = new PlayerStatsData
         {
             currentHealth = p1.currentHealth,
             currentLives = p1.currentLives,
             maxHealth = p1.maxHealth,
-            maxLives = p1.maxLives
+            maxLives = p1.maxLives,
+            posX = p1Pos.x,
+            posY = p1Pos.y
         };
 
         data.player2Stats = new PlayerStatsData
@@ -40,7 +48,9 @@ public class GameSaveController : MonoBehaviour
             currentHealth = p2.currentHealth,
             currentLives = p2.currentLives,
             maxHealth = p2.maxHealth,
-            maxLives = p2.maxLives
+            maxLives = p2.maxLives,
+            posX = p2Pos.x,
+            posY = p2Pos.y
         };
 
         data.currentSceneName = SceneManager.GetActiveScene().name;
@@ -99,6 +109,15 @@ public class GameSaveController : MonoBehaviour
 
         SaveTracker.Instance.collectedIDs = new HashSet<string>(data.collectedIDs);
         SaveTracker.Instance.disabledPatrolPairs = new HashSet<string>(data.disabledPatrolPairs);
+
+        var player1GO = FindFirstObjectByType<playerMovement>()?.gameObject;
+        var player2GO = FindFirstObjectByType<meleePlayerMovement>()?.gameObject;
+
+        if (player1GO != null)
+            player1GO.transform.position = new Vector2(data.player1Stats.posX, data.player1Stats.posY);
+        else{ Debug.Log("no player found!"); }
+        if (player2GO != null)
+            player2GO.transform.position = new Vector2(data.player2Stats.posX, data.player2Stats.posY);
 
         // ✅ Restore chunk data
         ChunkGenerator chunkGen = FindAnyObjectByType<ChunkGenerator>();
