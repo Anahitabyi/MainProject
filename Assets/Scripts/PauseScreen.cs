@@ -86,6 +86,10 @@ public class PauseMenuManager : MonoBehaviour
 
         if (playerStatsManager.Instance != null)
             playerStatsManager.Instance.ResetAllStats();
+
+        if (SaveTracker.Instance != null)
+        SaveTracker.Instance.ClearAll();
+
         SceneManager.LoadScene("Level1");
 
         Debug.Log("[Restart] Scene fully loaded: " + SceneManager.GetActiveScene().name);

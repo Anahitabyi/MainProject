@@ -108,6 +108,7 @@ public bool TryGetEnemyState(string id, out EnemyRecord record)
         defeatedEnemyIDs.Clear();
         disabledPatrolPairs.Clear(); // If you added patrol pair disabling
         spawnedChunks.Clear(); // If you track chunks
+        enemyStates.Clear();
         Debug.Log("[SaveTracker] Cleared all saved state.");
     }
 
