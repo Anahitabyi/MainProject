@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class patrollingEnemy : MonoBehaviour
+public class patrollingEnemy : MonoBehaviour, IPooledDeathHandler
 {
     public GameObject pointA;
     public GameObject pointB;
@@ -97,26 +97,14 @@ public class patrollingEnemy : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log($"[Enemy] Die() called for {name}");
-
         if (isDead) return;
-
         isDead = true;
         isAttacking = false;
-        rb.linearVelocity = Vector2.zero;
 
-        if (string.IsNullOrEmpty(patrolPairID))
-        {
-            Debug.LogWarning($"[Enemy] {name} has no patrolPairID! Cannot mark as disabled.");
-        }
-        else if (SaveTracker.Instance == null)
-        {
-            Debug.LogError("[Enemy] SaveTracker.Instance is null! Cannot mark patrol pair as disabled.");
-        }
-        else
+        if (!string.IsNullOrEmpty(patrolPairID))
         {
             SaveTracker.Instance.MarkPatrolPairDisabled(patrolPairID);
-            Debug.Log($"[Enemy] {name} marked patrolPairID '{patrolPairID}' as disabled.");
+            Debug.Log($"[Enemy] Marked patrolPairID '{patrolPairID}' as disabled.");
         }
 
         if (anim != null)
@@ -128,7 +116,8 @@ public class patrollingEnemy : MonoBehaviour
         Collider2D col = GetComponent<Collider2D>();
         if (col) col.enabled = false;
 
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb) rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
         Destroy(gameObject, 1.5f);
     }
@@ -142,5 +131,10 @@ public class patrollingEnemy : MonoBehaviour
             Gizmos.DrawWireSphere(pointB.transform.position, 0.2f);
             Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
         }
+    }
+    public void OnDeath()
+    {
+        // Called by EnemyHealth when enemy dies
+        Die(); // your existing slime-specific logic
     }
 }

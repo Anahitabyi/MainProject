@@ -35,30 +35,42 @@ public class EnemyHealth : MonoBehaviour
 
     // Called when the enemy dies
     protected virtual void Die()
+    {
+        isDead = true;
+        Debug.Log($"{gameObject.name} has died.");
+
+        // ✅ Let another script handle special behavior
+        IPooledDeathHandler deathHandler = GetComponent<IPooledDeathHandler>();
+        if (deathHandler != null)
+        {
+            deathHandler.OnDeath(); // Delegates to patrollingEnemy
+        }
+
+        // ✅ Save defeated enemy ID if applicable
+        UniqueID unique = GetComponent<UniqueID>();
+        if (unique != null)
+        {
+            SaveTracker.Instance.MarkEnemyDefeated(unique.id);
+        }
+
+        animator.SetTrigger("Die");
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col) col.enabled = false;
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+
+        Destroy(gameObject, 0.5f);
+    }
+
+}
+public interface IPooledDeathHandler
 {
-    isDead = true;
-    Debug.Log($"{gameObject.name} has died.");
-
-    // ✅ Save defeated enemy ID
-    UniqueID unique = GetComponent<UniqueID>();
-    if (unique != null)
-    {
-        SaveTracker.Instance.MarkEnemyDefeated(unique.id);
-    }
-
-    animator.SetTrigger("Die");
-
-    Collider2D col = GetComponent<Collider2D>();
-    if (col) col.enabled = false;
-
-    Rigidbody2D rb = GetComponent<Rigidbody2D>();
-    if (rb)
-    {
-        rb.linearVelocity = Vector2.zero;
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
-    }
-
-    Destroy(gameObject, 0.5f); // or any delay you want
+    void OnDeath();
 }
 
-}
