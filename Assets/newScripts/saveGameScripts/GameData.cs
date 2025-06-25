@@ -19,6 +19,8 @@ public class GameData
     // Level 3: Boss state
     public bool bossFightStarted;
     public bool bossDefeated;
+    public List<string> disabledPatrolPairs;
+
 }
 
 [System.Serializable]

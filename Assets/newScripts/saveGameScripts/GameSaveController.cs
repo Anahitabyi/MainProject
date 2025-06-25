@@ -45,11 +45,12 @@ public class GameSaveController : MonoBehaviour
 
         data.currentSceneName = SceneManager.GetActiveScene().name;
 
-        // ✅ Save chunks and collectibles (but not enemies)
+        // ✅ Save chunk and other game state data
         if (SaveTracker.Instance != null)
         {
             data.spawnedChunks = new List<ChunkRecord>(SaveTracker.Instance.spawnedChunks);
             data.collectedIDs = new List<string>(SaveTracker.Instance.collectedIDs);
+            data.disabledPatrolPairs = new List<string>(SaveTracker.Instance.disabledPatrolPairs);
         }
 
         SaveSystem.SaveGame(data);
@@ -66,10 +67,16 @@ public class GameSaveController : MonoBehaviour
     private IEnumerator LoadSceneAfterFrame(GameData data)
     {
         GameStateFlags.IsLoadingFromSave = true;
+
+        // Wait one frame to allow scene to load cleanly
         yield return null;
 
+        // Begin scene loading
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(data.currentSceneName);
         yield return new WaitUntil(() => asyncLoad.isDone);
+
+        // Wait for playerStatsManager to exist
+        yield return new WaitUntil(() => playerStatsManager.Instance != null);
 
         // ✅ Restore player stats
         var p1 = playerStatsManager.Instance.player1Stats;
@@ -85,13 +92,13 @@ public class GameSaveController : MonoBehaviour
         p2.maxHealth = data.player2Stats.maxHealth;
         p2.maxLives = data.player2Stats.maxLives;
 
-        // ✅ Restore collectibles (no enemies)
-        if (SaveTracker.Instance != null)
-        {
-            SaveTracker.Instance.collectedIDs = new HashSet<string>(data.collectedIDs);
-        }
+        // ✅ Restore SaveTracker data
+        yield return new WaitUntil(() => SaveTracker.Instance != null);
 
-        // ✅ Restore chunks
+        SaveTracker.Instance.collectedIDs = new HashSet<string>(data.collectedIDs);
+        SaveTracker.Instance.disabledPatrolPairs = new HashSet<string>(data.disabledPatrolPairs);
+
+        // ✅ Restore chunk data
         ChunkGenerator chunkGen = FindAnyObjectByType<ChunkGenerator>();
         if (chunkGen != null && data.spawnedChunks != null)
         {

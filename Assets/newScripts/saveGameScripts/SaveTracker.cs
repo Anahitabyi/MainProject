@@ -13,6 +13,11 @@ public class SaveTracker : MonoBehaviour
 
     public List<ChunkRecord> spawnedChunks = new(); // ✅ Track spawned chunks
 
+    public HashSet<string> disabledPatrolPairs = new();
+
+
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -63,6 +68,23 @@ public class SaveTracker : MonoBehaviour
     {
         spawnedChunks.Clear();
     }
-    
+    public void MarkPatrolPairDisabled(string id)
+    {
+        disabledPatrolPairs.Add(id);
+    }
+
+    public bool IsPatrolPairDisabled(string id)
+    {
+        return disabledPatrolPairs.Contains(id);
+    }
+        public void ClearAll()
+    {
+        collectedIDs.Clear();
+        defeatedEnemyIDs.Clear();
+        disabledPatrolPairs.Clear(); // If you added patrol pair disabling
+        spawnedChunks.Clear(); // If you track chunks
+        Debug.Log("[SaveTracker] Cleared all saved state.");
+    }
+
 
 }

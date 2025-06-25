@@ -13,6 +13,9 @@ public class patrollingEnemy : MonoBehaviour
     private bool isAttacking = false;
     private bool isDead = false;
 
+    [Tooltip("Unique ID of the patrol pair this enemy belongs to")]
+    public string patrolPairID;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -20,12 +23,17 @@ public class patrollingEnemy : MonoBehaviour
 
         if (pointA == null || pointB == null)
         {
-            Debug.Log($"{name}: pointA or pointB not assigned.");
+            Debug.LogWarning($"{name}: pointA or pointB not assigned.");
             enabled = false;
             return;
         }
 
         currentPoint = pointB.transform;
+
+        if (!string.IsNullOrEmpty(patrolPairID))
+            Debug.Log($"[Enemy] {name} initialized with patrolPairID = {patrolPairID}");
+        else
+            Debug.LogWarning($"[Enemy] {name} has no patrolPairID assigned!");
     }
 
     void Update()
@@ -78,7 +86,6 @@ public class patrollingEnemy : MonoBehaviour
         }
     }
 
-    // Called via animation event
     public void EndAttack()
     {
         if (!isDead)
@@ -88,14 +95,29 @@ public class patrollingEnemy : MonoBehaviour
         }
     }
 
-    // Called from your health script when dying
     public void Die()
     {
+        Debug.Log($"[Enemy] Die() called for {name}");
+
         if (isDead) return;
 
         isDead = true;
         isAttacking = false;
         rb.linearVelocity = Vector2.zero;
+
+        if (string.IsNullOrEmpty(patrolPairID))
+        {
+            Debug.LogWarning($"[Enemy] {name} has no patrolPairID! Cannot mark as disabled.");
+        }
+        else if (SaveTracker.Instance == null)
+        {
+            Debug.LogError("[Enemy] SaveTracker.Instance is null! Cannot mark patrol pair as disabled.");
+        }
+        else
+        {
+            SaveTracker.Instance.MarkPatrolPairDisabled(patrolPairID);
+            Debug.Log($"[Enemy] {name} marked patrolPairID '{patrolPairID}' as disabled.");
+        }
 
         if (anim != null)
         {
@@ -108,7 +130,7 @@ public class patrollingEnemy : MonoBehaviour
 
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
-        Destroy(gameObject, 1.5f); // Wait for death animation
+        Destroy(gameObject, 1.5f);
     }
 
     void OnDrawGizmos()

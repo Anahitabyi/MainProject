@@ -533,6 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35c480b10a7c9f14cb3427eb2bf95aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnedChunks: []
 --- !u!114 &895799241
 MonoBehaviour:
   m_ObjectHideFlags: 0

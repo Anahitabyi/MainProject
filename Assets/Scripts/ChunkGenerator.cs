@@ -55,7 +55,10 @@ public class ChunkGenerator : MonoBehaviour
             ClearAllChunks();
             return;
         }
-
+         if (SaveTracker.Instance != null)
+    {
+        SaveTracker.Instance.ClearChunks();
+    }
         unusedChunks = new List<ChunkData>(chunkDataList);
         ShuffleList(unusedChunks);
 
