@@ -51,6 +51,8 @@ public class GameSaveController : MonoBehaviour
             data.spawnedChunks = new List<ChunkRecord>(SaveTracker.Instance.spawnedChunks);
             data.collectedIDs = new List<string>(SaveTracker.Instance.collectedIDs);
             data.disabledPatrolPairs = new List<string>(SaveTracker.Instance.disabledPatrolPairs);
+            data.savedEnemies = new List<EnemyRecord>(SaveTracker.Instance.enemyStates.Values);
+
         }
 
         SaveSystem.SaveGame(data);
@@ -104,6 +106,21 @@ public class GameSaveController : MonoBehaviour
         {
             chunkGen.SpawnFromSavedData(data.spawnedChunks);
         }
+        foreach (var enemy in Object.FindObjectsByType<EnemyHealth>(FindObjectsSortMode.None))
+
+        {
+            GenerateID uid = enemy.GetComponent<GenerateID>();
+            if (uid != null && SaveTracker.Instance.TryGetEnemyState(uid.Id, out var saved))
+            {
+                enemy.SetHealth(saved.currentHealth);
+                if (saved.isDead){
+                    Debug.Log("killed the extra enemy!");
+                    Debug.Log($"Checking enemy {uid.Id} — saved: {saved.isDead}, HP: {saved.currentHealth}");
+
+                    enemy.KillImmediately();} // You’ll implement this
+            }
+        }
+
 
         GameStateFlags.IsLoadingFromSave = false;
     }

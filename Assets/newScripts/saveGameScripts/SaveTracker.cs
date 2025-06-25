@@ -44,6 +44,31 @@ public class SaveTracker : MonoBehaviour
     }
 
     public bool IsEnemyDefeated(string id) => defeatedEnemyIDs.Contains(id);
+    public Dictionary<string, EnemyRecord> enemyStates = new();
+
+public void RecordEnemyState(string id, int hp, bool dead)
+{
+    if (enemyStates.TryGetValue(id, out var existing))
+    {
+        // ✅ If enemy is already marked dead, don’t overwrite with "alive"
+        if (existing.isDead) return;
+    }
+
+    enemyStates[id] = new EnemyRecord
+    {
+        uniqueID = id,
+        currentHealth = hp,
+        isDead = dead
+    };
+
+    Debug.Log($"[SaveTracker] Saved state for {id}: HP={hp}, Dead={dead}");
+}
+
+
+public bool TryGetEnemyState(string id, out EnemyRecord record)
+{
+    return enemyStates.TryGetValue(id, out record);
+}
 
     // ========== CHUNKS ==========
 

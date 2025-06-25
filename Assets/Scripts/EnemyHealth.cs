@@ -26,7 +26,7 @@ public class EnemyHealth : MonoBehaviour
         Debug.Log($"{gameObject.name} took {damageAmount} damage. Current HP: {currentHealth}");
 
         animator.SetTrigger("Hit");           // Trigger the 'Hit' animation
-
+        // SaveIfHasID();
         if (currentHealth <= 0)
         {
             Die();                            // Call death logic if health reaches 0 or below
@@ -47,10 +47,11 @@ public class EnemyHealth : MonoBehaviour
         }
 
         // ✅ Save defeated enemy ID if applicable
-        UniqueID unique = GetComponent<UniqueID>();
+        GenerateID unique = GetComponent<GenerateID>();
         if (unique != null)
         {
-            SaveTracker.Instance.MarkEnemyDefeated(unique.id);
+            Debug.Log("Found the id!");
+            SaveTracker.Instance.MarkEnemyDefeated(unique.Id);
         }
 
         animator.SetTrigger("Die");
@@ -64,9 +65,41 @@ public class EnemyHealth : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }
-
+        // SaveIfHasID();
         Destroy(gameObject, 0.5f);
     }
+    public void SetHealth(int hp)
+        {
+            currentHealth = hp;
+            isDead = hp <= 0;
+        }
+
+
+
+    private bool hasBeenKilled = false;
+
+public void KillImmediately()
+{
+    if (hasBeenKilled) return;
+    hasBeenKilled = true;
+
+    isDead = true;
+
+    Collider2D col = GetComponent<Collider2D>();
+    if (col) col.enabled = false;
+
+    Rigidbody2D rb = GetComponent<Rigidbody2D>();
+    if (rb)
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    Destroy(gameObject);
+}
+
+public int CurrentHealth => currentHealth;
+
 
 }
 public interface IPooledDeathHandler

@@ -12,6 +12,8 @@ public class GameData
     public List<ChunkRecord> spawnedChunks = new List<ChunkRecord>();
     public List<string> collectedIDs = new List<string>();
     public List<string> defeatedEnemyIDs = new List<string>();
+    public List<EnemyRecord> savedEnemies = new List<EnemyRecord>();//for the shooter enemy
+
 
     // Level 2: Puzzle states
     public List<string> solvedPuzzleIDs = new List<string>();
@@ -40,4 +42,11 @@ public class ChunkRecord
     public float posX;          // if dynamically placed
     public float posY;
     public float width;
+}
+[System.Serializable]
+public class EnemyRecord
+{
+    public string uniqueID;
+    public int currentHealth;
+    public bool isDead;
 }
