@@ -33,12 +33,16 @@ public class newShooterPlayerMovement : MonoBehaviour
     //public LineRenderer lineRenderer;
     private bool isShooting;
     private Coroutine shootingCoroutine;
+    [SerializeField] private AnimationCurve trajectoryAnimationCurve;
+    [SerializeField] private float trajectoryMaxHeight;
     public float fireRate = 0.1f;
     private CinemachineImpulseSource impulseSource;
     public Camera hobbitCamera;
 
+
     [Header("Attack")]
     public int attackDamage = 1;
+    
 
     public WeaponUIIndicator weaponUIIndicator;
 
@@ -137,6 +141,34 @@ public class newShooterPlayerMovement : MonoBehaviour
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         bullet.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        if (impulseSource != null)
+        {
+            impulseSource.GenerateImpulse(-direction * 0.2f);
+        }
+        sfx.PlaySound(sfx.attackSound);
+    }
+    public void OnNewShoot(InputAction.CallbackContext context){
+        if(context.performed){
+            newShoot();
+        }
+
+    }
+    private void newShoot(){
+
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()); //this is the target
+        Vector3 direction = (mousePosition - (Vector3)firePoint.position).normalized;
+
+        GameObject bulletObject = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        newBullet bullet = bulletObject.GetComponent<newBullet>();
+        bullet.InitializeProjectile(mousePosition, trajectoryMaxHeight, bulletSpeed);
+        bullet.InitializeAnimationCurve(trajectoryAnimationCurve);
+
+
+        if (impactEffect != null)
+        {
+            GameObject flash = Instantiate(impactEffect, firePoint.position, firePoint.rotation, firePoint);
+            //Destroy(flash, 0.5f);
+        }
         if (impulseSource != null)
         {
             impulseSource.GenerateImpulse(-direction * 0.2f);

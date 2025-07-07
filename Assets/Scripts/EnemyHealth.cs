@@ -48,7 +48,7 @@ public class EnemyHealth : MonoBehaviour
 
         // ✅ Save defeated enemy ID if applicable
         GenerateID unique = GetComponent<GenerateID>();
-        if (unique != null)
+        if (unique != null && SaveTracker.Instance!=null)
         {
             Debug.Log("Found the id!");
             SaveTracker.Instance.MarkEnemyDefeated(unique.Id);

@@ -36,26 +36,25 @@ public class EnemyShooter : MonoBehaviour, IPooledDeathHandler
         if (isDead) return;
 
         target = FindClosestVisiblePlayer();
-        if (IsValidTarget(target))
-        {
-            FaceTarget(target.position);
-            rb.linearVelocity = Vector2.zero;
-            anim.SetBool("isRunning", false);
-
-            timer += Time.deltaTime;
-            if (timer >= shootCooldown)
+        if (IsValidTarget(target) && HasClearShot(target))
             {
-                timer = 0;
-                anim.SetTrigger("shoot");
-                Shoot();
+                FaceTarget(target.position);
+                rb.linearVelocity = Vector2.zero;
+                anim.SetBool("isRunning", false);
+
+                timer += Time.deltaTime;
+                if (timer >= shootCooldown)
+                {
+                    timer = 0;
+                    anim.SetTrigger("shoot");
+                    Shoot();
+                }
             }
-        }
-        else
+    else
         {
-            Patrol();
+        Patrol();
         }
     }
-
     void Patrol()
     {
         Vector2 direction = (currentPoint.position - transform.position).normalized;
@@ -174,10 +173,10 @@ public class EnemyShooter : MonoBehaviour, IPooledDeathHandler
     anim.SetTrigger("Die");
     GetComponent<Collider2D>().enabled = false;
     rb.constraints = RigidbodyConstraints2D.FreezeAll;
-    foreach (var kvp in SaveTracker.Instance.enemyStates)
-{
-    Debug.Log($"[Save] Enemy ID: {kvp.Key}, HP: {kvp.Value.currentHealth}, Dead: {kvp.Value.isDead}");
-}
+//     foreach (var kvp in SaveTracker.Instance.enemyStates)
+// {
+//     Debug.Log($"[Save] Enemy ID: {kvp.Key}, HP: {kvp.Value.currentHealth}, Dead: {kvp.Value.isDead}");
+// }
 
     // ✅ Save death state
     if (uniqueID != null && SaveTracker.Instance != null)
@@ -199,4 +198,20 @@ public class EnemyShooter : MonoBehaviour, IPooledDeathHandler
     {
         players = newPlayers;
     }
+    bool HasClearShot(Transform target)
+{
+    Vector2 direction = (target.position - bulletSpawnPoint.position).normalized;
+    float distance = Vector2.Distance(bulletSpawnPoint.position, target.position);
+    RaycastHit2D hit = Physics2D.Raycast(bulletSpawnPoint.position, direction, distance);
+
+    if (hit.collider != null)
+    {
+        // Check if we hit the player
+        return hit.collider.gameObject == target.gameObject;
+    }
+
+    return false;
 }
+
+
+    }

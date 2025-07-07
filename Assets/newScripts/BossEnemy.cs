@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Audio;
+using System;
+using System.Collections;
+//using System.Numerics;
 
 public class BossEnemy : MonoBehaviour
 {
@@ -17,6 +20,8 @@ public class BossEnemy : MonoBehaviour
     public float attackRange = 5f;
     private bool isAttacking = false;
     private bool isSpawning = false;
+
+    private bool isCloseAttacking = false;
     private bool minionsTargetPlayer1 = true;
 
     [Header("Attack Delay")]
@@ -29,12 +34,22 @@ public class BossEnemy : MonoBehaviour
     public Transform[] spawnPoints;
     public int attacksPerMinionSpawn = 3;
     private int attackCount = 0;
+    [Header("Close Attack")]
+    public int attacksPerCloseAttacks = 10;
+    public float currentSpeed = 10;
+    public float maxSpeed = 10f;
+    public float acceleration = 10f;
+    public Transform clostAttackTarget;
+    private Vector3 startPosition;
+    public float inAttackWaitingTime = 5f;
 
     [Header("Animation")]
     public Animator animator;
     public string attackAnimationName = "Attack";
     public string spawnAnimationName = "SpawnMinions";
     public string deathAnimationName = "Death";
+    public string closeAttackAnimationName = "CloseAttack";
+    public string hurtAnimationName = "Hurt";
 
     [Header("Shooter Device")]
     public BossShooterDevice shooterDevice;
@@ -44,8 +59,14 @@ public class BossEnemy : MonoBehaviour
     public AudioSource audioSource;
     public AudioMixerGroup sfxMixerGroup;
     public BossSFX sfx;
+    [Header("Timer")]
+    public float timer = 0f;
+    //sbool isWaiting = false;
+
 
     private HashSet<Transform> damagedPlayersThisWave = new HashSet<Transform>();
+    public BossBulletHell bulletHell;
+
 
     void Start()
     {
@@ -53,6 +74,7 @@ public class BossEnemy : MonoBehaviour
         shooterDevice.bossRef = this; // Register boss in device
         audioSource = GetComponent<AudioSource>();
         sfx = GetComponent<BossSFX>();
+        startPosition = transform.position;
     }
 
     public void StartAttackWithDelay()
@@ -67,10 +89,14 @@ public class BossEnemy : MonoBehaviour
 
     void Update()
     {
-        if (isDead || !canStartAttacking)
-            return;
+        if (isDead || !canStartAttacking || isCloseAttacking)
+        return; // ⛔ Block anything during close attack
 
         HandleAttacking();
+        // if (isCloseAttacking)
+        // {
+        //     CloseAttack();
+        // }
     }
 
     void HandleAttacking()
@@ -78,10 +104,9 @@ public class BossEnemy : MonoBehaviour
         Transform bulletTarget = minionsTargetPlayer1 ? player2 : player1;
         float distance = Vector2.Distance(transform.position, bulletTarget.position);
 
-        if (!isAttacking && !isSpawning && distance <= attackRange)
+        if (!isAttacking && !isSpawning && !isCloseAttacking && distance <= attackRange)
         {
             isAttacking = true;
-
             if (animator != null)
                 animator.SetTrigger(attackAnimationName);
 
@@ -128,14 +153,74 @@ public class BossEnemy : MonoBehaviour
         isAttacking = false;
         attackCount++;
 
-        if (attackCount >= attacksPerMinionSpawn)
+        if (attackCount % attacksPerMinionSpawn == 0)
         {
-            attackCount = 0;
             isSpawning = true;
             animator.SetTrigger(spawnAnimationName);
         }
-    }
+        if (attackCount % attacksPerCloseAttacks == 0)
+        {
 
+            //StartCoroutine(DelayedCloseAttack(3));
+            isCloseAttacking = true;
+            CloseAttack();
+            // animator.SetTrigger(closeAttackAnimationName);
+        }
+    }
+    public void CloseAttack()
+    {
+
+        StartCoroutine(CloseAttackCoroutine());
+
+    }
+    private IEnumerator CloseAttackCoroutine()
+    {
+        isCloseAttacking = true;
+
+        if (animator != null)
+            animator.SetTrigger(closeAttackAnimationName);
+        Vector3 targetPosition = clostAttackTarget.position;
+        Vector3 direction = (targetPosition - startPosition).normalized;
+
+        currentSpeed = 0;
+
+        // Move forward
+        while ((targetPosition - transform.position).magnitude >= 0.5f)
+        {
+            currentSpeed += acceleration * Time.deltaTime;
+            currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
+            transform.position += direction * currentSpeed * Time.deltaTime;
+            yield return null; // wait one frame
+        }
+
+        // Optional: wait at target
+        yield return new WaitForSeconds(0.5f);
+        bulletHell.gameObject.SetActive(true); // This calls OnEnable → starts firing
+        yield return new WaitForSeconds(inAttackWaitingTime);
+        bulletHell.StopFiring();
+        bulletHell.gameObject.SetActive(false); // Optional: to fully hide/deactivate it
+
+
+        // Move back
+        direction = (startPosition - transform.position).normalized;
+        currentSpeed = 0;
+
+        while ((startPosition - transform.position).magnitude >= 0.1f)
+        {
+            //Debug.Log((startPosition - transform.position).magnitude);
+            currentSpeed += acceleration * Time.deltaTime;
+            currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
+            transform.position += direction * currentSpeed * Time.deltaTime;
+            yield return null; // wait one frame
+        }
+
+        transform.position = startPosition; // snap back if needed
+        currentSpeed = 0;
+        isCloseAttacking = false;
+        isAttacking = false;
+        //Debug.Log("set the is attacking and is close atttacking sateto false");
+    }
+    
     public bool Registerdamage(Transform player)
     {
         if (!damagedPlayersThisWave.Contains(player))
@@ -159,11 +244,21 @@ public class BossEnemy : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= amount;
+        animator.SetLayerWeight(1, 1f);  // Enable Hurt layer
+        animator.SetTrigger(hurtAnimationName);
+        StartCoroutine(DisableHurtLayerAfterTime());
+
+
         //Debug.Log("boss health : " + currentHealth);
         if (currentHealth <= 0)
         {
             Die();
         }
+    }
+    private IEnumerator DisableHurtLayerAfterTime()
+    {
+            yield return new WaitForSeconds(0.5f); // Adjust based on animation
+            animator.SetLayerWeight(1, 0f); // Turn off Hurt layer
     }
 
     void Die()
@@ -185,4 +280,11 @@ public class BossEnemy : MonoBehaviour
     {
         return currentHealth;
     }
+    private IEnumerator DelayedCloseAttack(int seconds)
+{
+    yield return new WaitForSeconds(seconds);
+    isCloseAttacking = true;
+    animator.SetTrigger(closeAttackAnimationName);
+}
+
 }
