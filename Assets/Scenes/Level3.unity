@@ -26725,9 +26725,9 @@ MonoBehaviour:
   - {fileID: 529041359}
   attacksPerMinionSpawn: 3
   attacksPerCloseAttacks: 3
-  currentSpeed: 10
+  currentSpeed: 5
   maxSpeed: 10
-  acceleration: 10
+  acceleration: 6
   clostAttackTarget: {fileID: 1230905757}
   inAttackWaitingTime: 5
   animator: {fileID: 575913218}
@@ -38989,10 +38989,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 8538329847812133349, guid: da18f4f6e3ea3fa48bc3cd26426a6d5d, type: 3}
   rotateSpeed: 10
-  spawnPointCount: 8
-  ShooterWaitTime: 0.5
+  spawnPointCount: 20
+  ShooterWaitTime: 3.25
   radius: 1.26
   shouldFire: 1
+  bossEnemy: {fileID: 575913221}
 --- !u!4 &2048159714
 Transform:
   m_ObjectHideFlags: 0

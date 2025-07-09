@@ -12,7 +12,7 @@ public class BossBulletHell : MonoBehaviour
     public float radius = 10f;
     private List<Vector3> spawnPositions = new List<Vector3>();
     public bool shouldFire = true;
-
+    public BossEnemy bossEnemy;
     void OnEnable()
     {
         spawnPositions.Clear();
@@ -32,6 +32,7 @@ public class BossBulletHell : MonoBehaviour
             // Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
         }
         StartCoroutine(SpawnBulletWaves());
+
     }
     void OnDrawGizmosSelected()
     {
@@ -52,6 +53,7 @@ public class BossBulletHell : MonoBehaviour
         shouldFire = true;
         while (shouldFire)
         {
+            bossEnemy.animator.SetTrigger(bossEnemy.closeAttackAnimationName);
             foreach (Vector3 pos in spawnPositions)
             {
                 GameObject bullet = Instantiate(bulletPrefab, pos, Quaternion.identity);

@@ -153,7 +153,7 @@ public class BossEnemy : MonoBehaviour
         isAttacking = false;
         attackCount++;
 
-        if (attackCount % attacksPerMinionSpawn == 0)
+        if (attackCount % attacksPerMinionSpawn == 0 && attackCount % attacksPerCloseAttacks != 0)
         {
             isSpawning = true;
             animator.SetTrigger(spawnAnimationName);
