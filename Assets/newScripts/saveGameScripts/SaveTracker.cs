@@ -15,6 +15,8 @@ public class SaveTracker : MonoBehaviour
 
     public HashSet<string> disabledPatrolPairs = new();
     public HashSet<string> collectedLevel2Keys = new();
+    public bool level3CutscenePlayed = false;
+    public bool cameraSizeChanged = false;
 
 
 

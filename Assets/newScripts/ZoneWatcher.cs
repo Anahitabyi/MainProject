@@ -9,12 +9,28 @@ public class ZoneWatcher : MonoBehaviour
     private bool player1In = false;
     private bool player2In = false;
 
-    private bool fadePlayed = false;  // Track if fade already played
+    private bool fadePlayed = false;
+
+    void Start()
+    {
+        // Load the saved state of cutscene playback
+        if (SaveTracker.Instance != null)
+        {
+            fadePlayed = SaveTracker.Instance.level3CutscenePlayed;
+
+            // If the cutscene was already played in a previous session, disable this script
+            if (fadePlayed)
+            {
+                Debug.Log("Level 3 cutscene already played. Disabling ZoneWatcher.");
+                enabled = false;
+            }
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (fadePlayed)
-            return;  // Fade already played, do nothing
+            return;
 
         if (other.gameObject == player1)
             player1In = true;
@@ -24,8 +40,19 @@ public class ZoneWatcher : MonoBehaviour
         if (player1In || player2In)
         {
             sceneFader.PlayCutsceneFade();
-            fadePlayed = true;  // Mark fade as played
-            enabled = false;    // Disable this script to prevent further checks
+            fadePlayed = true;
+
+            if (SaveTracker.Instance != null)
+            {
+                SaveTracker.Instance.level3CutscenePlayed = true;
+            }
+
+            if (GameSaveController.Instance != null)
+            {
+                GameSaveController.Instance.SaveToFile();
+            }
+
+            enabled = false;
         }
     }
 }

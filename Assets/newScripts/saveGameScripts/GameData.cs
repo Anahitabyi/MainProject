@@ -20,7 +20,11 @@ public class GameData
     public List<string> solvedPuzzleIDs = new List<string>();
 
     // Level 3: Boss state
-    public bool bossFightStarted;
+    public bool level3CutscenePlayed = false;
+    public bool cameraSizeChanged = false;
+
+    public float bossHealth = -1;
+    public bool bossFightStarted = false;
     public bool bossDefeated;
     public List<string> disabledPatrolPairs;
 

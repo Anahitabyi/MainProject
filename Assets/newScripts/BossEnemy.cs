@@ -366,6 +366,16 @@ public class BossEnemy : MonoBehaviour
 
         return positions;
     }
+    public void SetCurrentHealth(float value)
+{
+    currentHealth = Mathf.Clamp(value, 0, maxHealth);
+
+    if (currentHealth <= 0f)
+    {
+        Die(); // Trigger death if health is 0 or less
+    }
+}
+
 void OnDrawGizmos()
 {
     // Draw attack range

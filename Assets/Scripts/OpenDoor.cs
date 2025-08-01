@@ -93,7 +93,7 @@ public class OpenDoor : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadScene("MainMenu");
+                SceneManager.LoadScene("Level3");
             }
         }
         else
@@ -125,6 +125,6 @@ public class OpenDoor : MonoBehaviour
     private IEnumerator WaitAndLoadScene(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Level3");
     }
 }

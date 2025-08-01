@@ -70,8 +70,21 @@ public class GameSaveController : MonoBehaviour
             data.disabledPatrolPairs = new List<string>(SaveTracker.Instance.disabledPatrolPairs);
             data.savedEnemies = new List<EnemyRecord>(SaveTracker.Instance.enemyStates.Values);
             data.collectedLevel2Keys = new List<string>(SaveTracker.Instance.collectedLevel2Keys);
+            data.level3CutscenePlayed = SaveTracker.Instance.level3CutscenePlayed;
+            data.cameraSizeChanged = SaveTracker.Instance.cameraSizeChanged;
+
 
         }
+        BossEnemy boss = FindFirstObjectByType<BossEnemy>();
+        if (boss != null)
+        {
+            data.bossHealth = boss.GetCurrentHealth();
+        }
+        else
+        {
+            data.bossHealth = -1f;
+        }
+
 
         SaveSystem.SaveGame(data);
     }
@@ -95,8 +108,13 @@ public class GameSaveController : MonoBehaviour
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(data.currentSceneName);
         yield return new WaitUntil(() => asyncLoad.isDone);
 
+        yield return null;
         // Wait for playerStatsManager to exist
         yield return new WaitUntil(() => playerStatsManager.Instance != null);
+        yield return new WaitUntil(() => {
+        var ids = Object.FindObjectsByType<PlayerIdentifier>(FindObjectsSortMode.None);
+        return ids != null && ids.Length >= 2;  // assuming 2 players
+    });
 
         // ✅ Restore player stats
         var p1 = playerStatsManager.Instance.player1Stats;
@@ -117,6 +135,9 @@ public class GameSaveController : MonoBehaviour
 
         SaveTracker.Instance.collectedIDs = new HashSet<string>(data.collectedIDs);
         SaveTracker.Instance.disabledPatrolPairs = new HashSet<string>(data.disabledPatrolPairs);
+        SaveTracker.Instance.level3CutscenePlayed = data.level3CutscenePlayed;
+        SaveTracker.Instance.cameraSizeChanged = data.cameraSizeChanged;
+
 
         GameObject player1GO = null, player2GO = null;
         var identifiers = Object.FindObjectsByType<PlayerIdentifier>(FindObjectsSortMode.None);
@@ -154,6 +175,12 @@ public class GameSaveController : MonoBehaviour
 
                     enemy.KillImmediately();} // You’ll implement this
             }
+        }
+        // Restore Boss Health (if boss exists and data is valid)
+        BossEnemy boss = FindFirstObjectByType<BossEnemy>();
+        if (boss != null && data.bossHealth > 0)
+        {
+            boss.SetCurrentHealth(data.bossHealth);
         }
 
 
