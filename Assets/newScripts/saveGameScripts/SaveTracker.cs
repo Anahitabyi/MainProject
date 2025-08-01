@@ -14,6 +14,7 @@ public class SaveTracker : MonoBehaviour
     public List<ChunkRecord> spawnedChunks = new(); // ✅ Track spawned chunks
 
     public HashSet<string> disabledPatrolPairs = new();
+    public HashSet<string> collectedLevel2Keys = new();
 
 
 
@@ -110,6 +111,26 @@ public bool TryGetEnemyState(string id, out EnemyRecord record)
         spawnedChunks.Clear(); // If you track chunks
         enemyStates.Clear();
         Debug.Log("[SaveTracker] Cleared all saved state.");
+    }
+
+    public void MarkLevel2KeyCollected(string keyID)
+    {
+        collectedLevel2Keys.Add(keyID);
+    }
+
+    public bool IsLevel2KeyCollected(string keyID)
+    {
+        return collectedLevel2Keys.Contains(keyID);
+    }
+
+    public void SetLevel2Keys(IEnumerable<string> keys)
+    {
+        collectedLevel2Keys = new HashSet<string>(keys);
+    }
+
+    public List<string> GetLevel2Keys()
+    {
+        return new List<string>(collectedLevel2Keys);
     }
 
 

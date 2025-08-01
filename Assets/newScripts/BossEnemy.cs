@@ -4,9 +4,13 @@ using UnityEngine.Audio;
 using System;
 using System.Collections;
 //using System.Numerics;
-
+    #if UNITY_EDITOR
+using UnityEditor;
+#endif
 public class BossEnemy : MonoBehaviour
 {
+
+
     [Header("Stats")]
     public float maxHealth = 100f;
     private float currentHealth;
@@ -31,17 +35,28 @@ public class BossEnemy : MonoBehaviour
     [Header("Minion Spawning")]
     public GameObject minionPrefab1;
     public GameObject minionPrefab2;
-    public Transform[] spawnPoints;
+    //public Transform[] spawnPoints;
     public int attacksPerMinionSpawn = 3;
+
+    public enum SpawnShape { Line, Circle, Zigzag }
+    [Header("Minion Spawn Settings")]
+    public SpawnShape spawnShape = SpawnShape.Line;
+    public int minionCount = 6;
+    public float spawnRadius = 5f; // used for circle and zigzag
+    public Vector3 spawnCenterOffset = new Vector3(0, 0, 0); // from boss position
+
     private int attackCount = 0;
     [Header("Close Attack")]
     public int attacksPerCloseAttacks = 10;
     public float currentSpeed = 10;
     public float maxSpeed = 10f;
     public float acceleration = 10f;
-    public Transform clostAttackTarget;
+    //public Transform clostAttackTarget;
     private Vector3 startPosition;
     public float inAttackWaitingTime = 5f;
+    public List<Transform> bossCloseAttackPoints = new List<Transform>();
+    public GameObject warningPrefab;
+
 
     [Header("Animation")]
     public Animator animator;
@@ -89,7 +104,7 @@ public class BossEnemy : MonoBehaviour
 
     void Update()
     {
-        if (isDead || !canStartAttacking || isCloseAttacking)
+        if (isDead || !canStartAttacking) //|| //isCloseAttacking)
         return; // ⛔ Block anything during close attack
 
         HandleAttacking();
@@ -128,23 +143,27 @@ public class BossEnemy : MonoBehaviour
     // 🔔 Called during the boss attack animation
     public void SpawnMinions()
     {
+
         sfx.PlaySpawnSound();
         Transform minionTarget = minionsTargetPlayer1 ? player1 : player2;
         GameObject[] playerObjects = { player1.gameObject, player2.gameObject };
 
         bool useFirstMinion = true;
-        foreach (Transform point in spawnPoints)
+        List<Vector3> spawnPositions = GenerateSpawnPositions();
+
+        foreach (Vector3 pos in spawnPositions)
         {
             GameObject chosenPrefab = useFirstMinion ? minionPrefab1 : minionPrefab2;
             useFirstMinion = !useFirstMinion;
 
-            GameObject minion = Instantiate(chosenPrefab, point.position, Quaternion.identity);
+            GameObject minion = Instantiate(chosenPrefab, pos, Quaternion.identity);
             MinionEnemy minionScript = minion.GetComponent<MinionEnemy>();
             if (minionScript != null)
             {
-                minionScript.SetPlayers(playerObjects, minionTarget.gameObject);
+                minionScript.SetPlayers(new[] { player1.gameObject, player2.gameObject }, minionsTargetPlayer1 ? player1.gameObject : player2.gameObject);
             }
         }
+
     }
 
     // 🔔 Called at the end of boss attack animation
@@ -156,71 +175,87 @@ public class BossEnemy : MonoBehaviour
         if (attackCount % attacksPerMinionSpawn == 0 && attackCount % attacksPerCloseAttacks != 0)
         {
             isSpawning = true;
-            animator.SetTrigger(spawnAnimationName);
+            StartCoroutine(DelayedMinionSpawn(3f)); // 2 seconds delay before triggering spawn animation
         }
-        if (attackCount % attacksPerCloseAttacks == 0)
-        {
 
-            //StartCoroutine(DelayedCloseAttack(3));
-            isCloseAttacking = true;
-            CloseAttack();
-            // animator.SetTrigger(closeAttackAnimationName);
-        }
+        //if (attackCount % attacksPerCloseAttacks == 0)
+        // {
+
+        //     //StartCoroutine(DelayedCloseAttack(3));
+        //     isCloseAttacking = true;
+        //     CloseAttack();
+        //     // animator.SetTrigger(closeAttackAnimationName);
+        // }
     }
-    public void CloseAttack()
-    {
-
-        StartCoroutine(CloseAttackCoroutine());
-
-    }
-    private IEnumerator CloseAttackCoroutine()
-    {
-        isCloseAttacking = true;
-
-        if (animator != null)
-            animator.SetTrigger(closeAttackAnimationName);
-        Vector3 targetPosition = clostAttackTarget.position;
-        Vector3 direction = (targetPosition - startPosition).normalized;
-
-        currentSpeed = 0;
-
-        // Move forward
-        while ((targetPosition - transform.position).magnitude >= 0.5f)
+    private IEnumerator DelayedMinionSpawn(float delaySeconds)
         {
-            currentSpeed += acceleration * Time.deltaTime;
-            currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
-            transform.position += direction * currentSpeed * Time.deltaTime;
-            yield return null; // wait one frame
+            yield return new WaitForSeconds(delaySeconds);
+            animator.SetTrigger(spawnAnimationName); // This will call SpawnMinions() via animation event
         }
 
-        // Optional: wait at target
-        yield return new WaitForSeconds(0.5f);
-        bulletHell.gameObject.SetActive(true); // This calls OnEnable → starts firing
-        yield return new WaitForSeconds(inAttackWaitingTime);
-        bulletHell.StopFiring();
-        bulletHell.gameObject.SetActive(false); // Optional: to fully hide/deactivate it
+    // public void CloseAttack()
+    // {
+
+    //     StartCoroutine(CloseAttackCoroutine());
+
+    // }
+    // private IEnumerator CloseAttackCoroutine()
+    // {
+    //     isCloseAttacking = true;
+    //     int index = UnityEngine.Random.Range(0, bossCloseAttackPoints.Count);
+    //     Transform randomElement = bossCloseAttackPoints[index];
+    //     Vector3 targetPosition = randomElement.position;
+    //      // Spawn danger warning BEFORE moving
+    //     GameObject warning = Instantiate(warningPrefab, targetPosition, Quaternion.identity);
+    //     Destroy(warning, 4f); // Automatically destroy after 2 seconds (optional)
+
+    // // Wait before boss starts moving — this gives players time to react
+    //     yield return new WaitForSeconds(2f);
+
+    //     if (animator != null)
+    //         animator.SetTrigger(closeAttackAnimationName);
+    //     Vector3 direction = (targetPosition - startPosition).normalized;
+
+    //     currentSpeed = 0;
+
+    //     // Move forward
+    //     while ((targetPosition - transform.position).magnitude >= 0.5f)
+    //     {
+    //         currentSpeed += acceleration * Time.deltaTime;
+    //         currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
+    //         transform.position += direction * currentSpeed * Time.deltaTime;
+    //         yield return null; // wait one frame
+    //     }
+
+    //     // Optional: wait at target
+    //     yield return new WaitForSeconds(0.5f);
+    //     bulletHell.gameObject.SetActive(true); // This calls OnEnable → starts firing
+    //     bulletHell.FireBulletWave();
+    //     yield return new WaitForSeconds(inAttackWaitingTime);
+    //     bulletHell.StopFiring();
+    //     bulletHell.gameObject.SetActive(false); // Optional: to fully hide/deactivate it
 
 
-        // Move back
-        direction = (startPosition - transform.position).normalized;
-        currentSpeed = 0;
+    //     // Move back
+    //     direction = (startPosition - transform.position).normalized;
+    //     currentSpeed = 0;
 
-        while ((startPosition - transform.position).magnitude >= 0.1f)
-        {
-            //Debug.Log((startPosition - transform.position).magnitude);
-            currentSpeed += acceleration * Time.deltaTime;
-            currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
-            transform.position += direction * currentSpeed * Time.deltaTime;
-            yield return null; // wait one frame
-        }
+    //     while ((startPosition - transform.position).magnitude >= 0.5f)
+    //     {
+    //         //Debug.Log((startPosition - transform.position).magnitude);
+    //         currentSpeed += acceleration * Time.deltaTime;
+    //         currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
+    //         transform.position += direction * currentSpeed * Time.deltaTime;
+    //         yield return null; // wait one frame
+    //     }
 
-        transform.position = startPosition; // snap back if needed
-        currentSpeed = 0;
-        isCloseAttacking = false;
-        isAttacking = false;
-        //Debug.Log("set the is attacking and is close atttacking sateto false");
-    }
-    
+    //     transform.position = startPosition; // snap back if needed
+    //     currentSpeed = 0;
+    //     isCloseAttacking = false;
+    //     isAttacking = false;
+    //     //Debug.Log("set the is attacking and is close atttacking sateto false");
+    // }
+
     public bool Registerdamage(Transform player)
     {
         if (!damagedPlayersThisWave.Contains(player))
@@ -266,10 +301,17 @@ public class BossEnemy : MonoBehaviour
         isDead = true;
         isAttacking = false;
         isSpawning = false;
-        if (animator != null)
-            animator.SetTrigger(deathAnimationName);
-        Destroy(gameObject, 2f);
+        if (shooterDevice.deviceAnimator != null)
+        {
+            sfx.PlayDeathSound();
+            shooterDevice.deviceAnimator.SetTrigger(shooterDevice.deathTrigger);
+            
+        }
+        Destroy(gameObject, 3f);
+            
     }
+    
+
 
     void OnDrawGizmosSelected()
     {
@@ -281,10 +323,106 @@ public class BossEnemy : MonoBehaviour
         return currentHealth;
     }
     private IEnumerator DelayedCloseAttack(int seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        isCloseAttacking = true;
+        animator.SetTrigger(closeAttackAnimationName);
+    }
+    private List<Vector3> GenerateSpawnPositions()
+    {
+        List<Vector3> positions = new List<Vector3>();
+        Vector3 center = transform.position + spawnCenterOffset;
+
+        switch (spawnShape)
+        {
+            case SpawnShape.Line:
+                float spacing = 2f;
+                float startX = center.x - (minionCount - 1) * spacing * 0.5f;
+                for (int i = 0; i < minionCount; i++)
+                    positions.Add(new Vector3(startX + i * spacing, center.y, center.z));
+                break;
+
+            case SpawnShape.Circle:
+                for (int i = 0; i < minionCount; i++)
+                {
+                    float angle = 2 * Mathf.PI * i / minionCount;
+                    float x = center.x + Mathf.Cos(angle) * spawnRadius;
+                    float y = center.y + Mathf.Sin(angle) * spawnRadius;
+                    positions.Add(new Vector3(x, y, center.z));
+                }
+                break;
+
+            case SpawnShape.Zigzag:
+                float zigSpacing = 2f;
+                float zigHeight = 1.5f;
+                for (int i = 0; i < minionCount; i++)
+                {
+                    float x = center.x - (minionCount - 1) * zigSpacing * 0.5f + i * zigSpacing;
+                    float y = center.y + ((i % 2 == 0) ? zigHeight : -zigHeight);
+                    positions.Add(new Vector3(x, y, center.z));
+                }
+                break;
+        }
+
+        return positions;
+    }
+void OnDrawGizmos()
 {
-    yield return new WaitForSeconds(seconds);
-    isCloseAttacking = true;
-    animator.SetTrigger(closeAttackAnimationName);
+    // Draw attack range
+    Gizmos.color = Color.red;
+    Gizmos.DrawWireSphere(transform.position, attackRange);
+
+    // Draw minion spawn radius
+    Gizmos.color = Color.green;
+    Gizmos.DrawWireSphere(transform.position, spawnRadius);
+
+#if UNITY_EDITOR
+    // Simulate spawn positions in edit mode
+    if (!Application.isPlaying)
+    {
+        List<Vector3> preview = GetPreviewSpawnPositions();
+
+        foreach (var pos in preview)
+        {
+            Gizmos.DrawSphere(pos, 0.2f);
+            Handles.Label(pos + Vector3.up * 0.3f, "Spawn");
+        }
+    }
+#endif
 }
+List<Vector3> GetPreviewSpawnPositions()
+{
+    List<Vector3> positions = new List<Vector3>();
+    Vector3 center = transform.position;
+
+    for (int i = 0; i < minionCount; i++)
+    {
+        Vector3 offset = Vector3.zero;
+
+        switch (spawnShape)
+        {
+            case SpawnShape.Line:
+                offset = new Vector3(-spawnRadius + (2f * spawnRadius / Mathf.Max(minionCount - 1, 1)) * i, 0, 0);
+                break;
+
+            case SpawnShape.Circle:
+                float angle = i * Mathf.PI * 2f / minionCount;
+                offset = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * spawnRadius;
+                break;
+
+            case SpawnShape.Zigzag:
+                float step = 2f * spawnRadius / Mathf.Max(minionCount - 1, 1);
+                offset = new Vector3(-spawnRadius + step * i, 0, Mathf.Sin(i * 0.5f * Mathf.PI) * 2f);
+                break;
+        }
+
+        positions.Add(center + offset);
+    }
+
+    return positions;
+}
+
+
+
 
 }

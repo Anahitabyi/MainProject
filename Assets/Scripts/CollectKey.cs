@@ -8,14 +8,34 @@ public class CollectKey : MonoBehaviour
     public AudioClip collectKeySound;
     public AudioMixerGroup sfxMixerGroup;
 
+    private string keyID;
+
     private void Start()
     {
-        keyTracker = FindFirstObjectByType<KeyTracker>();
+        keyTracker = KeyTracker.Instance;
 
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.outputAudioMixerGroup = sfxMixerGroup;
+        }
+
+        // Get the UniqueID component and fetch the id
+        var uniqueID = GetComponent<UniqueID>();
+        if (uniqueID == null)
+        {
+            Debug.LogError($"No UniqueID component on {gameObject.name}!");
+            keyID = gameObject.name; // fallback
+        }
+        else
+        {
+            keyID = uniqueID.id;
+        }
+
+        // If already collected, destroy key immediately (skip showing it again)
+        if (keyTracker != null && keyTracker.HasKey(keyID))
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -23,17 +43,19 @@ public class CollectKey : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            keyTracker.GotKey();
+            if (keyTracker != null && !keyTracker.HasKey(keyID))
+            {
+                keyTracker.GotKey(keyID);
 
-            if (collectKeySound != null)
-            {
-                audioSource.PlayOneShot(collectKeySound);
-                // Destroy after sound length to let it play
-                Destroy(gameObject, collectKeySound.length);
-            }
-            else
-            {
-                Destroy(gameObject); // No sound, destroy immediately
+                if (collectKeySound != null)
+                {
+                    audioSource.PlayOneShot(collectKeySound);
+                    Destroy(gameObject, collectKeySound.length);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
         }
     }

@@ -16,6 +16,7 @@ public class GameData
 
 
     // Level 2: Puzzle states
+    public List<string> collectedLevel2Keys = new List<string>();
     public List<string> solvedPuzzleIDs = new List<string>();
 
     // Level 3: Boss state
@@ -52,4 +53,10 @@ public class EnemyRecord
     public string uniqueID;
     public int currentHealth;
     public bool isDead;
+}
+[System.Serializable]
+public class PlayerPositionsData
+{
+    public float player1PosX, player1PosY;
+    public float player2PosX, player2PosY;
 }

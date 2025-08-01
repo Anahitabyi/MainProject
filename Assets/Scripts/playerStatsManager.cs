@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class playerStatsManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class playerStatsManager : MonoBehaviour
 
     public PlayerStats player1Stats = new PlayerStats();
     public PlayerStats player2Stats = new PlayerStats();
+
+    public Dictionary<string, PlayerPositionsData> scenePlayerPositions = new();
 
     private void Awake()
     {
@@ -55,5 +58,12 @@ public class playerStatsManager : MonoBehaviour
     {
         player1Stats = new PlayerStats();
         player2Stats = new PlayerStats();
+    }
+
+    [System.Serializable]
+    public class PlayerPositionsData
+    {
+        public float player1PosX, player1PosY;
+        public float player2PosX, player2PosY;
     }
 }

@@ -273,6 +273,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7099390637859293862, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 989635143}
+    - targetCorrespondingSourceObject: {fileID: 7099390637859293862, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 989635144}
   m_SourcePrefab: {fileID: 100100000, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
 --- !u!4 &11213739 stripped
 Transform:
@@ -324,7 +327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6865242282586098371, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.8043547
+      value: -7.8050833
       objectReference: {fileID: 0}
     - target: {fileID: 6865242282586098371, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -940,7 +943,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1026711825992941632, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 92919
+      value: 2190071
       objectReference: {fileID: 0}
     - target: {fileID: 1327864990081933079, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_Name
@@ -948,7 +951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4135620339002320958, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.8043547
+      value: -7.8050833
       objectReference: {fileID: 0}
     - target: {fileID: 4135620339002320958, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1187,7 +1190,7 @@ MonoBehaviour:
     yPosition: -6
     width: 41
   finalChunkPrefab: {fileID: 7091617549630125815, guid: ae5e9592e4f1d854a95847adef8ce4c6, type: 3}
-  finalChunkYPosition: -9
+  finalChunkYPosition: -12
   finalChunkWidth: 20
   backgroundPrefab: {fileID: 3835103202223498735, guid: 4129ad455ec4d58469230fc1e4b7970a, type: 3}
   backgroundYPosition: 0
@@ -1349,6 +1352,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0.011319797, y: -0.0028299491}
   m_Size: {x: 0.49458122, y: 0.9035406}
   m_Direction: 0
+--- !u!114 &989635144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11213742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827b2083bd4df4d4bafa255c34fc569e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerType: 0
 --- !u!224 &1099305256 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7274641041945597389, guid: 7a3c47ec84cfd5c408aef10f8bea94d7, type: 3}
@@ -1368,11 +1384,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3360178660043591020, guid: 147174d52237951409994b0420153ff1, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 55799
+      value: 2152951
       objectReference: {fileID: 0}
     - target: {fileID: 7221113656925418214, guid: 147174d52237951409994b0420153ff1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.7543535
+      value: -7.755082
       objectReference: {fileID: 0}
     - target: {fileID: 7221113656925418214, guid: 147174d52237951409994b0420153ff1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1794,7 +1810,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1085164908796191870, guid: f6ed78452ea9e0340a3453d9dbe12bef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.7543535
+      value: -7.755082
       objectReference: {fileID: 0}
     - target: {fileID: 1085164908796191870, guid: f6ed78452ea9e0340a3453d9dbe12bef, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2050,6 +2066,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4490634895448124012, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2058845412}
+    - targetCorrespondingSourceObject: {fileID: 4490634895448124012, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2058845413}
   m_SourcePrefab: {fileID: 100100000, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
 --- !u!4 &1440778347 stripped
 Transform:
@@ -11972,8 +11991,8 @@ MonoBehaviour:
   IsClimbing: 0
   bulletPrefab: {fileID: 64783981532899760, guid: 6f5aeac0ae4aa7147a4f0d79ff415078, type: 3}
   firePoint: {fileID: 1440778347}
-  bulletSpeed: 15
-  bulletSpawnDelay: 0.2
+  bulletSpeed: 35
+  bulletSpawnDelay: 0.1
   hobbitCamera: {fileID: 70811835}
   shakeDuration: 0
   shakeMagnitude: 0
@@ -12006,6 +12025,19 @@ MonoBehaviour:
   _moveParticles: {fileID: 1548258303}
   _landParticles: {fileID: 1548258303}
   _footsteps: []
+--- !u!114 &2058845413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058845409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827b2083bd4df4d4bafa255c34fc569e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerType: 1
 --- !u!1001 &1718361763432294399
 PrefabInstance:
   m_ObjectHideFlags: 0

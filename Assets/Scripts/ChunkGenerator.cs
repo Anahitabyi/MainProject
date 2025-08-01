@@ -225,7 +225,41 @@ public class ChunkGenerator : MonoBehaviour
             }
         }
 
+        // After all saved chunks have been loaded
+    if (!ContainsFinalChunk(savedChunks) && finalChunkPrefab != null)
+    {
+        float lastX = 0f;
+        if (activeChunks.Count > 0)
+        {
+            SpawnedChunk last = activeChunks[activeChunks.Count - 1];
+            lastX = last.chunkObject.transform.position.x + last.width;
+        }
+
+        GameObject chunk = Instantiate(finalChunkPrefab, new Vector3(lastX, finalChunkYPosition, 0), Quaternion.identity, transform);
+        chunk.name = $"Chunk_{currentChunkIndex}";
+        activeChunks.Add(new SpawnedChunk(chunk, finalChunkWidth));
+        currentChunkIndex++;
+
+        EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
+        foreach (EnemyShooter shooter in shooters)
+        {
+            shooter.SetPlayers(GetPlayerGameObjects());
+        }
+
+        if (backgroundPrefab != null)
+        {
+            GameObject background = Instantiate(backgroundPrefab);
+            background.transform.position = new Vector3(lastX, backgroundYPosition, -1);
+            activeBackgrounds.Add(background);
+        }
+
         finalChunkSpawned = true;
+    }
+
+    }
+    private bool ContainsFinalChunk(List<ChunkRecord> savedChunks)
+    {
+        return savedChunks.Exists(chunk => chunk.chunkID == finalChunkPrefab.name);
     }
 
     private void ClearAllChunks()

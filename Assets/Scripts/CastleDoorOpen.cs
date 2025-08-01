@@ -45,37 +45,41 @@ public class CastleDoorOpen : MonoBehaviour
         if (playerInRange && Input.GetKeyDown(KeyCode.Return))
         {
             Debug.Log("Return key pressed while player is in range.");
-
-            if (keyTracker != null && keyTracker.getCurrentKey() >= 1) // change this if you require a specific number
+            if (openDoorClip != null)
             {
-                Debug.Log("Player has at least one key. Opening door...");
-
-                if (openDoorClip != null)
-                {
-                    Debug.Log("Playing door open sound.");
-                    audioSource.PlayOneShot(openDoorClip);
-                }
-
-                StartCoroutine(FadeOutAndLoad(nextSceneName));
+                Debug.Log("Playing door open sound.");
+                audioSource.PlayOneShot(openDoorClip);
             }
-            else
-            {
-                Debug.Log("Player does not have a key. Playing locked door sound.");
 
-                if (lockedDoorClip != null)
-                    audioSource.PlayOneShot(lockedDoorClip);
-
-                if (messageText != null)
-                    {
-                        Debug.Log("Message text is set: " + messageText.name);
-                        StartCoroutine(ShowMessage(lockedMessage, messageDuration));
-                    }
-                    else
-                    {
-                        Debug.LogWarning("Message text reference is NULL!");
-                    }
-            }
+            StartCoroutine(FadeOutAndLoad(nextSceneName));
         }
+
+        // if (keyTracker.getCurrentKey() >= 1) // change this if you require a specific number
+        // {
+            //Debug.Log("Player has at least one key. Opening door...");
+
+           
+            //}
+            //     else
+            //     {
+            //         Debug.Log("Player does not have a key. Playing locked door sound.");
+
+            //         if (lockedDoorClip != null)
+            //             audioSource.PlayOneShot(lockedDoorClip);
+
+            //         if (messageText != null)
+            //             {
+            //                 Debug.Log("Message text is set: " + messageText.name);
+            //                 StartCoroutine(ShowMessage(lockedMessage, messageDuration));
+            //             }
+            //             else
+            //             {
+            //                 Debug.LogWarning("Message text reference is NULL!");
+            //             }
+            //     }
+            // }
+        
+    
     }
 
     private IEnumerator FadeOutAndLoad(string sceneName)

@@ -27,8 +27,16 @@ public class GameSaveController : MonoBehaviour
         var p1 = playerStatsManager.Instance.player1Stats;
         var p2 = playerStatsManager.Instance.player2Stats;
 
-        var player2GO = FindFirstObjectByType<meleePlayerMovement>()?.gameObject;
-        var player1GO = FindFirstObjectByType<playerMovement>()?.gameObject;
+        GameObject player1GO = null, player2GO = null;
+        var identifiers = Object.FindObjectsByType<PlayerIdentifier>(FindObjectsSortMode.None);
+        foreach (var id in identifiers)
+        {
+            if (id.playerType == PlayerIdentifier.PlayerType.Hobbit)
+                player1GO = id.gameObject;
+            else if (id.playerType == PlayerIdentifier.PlayerType.Hooded)
+                player2GO = id.gameObject;
+        }
+
 
         Vector2 p1Pos = player1GO != null ? (Vector2)player1GO.transform.position : Vector2.zero;
         Vector2 p2Pos = player2GO != null ? (Vector2)player2GO.transform.position : Vector2.zero;
@@ -54,7 +62,6 @@ public class GameSaveController : MonoBehaviour
         };
 
         data.currentSceneName = SceneManager.GetActiveScene().name;
-
         // ✅ Save chunk and other game state data
         if (SaveTracker.Instance != null)
         {
@@ -62,6 +69,7 @@ public class GameSaveController : MonoBehaviour
             data.collectedIDs = new List<string>(SaveTracker.Instance.collectedIDs);
             data.disabledPatrolPairs = new List<string>(SaveTracker.Instance.disabledPatrolPairs);
             data.savedEnemies = new List<EnemyRecord>(SaveTracker.Instance.enemyStates.Values);
+            data.collectedLevel2Keys = new List<string>(SaveTracker.Instance.collectedLevel2Keys);
 
         }
 
@@ -110,8 +118,16 @@ public class GameSaveController : MonoBehaviour
         SaveTracker.Instance.collectedIDs = new HashSet<string>(data.collectedIDs);
         SaveTracker.Instance.disabledPatrolPairs = new HashSet<string>(data.disabledPatrolPairs);
 
-        var player1GO = FindFirstObjectByType<playerMovement>()?.gameObject;
-        var player2GO = FindFirstObjectByType<meleePlayerMovement>()?.gameObject;
+        GameObject player1GO = null, player2GO = null;
+        var identifiers = Object.FindObjectsByType<PlayerIdentifier>(FindObjectsSortMode.None);
+        foreach (var id in identifiers)
+        {
+            if (id.playerType == PlayerIdentifier.PlayerType.Hobbit)
+                player1GO = id.gameObject;
+            else if (id.playerType == PlayerIdentifier.PlayerType.Hooded)
+                player2GO = id.gameObject;
+        }
+
 
         if (player1GO != null)
             player1GO.transform.position = new Vector2(data.player1Stats.posX, data.player1Stats.posY);

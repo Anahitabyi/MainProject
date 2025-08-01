@@ -101,18 +101,10 @@ public class newMeleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
                 enemyHealth.TakeDamage(attackDamage);
             }
 
-            BossEnemy bossEnemy = enemy.GetComponent<BossEnemy>();
-            if (bossEnemy != null)
-            {
-                bossEnemy.TakeDamage(attackDamage);
-                Debug.Log("tried to damage the boss!");
-                return;
-            }
-
             BossShooterDevice shooter = enemy.GetComponent<BossShooterDevice>();
             if (shooter != null && shooter.bossRef != null)
             {
-                shooter.bossRef.TakeDamage(attackDamage);
+                shooter.TakeDamage(attackDamage);
                 return;
             }
         }

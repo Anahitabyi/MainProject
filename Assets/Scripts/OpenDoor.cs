@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class OpenDoor : MonoBehaviour
 {
     public TMP_Text _text;
-    KeyTracker keyTracker;
+    private KeyTracker keyTracker;
 
     public AudioClip openDoorSound;
     public AudioClip lockedDoorSound;
@@ -17,9 +17,11 @@ public class OpenDoor : MonoBehaviour
     private bool _playerInTrigger = false;
     private Coroutine subtitleCoroutine;
 
+    private const int requiredKeys = 4;
+
     private void Start()
     {
-        keyTracker = FindFirstObjectByType<KeyTracker>();
+        keyTracker = KeyTracker.Instance;
 
         if (audioSource == null)
         {
@@ -41,7 +43,7 @@ public class OpenDoor : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _playerInTrigger = true;
-            UpdateButtonText(keyTracker.getCurrentKey());
+            UpdateButtonText();
         }
     }
 
@@ -51,7 +53,6 @@ public class OpenDoor : MonoBehaviour
         {
             _playerInTrigger = false;
 
-            // Hide text and stop subtitle if playing
             if (_text != null)
                 _text.gameObject.SetActive(false);
 
@@ -63,22 +64,29 @@ public class OpenDoor : MonoBehaviour
         }
     }
 
-    void UpdateButtonText(int currentKey)
+    void UpdateButtonText()
     {
-        if (_text != null)
+        if (_text != null && keyTracker != null)
         {
-            _text.text = $"Keys: {currentKey}/4"; // Show the number of keys when in door zone
+            int currentKeyCount = keyTracker.GetCurrentKeyCount();
+            _text.text = $"Keys: {currentKeyCount}/{requiredKeys}";
             _text.gameObject.SetActive(true);
         }
     }
 
     public void OpenLockedDoor()
     {
-        int currentKey = keyTracker.getCurrentKey();
-
-        if (currentKey >= 4)
+        if (keyTracker == null)
         {
-            if (openDoorSound != null) // Open door (with or without sound)
+            Debug.LogWarning("KeyTracker instance not found!");
+            return;
+        }
+
+        int currentKeyCount = keyTracker.GetCurrentKeyCount();
+
+        if (currentKeyCount >= requiredKeys)
+        {
+            if (openDoorSound != null)
             {
                 audioSource.PlayOneShot(openDoorSound);
                 StartCoroutine(WaitAndLoadScene(openDoorSound.length));
@@ -88,14 +96,13 @@ public class OpenDoor : MonoBehaviour
                 SceneManager.LoadScene("MainMenu");
             }
         }
-        else // Not enough keys, won't let player in. 
+        else
         {
             if (lockedDoorSound != null)
                 audioSource.PlayOneShot(lockedDoorSound);
 
-            string message = $"Insufficient keys! {currentKey}/4 acquired";
+            string message = $"Insufficient keys! {currentKeyCount}/{requiredKeys} acquired";
 
-            // If subtitle already showing, stop it so we can restart with new message
             if (subtitleCoroutine != null)
                 StopCoroutine(subtitleCoroutine);
 
@@ -103,7 +110,7 @@ public class OpenDoor : MonoBehaviour
         }
     }
 
-    private IEnumerator ShowSubtitle(string message, float duration) // Method to say that we don't have enough keys.
+    private IEnumerator ShowSubtitle(string message, float duration)
     {
         if (_text != null)
         {
@@ -115,7 +122,7 @@ public class OpenDoor : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitAndLoadScene(float waitTime) 
+    private IEnumerator WaitAndLoadScene(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         SceneManager.LoadScene("MainMenu");

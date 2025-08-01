@@ -79,6 +79,9 @@ public class newBullet : MonoBehaviour
         }
         if (collision.gameObject.layer == LayerMask.NameToLayer("NuclearThrone"))
         {
+            if (collision.TryGetComponent<BossShooterDevice>(out var shooter)) {
+            shooter.TakeDamage(1); // This deals damage to the boss through the shooter
+        }
             if (explosionPrefab != null)
             {
                 Instantiate(explosionPrefab, transform.position, Quaternion.identity);

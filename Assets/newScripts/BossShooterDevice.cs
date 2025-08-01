@@ -20,12 +20,15 @@ public class BossShooterDevice : MonoBehaviour
     public string alertTrigger = "Alert";
     public string attackTrigger = "Attack";
 
+    public string deathTrigger = "Death";
+
     [Header("Shooting")]
     public GameObject bulletPrefab;
     public Transform[] firePoints;
     public float spreadAngle = 15f;
     public int numberOfWaves = 3;
     public float delayBetweenWaves = 0.2f;
+    public bool hasFinishedWaves;
 
     [Header("Reference")]
     public BossEnemy bossRef;
@@ -73,8 +76,8 @@ public class BossShooterDevice : MonoBehaviour
             if (deviceAnimator != null)
                 deviceAnimator.SetTrigger(alertTrigger);
             sfx.PlayAlertSound();
-                
-                if (orthoSizeChanger != null)
+
+            if (orthoSizeChanger != null)
             {
                 // Debug.Log("ortho not null!");
                 orthoSizeChanger.StartChangeOrthoSize();
@@ -103,7 +106,7 @@ public class BossShooterDevice : MonoBehaviour
     {
         if (deviceAnimator != null)
             deviceAnimator.SetTrigger(attackTrigger);
-        
+
     }
 
     // 🔔 Call this from animation event during device attack animation
@@ -125,7 +128,7 @@ public class BossShooterDevice : MonoBehaviour
             firePoint.rotation = Quaternion.Euler(0, 0, angle + 270);
         }
         StartCoroutine(ShootBulletWaves());
-        
+
     }
 
     private IEnumerator ShootBulletWaves()
@@ -145,7 +148,7 @@ public class BossShooterDevice : MonoBehaviour
         sfx.PlayAttackSound();
         for (int wave = 0; wave < numberOfWaves; wave++)
         {
-            
+
             for (int i = -1; i <= 1; i++)
             {
                 //damagedPlayersTHisWave.Clear();
@@ -160,11 +163,12 @@ public class BossShooterDevice : MonoBehaviour
                 yield return new WaitForSeconds(delayBetweenWaves);
         }
     }
-    void SpawnBullet(Vector3 pos, Quaternion rot){
+    void SpawnBullet(Vector3 pos, Quaternion rot)
+    {
         GameObject bullet = Instantiate(bulletPrefab, pos, rot);
         BossBullet bossBulletScript = bullet.GetComponent<BossBullet>();
         bossBulletScript.bossEnemy = bossRef;
-        
+
     }
     private void OnDrawGizmosSelected()
     {
@@ -173,6 +177,18 @@ public class BossShooterDevice : MonoBehaviour
         Gizmos.DrawCube(worldCenter, zoneSize);
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(worldCenter, zoneSize);
+    }
+    public void TakeDamage(float amount)
+    {
+        if (bossRef != null)
+        {
+            bossRef.TakeDamage(amount);
+        }
+    }
+
+    public void OnDeathAnimationFinished()
+    {
+        Destroy(gameObject);
     }
 
 
