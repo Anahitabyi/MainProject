@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class patrollingEnemy : MonoBehaviour
+public class patrollingEnemy : MonoBehaviour, IPooledDeathHandler
 {
     public GameObject pointA;
     public GameObject pointB;
@@ -13,6 +13,9 @@ public class patrollingEnemy : MonoBehaviour
     private bool isAttacking = false;
     private bool isDead = false;
 
+    [Tooltip("Unique ID of the patrol pair this enemy belongs to")]
+    public string patrolPairID;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -20,12 +23,17 @@ public class patrollingEnemy : MonoBehaviour
 
         if (pointA == null || pointB == null)
         {
-            Debug.Log($"{name}: pointA or pointB not assigned.");
+            Debug.LogWarning($"{name}: pointA or pointB not assigned.");
             enabled = false;
             return;
         }
 
         currentPoint = pointB.transform;
+
+        if (!string.IsNullOrEmpty(patrolPairID))
+            Debug.Log($"[Enemy] {name} initialized with patrolPairID = {patrolPairID}");
+        else
+            Debug.LogWarning($"[Enemy] {name} has no patrolPairID assigned!");
     }
 
     void Update()
@@ -78,7 +86,6 @@ public class patrollingEnemy : MonoBehaviour
         }
     }
 
-    // Called via animation event
     public void EndAttack()
     {
         if (!isDead)
@@ -88,14 +95,17 @@ public class patrollingEnemy : MonoBehaviour
         }
     }
 
-    // Called from your health script when dying
     public void Die()
     {
         if (isDead) return;
-
         isDead = true;
         isAttacking = false;
-        rb.linearVelocity = Vector2.zero;
+
+        if (!string.IsNullOrEmpty(patrolPairID))
+        {
+            SaveTracker.Instance.MarkPatrolPairDisabled(patrolPairID);
+            Debug.Log($"[Enemy] Marked patrolPairID '{patrolPairID}' as disabled.");
+        }
 
         if (anim != null)
         {
@@ -106,9 +116,10 @@ public class patrollingEnemy : MonoBehaviour
         Collider2D col = GetComponent<Collider2D>();
         if (col) col.enabled = false;
 
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb) rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
-        Destroy(gameObject, 1.5f); // Wait for death animation
+        Destroy(gameObject, 1.5f);
     }
 
     void OnDrawGizmos()
@@ -120,5 +131,10 @@ public class patrollingEnemy : MonoBehaviour
             Gizmos.DrawWireSphere(pointB.transform.position, 0.2f);
             Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
         }
+    }
+    public void OnDeath()
+    {
+        // Called by EnemyHealth when enemy dies
+        Die(); // your existing slime-specific logic
     }
 }

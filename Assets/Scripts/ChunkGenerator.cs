@@ -24,7 +24,7 @@ public class ChunkGenerator : MonoBehaviour
 
     [SerializeField] private Transform[] players;
 
-    public Transform FirstSpawnPoint { get; private set; } // ✅ Spawn point of the first chunk
+    public Transform FirstSpawnPoint { get; private set; }
 
     private List<ChunkData> unusedChunks = new List<ChunkData>();
 
@@ -46,8 +46,19 @@ public class ChunkGenerator : MonoBehaviour
     private int currentChunkIndex = 0;
     private bool finalChunkSpawned = false;
 
+    private bool useSavedChunks = false; // Prevent auto-gen after load
+
     void Start()
     {
+        if (useSavedChunks)
+        {
+            ClearAllChunks();
+            return;
+        }
+         if (SaveTracker.Instance != null)
+    {
+        SaveTracker.Instance.ClearChunks();
+    }
         unusedChunks = new List<ChunkData>(chunkDataList);
         ShuffleList(unusedChunks);
 
@@ -59,7 +70,7 @@ public class ChunkGenerator : MonoBehaviour
 
     void Update()
     {
-        if (players == null || players.Length == 0 || finalChunkSpawned) return;
+        if (useSavedChunks || players == null || players.Length == 0 || finalChunkSpawned) return;
 
         float maxPlayerX = float.MinValue;
         foreach (Transform player in players)
@@ -108,28 +119,30 @@ public class ChunkGenerator : MonoBehaviour
             finalChunkSpawned = true;
         }
 
-        if (chunkToSpawn == null)
-            return null;
+        if (chunkToSpawn == null) return null;
 
         GameObject chunk = Instantiate(chunkToSpawn, new Vector3(positionX, chunkY, 0), Quaternion.identity, transform);
         chunk.name = "Chunk_" + currentChunkIndex;
         currentChunkIndex++;
 
-        // ✅ Store spawn point from first chunk
         if (activeChunks.Count == 0)
         {
             Transform spawn = chunk.transform.Find("SpawnPoint");
             if (spawn != null)
-            {
                 FirstSpawnPoint = spawn;
-            }
-            else
-            {
-                Debug.LogWarning("SpawnPoint not found in the first chunk!");
-            }
         }
 
         activeChunks.Add(new SpawnedChunk(chunk, chunkWidth));
+
+        if (chunk.CompareTag("Chunk"))
+            {
+                SaveTracker.Instance.RecordChunk(
+                    chunkToSpawn.name,
+                    currentChunkIndex - 1,
+                    new Vector2(positionX, chunkY),
+                    chunkWidth
+                );
+            }
 
         EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
         foreach (EnemyShooter shooter in shooters)
@@ -167,5 +180,87 @@ public class ChunkGenerator : MonoBehaviour
             list[i] = list[randomIndex];
             list[randomIndex] = temp;
         }
+    }
+
+    public void SpawnFromSavedData(List<ChunkRecord> savedChunks)
+    {
+        useSavedChunks = true;
+
+        ClearAllChunks(); // Remove any auto-generated chunks before loading saved ones
+
+        savedChunks.Sort((a, b) => a.chunkIndex.CompareTo(b.chunkIndex)); // maintain order
+
+        foreach (var record in savedChunks)
+        {
+            GameObject prefab = FindChunkPrefabByID(record.chunkID);
+            if (prefab == null)
+            {
+                Debug.LogWarning($"Chunk prefab with ID {record.chunkID} not found!");
+                continue;
+            }
+
+            GameObject chunk = Instantiate(prefab, new Vector3(record.posX, record.posY, 0), Quaternion.identity, transform);
+            chunk.name = $"Chunk_{record.chunkIndex}";
+
+            activeChunks.Add(new SpawnedChunk(chunk, record.width)); 
+
+            if (record.chunkIndex == 0)
+            {
+                Transform spawn = chunk.transform.Find("SpawnPoint");
+                if (spawn != null)
+                    FirstSpawnPoint = spawn;
+            }
+
+            EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
+            foreach (EnemyShooter shooter in shooters)
+            {
+                shooter.SetPlayers(GetPlayerGameObjects());
+            }
+
+            if (backgroundPrefab != null)
+            {
+                GameObject background = Instantiate(backgroundPrefab);
+                background.transform.position = new Vector3(record.posX, backgroundYPosition, -1);
+                activeBackgrounds.Add(background);
+            }
+        }
+
+        finalChunkSpawned = true;
+    }
+
+    private void ClearAllChunks()
+    {
+        // Destroy all active chunks
+        foreach (var chunk in activeChunks)
+        {
+            if (chunk.chunkObject != null)
+                Destroy(chunk.chunkObject);
+        }
+        activeChunks.Clear();
+
+        // Destroy all active backgrounds
+        foreach (var bg in activeBackgrounds)
+        {
+            if (bg != null)
+                Destroy(bg);
+        }
+        activeBackgrounds.Clear();
+
+        currentChunkIndex = 0;
+        finalChunkSpawned = false;
+    }
+
+    private GameObject FindChunkPrefabByID(string id)
+    {
+        foreach (var chunk in chunkDataList)
+        {
+            if (chunk.chunkPrefab.name == id)
+                return chunk.chunkPrefab;
+        }
+
+        if (finalChunkPrefab != null && finalChunkPrefab.name == id)
+            return finalChunkPrefab;
+
+        return null;
     }
 }

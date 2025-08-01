@@ -94,6 +94,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6157776353644550334, guid: 31ad1c0a594561546ad3289c47a08803, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2887067715949177547}
+    - targetCorrespondingSourceObject: {fileID: 6157776353644550334, guid: 31ad1c0a594561546ad3289c47a08803, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6549387965558741477}
   m_SourcePrefab: {fileID: 100100000, guid: 31ad1c0a594561546ad3289c47a08803, type: 3}
 --- !u!1 &5946122058466584501 stripped
 GameObject:
@@ -170,8 +173,24 @@ MonoBehaviour:
   scoreValue: 0
   lifevalue: 0
   healthValue: 1
+  powerupValue: 1
+  powerupDuration: 10
   healSound: {fileID: 8300000, guid: f44f6b02fb4b15b49bbe86214609adb5, type: 3}
   coinPickupSound: {fileID: 8300000, guid: db40f0c67b612304bb95d48308eef206, type: 3}
   healthPickupSound: {fileID: 0}
   lifePickupSound: {fileID: 0}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
+  uniqueID: {fileID: 0}
+--- !u!114 &-6549387965558741477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5946122058466584501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efde82564566d274bb013cdda1a9988e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: b37b3315-d6aa-4fed-948e-03d227306590

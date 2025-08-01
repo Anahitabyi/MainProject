@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyShooter : MonoBehaviour
+public class EnemyShooter : MonoBehaviour, IPooledDeathHandler
 {
     public GameObject pointA;
     public GameObject pointB;
@@ -17,7 +17,13 @@ public class EnemyShooter : MonoBehaviour
     private Transform target;
     private float timer;
     private bool isDead = false;
-
+    private GenerateID uniqueID;
+    private EnemyHealth health;
+    private void Awake()
+    {
+        uniqueID = GetComponent<GenerateID>();
+        health = GetComponent<EnemyHealth>();
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -159,15 +165,35 @@ public class EnemyShooter : MonoBehaviour
         }
     }
 
-    public void Die()
+    public void OnDeath()
+{
+    Debug.Log($"[EnemyShooter] OnDeath called for: {gameObject.name}");
+
+    isDead = true;
+    rb.linearVelocity = Vector2.zero;
+    anim.SetTrigger("Die");
+    GetComponent<Collider2D>().enabled = false;
+    rb.constraints = RigidbodyConstraints2D.FreezeAll;
+    foreach (var kvp in SaveTracker.Instance.enemyStates)
+{
+    Debug.Log($"[Save] Enemy ID: {kvp.Key}, HP: {kvp.Value.currentHealth}, Dead: {kvp.Value.isDead}");
+}
+
+    // ✅ Save death state
+    if (uniqueID != null && SaveTracker.Instance != null)
     {
-        isDead = true;
-        rb.linearVelocity = Vector2.zero;
-        anim.SetTrigger("Die");
-        GetComponent<Collider2D>().enabled = false;
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        Destroy(gameObject, 1.5f);
+        Debug.Log($"[EnemyShooter] Recording state for: {uniqueID.Id}");
+
+        SaveTracker.Instance.RecordEnemyState(
+            uniqueID.Id,
+            health != null ? health.CurrentHealth : 0,
+            true
+        );
     }
+
+    Destroy(gameObject, 1.5f);
+}
+
 
     public void SetPlayers(GameObject[] newPlayers)
     {

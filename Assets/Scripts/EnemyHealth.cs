@@ -26,7 +26,7 @@ public class EnemyHealth : MonoBehaviour
         Debug.Log($"{gameObject.name} took {damageAmount} damage. Current HP: {currentHealth}");
 
         animator.SetTrigger("Hit");           // Trigger the 'Hit' animation
-
+        // SaveIfHasID();
         if (currentHealth <= 0)
         {
             Die();                            // Call death logic if health reaches 0 or below
@@ -36,21 +36,74 @@ public class EnemyHealth : MonoBehaviour
     // Called when the enemy dies
     protected virtual void Die()
     {
-        isDead = true;                        // Mark enemy as dead
-        Debug.Log($"{gameObject.name} has died."); // Log death event
+        isDead = true;
+        Debug.Log($"{gameObject.name} has died.");
 
-        animator.SetTrigger("Die");           // Trigger the 'Die' animation
+        // ✅ Let another script handle special behavior
+        IPooledDeathHandler deathHandler = GetComponent<IPooledDeathHandler>();
+        if (deathHandler != null)
+        {
+            deathHandler.OnDeath(); // Delegates to patrollingEnemy
+        }
+
+        // ✅ Save defeated enemy ID if applicable
+        GenerateID unique = GetComponent<GenerateID>();
+        if (unique != null)
+        {
+            Debug.Log("Found the id!");
+            SaveTracker.Instance.MarkEnemyDefeated(unique.Id);
+        }
+
+        animator.SetTrigger("Die");
 
         Collider2D col = GetComponent<Collider2D>();
-        if (col) col.enabled = false;         // Disable the collider so it doesn't interact anymore
+        if (col) col.enabled = false;
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb)
         {
-            rb.linearVelocity = Vector2.zero; // Stop all movement
-            rb.constraints = RigidbodyConstraints2D.FreezeAll; // Freeze physics to stop interactions
+            rb.linearVelocity = Vector2.zero;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+        // SaveIfHasID();
+        Destroy(gameObject, 0.5f);
+    }
+    public void SetHealth(int hp)
+        {
+            currentHealth = hp;
+            isDead = hp <= 0;
         }
 
-        Destroy(gameObject, 0.5f);            // Destroy the enemy object after the animation plays
+
+
+    private bool hasBeenKilled = false;
+
+public void KillImmediately()
+{
+    if (hasBeenKilled) return;
+    hasBeenKilled = true;
+
+    isDead = true;
+
+    Collider2D col = GetComponent<Collider2D>();
+    if (col) col.enabled = false;
+
+    Rigidbody2D rb = GetComponent<Rigidbody2D>();
+    if (rb)
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
+
+    Destroy(gameObject);
 }
+
+public int CurrentHealth => currentHealth;
+
+
+}
+public interface IPooledDeathHandler
+{
+    void OnDeath();
+}
+

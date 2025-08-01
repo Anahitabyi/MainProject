@@ -1,14 +1,16 @@
+// === PauseMenuManager.cs ===
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PauseMenuManager : MonoBehaviour
 {
-    public GameObject pauseMenuUI;    // Reference to Canvas
-    public GameObject pausePanel;     // Resume / Settings / Quit
-    public GameObject settingsPanel;  // Settings menu
+    public GameObject pauseMenuUI;
+    public GameObject pausePanel;
+    public GameObject settingsPanel;
     private bool isPaused = false;
-    
+
     public AudioClip pauseToggleClip;
     public AudioClip resumeToggleClip;
     public AudioClip SettingsClip;
@@ -16,6 +18,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public AudioMixer audioMixer;
     public AudioMixerGroup sfxGroup;
+
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -23,9 +26,10 @@ public class PauseMenuManager : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.outputAudioMixerGroup = sfxGroup;
     }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) // Pause and unpause with esc
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
         }
@@ -43,41 +47,55 @@ public class PauseMenuManager : MonoBehaviour
             if (resumeToggleClip != null)
                 audioSource.PlayOneShot(resumeToggleClip);
         }
+
         isPaused = !isPaused;
         pausePanel.SetActive(isPaused);
         settingsPanel.SetActive(false);
-        Time.timeScale = isPaused ? 0f : 1f; // Everything time based changes with pause and unpause
+        Time.timeScale = isPaused ? 0f : 1f;
     }
+
     public void Resume()
     {
         if (resumeToggleClip != null)
             audioSource.PlayOneShot(resumeToggleClip);
-    
-        Time.timeScale = 1f; 
 
+        Time.timeScale = 1f;
         pausePanel.SetActive(false);
         isPaused = false;
     }
 
-    
     public void RestartLevel()
     {
         if (resumeToggleClip != null)
             audioSource.PlayOneShot(resumeToggleClip);
+
         Time.timeScale = 1f;
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene("Level1"); 
-        // Reset health and score when restarting
+        LoadAndReset();
+    }
+
+    private void LoadAndReset()
+    {
         PlayerHealth[] players = GameObject.FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
         foreach (PlayerHealth p in players)
         {
             p.SetHealth(9);
         }
-        if (ScoreManager.Instance!= null){ScoreManager.Instance.ResetScore();}
-        if (playerStatsManager.Instance != null){playerStatsManager.Instance.ResetAllStats();}
-        
-    }
 
+        if (ScoreManager.Instance != null)
+            ScoreManager.Instance.ResetScore();
+
+        if (playerStatsManager.Instance != null)
+            playerStatsManager.Instance.ResetAllStats();
+
+        if (SaveTracker.Instance != null)
+        SaveTracker.Instance.ClearAll();
+
+        SceneManager.LoadScene("Level1");
+
+        Debug.Log("[Restart] Scene fully loaded: " + SceneManager.GetActiveScene().name);
+
+       
+    }
 
     public void OpenSettings()
     {
@@ -92,13 +110,37 @@ public class PauseMenuManager : MonoBehaviour
         if (resumeToggleClip != null)
             audioSource.PlayOneShot(resumeToggleClip);
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu"); // Change to your actual main menu scene
+        SceneManager.LoadScene("MainMenu");
     }
+
     public void BackToPause()
     {
-        settingsPanel.SetActive(false); // Close setting and go back to pause
+        settingsPanel.SetActive(false);
         pausePanel.SetActive(true);
         if (SettingsClip != null)
             audioSource.PlayOneShot(SettingsClip);
+    }
+
+    public void SaveGame()
+    {
+        StartCoroutine(DelayedSaveCoroutine());
+    }
+
+    private IEnumerator DelayedSaveCoroutine()
+    {
+        yield return null;
+
+        if (GameSaveController.Instance != null)
+        {
+            GameSaveController.Instance.SaveToFile();
+
+            SaveFeedback feedback = FindFirstObjectByType<SaveFeedback>();
+            if (feedback != null)
+                feedback.Show("Game Saved!");
+        }
+        else
+        {
+            Debug.LogWarning("GameSaveController not found!");
+        }
     }
 }

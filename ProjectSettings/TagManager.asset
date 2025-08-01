@@ -18,6 +18,7 @@ TagManager:
   - Jumpscare
   - Door
   - Gun
+  - Chunk
   layers:
   - Default
   - TransparentFX
