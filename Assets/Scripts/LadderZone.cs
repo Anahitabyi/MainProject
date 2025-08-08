@@ -1,14 +1,13 @@
 using UnityEngine;
-
-public class LadderZone : MonoBehaviour
+  public class LadderZone : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            PlayerClimb climb = other.GetComponent<PlayerClimb>();
-            if (climb != null)
-                climb.SetOnLadder(true); // Calls the method form the PlayerClimb so player can start climbing after the setter.
+            var controller = other.GetComponent<PlayerControllerNew>();
+            if (controller != null)
+                controller.SetOnLadder(true);
         }
     }
 
@@ -16,9 +15,9 @@ public class LadderZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerClimb climb = other.GetComponent<PlayerClimb>();
-            if (climb != null)
-                climb.SetOnLadder(false); // No longer climbing
+            var controller = other.GetComponent<PlayerControllerNew>();
+            if (controller != null)
+                controller.SetOnLadder(false);
         }
     }
 }

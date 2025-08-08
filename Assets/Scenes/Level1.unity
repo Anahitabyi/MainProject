@@ -258,6 +258,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8509036316442811293, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
     - {fileID: 4896806908539722067, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
+    - {fileID: -5310316931670057863, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4181548740265867038, guid: 10de0b95ee9b1204a91f4c40630d9fc8, type: 3}
@@ -327,7 +328,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6865242282586098371, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.8050833
+      value: -7.799999
       objectReference: {fileID: 0}
     - target: {fileID: 6865242282586098371, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -951,7 +952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4135620339002320958, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.8050833
+      value: -7.799999
       objectReference: {fileID: 0}
     - target: {fileID: 4135620339002320958, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1309,12 +1310,13 @@ MonoBehaviour:
   _stats: {fileID: 11400000, guid: 4e88fd37136630d4e92fa58eeefe031f, type: 2}
   IsClimbing: 0
   attackPoint: {fileID: 11213739}
-  attackBoxSize: {x: 1, y: 1}
+  attackBoxSize: {x: 2.84, y: 3.07}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 2048
   attackDamage: 1
   weaponUIIndicator: {fileID: 980296042}
+  climbSpeed: 4
 --- !u!70 &989635143
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1388,7 +1390,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7221113656925418214, guid: 147174d52237951409994b0420153ff1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.755082
+      value: -7.749998
       objectReference: {fileID: 0}
     - target: {fileID: 7221113656925418214, guid: 147174d52237951409994b0420153ff1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1784,7 +1786,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalKey: 1
-  currentKey: 0
 --- !u!4 &1225730589
 Transform:
   m_ObjectHideFlags: 0
@@ -1810,7 +1811,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1085164908796191870, guid: f6ed78452ea9e0340a3453d9dbe12bef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.755082
+      value: -7.749998
       objectReference: {fileID: 0}
     - target: {fileID: 1085164908796191870, guid: f6ed78452ea9e0340a3453d9dbe12bef, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2054,6 +2055,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 7125895893738783617, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
     - {fileID: 3727483765937510447, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
+    - {fileID: 1398826437400064987, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5994522201415092766, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}
@@ -11998,6 +12000,7 @@ MonoBehaviour:
   shakeMagnitude: 0
   attackDamage: 1
   weaponUIIndicator: {fileID: 313531143}
+  climbSpeed: 4
 --- !u!70 &2058845411 stripped
 CapsuleCollider2D:
   m_CorrespondingSourceObject: {fileID: 1960589413108520068, guid: 6cd9139fa6238cd40b93cb37cda355be, type: 3}

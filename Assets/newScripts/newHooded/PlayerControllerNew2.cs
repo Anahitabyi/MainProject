@@ -54,6 +54,29 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
             //animator.SetFloat("magnitude", 0);
             return;
         }
+        if (_isOnLadder)
+        {
+            float climbInput = _frameInput.Move.y;
+
+            if (Mathf.Abs(climbInput) > 0.1f)
+            {
+                if (!_isClimbing)
+                {
+                    StartClimbing();
+                }
+
+                _rb.gravityScale = 0f;
+                _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, climbInput * climbSpeed);
+            }
+            else if (_isClimbing)
+            {
+                _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 0f);
+            }
+        }
+        else if (_isClimbing)
+        {
+            StopClimbing();
+        }
 
     }
     private void FixedUpdate()
@@ -117,6 +140,16 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
             }
         }
     }
+    #if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(attackPoint.position, attackBoxSize);
+    }
+    #endif
 
 
     #region Collisions  
@@ -192,6 +225,40 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
     }
 
     #endregion
+    #region Climb
+
+    [SerializeField] private float climbSpeed = 4f;
+    private bool _isOnLadder = false;
+    private bool _isClimbing = false;
+    private float originalGravity;
+    private void StartClimbing()
+    {
+        _isClimbing = true;
+        IsClimbing = true; // This was your public field
+        originalGravity = _rb.gravityScale; // Store original gravity scale
+        _rb.gravityScale = 0f;
+
+    }
+
+    private void StopClimbing()
+    {
+        _isClimbing = false;
+        IsClimbing = false;
+        _rb.gravityScale = originalGravity; // or original gravity
+    }
+    public void SetOnLadder(bool value)
+    {
+        _isOnLadder = value;
+
+        if (!value && _isClimbing)
+        {
+            StopClimbing();
+        }
+    }
+
+
+
+    #endregion  
 
     #region Horizontal  
 
@@ -209,7 +276,6 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
     }
 
     #endregion
-
     #region Gravity  
 
     private void HandleGravity()
@@ -231,7 +297,9 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
     private void ApplyMovement()
     {
         if (!IsClimbing)
-            _rb.linearVelocity = _frameVelocity;
+    {
+        _rb.linearVelocity = _frameVelocity;
+    }
     }
 
 #if UNITY_EDITOR

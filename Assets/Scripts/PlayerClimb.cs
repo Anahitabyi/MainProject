@@ -9,12 +9,17 @@ public class PlayerClimb : MonoBehaviour
 
     private Rigidbody2D rb;
     private float originalGravity;
-    private PlayerControllerNew controller;
+    private MonoBehaviour controller;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        controller = GetComponent<PlayerControllerNew>();
+        controller = GetComponent<PlayerControllerNew>() as MonoBehaviour;
+        if (controller == null)
+        {
+            controller = GetComponent<PlayerControllerNew2>() as MonoBehaviour;
+        }
+
         originalGravity = rb.gravityScale;
     }
 
@@ -26,8 +31,8 @@ public class PlayerClimb : MonoBehaviour
             {
                 StopClimbing();
             }
-            if(controller != null){controller.IsClimbing = false;}
-            
+
+            SetIsClimbing(false);
             return;
         }
 
@@ -52,16 +57,24 @@ public class PlayerClimb : MonoBehaviour
     {
         isClimbing = true;
         rb.gravityScale = 0f;
-        if(controller!= null)
-        controller.IsClimbing = true;
+        SetIsClimbing(true);
     }
 
     private void StopClimbing()
     {
         isClimbing = false;
         rb.gravityScale = originalGravity;
-        if(controller!=null)
-        controller.IsClimbing = false;
+        SetIsClimbing(false);
+    }
+
+    private void SetIsClimbing(bool value)
+    {
+        if (controller == null) return;
+
+        if (controller is PlayerControllerNew c1)
+            c1.IsClimbing = value;
+        else if (controller is PlayerControllerNew2 c2)
+            c2.IsClimbing = value;
     }
 
     public void SetOnLadder(bool value)
