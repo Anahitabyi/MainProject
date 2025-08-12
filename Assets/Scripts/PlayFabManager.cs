@@ -8,7 +8,7 @@ public class PlayFabManager : MonoBehaviour
 {
     [SerializeField] private TMP_InputField email;
     [SerializeField] private TMP_InputField password;
-    [SerializeField] private TMP_InputField errorText;
+    [SerializeField] private TMP_Text errorText;
 
     public void Signup()
     {
@@ -62,8 +62,7 @@ public class PlayFabManager : MonoBehaviour
     }
     void OnError(PlayFabError error)
     {
-        Debug.Log(error.GenerateErrorReport());
-        
+        errorText.text = error.GenerateErrorReport();
     }
     
 }
