@@ -68,9 +68,14 @@ public class Trampoline : MonoBehaviour
         if (bouncer != null)
         {
             PlayerControllerNew pc = bouncer.GetComponent<PlayerControllerNew>();
+            PlayerControllerNew2 pc2 = bouncer.GetComponent<PlayerControllerNew2>();
             if (pc != null)
             {
                 pc.ExecuteBounce(bouncePower);
+            }
+            if (pc2 != null)
+            {
+                pc2.ExecuteBounce(bouncePower);
             }
         }
     }

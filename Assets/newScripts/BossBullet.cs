@@ -27,22 +27,28 @@ public class BossBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (((1 << collision.gameObject.layer) & playerLayer) != 0)
+        if (collision.CompareTag("Player"))
         {
             // Try to deal damage to the player
             PlayerHealth player = collision.GetComponent<PlayerHealth>();
             if (player != null && bossEnemy != null)
-        {
-            if(bossEnemy.Registerdamage(collision.transform)){
-                //Debug.Log("pplayer took damage.");
-            player.TakeDamage(damage);
-            
-            }
-            
-        }
-        Destroy(gameObject);
+            {
+                if (bossEnemy.Registerdamage(collision.transform))
+                {
+                    //Debug.Log("pplayer took damage.");
+                    player.TakeDamage(damage);
 
-        // If you want to also destroy bullet on hitting walls/ground, add checks here
-    }
+                }
+
+            }
+            Destroy(gameObject);
+
+            // If you want to also destroy bullet on hitting walls/ground, add checks here
+        }
+        if (((1 << collision.gameObject.layer) & playerLayer) != 0)
+        {
+        
+        Destroy(gameObject);
+        }
 }
 }

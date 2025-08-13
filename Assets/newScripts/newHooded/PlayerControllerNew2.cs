@@ -293,6 +293,18 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
     }
 
     #endregion
+    #region VelocityBoost 
+
+    public void ExecuteBounce(float bouncePower){
+            _endedJumpEarly = false;
+        _timeJumpWasPressed = 0;
+        _bufferedJumpUsable = false;
+        _coyoteUsable = false;
+        _frameVelocity.y = bouncePower;
+        Jumped?.Invoke();
+    }
+    #endregion
+
 
     private void ApplyMovement()
     {
