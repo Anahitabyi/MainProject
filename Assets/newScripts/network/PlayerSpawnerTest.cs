@@ -1,12 +1,16 @@
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class PlayerSpawnerTest : NetworkBehaviour
 {
     [Header("Player Prefabs")]
     public NetworkObject shooterPrefab;
     public NetworkObject meleePrefab;
+
+    [Header("Chunk Manager")]
+    public ChunkGenerator chunkGenerator;
 
     [Header("Mode")]
     public bool isOfflineMode = false; // Toggle in inspector for local play
@@ -24,6 +28,7 @@ public class PlayerSpawnerTest : NetworkBehaviour
         }
     }
 
+    // ------------------- Offline -------------------
     private void SpawnOfflinePlayers()
     {
         // Spawn Shooter at top position
@@ -39,8 +44,15 @@ public class PlayerSpawnerTest : NetworkBehaviour
         var meleeInput = meleeGO.GetComponent<PlayerInput>();
         if (meleeInput != null)
             meleeInput.SwitchCurrentControlScheme("KeyboardRight", Keyboard.current);
+
+        // Assign players to ChunkGenerator
+        if (chunkGenerator != null)
+        {
+            chunkGenerator.players = new Transform[] { shooterGO.transform, meleeGO.transform };
+        }
     }
 
+    // ------------------- Online -------------------
     private void SpawnOnlinePlayer(ulong clientId)
     {
         // Only the server spawns players
@@ -63,19 +75,33 @@ public class PlayerSpawnerTest : NetworkBehaviour
         var playerInstance = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
         playerInstance.SpawnAsPlayerObject(clientId);
 
-        // Assign keyboard schemes **only for players on the local machine**
+        // Assign keyboard schemes for local players only
         var playerInput = playerInstance.GetComponent<PlayerInput>();
-        if (playerInput != null)
+        if (playerInput != null && clientId == NetworkManager.Singleton.LocalClientId)
         {
-            // Host uses Right keyboard, client uses Left keyboard
-            if (clientId == NetworkManager.Singleton.LocalClientId && NetworkManager.Singleton.IsHost)
-            {
+            if (NetworkManager.Singleton.IsHost)
                 playerInput.SwitchCurrentControlScheme("KeyboardLeft", Keyboard.current);
-            }
             else
-            {
                 playerInput.SwitchCurrentControlScheme("KeyboardRight", Keyboard.current);
-            }
         }
+
+        // Update ChunkGenerator with currently spawned players
+        if (chunkGenerator != null)
+        {
+            chunkGenerator.players = GetAllSpawnedPlayers();
+        }
+    }
+
+    // ------------------- Helper -------------------
+    private Transform[] GetAllSpawnedPlayers()
+    {
+        var playersList = new List<Transform>();
+        foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
+        {
+            var playerObj = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId);
+            if (playerObj != null)
+                playersList.Add(playerObj.transform);
+        }
+        return playersList.ToArray();
     }
 }

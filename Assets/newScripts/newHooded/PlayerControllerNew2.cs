@@ -47,7 +47,10 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
 
     void Update()
     {
-        //if(!IsOwner) return;
+        if (NetworkManager.Singleton != null && !GetComponent<NetworkObject>().IsOwner)
+        {
+            return; // Not this client's player → do nothing
+        }
 
         _time += Time.deltaTime;
         if (isInputBlocked)
@@ -84,6 +87,8 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
     }
     private void FixedUpdate()
     {
+        if (NetworkManager.Singleton != null && !GetComponent<NetworkObject>().IsOwner)
+        return;
         CheckCollisions();
 
         HandleJump();
