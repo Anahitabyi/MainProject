@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
 
 public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerController
@@ -46,6 +47,8 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
 
     void Update()
     {
+        //if(!IsOwner) return;
+
         _time += Time.deltaTime;
         if (isInputBlocked)
         {
