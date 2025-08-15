@@ -4921,6 +4921,7 @@ GameObject:
   - component: {fileID: 4015578980345612625}
   - component: {fileID: 8287136516349649123}
   - component: {fileID: 8566690557071521853}
+  - component: {fileID: -2695883437766796612}
   m_Layer: 7
   m_Name: HoodedLevel1
   m_TagString: Player
@@ -5125,7 +5126,7 @@ MonoBehaviour:
     m_ActionId: b73b304f-0b38-4203-a9e1-ea4fb45c851d
     m_ActionName: 'Player/MeleeAttack[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: keyboardLeft
+  m_DefaultControlScheme: keyboardRight
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -5483,7 +5484,7 @@ MonoBehaviour:
   RotationMaxInterpolationTime: 0.1
   ScaleLerpSmoothing: 1
   ScaleMaxInterpolationTime: 0.1
-  AuthorityMode: 0
+  AuthorityMode: 1
   TickSyncChildren: 0
   UseUnreliableDeltas: 0
   SyncPositionX: 1
@@ -5505,3 +5506,18 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-2695883437766796612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746070206373877254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b949e9fd53d3be9468b7da084dad037c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  playerInput: {fileID: 3051982203573468310}
+  playerIdentifier: {fileID: 4015578980345612625}

@@ -54,43 +54,53 @@ public class PlayerSpawnerTest : NetworkBehaviour
 
     // ------------------- Online -------------------
     private void SpawnOnlinePlayer(ulong clientId)
-    {
-        // Only the server spawns players
-        if (!IsServer) return;
+{
+    if (!IsServer) return;
 
-        NetworkObject prefabToSpawn;
+    // Decide which prefab to spawn
+    NetworkObject prefabToSpawn = (clientId == NetworkManager.Singleton.LocalClientId) ? shooterPrefab : meleePrefab;
 
-        // Hard-coded: host gets shooter, client gets melee
-        if (clientId == NetworkManager.Singleton.LocalClientId)
-        {
-            prefabToSpawn = shooterPrefab;
-        }
-        else
-        {
-            prefabToSpawn = meleePrefab;
-        }
+    // Instantiate and spawn the player prefab
+    var playerInstance = Instantiate(prefabToSpawn, new Vector3(-17, 5, 0), Quaternion.identity);
+    playerInstance.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
 
-        // Spawn player
-        var spawnPos = new Vector3(-17, 5, 0);
-        var playerInstance = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
-        playerInstance.SpawnAsPlayerObject(clientId);
+    // Get all currently spawned players
+    // Transform[] allPlayers = GetAllSpawnedPlayers();
 
-        // Assign keyboard schemes for local players only
-        var playerInput = playerInstance.GetComponent<PlayerInput>();
-        if (playerInput != null && clientId == NetworkManager.Singleton.LocalClientId)
-        {
-            if (NetworkManager.Singleton.IsHost)
-                playerInput.SwitchCurrentControlScheme("KeyboardLeft", Keyboard.current);
-            else
-                playerInput.SwitchCurrentControlScheme("KeyboardRight", Keyboard.current);
-        }
+    // NetworkObject ownerNetObj = null;
+    // PlayerInput ownerInput = null;
 
-        // Update ChunkGenerator with currently spawned players
-        if (chunkGenerator != null)
-        {
-            chunkGenerator.players = GetAllSpawnedPlayers();
-        }
-    }
+    // // First loop: disable all other PlayerInputs and find the owner
+    // foreach (var playerTransform in allPlayers)
+    // {
+    //     var netObj = playerTransform.GetComponent<NetworkObject>();
+    //     var playerInput = playerTransform.GetComponent<PlayerInput>();
+    //     if (playerInput == null) continue;
+
+    //     if (netObj.IsOwner)
+    //     {
+    //         ownerNetObj = netObj;     // store owner reference
+    //         ownerInput = playerInput; // store owner PlayerInput
+    //         playerInput.enabled = true; // temporarily enable for now
+    //     }
+    //     else
+    //     {
+    //         playerInput.enabled = false; // disable all others
+    //     }
+    // }
+
+    // // Now assign control scheme for the owner player
+    // if (ownerInput != null)
+    // {
+    //     string controlScheme = NetworkManager.Singleton.IsHost ? "KeyboardLeft" : "KeyboardRight";
+    //     ownerInput.SwitchCurrentControlScheme(controlScheme, Keyboard.current);
+    // }
+
+    // Update ChunkGenerator
+    if (chunkGenerator != null)
+        chunkGenerator.players = GetAllSpawnedPlayers();
+}
+
 
     // ------------------- Helper -------------------
     private Transform[] GetAllSpawnedPlayers()
