@@ -5,9 +5,13 @@ using System.Collections.Generic;
 
 public class PlayerSpawnerTest : NetworkBehaviour
 {
-    [Header("Player Prefabs")]
-    public NetworkObject shooterPrefab;
-    public NetworkObject meleePrefab;
+    [Header("Online Prefabs (With Netcode)")]
+    public NetworkObject shooterPrefabOnline;
+    public NetworkObject meleePrefabOnline;
+
+    [Header("Offline Prefabs (No Netcode Components)")]
+    public GameObject shooterPrefabOffline;
+    public GameObject meleePrefabOffline;
 
     [Header("Chunk Manager")]
     public ChunkGenerator chunkGenerator;
@@ -32,9 +36,9 @@ public class PlayerSpawnerTest : NetworkBehaviour
     private void SpawnOfflinePlayers()
     {
         // Spawn Shooter at top position
-        var shooterGO = Instantiate(shooterPrefab.gameObject, new Vector3(-17, 7, 0), Quaternion.identity);
+        var shooterGO = Instantiate(shooterPrefabOffline, new Vector3(-17, 7, 0), Quaternion.identity);
         // Spawn Melee at lower position
-        var meleeGO = Instantiate(meleePrefab.gameObject, new Vector3(-17, 5, 0), Quaternion.identity);
+        var meleeGO = Instantiate(meleePrefabOffline, new Vector3(-17, 5, 0), Quaternion.identity);
 
         // Assign offline keyboard schemes
         var shooterInput = shooterGO.GetComponent<PlayerInput>();
@@ -54,53 +58,22 @@ public class PlayerSpawnerTest : NetworkBehaviour
 
     // ------------------- Online -------------------
     private void SpawnOnlinePlayer(ulong clientId)
-{
-    if (!IsServer) return;
+    {
+        if (!IsServer) return;
 
-    // Decide which prefab to spawn
-    NetworkObject prefabToSpawn = (clientId == NetworkManager.Singleton.LocalClientId) ? shooterPrefab : meleePrefab;
+        // Decide which prefab to spawn
+        NetworkObject prefabToSpawn = (clientId == NetworkManager.Singleton.LocalClientId) 
+            ? shooterPrefabOnline 
+            : meleePrefabOnline;
 
-    // Instantiate and spawn the player prefab
-    var playerInstance = Instantiate(prefabToSpawn, new Vector3(-17, 5, 0), Quaternion.identity);
-    playerInstance.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
+        // Instantiate and spawn the player prefab
+        var playerInstance = Instantiate(prefabToSpawn, new Vector3(-17, 5, 0), Quaternion.identity);
+        playerInstance.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
 
-    // Get all currently spawned players
-    // Transform[] allPlayers = GetAllSpawnedPlayers();
-
-    // NetworkObject ownerNetObj = null;
-    // PlayerInput ownerInput = null;
-
-    // // First loop: disable all other PlayerInputs and find the owner
-    // foreach (var playerTransform in allPlayers)
-    // {
-    //     var netObj = playerTransform.GetComponent<NetworkObject>();
-    //     var playerInput = playerTransform.GetComponent<PlayerInput>();
-    //     if (playerInput == null) continue;
-
-    //     if (netObj.IsOwner)
-    //     {
-    //         ownerNetObj = netObj;     // store owner reference
-    //         ownerInput = playerInput; // store owner PlayerInput
-    //         playerInput.enabled = true; // temporarily enable for now
-    //     }
-    //     else
-    //     {
-    //         playerInput.enabled = false; // disable all others
-    //     }
-    // }
-
-    // // Now assign control scheme for the owner player
-    // if (ownerInput != null)
-    // {
-    //     string controlScheme = NetworkManager.Singleton.IsHost ? "KeyboardLeft" : "KeyboardRight";
-    //     ownerInput.SwitchCurrentControlScheme(controlScheme, Keyboard.current);
-    // }
-
-    // Update ChunkGenerator
-    if (chunkGenerator != null)
-        chunkGenerator.players = GetAllSpawnedPlayers();
-}
-
+        // Update ChunkGenerator
+        if (chunkGenerator != null)
+            chunkGenerator.players = GetAllSpawnedPlayers();
+    }
 
     // ------------------- Helper -------------------
     private Transform[] GetAllSpawnedPlayers()
