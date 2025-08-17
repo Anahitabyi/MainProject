@@ -35,6 +35,7 @@ public class PlayerAnimator : MonoBehaviour
     private IPlayerController _player;
     private bool _grounded;
     private ParticleSystem.MinMaxGradient _currentGradient;
+    private bool isFacingRight = true;
 
     private void Awake()
     {
@@ -76,24 +77,29 @@ public class PlayerAnimator : MonoBehaviour
     }
     private void HandleSpriteFlip()
     {
-        //flip the sprite
         float currentX = _player.FrameInput.x;
 
-        if (_player.FrameInput.x != 0) _sprite.flipX = _player.FrameInput.x < 0;
-        
+        // Rotate character instead of flipping sprite
+        if ((isFacingRight && currentX < 0) || (!isFacingRight && currentX > 0))
+        {
+            // Face right (0 degrees) or left (180 degrees) on Y-axis
+            isFacingRight = !isFacingRight;
+            Vector3 scale = transform.localScale;
+            scale.x *= -1f;
+            transform.localScale = scale;
+        }
 
-        
-    // Detect direction change, only when grounded and there's horizontal input
-    if (currentX != 0 && Mathf.Sign(currentX) != Mathf.Sign(_lastDirectionX) && _grounded)
-    {
-        _moveParticles.Play();
+        // Detect direction change, only when grounded and there's horizontal input
+        if (currentX != 0 && Mathf.Sign(currentX) != Mathf.Sign(_lastDirectionX) && _grounded)
+        {
+            _moveParticles.Play();
+        }
+
+        // Update last known movement direction only when moving
+        if (currentX != 0)
+            _lastDirectionX = currentX;
     }
 
-    // Update last known movement direction only when moving
-    if (currentX != 0)
-        _lastDirectionX = currentX;
-
-    }
 
     private void HandleIdleSpeed()
     {

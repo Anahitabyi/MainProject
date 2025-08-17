@@ -113251,7 +113251,7 @@ MonoBehaviour:
   shooterPrefabOffline: {fileID: 472219826583142136, guid: 640a04279ac69a14bbb08a9ddd3f9464, type: 3}
   meleePrefabOffline: {fileID: 4426039281350244958, guid: dcb0bf09cfa247f4b899287130c07c0b, type: 3}
   chunkGenerator: {fileID: 0}
-  isOfflineMode: 1
+  isOfflineMode: 0
 --- !u!114 &1303485852
 MonoBehaviour:
   m_ObjectHideFlags: 0
