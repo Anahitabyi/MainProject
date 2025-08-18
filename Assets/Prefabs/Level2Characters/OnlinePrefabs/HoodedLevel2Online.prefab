@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6346348242798332516}
   - component: {fileID: 1622255092246063723}
+  - component: {fileID: 2564893317565012847}
   - component: {fileID: 191741564495851956}
   - component: {fileID: 7871744536159798349}
   - component: {fileID: 4868453752246472563}
@@ -57,8 +58,6 @@ GameObject:
   - component: {fileID: 6680113048217293252}
   - component: {fileID: 6908079950493668474}
   - component: {fileID: 3556495517797739914}
-  - component: {fileID: 2564893317565012847}
-  - component: {fileID: 6962910447666986378}
   - component: {fileID: 6761452996532919899}
   - component: {fileID: 6827838545181612804}
   - component: {fileID: 5542855718949062824}
@@ -110,6 +109,31 @@ MonoBehaviour:
   rb: {fileID: 136652043283530007}
   movementScriptMono: {fileID: 191741564495851956}
   playerId: 2
+--- !u!114 &2564893317565012847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7284990156239117502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 696038772
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &191741564495851956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e04a765efd2b13489ec374299c3e4ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   animator: {fileID: 4868453752246472563}
   movementSpeed: 5.5
   jumpPower: 13
@@ -618,53 +643,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerType: 0
---- !u!114 &2564893317565012847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7284990156239117502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1232453541
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
---- !u!114 &6962910447666986378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7284990156239117502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  TransitionStateInfoList:
-  - IsCrossFadeExit: 0
-    Layer: 0
-    OriginatingState: 1711020192
-    DestinationState: 1638880437
-    TransitionDuration: 0.25
-    TriggerNameHash: -847932572
-    TransitionIndex: 1
-  m_Animator: {fileID: 4868453752246472563}
 --- !u!114 &6761452996532919899
 MonoBehaviour:
   m_ObjectHideFlags: 0

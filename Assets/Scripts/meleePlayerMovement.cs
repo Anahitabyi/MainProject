@@ -2,8 +2,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine.Audio;
+using Unity.Netcode;
+using NUnit.Framework;
 
-public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
+public class meleePlayerMovement : NetworkBehaviour, IPlayerInputBlocker
 {
     public bool isInputBlocked { get; set; } = false;
     public Animator animator;
@@ -60,6 +62,7 @@ public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
 
     void Update()
     {
+        if (!IsOwner) return;
         if (isInputBlocked)
         {
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
@@ -80,10 +83,32 @@ public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
         animator.SetFloat("Yvelocity", yVel);
         animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
         animator.SetBool("isJumping", !groundedNow);
+        SetVariablesServerRpc(yVel, groundedNow);
 
         flip();
 
         wasGroundedLastFrame = groundedNow;
+    }
+    [ServerRpc]
+    public void SetVariablesServerRpc(float yVel, bool groundedNow)
+    {
+        if (!IsOwner)
+        {
+            animator.SetFloat("Yvelocity", yVel);
+            animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
+            animator.SetBool("isJumping", !groundedNow);
+            SetVariablesClientRpc(yVel, groundedNow);
+        }
+    }
+    [ClientRpc]
+    public void SetVariablesClientRpc(float yVel, bool groundedNow)
+    {
+        if (!IsOwner && !IsServer)
+        {
+            animator.SetFloat("Yvelocity", yVel);
+            animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
+            animator.SetBool("isJumping", !groundedNow);
+        }
     }
 
     private void ApplyGravity()

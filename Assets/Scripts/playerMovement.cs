@@ -1,8 +1,9 @@
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class playerMovement : MonoBehaviour, IPlayerInputBlocker
+public class playerMovement : NetworkBehaviour, IPlayerInputBlocker
 {
     public bool isInputBlocked { get; set; } = false;
     public Animator animator;
@@ -59,6 +60,7 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 
     void Update()
     {
+        if(!IsOwner) return;
         if (isInputBlocked)
         {
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
@@ -77,6 +79,8 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 
         animator.SetFloat("Yvelocity", yVel);
         animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
+        //animator.SetBool("isJumping", !groundedNow);
+        SetFloatsServerRpc(yVel, groundedNow);
 
         flip();
 
@@ -84,12 +88,51 @@ public class playerMovement : MonoBehaviour, IPlayerInputBlocker
 
         if (wasFalling)
             animator.SetBool("isJumping", false);
+            SetIsJumpingServerRpc(groundedNow);
 
         // Update ground time
         if (groundedNow)
             groundTime += Time.deltaTime;
         else
             groundTime = 0f;
+    }
+    [ServerRpc]
+    public void SetFloatsServerRpc(float yVel, bool groundedNow)
+    {
+        if (!IsOwner)
+        {
+            animator.SetFloat("Yvelocity", yVel);
+            animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
+            //animator.SetBool("isJumping", !groundedNow);
+            SetFloatsClientRpc(yVel, groundedNow);
+        }
+    }
+     [ServerRpc]
+    private void SetIsJumpingServerRpc(bool groundedNow)
+    {
+        if (!IsOwner)
+        {
+            animator.SetBool("isJumping", !groundedNow);
+            SetIsJumpingClientRpc(groundedNow);
+        }
+    }
+    [ClientRpc]
+    public void SetFloatsClientRpc(float yVel, bool groundedNow)
+    {
+        if (!IsOwner && !IsServer)
+        {
+            animator.SetFloat("Yvelocity", yVel);
+            animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
+            //animator.SetBool("isJumping", !groundedNow);
+        }
+    }
+    [ClientRpc]
+    private void SetIsJumpingClientRpc(bool groundedNow)
+    {
+        if (!IsOwner && !IsServer)
+        {
+            animator.SetBool("isJumping", !groundedNow);
+        }
     }
 
     private void Gravity()
