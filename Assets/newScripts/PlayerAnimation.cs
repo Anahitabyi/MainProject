@@ -1,15 +1,17 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 
 
 /// <summary>
 /// VERY primitive animator example.
 /// </summary>
-public class PlayerAnimator : MonoBehaviour
+public class PlayerAnimator : NetworkBehaviour
 {
     [Header("References")]
     [SerializeField]
     private Animator _anim;
+    private Rigidbody2D _rb;
 
     [SerializeField] private SpriteRenderer _sprite;
 
@@ -36,11 +38,13 @@ public class PlayerAnimator : MonoBehaviour
     private bool _grounded;
     private ParticleSystem.MinMaxGradient _currentGradient;
     private bool isFacingRight = true;
+    public NetworkVariable<float> idleSpeedNetwork = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private void Awake()
     {
         _source = GetComponent<AudioSource>();
         _player = GetComponentInParent<IPlayerController>();
+        _rb = GetComponentInParent<Rigidbody2D>();
     }
 
     private void OnEnable()
@@ -104,9 +108,24 @@ public class PlayerAnimator : MonoBehaviour
     private void HandleIdleSpeed()
     {
         var inputStrength = Mathf.Abs(_player.FrameInput.x);
+
+        if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening)
+        {
+            _anim.SetFloat(IdleSpeedKey, Mathf.Abs(_rb.linearVelocity.x));
+            //Debug.Log($"IdleSpeed: {inputStrength}");
+        }
+        else
+        {
+            if (IsOwner)
+            {
+                idleSpeedNetwork.Value = Mathf.Abs(_rb.linearVelocity.x);
+                _anim.SetFloat(IdleSpeedKey, idleSpeedNetwork.Value);
+            }
+        }
+        
         //Debug.Log($"FrameInput.x: {_player.FrameInput.x}, inputStrength: {Mathf.Abs(_player.FrameInput.x)}");
 
-        _anim.SetFloat(IdleSpeedKey, Mathf.Lerp(1, _maxIdleSpeed, inputStrength));
+        //_anim.SetFloat(IdleSpeedKey, Mathf.Lerp(1, _maxIdleSpeed, inputStrength));
         //Debug.Log($"IdleSpeed: {Mathf.Lerp(1, _maxIdleSpeed, inputStrength)}");
         //_moveParticles.transform.localScale = Vector3.MoveTowards(_moveParticles.transform.localScale, Vector3.one * inputStrength, 2 * Time.deltaTime);
         //added this to stop the particles when its not moving left or right and its grounded:

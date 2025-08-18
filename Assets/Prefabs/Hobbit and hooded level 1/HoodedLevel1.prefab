@@ -4916,12 +4916,13 @@ GameObject:
   - component: {fileID: 4175198154052046401}
   - component: {fileID: 1928764291025861157}
   - component: {fileID: 7281130914851131035}
+  - component: {fileID: 8287136516349649123}
   - component: {fileID: 6226895842332079356}
   - component: {fileID: 6057448004109146386}
   - component: {fileID: 4015578980345612625}
-  - component: {fileID: 8287136516349649123}
   - component: {fileID: 8566690557071521853}
   - component: {fileID: -2695883437766796612}
+  - component: {fileID: -399277753827995496}
   m_Layer: 7
   m_Name: HoodedLevel1
   m_TagString: Player
@@ -5363,6 +5364,31 @@ MonoBehaviour:
   attackDamage: 1
   weaponUIIndicator: {fileID: 0}
   climbSpeed: 4
+--- !u!114 &8287136516349649123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746070206373877254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 877445169
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &6226895842332079356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5375,6 +5401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6898822b21498b84eb4c1aae847aa647, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   _anim: {fileID: 5508887199227375645}
   _sprite: {fileID: 5526463872064001822}
   _maxIdleSpeed: 2
@@ -5385,6 +5412,8 @@ MonoBehaviour:
   _moveParticles: {fileID: 1085562233087432842}
   _landParticles: {fileID: 1085562233087432842}
   _footsteps: []
+  idleSpeedNetwork:
+    m_InternalValue: 0
 --- !u!70 &6057448004109146386
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -5435,31 +5464,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerType: 0
---- !u!114 &8287136516349649123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8746070206373877254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 877445169
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &8566690557071521853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5521,3 +5525,18 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   playerInput: {fileID: 3051982203573468310}
   playerIdentifier: {fileID: 4015578980345612625}
+--- !u!114 &-399277753827995496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746070206373877254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 679e01967e0a9de4186800f344d61caf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 5508887199227375645}

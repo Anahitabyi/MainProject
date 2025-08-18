@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Audio;
+using Unity.Netcode;
 
-public class newMeleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
+public class newMeleePlayerMovement : NetworkBehaviour, IPlayerInputBlocker
 {
     public bool isInputBlocked { get; set; } = false;
 
@@ -24,6 +25,7 @@ public class newMeleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
     public int attackDamage = 1;
 
     public WeaponUIIndicator weaponUIIndicator;
+    public NetworkVariable<float> magnitude = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     Rigidbody2D rb;
 
@@ -65,7 +67,30 @@ public class newMeleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
 
 
         // Animator control for movement magnitude
-        animator.SetFloat("magnitude", moveInput.magnitude);
+        //animator.SetFloat("magnitude", moveInput.magnitude);
+        if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening)
+        {
+            animator.SetFloat("magnitude", moveInput.magnitude);
+            //Debug.Log("offline!");
+        }
+        else
+        {
+            if (IsOwner)
+            {
+                    magnitude.Value = moveInput.magnitude;
+                    //Debug.Log("magnitude: " + magnitude1.Value);
+                    animator.SetFloat("magnitude", magnitude.Value);
+                
+                // else if (playerIdentifier.playerType == PlayerIdentifier.PlayerType.Hooded)
+                // {
+                //     magnitude2.Value = localMag;
+                //     Debug.Log("magnitude: " + magnitude2.Value);
+                //     animator.SetFloat("magnitude", magnitude2.Value);
+                // }
+
+            }
+
+        }
     }
 
     public void Move(InputAction.CallbackContext context)
