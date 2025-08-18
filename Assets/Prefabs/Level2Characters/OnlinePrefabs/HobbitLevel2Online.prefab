@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 450157900171277987}
   - component: {fileID: 2032378734681715293}
   - component: {fileID: 990812656036303785}
+  - component: {fileID: 6436377642573848059}
   - component: {fileID: 5559466880547250767}
   - component: {fileID: 2759232211825610856}
   - component: {fileID: 3094166735257021515}
@@ -60,11 +61,10 @@ GameObject:
   - component: {fileID: 1006988673145726661}
   - component: {fileID: 3680807336949884666}
   - component: {fileID: 3198240719576081146}
-  - component: {fileID: 6436377642573848059}
-  - component: {fileID: 7983691076432570861}
   - component: {fileID: 4791217732733911061}
   - component: {fileID: 3023773148392700474}
   - component: {fileID: 5442495715676022921}
+  - component: {fileID: 1317087120480336778}
   m_Layer: 7
   m_Name: HobbitLevel2Online
   m_TagString: Player
@@ -163,6 +163,31 @@ MonoBehaviour:
   deathSound: {fileID: 8300000, guid: 98d7588c9b699d74189ae9a992d02165, type: 3}
   attackSound: {fileID: 8300000, guid: f2326e2051544ed4d82c5286e00955dc, type: 3}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
+--- !u!114 &6436377642573848059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2595059178286628852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1231990051
+  InScenePlacedSourceGlobalObjectIdHash: 1231990051
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &5559466880547250767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c46315c44007c1d46b30d12cdd0db7c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   animator: {fileID: 2759232211825610856}
   movementSpeed: 5
   jumpPower: 13
@@ -196,6 +222,8 @@ MonoBehaviour:
   shakeMagnitude: 0.1
   attackDamage: 1
   weaponUIIndicator: {fileID: 0}
+  magnitude1:
+    m_InternalValue: 0
 --- !u!95 &2759232211825610856
 Animator:
   serializedVersion: 7
@@ -726,46 +754,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerType: 1
---- !u!114 &6436377642573848059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2595059178286628852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3145458655
-  InScenePlacedSourceGlobalObjectIdHash: 1231990051
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
---- !u!114 &7983691076432570861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2595059178286628852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  TransitionStateInfoList: []
-  m_Animator: {fileID: 2759232211825610856}
 --- !u!114 &4791217732733911061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -844,6 +832,21 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
+--- !u!114 &1317087120480336778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2595059178286628852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 679e01967e0a9de4186800f344d61caf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 2759232211825610856}
 --- !u!1 &5449578083985846273
 GameObject:
   m_ObjectHideFlags: 0
