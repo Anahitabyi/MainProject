@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class Bomb : MonoBehaviour
+public class Bomb : NetworkBehaviour
 {
     private Vector2 moveDirection;
     private float speed;
@@ -13,20 +14,30 @@ public class Bomb : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(moveDirection * speed * Time.deltaTime);
+        // move only on server, then use NetworkTransform
+        if (IsServer)
+        {
+            transform.Translate(moveDirection * speed * Time.deltaTime);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (!IsServer) return; // Only server handles stuff
+
         if (other.CompareTag("Player"))
         {
             PlayerHealth player = other.GetComponent<PlayerHealth>();
             if (player != null)
             {
-                player.TakeDamage(2);
+                player.TakeDamage(2); 
             }
         }
-
-        BombPool.Instance.ReturnBomb(gameObject);
+        // Despawn the bomb via Netcode, which triggers pool handler
+        var netObj = GetComponent<NetworkObject>();
+        if (netObj != null)
+        {
+            netObj.Despawn();
+        }
     }
 }
