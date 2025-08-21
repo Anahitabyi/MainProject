@@ -7,9 +7,9 @@ public class PlayerHealth : NetworkBehaviour
 {
     [Header("Health & Lives")]
     public int maxHealth = 9;
-    public NetworkVariable<int> currentHealth = new NetworkVariable<int>();
+    public NetworkVariable<int> currentHealth = new NetworkVariable<int>(3, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public int maxLives = 3;
-    public NetworkVariable<int> currentLives = new NetworkVariable<int>();
+    public NetworkVariable<int> currentLives = new NetworkVariable<int>(3, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [Header("Invincibility")]
     public float invincibilityDuration = 3f;
@@ -32,11 +32,15 @@ public class PlayerHealth : NetworkBehaviour
 
     private void Start()
     {
+        if (!IsOwner)
+            return;
+
         inputBlocker = movementScriptMono as IPlayerInputBlocker;
 
         if (playerStatsManager.Instance != null)
         {
-            playerStatsManager.Instance.LoadIntoPlayer(this);
+            { playerStatsManager.Instance.LoadIntoPlayer(this);}
+            
         }
 
         // Sync initial state
@@ -53,9 +57,13 @@ public class PlayerHealth : NetworkBehaviour
         OnHealthChanged?.Invoke(currentHealth.Value, maxHealth);
         OnLivesChanged?.Invoke(currentLives.Value, maxLives);
     }
-    
+
+    // Add this Update for networked debug log
     private void Update()
     {
+         if (!IsOwner)
+            return;
+        // This will print the health and lives for each player object in every editor window
         Debug.Log($"[Networked][PlayerId:{playerId}][IsOwner:{IsOwner}] Health: {currentHealth.Value} / {maxHealth} | Lives: {currentLives.Value} / {maxLives}");
     }
 
@@ -138,7 +146,8 @@ public class PlayerHealth : NetworkBehaviour
 
     [ClientRpc]
     private void DieClientRpc(bool final)
-    {animator?.SetTrigger("Die");
+    {
+        animator?.SetTrigger("Die");
         rb.linearVelocity = Vector2.zero;
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         rb.simulated = false;

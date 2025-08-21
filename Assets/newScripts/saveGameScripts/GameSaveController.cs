@@ -43,20 +43,20 @@ public class GameSaveController : MonoBehaviour
 
         data.player1Stats = new PlayerStatsData
         {
-            currentHealth = p1.currentHealth.Value,
-            currentLives = p1.currentLives.Value,
-            maxHealth = p1.maxHealth.Value,
-            maxLives = p1.maxLives.Value,
+            currentHealth = p1.currentHealth,
+            currentLives = p1.currentLives,
+            maxHealth = p1.maxHealth,
+            maxLives = p1.maxLives,
             posX = p1Pos.x,
             posY = p1Pos.y
         };
 
         data.player2Stats = new PlayerStatsData
         {
-            currentHealth = p2.currentHealth.Value,
-            currentLives = p2.currentLives.Value,
-            maxHealth = p2.maxHealth.Value,
-            maxLives = p2.maxLives.Value,
+            currentHealth = p2.currentHealth,
+            currentLives = p2.currentLives,
+            maxHealth = p2.maxHealth,
+            maxLives = p2.maxLives,
             posX = p2Pos.x,
             posY = p2Pos.y
         };
@@ -120,15 +120,15 @@ public class GameSaveController : MonoBehaviour
         var p1 = playerStatsManager.Instance.player1Stats;
         var p2 = playerStatsManager.Instance.player2Stats;
 
-        p1.currentHealth.Value = data.player1Stats.currentHealth;
-        p1.currentLives.Value = data.player1Stats.currentLives;
-        p1.maxHealth.Value = data.player1Stats.maxHealth;
-        p1.maxLives.Value = data.player1Stats.maxLives;
+        p1.currentHealth = data.player1Stats.currentHealth;
+        p1.currentLives = data.player1Stats.currentLives;
+        p1.maxHealth = data.player1Stats.maxHealth;
+        p1.maxLives = data.player1Stats.maxLives;
 
-        p2.currentHealth.Value = data.player2Stats.currentHealth;
-        p2.currentLives.Value = data.player2Stats.currentLives;
-        p2.maxHealth.Value = data.player2Stats.maxHealth;
-        p2.maxLives.Value = data.player2Stats.maxLives;
+        p2.currentHealth = data.player2Stats.currentHealth;
+        p2.currentLives = data.player2Stats.currentLives;
+        p2.maxHealth = data.player2Stats.maxHealth;
+        p2.maxLives = data.player2Stats.maxLives;
 
         // ✅ Restore SaveTracker data
         yield return new WaitUntil(() => SaveTracker.Instance != null);
