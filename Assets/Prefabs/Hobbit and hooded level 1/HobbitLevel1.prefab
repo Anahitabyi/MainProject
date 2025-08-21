@@ -4849,6 +4849,7 @@ GameObject:
   - component: {fileID: 4752275031919122941}
   - component: {fileID: 5786771330017779333}
   - component: {fileID: 2914159878936930490}
+  - component: {fileID: 2628741166230204564}
   - component: {fileID: 8628570766957991137}
   - component: {fileID: 6516182605981498497}
   - component: {fileID: 5773557792058401798}
@@ -4857,7 +4858,6 @@ GameObject:
   - component: {fileID: 786544817388276785}
   - component: {fileID: 2828376383192892946}
   - component: {fileID: 1410077203313484857}
-  - component: {fileID: 2628741166230204564}
   - component: {fileID: 9065381567142841532}
   - component: {fileID: 2391269249381598982}
   - component: {fileID: 2486616747484379182}
@@ -5177,6 +5177,31 @@ CapsuleCollider2D:
   m_Offset: {x: 0.072523914, y: 0.024667263}
   m_Size: {x: 0.49890995, y: 0.5811485}
   m_Direction: 0
+--- !u!114 &2628741166230204564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6713231506421959016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 404458538
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &8628570766957991137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5189,10 +5214,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77468fa4c4c142d46a5b19730fdacaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   maxHealth: 3
-  currentHealth: 3
+  currentHealth:
+    m_InternalValue: 0
   maxLives: 3
-  currentLives: 3
+  currentLives:
+    m_InternalValue: 0
   invincibilityDuration: 3
   flashInterval: 0.1
   animator: {fileID: 556701175943789761}
@@ -5402,31 +5430,6 @@ MonoBehaviour:
   attackDamage: 1
   weaponUIIndicator: {fileID: 0}
   climbSpeed: 4
---- !u!114 &2628741166230204564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6713231506421959016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 404458538
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &9065381567142841532
 MonoBehaviour:
   m_ObjectHideFlags: 0

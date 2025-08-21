@@ -26,7 +26,7 @@ public class PlayerLivesUI : MonoBehaviour
     if (playerHealth != null)
     {
         playerHealth.OnLivesChanged += UpdateHearts;
-        UpdateHearts(playerHealth.currentLives, playerHealth.maxLives);
+        UpdateHearts(playerHealth.currentLives.Value, playerHealth.maxLives);
     }
     else
     {

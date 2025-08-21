@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5765828757130410687}
+  - component: {fileID: 6644306293676413064}
   - component: {fileID: 7332294637053908041}
   - component: {fileID: 4349011352394786686}
   - component: {fileID: 491174824424011689}
@@ -22,7 +23,6 @@ GameObject:
   - component: {fileID: 3184903221420229653}
   - component: {fileID: 3876902806012202983}
   - component: {fileID: 139921693762475661}
-  - component: {fileID: 6644306293676413064}
   - component: {fileID: 8417760313253786958}
   - component: {fileID: 3248908196711647280}
   - component: {fileID: 7481452118772418977}
@@ -54,6 +54,31 @@ Transform:
   - {fileID: 4964734904811634034}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6644306293676413064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4601631709164929054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 4067203502
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &7332294637053908041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,10 +91,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77468fa4c4c142d46a5b19730fdacaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   maxHealth: 10
-  currentHealth: 10
+  currentHealth:
+    m_InternalValue: 0
   maxLives: 3
-  currentLives: 3
+  currentLives:
+    m_InternalValue: 0
   invincibilityDuration: 3
   flashInterval: 0.1
   animator: {fileID: 491174824424011689}
@@ -491,31 +519,6 @@ MonoBehaviour:
   deathSound: {fileID: 8300000, guid: 53848bf28ea89c74898f21f17f072488, type: 3}
   attackSound: {fileID: 8300000, guid: c0bb9aae25502854c81a7551d11d453a, type: 3}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
---- !u!114 &6644306293676413064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4601631709164929054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2848902539
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &8417760313253786958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,7 +620,7 @@ MonoBehaviour:
   RotationMaxInterpolationTime: 0.1
   ScaleLerpSmoothing: 1
   ScaleMaxInterpolationTime: 0.1
-  AuthorityMode: 0
+  AuthorityMode: 1
   TickSyncChildren: 0
   UseUnreliableDeltas: 0
   SyncPositionX: 1

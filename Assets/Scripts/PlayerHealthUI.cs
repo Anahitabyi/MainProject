@@ -25,7 +25,7 @@ public class PlayerHealthUI : MonoBehaviour
         if (playerHealth != null)
         {
             playerHealth.OnHealthChanged += UpdateSlider;
-            UpdateSlider(playerHealth.currentHealth, playerHealth.maxHealth);
+            UpdateSlider(playerHealth.currentHealth.Value, playerHealth.maxHealth);
         }
         else
         {

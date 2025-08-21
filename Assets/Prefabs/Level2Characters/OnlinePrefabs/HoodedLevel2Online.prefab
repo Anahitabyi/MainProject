@@ -40,8 +40,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6346348242798332516}
-  - component: {fileID: 1622255092246063723}
   - component: {fileID: 2564893317565012847}
+  - component: {fileID: 1622255092246063723}
   - component: {fileID: 191741564495851956}
   - component: {fileID: 7871744536159798349}
   - component: {fileID: 4868453752246472563}
@@ -86,30 +86,6 @@ Transform:
   - {fileID: 5708140317099492069}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1622255092246063723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7284990156239117502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77468fa4c4c142d46a5b19730fdacaac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 3
-  currentHealth: 3
-  maxLives: 3
-  currentLives: 3
-  invincibilityDuration: 3
-  flashInterval: 0.1
-  animator: {fileID: 4868453752246472563}
-  playerCollider: {fileID: 8812940096801192068}
-  spriteRenderer: {fileID: 7871744536159798349}
-  rb: {fileID: 136652043283530007}
-  movementScriptMono: {fileID: 191741564495851956}
-  playerId: 2
 --- !u!114 &2564893317565012847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +111,33 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &1622255092246063723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7284990156239117502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77468fa4c4c142d46a5b19730fdacaac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxHealth: 3
+  currentHealth:
+    m_InternalValue: 0
+  maxLives: 3
+  currentLives:
+    m_InternalValue: 0
+  invincibilityDuration: 3
+  flashInterval: 0.1
+  animator: {fileID: 4868453752246472563}
+  playerCollider: {fileID: 8812940096801192068}
+  spriteRenderer: {fileID: 7871744536159798349}
+  rb: {fileID: 136652043283530007}
+  movementScriptMono: {fileID: 191741564495851956}
+  playerId: 2
 --- !u!114 &191741564495851956
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Netcode;
 
-public class playerStatsManager : MonoBehaviour
+public class playerStatsManager : NetworkBehaviour
 {
     public static playerStatsManager Instance { get; private set; }
 
@@ -34,8 +35,8 @@ public class playerStatsManager : MonoBehaviour
     public void SaveFromPlayer(PlayerHealth player)
     {
         PlayerStats stats = GetStats(player.playerId);
-        stats.currentHealth = player.currentHealth;
-        stats.currentLives = player.currentLives;
+        stats.currentHealth = player.currentHealth.Value;
+        stats.currentLives = player.currentLives.Value;
         stats.maxHealth = player.maxHealth;
         stats.maxLives = player.maxLives;
     }
@@ -43,9 +44,9 @@ public class playerStatsManager : MonoBehaviour
     public void LoadIntoPlayer(PlayerHealth player)
     {
         PlayerStats stats = GetStats(player.playerId);
-        player.currentHealth = stats.currentHealth;
+        player.currentHealth.Value = stats.currentHealth;
         player.maxHealth = stats.maxHealth;
-        player.currentLives = stats.currentLives;
+        player.currentLives.Value = stats.currentLives;
         player.maxLives = stats.maxLives;
     }
 
