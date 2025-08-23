@@ -1,45 +1,72 @@
-using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class KeyTracker : MonoBehaviour
+public class KeyTracker : NetworkBehaviour
 {
-    public static KeyTracker Instance { get; private set; }  // Singleton instance
-
+    public static KeyTracker Instance { get; private set; }
+    
     public int totalKey = 4;
-    private HashSet<string> collectedKeys = new HashSet<string>();
+    
+    private NetworkVariable<int> keyBitmask = new NetworkVariable<int>(0);
 
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);  // Enforce singleton uniqueness
+            Destroy(gameObject);
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);  // Optional, if you want to persist between scenes
+        DontDestroyOnLoad(gameObject);
     }
 
-    public void GotKey(string keyID)
+    public void GotKey(int keyIndex)
     {
-        if (!collectedKeys.Contains(keyID))
+        if (!IsServer)
         {
-            collectedKeys.Add(keyID);
-            Debug.Log($"Key collected: {keyID}. Total keys collected: {collectedKeys.Count}");
+            Debug.LogWarning("GotKey should only be called on the server!");
+            return;
+        }
+
+        if (keyIndex < 0 || keyIndex >= totalKey)
+        {
+            Debug.LogError($"Key index {keyIndex} is out of bounds!");
+            return;
+        }
+
+        int mask = 1 << keyIndex;
+        if ((keyBitmask.Value & mask) == 0)
+        {
+            keyBitmask.Value |= mask;
+            Debug.Log($"Key collected: {keyIndex}. Total keys collected: {GetCurrentKeyCount()}");
         }
     }
 
-    public bool HasKey(string keyID)
+    public bool HasKey(int keyIndex)
     {
-        return collectedKeys.Contains(keyID);
+        int mask = 1 << keyIndex;
+        return (keyBitmask.Value & mask) != 0;
     }
 
     public int GetCurrentKeyCount()
     {
-        return collectedKeys.Count;
+        int count = 0;
+        int bits = keyBitmask.Value;
+        for (int i = 0; i < totalKey; i++)
+        {
+            if ((bits & (1 << i)) != 0)
+                count++;
+        }
+        return count;
     }
 
     public void ResetKeys()
     {
-        collectedKeys.Clear();
+        if (!IsServer)
+        {
+            Debug.LogWarning("ResetKeys should only be called on the server!");
+            return;
+        }
+        keyBitmask.Value = 0;
     }
 }

@@ -403,6 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1fcd0ecbac43f44983230f33a76270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   totalKey: 4
 --- !u!4 &75531940
 Transform:
@@ -2086,6 +2087,7 @@ GameObject:
   - component: {fileID: 248822948}
   - component: {fileID: 248822947}
   - component: {fileID: 248822952}
+  - component: {fileID: 248822953}
   m_Layer: 0
   m_Name: Key 13 - BRONZE - Spritesheet_0
   m_TagString: Untagged
@@ -2105,9 +2107,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6e693a9d5bf6d41b814c1522eef03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   audioSource: {fileID: 0}
   collectKeySound: {fileID: 8300000, guid: 7a3242d1d9c49ff40830dc28d6ce1d73, type: 3}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
+  keyIndex: 2
 --- !u!60 &248822948
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2264,6 +2268,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 4ad5a077-f286-4356-8099-b0cb7201c54c
+--- !u!114 &248822953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248822946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1010932470
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &251006656
 GameObject:
   m_ObjectHideFlags: 0
@@ -97812,6 +97841,7 @@ GameObject:
   - component: {fileID: 509700053}
   - component: {fileID: 509700052}
   - component: {fileID: 509700051}
+  - component: {fileID: 509700057}
   - component: {fileID: 509700055}
   - component: {fileID: 509700056}
   m_Layer: 0
@@ -97977,9 +98007,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6e693a9d5bf6d41b814c1522eef03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   audioSource: {fileID: 0}
   collectKeySound: {fileID: 8300000, guid: b7030f1cdd7a7d644aa7a889766a381c, type: 3}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
+  keyIndex: 4
 --- !u!114 &509700056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97993,6 +98025,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 2ee867d2-1524-47bc-afc2-e6c3a0622f9f
+--- !u!114 &509700057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509700050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 4025439269
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &519740484
 GameObject:
   m_ObjectHideFlags: 0
@@ -111684,6 +111741,7 @@ GameObject:
   - component: {fileID: 1098819172}
   - component: {fileID: 1098819176}
   - component: {fileID: 1098819177}
+  - component: {fileID: 1098819178}
   m_Layer: 0
   m_Name: Key 8 - GOLD - Spritesheet_0
   m_TagString: Untagged
@@ -111850,9 +111908,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6e693a9d5bf6d41b814c1522eef03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   audioSource: {fileID: 0}
   collectKeySound: {fileID: 8300000, guid: b7030f1cdd7a7d644aa7a889766a381c, type: 3}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
+  keyIndex: 3
 --- !u!114 &1098819177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111866,6 +111926,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 4dde3592-eb72-42b3-b6c7-2caa85b95a8c
+--- !u!114 &1098819178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098819171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3326262479
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1099504396
 GameObject:
   m_ObjectHideFlags: 0
@@ -114916,6 +115001,7 @@ GameObject:
   - component: {fileID: 1501856678}
   - component: {fileID: 1501856677}
   - component: {fileID: 1501856682}
+  - component: {fileID: 1501856683}
   m_Layer: 0
   m_Name: Key 12 - SILVER - Spritesheet_0
   m_TagString: Untagged
@@ -114935,9 +115021,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6e693a9d5bf6d41b814c1522eef03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   audioSource: {fileID: 0}
   collectKeySound: {fileID: 8300000, guid: b7030f1cdd7a7d644aa7a889766a381c, type: 3}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
+  keyIndex: 1
 --- !u!60 &1501856678
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -115095,6 +115183,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 51ede9a8-6787-42f7-be73-75044b0b20b0
+--- !u!114 &1501856683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501856676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 706813049
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1502528559
 GameObject:
   m_ObjectHideFlags: 0
