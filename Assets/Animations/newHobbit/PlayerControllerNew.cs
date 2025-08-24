@@ -60,9 +60,13 @@ public class PlayerControllerNew : MonoBehaviour, IPlayerInputBlocker, IPlayerCo
 
     void Update()
     {
-        if (NetworkManager.Singleton != null && !GetComponent<NetworkObject>().IsOwner)
+        if (NetworkManager.Singleton != null)
         {
-            return; // Not this client's player → do nothing
+            var netObj = GetComponent<NetworkObject>();
+            if (netObj != null && !netObj.IsOwner)
+            {
+                return;
+            }
         }
 
 
@@ -74,23 +78,30 @@ public class PlayerControllerNew : MonoBehaviour, IPlayerInputBlocker, IPlayerCo
             //animator.SetFloat("magnitude", 0);
             return;
         }
-        // Check for climb input while on ladder
         if (_isOnLadder)
         {
-            float climbInput = _frameInput.Move.y;
+            float climbInput = 0f;
 
+            // W key / Jump key climbs up
+            if (_frameInput.JumpDown)
+                climbInput = 1f;
+
+            // S key / Down arrow key climbs down
+            if (_frameInput.Move.y < 0f)
+                climbInput = _frameInput.Move.y;
+
+            // If any vertical input
             if (Mathf.Abs(climbInput) > 0.1f)
             {
                 if (!_isClimbing)
-                {
                     StartClimbing();
-                }
 
                 _rb.gravityScale = 0f;
                 _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, climbInput * climbSpeed);
             }
             else if (_isClimbing)
             {
+                // Stop moving on ladder when no input
                 _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 0f);
             }
         }
@@ -98,13 +109,17 @@ public class PlayerControllerNew : MonoBehaviour, IPlayerInputBlocker, IPlayerCo
         {
             StopClimbing();
         }
-
-
     }
     private void FixedUpdate()
     {
-        if (NetworkManager.Singleton != null && !GetComponent<NetworkObject>().IsOwner)
-        return;
+        if (NetworkManager.Singleton != null)
+        {
+            var netObj = GetComponent<NetworkObject>();
+            if (netObj != null && !netObj.IsOwner)
+            {
+                return;
+            }
+        }
         CheckCollisions();
 
         HandleJump();
@@ -197,11 +212,12 @@ public class PlayerControllerNew : MonoBehaviour, IPlayerInputBlocker, IPlayerCo
         // Landed on the Ground  
         if (!_grounded && groundHit)
         {
-            Debug.Log("Grounded"!);
+            //Debug.Log("Grounded");
             _grounded = true;
             _coyoteUsable = true;
             _bufferedJumpUsable = true;
             _endedJumpEarly = false;
+            jumpsRemaining = maxJumps;
             GroundedChanged?.Invoke(true, Mathf.Abs(_frameVelocity.y));
         }
         // Left the Ground  
@@ -223,21 +239,34 @@ public class PlayerControllerNew : MonoBehaviour, IPlayerInputBlocker, IPlayerCo
     private bool _endedJumpEarly;
     private bool _coyoteUsable;
     private float _timeJumpWasPressed;
+    [SerializeField] private int maxJumps = 2;
+    private int jumpsRemaining;
+
 
     private bool HasBufferedJump => _bufferedJumpUsable && _time < _timeJumpWasPressed + _stats.JumpBuffer;
     private bool CanUseCoyote => _coyoteUsable && !_grounded && _time < _frameLeftGrounded + _stats.CoyoteTime;
 
     private void HandleJump()
     {
-        //Debug.Log("handle jump called!");
-        if (!_endedJumpEarly && !_grounded && !_frameInput.JumpHeld && _rb.linearVelocity.y > 0) _endedJumpEarly = true;
+        if (!_endedJumpEarly && !_grounded && !_frameInput.JumpHeld && _rb.linearVelocity.y > 0)
+            _endedJumpEarly = true;
 
         if (!_jumpToConsume && !HasBufferedJump) return;
 
-        if (_grounded || CanUseCoyote) ExecuteJump();
+        // First jump: Ground or Coyote
+        if ((_grounded || CanUseCoyote) && jumpsRemaining > 0)
+        {
+            ExecuteJump();
+        }
+        // Extra jumps: allow in-air if we still have jumps left
+        else if (!_grounded && jumpsRemaining > 0)
+        {
+            ExecuteJump();
+        }
 
         _jumpToConsume = false;
-    }
+}
+
 
     private void ExecuteJump()
     {
@@ -246,6 +275,7 @@ public class PlayerControllerNew : MonoBehaviour, IPlayerInputBlocker, IPlayerCo
         _timeJumpWasPressed = 0;
         _bufferedJumpUsable = false;
         _coyoteUsable = false;
+        jumpsRemaining--;
         _frameVelocity.y = _stats.JumpPower;
         Jumped?.Invoke();
     }
@@ -364,7 +394,4 @@ public interface IPlayerController
         public bool JumpDown;  
         public bool JumpHeld;  
         public Vector2 Move;  
-    }  
-  
-    
-
+    } 

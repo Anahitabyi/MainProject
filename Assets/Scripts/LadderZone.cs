@@ -1,13 +1,23 @@
 using UnityEngine;
-  public class LadderZone : MonoBehaviour
+
+public class LadderZone : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            var controller = other.GetComponent<PlayerControllerNew>();
-            if (controller != null)
-                controller.SetOnLadder(true);
+            var playerController = other.GetComponent<PlayerControllerNew>();
+            if (playerController != null)
+            {
+                playerController.SetOnLadder(true); // Call the new method in PlayerControllerNew
+                Debug.Log("Player entered ladder zone.");
+            }
+            var playerController2 = other.GetComponent<PlayerControllerNew2>();
+            if (playerController2 != null)
+            {
+                playerController2.SetOnLadder(true); // Call the new method in PlayerControllerNew
+                Debug.Log("Player entered ladder zone.");
+            }
         }
     }
 
@@ -15,9 +25,18 @@ using UnityEngine;
     {
         if (other.CompareTag("Player"))
         {
-            var controller = other.GetComponent<PlayerControllerNew>();
-            if (controller != null)
-                controller.SetOnLadder(false);
+            var playerController = other.GetComponent<PlayerControllerNew>();
+            if (playerController != null)
+            {
+                playerController.SetOnLadder(false); // Call the new method in PlayerControllerNew
+                Debug.Log("Player exited ladder zone.");
+            }
+            var playerController2 = other.GetComponent<PlayerControllerNew2>();
+            if (playerController2 != null)
+            {
+                playerController2.SetOnLadder(false); // Call the new method in PlayerControllerNew
+                Debug.Log("Player exited ladder zone.");
+            }
         }
     }
 }

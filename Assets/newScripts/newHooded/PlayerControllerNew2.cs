@@ -47,9 +47,13 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
 
     void Update()
     {
-        if (NetworkManager.Singleton != null && !GetComponent<NetworkObject>().IsOwner)
+        if (NetworkManager.Singleton != null)
         {
-            return; // Not this client's player → do nothing
+            var netObj = GetComponent<NetworkObject>();
+            if (netObj != null && !netObj.IsOwner)
+            {
+                return;
+            }
         }
 
         _time += Time.deltaTime;
@@ -62,20 +66,28 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
         }
         if (_isOnLadder)
         {
-            float climbInput = _frameInput.Move.y;
+            float climbInput = 0f;
 
+            // W key / Jump key climbs up
+            if (_frameInput.JumpDown)
+                climbInput = 1f;
+
+            // S key / Down arrow key climbs down
+            if (_frameInput.Move.y < 0f)
+                climbInput = _frameInput.Move.y;
+
+            // If any vertical input
             if (Mathf.Abs(climbInput) > 0.1f)
             {
                 if (!_isClimbing)
-                {
                     StartClimbing();
-                }
 
                 _rb.gravityScale = 0f;
                 _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, climbInput * climbSpeed);
             }
             else if (_isClimbing)
             {
+                // Stop moving on ladder when no input
                 _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 0f);
             }
         }
@@ -87,8 +99,14 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
     }
     private void FixedUpdate()
     {
-        if (NetworkManager.Singleton != null && !GetComponent<NetworkObject>().IsOwner)
-        return;
+        if (NetworkManager.Singleton != null)
+        {
+            var netObj = GetComponent<NetworkObject>();
+            if (netObj != null && !netObj.IsOwner)
+            {
+                return;
+            }
+        }
         CheckCollisions();
 
         HandleJump();

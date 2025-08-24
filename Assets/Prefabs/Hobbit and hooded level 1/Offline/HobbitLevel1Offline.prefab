@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 8397118095881568377}
   - component: {fileID: 2267595449474554803}
   - component: {fileID: 4391633648505945382}
+  - component: {fileID: -5285495261809054499}
   m_Layer: 7
   m_Name: HobbitLevel1Offline
   m_TagString: Player
@@ -351,10 +352,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77468fa4c4c142d46a5b19730fdacaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   maxHealth: 3
-  currentHealth: 3
+  currentHealth:
+    m_InternalValue: 3
   maxLives: 3
-  currentLives: 3
+  currentLives:
+    m_InternalValue: 3
   invincibilityDuration: 3
   flashInterval: 0.1
   animator: {fileID: 3955326699921750872}
@@ -563,7 +567,7 @@ MonoBehaviour:
   shakeMagnitude: 0
   attackDamage: 1
   weaponUIIndicator: {fileID: 0}
-  climbSpeed: 4
+  maxJumps: 2
 --- !u!114 &2267595449474554803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -602,6 +606,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerType: 1
+--- !u!114 &-5285495261809054499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2215770295304683125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a43bf828af8034389e9b24117d0425, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  climbSpeed: 4
 --- !u!1 &3528300859825439546
 GameObject:
   m_ObjectHideFlags: 0
