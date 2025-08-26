@@ -2,8 +2,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine.Audio;
+using Unity.Netcode;
+using NUnit.Framework;
 
-public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
+public class meleePlayerMovement : NetworkBehaviour, IPlayerInputBlocker
 {
     public bool isInputBlocked { get; set; } = false;
     public Animator animator;
@@ -47,6 +49,7 @@ public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
     // ✳️ New jump buffer timer
     private float groundedTime = 0f;
     private float groundedResetThreshold = 0.04f;
+    public NetworkVariable<float> magnitude2 = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     void Start()
     {
@@ -60,6 +63,7 @@ public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
 
     void Update()
     {
+        //if (!IsOwner) return;
         if (isInputBlocked)
         {
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
@@ -78,13 +82,62 @@ public class meleePlayerMovement : MonoBehaviour, IPlayerInputBlocker
         bool groundedNow = isGrounded();
 
         animator.SetFloat("Yvelocity", yVel);
-        animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
+        // -------------------- MAGNITUDE HANDLING --------------------
+        float localMag = Mathf.Abs(rb.linearVelocity.x);
+        // Offline mode → just update directly
+
+        if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening)
+        {
+            animator.SetFloat("magnitude", localMag);
+            //Debug.Log("offline!");
+        }
+        else
+        {
+            if (IsOwner)
+            {
+            
+                    magnitude2.Value = localMag;
+                    Debug.Log("magnitude: " + magnitude2.Value);
+                    animator.SetFloat("magnitude", magnitude2.Value);
+                // else if (playerIdentifier.playerType == PlayerIdentifier.PlayerType.Hooded)
+                // {
+                //     magnitude2.Value = localMag;
+                //     Debug.Log("magnitude: " + magnitude2.Value);
+                //     animator.SetFloat("magnitude", magnitude2.Value);
+                // }
+
+            }
+
+        }
+        // ------------------------------------------------------------
         animator.SetBool("isJumping", !groundedNow);
+        //SetVariablesServerRpc(yVel, groundedNow);
 
         flip();
 
         wasGroundedLastFrame = groundedNow;
     }
+    // [ServerRpc]
+    // public void SetVariablesServerRpc(float yVel, bool groundedNow)
+    // {
+    //     if (!IsOwner)
+    //     {
+    //         animator.SetFloat("Yvelocity", yVel);
+    //         animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
+    //         animator.SetBool("isJumping", !groundedNow);
+    //         SetVariablesClientRpc(yVel, groundedNow);
+    //     }
+    // }
+    // [ClientRpc]
+    // public void SetVariablesClientRpc(float yVel, bool groundedNow)
+    // {
+    //     if (!IsOwner && !IsServer)
+    //     {
+    //         animator.SetFloat("Yvelocity", yVel);
+    //         animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x));
+    //         animator.SetBool("isJumping", !groundedNow);
+    //     }
+    // }
 
     private void ApplyGravity()
     {

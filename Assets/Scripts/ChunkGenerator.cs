@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Netcode;
 
 public class ChunkGenerator : MonoBehaviour
 {
@@ -22,7 +23,8 @@ public class ChunkGenerator : MonoBehaviour
     [SerializeField] private GameObject backgroundPrefab;
     [SerializeField] private float backgroundYPosition = 0f;
 
-    [SerializeField] private Transform[] players;
+    // THIS IS FILLED RUNTIME BY PlayerSpawnerTest
+    [HideInInspector] public Transform[] players;
 
     public Transform FirstSpawnPoint { get; private set; }
 
@@ -55,10 +57,10 @@ public class ChunkGenerator : MonoBehaviour
             ClearAllChunks();
             return;
         }
-         if (SaveTracker.Instance != null)
-    {
-        SaveTracker.Instance.ClearChunks();
-    }
+
+        if (SaveTracker.Instance != null)
+            SaveTracker.Instance.ClearChunks();
+
         unusedChunks = new List<ChunkData>(chunkDataList);
         ShuffleList(unusedChunks);
 
@@ -70,6 +72,9 @@ public class ChunkGenerator : MonoBehaviour
 
     void Update()
     {
+        // If multiplayer: only server generates chunks
+        if (NetworkManager.Singleton != null && !NetworkManager.Singleton.IsServer) return;
+
         if (useSavedChunks || players == null || players.Length == 0 || finalChunkSpawned) return;
 
         float maxPlayerX = float.MinValue;
@@ -121,7 +126,21 @@ public class ChunkGenerator : MonoBehaviour
 
         if (chunkToSpawn == null) return null;
 
-        GameObject chunk = Instantiate(chunkToSpawn, new Vector3(positionX, chunkY, 0), Quaternion.identity, transform);
+        GameObject chunk;
+
+        // --- Multiplayer: spawn as NetworkObject if online ---
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
+        {
+            var netObj = Instantiate(chunkToSpawn, new Vector3(positionX, chunkY, 0), Quaternion.identity).GetComponent<NetworkObject>();
+            netObj.Spawn();
+            chunk = netObj.gameObject;
+        }
+        else
+        {
+            // Offline spawn
+            chunk = Instantiate(chunkToSpawn, new Vector3(positionX, chunkY, 0), Quaternion.identity, transform);
+        }
+
         chunk.name = "Chunk_" + currentChunkIndex;
         currentChunkIndex++;
 
@@ -134,22 +153,24 @@ public class ChunkGenerator : MonoBehaviour
 
         activeChunks.Add(new SpawnedChunk(chunk, chunkWidth));
 
-        if (chunk.CompareTag("Chunk"))
-            {
-                SaveTracker.Instance.RecordChunk(
-                    chunkToSpawn.name,
-                    currentChunkIndex - 1,
-                    new Vector2(positionX, chunkY),
-                    chunkWidth
-                );
-            }
+        if (chunk.CompareTag("Chunk") && SaveTracker.Instance != null)
+        {
+            SaveTracker.Instance.RecordChunk(
+                chunkToSpawn.name,
+                currentChunkIndex - 1,
+                new Vector2(positionX, chunkY),
+                chunkWidth
+            );
+        }
 
+        // Assign players to enemies
         EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
         foreach (EnemyShooter shooter in shooters)
         {
             shooter.SetPlayers(GetPlayerGameObjects());
         }
 
+        // Spawn background
         if (backgroundPrefab != null)
         {
             GameObject background = Instantiate(backgroundPrefab);
@@ -163,6 +184,8 @@ public class ChunkGenerator : MonoBehaviour
     private GameObject[] GetPlayerGameObjects()
     {
         List<GameObject> playerList = new List<GameObject>();
+        if (players == null) return playerList.ToArray();
+
         foreach (Transform t in players)
         {
             if (t != null)
@@ -182,13 +205,13 @@ public class ChunkGenerator : MonoBehaviour
         }
     }
 
+    // ------------------- Saved Data -------------------
     public void SpawnFromSavedData(List<ChunkRecord> savedChunks)
     {
         useSavedChunks = true;
+        ClearAllChunks();
 
-        ClearAllChunks(); // Remove any auto-generated chunks before loading saved ones
-
-        savedChunks.Sort((a, b) => a.chunkIndex.CompareTo(b.chunkIndex)); // maintain order
+        savedChunks.Sort((a, b) => a.chunkIndex.CompareTo(b.chunkIndex));
 
         foreach (var record in savedChunks)
         {
@@ -201,8 +224,7 @@ public class ChunkGenerator : MonoBehaviour
 
             GameObject chunk = Instantiate(prefab, new Vector3(record.posX, record.posY, 0), Quaternion.identity, transform);
             chunk.name = $"Chunk_{record.chunkIndex}";
-
-            activeChunks.Add(new SpawnedChunk(chunk, record.width)); 
+            activeChunks.Add(new SpawnedChunk(chunk, record.width));
 
             if (record.chunkIndex == 0)
             {
@@ -211,6 +233,7 @@ public class ChunkGenerator : MonoBehaviour
                     FirstSpawnPoint = spawn;
             }
 
+            // Assign players to enemies
             EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
             foreach (EnemyShooter shooter in shooters)
             {
@@ -224,64 +247,6 @@ public class ChunkGenerator : MonoBehaviour
                 activeBackgrounds.Add(background);
             }
         }
-
-        // After all saved chunks have been loaded
-    if (!ContainsFinalChunk(savedChunks) && finalChunkPrefab != null)
-    {
-        float lastX = 0f;
-        if (activeChunks.Count > 0)
-        {
-            SpawnedChunk last = activeChunks[activeChunks.Count - 1];
-            lastX = last.chunkObject.transform.position.x + last.width;
-        }
-
-        GameObject chunk = Instantiate(finalChunkPrefab, new Vector3(lastX, finalChunkYPosition, 0), Quaternion.identity, transform);
-        chunk.name = $"Chunk_{currentChunkIndex}";
-        activeChunks.Add(new SpawnedChunk(chunk, finalChunkWidth));
-        currentChunkIndex++;
-
-        EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
-        foreach (EnemyShooter shooter in shooters)
-        {
-            shooter.SetPlayers(GetPlayerGameObjects());
-        }
-
-        if (backgroundPrefab != null)
-        {
-            GameObject background = Instantiate(backgroundPrefab);
-            background.transform.position = new Vector3(lastX, backgroundYPosition, -1);
-            activeBackgrounds.Add(background);
-        }
-
-        finalChunkSpawned = true;
-    }
-
-    }
-    private bool ContainsFinalChunk(List<ChunkRecord> savedChunks)
-    {
-        return savedChunks.Exists(chunk => chunk.chunkID == finalChunkPrefab.name);
-    }
-
-    private void ClearAllChunks()
-    {
-        // Destroy all active chunks
-        foreach (var chunk in activeChunks)
-        {
-            if (chunk.chunkObject != null)
-                Destroy(chunk.chunkObject);
-        }
-        activeChunks.Clear();
-
-        // Destroy all active backgrounds
-        foreach (var bg in activeBackgrounds)
-        {
-            if (bg != null)
-                Destroy(bg);
-        }
-        activeBackgrounds.Clear();
-
-        currentChunkIndex = 0;
-        finalChunkSpawned = false;
     }
 
     private GameObject FindChunkPrefabByID(string id)
@@ -296,5 +261,25 @@ public class ChunkGenerator : MonoBehaviour
             return finalChunkPrefab;
 
         return null;
+    }
+
+    private void ClearAllChunks()
+    {
+        foreach (var chunk in activeChunks)
+        {
+            if (chunk.chunkObject != null)
+                Destroy(chunk.chunkObject);
+        }
+        activeChunks.Clear();
+
+        foreach (var bg in activeBackgrounds)
+        {
+            if (bg != null)
+                Destroy(bg);
+        }
+        activeBackgrounds.Clear();
+
+        currentChunkIndex = 0;
+        finalChunkSpawned = false;
     }
 }

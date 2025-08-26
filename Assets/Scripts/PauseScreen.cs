@@ -19,6 +19,11 @@ public class PauseMenuManager : MonoBehaviour
     public AudioMixer audioMixer;
     public AudioMixerGroup sfxGroup;
 
+    private void OnEnable()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -80,7 +85,19 @@ public class PauseMenuManager : MonoBehaviour
         {
             p.SetHealth(9);
         }
+        Transform spawn = GameObject.Find("PlayerSpawn")?.transform;
+        if (spawn != null)
+        {
+            var meleePlayer = GameObject.FindAnyObjectByType<meleePlayerMovement>()?.gameObject;
+            var rangedPlayer = GameObject.FindAnyObjectByType<playerMovement>()?.gameObject;
 
+            if (meleePlayer != null) meleePlayer.transform.position = spawn.position;
+            if (rangedPlayer != null) rangedPlayer.transform.position = spawn.position;
+        }
+        else
+        {
+            Debug.LogWarning("PlayerSpawn object not found in scene!");
+        }
         if (ScoreManager.Instance != null)
             ScoreManager.Instance.ResetScore();
 
@@ -123,6 +140,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void SaveGame()
     {
+        Debug.Log("save button clicked!");
         StartCoroutine(DelayedSaveCoroutine());
     }
 

@@ -6,9 +6,18 @@ public class LadderZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerClimb climb = other.GetComponent<PlayerClimb>();
-            if (climb != null)
-                climb.SetOnLadder(true); // Calls the method form the PlayerClimb so player can start climbing after the setter.
+            var playerController = other.GetComponent<PlayerControllerNew>();
+            if (playerController != null)
+            {
+                playerController.SetOnLadder(true); // Call the new method in PlayerControllerNew
+                Debug.Log("Player entered ladder zone.");
+            }
+            var playerController2 = other.GetComponent<PlayerControllerNew2>();
+            if (playerController2 != null)
+            {
+                playerController2.SetOnLadder(true); // Call the new method in PlayerControllerNew
+                Debug.Log("Player entered ladder zone.");
+            }
         }
     }
 
@@ -16,9 +25,18 @@ public class LadderZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerClimb climb = other.GetComponent<PlayerClimb>();
-            if (climb != null)
-                climb.SetOnLadder(false); // No longer climbing
+            var playerController = other.GetComponent<PlayerControllerNew>();
+            if (playerController != null)
+            {
+                playerController.SetOnLadder(false); // Call the new method in PlayerControllerNew
+                Debug.Log("Player exited ladder zone.");
+            }
+            var playerController2 = other.GetComponent<PlayerControllerNew2>();
+            if (playerController2 != null)
+            {
+                playerController2.SetOnLadder(false); // Call the new method in PlayerControllerNew
+                Debug.Log("Player exited ladder zone.");
+            }
         }
     }
 }

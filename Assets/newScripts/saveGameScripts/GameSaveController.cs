@@ -65,6 +65,12 @@ public class GameSaveController : MonoBehaviour
         // ✅ Save chunk and other game state data
         if (SaveTracker.Instance != null)
         {
+            Debug.Log("📦 Saving chunks in order:");
+        for (int i = 0; i < SaveTracker.Instance.spawnedChunks.Count; i++)
+        {
+            var c = SaveTracker.Instance.spawnedChunks[i];
+            Debug.Log($"Chunk #{i}: ID = {c.chunkID}, Index = {c.chunkIndex}, Pos = ({c.posX}, {c.posY})");
+        }
             data.spawnedChunks = new List<ChunkRecord>(SaveTracker.Instance.spawnedChunks);
             data.collectedIDs = new List<string>(SaveTracker.Instance.collectedIDs);
             data.disabledPatrolPairs = new List<string>(SaveTracker.Instance.disabledPatrolPairs);
@@ -160,7 +166,10 @@ public class GameSaveController : MonoBehaviour
         ChunkGenerator chunkGen = FindAnyObjectByType<ChunkGenerator>();
         if (chunkGen != null && data.spawnedChunks != null)
         {
-            chunkGen.SpawnFromSavedData(data.spawnedChunks);
+             chunkGen.SpawnFromSavedData(data.spawnedChunks);
+
+            // ✅ Restore the original order into SaveTracker
+            SaveTracker.Instance.spawnedChunks = new List<ChunkRecord>(data.spawnedChunks);
         }
         foreach (var enemy in Object.FindObjectsByType<EnemyHealth>(FindObjectsSortMode.None))
 

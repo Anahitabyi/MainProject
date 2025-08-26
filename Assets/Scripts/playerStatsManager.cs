@@ -44,11 +44,23 @@ public class playerStatsManager : NetworkBehaviour
     public void LoadIntoPlayer(PlayerHealth player)
     {
         PlayerStats stats = GetStats(player.playerId);
-        player.currentHealth.Value = stats.currentHealth;
-        player.maxHealth = stats.maxHealth;
-        player.currentLives.Value = stats.currentLives;
-        player.maxLives = stats.maxLives;
+
+        if (NetworkManager.Singleton.IsServer) // ✅ only server writes
+        {
+            player.currentHealth.Value = stats.currentHealth;
+            player.maxHealth = stats.maxHealth;
+            player.currentLives.Value = stats.currentLives;
+            player.maxLives = stats.maxLives;
+        }
+        else
+        {
+            // Clients shouldn’t write directly.
+            // Optionally you could just update local NON-networked stuff here if needed.
+            player.maxHealth = stats.maxHealth;
+            player.maxLives = stats.maxLives;
+        }
     }
+
 
     private PlayerStats GetStats(int id)
     {

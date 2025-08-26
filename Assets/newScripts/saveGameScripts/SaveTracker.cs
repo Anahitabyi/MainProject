@@ -134,6 +134,5 @@ public bool TryGetEnemyState(string id, out EnemyRecord record)
     {
         return new List<string>(collectedLevel2Keys);
     }
-
-
 }
+
