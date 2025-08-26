@@ -71,6 +71,7 @@ public class CharacterSelectDisplay : NetworkBehaviour
         SelectServerRpc(characterId);
     }
 
+    [ServerRpc]
     private void SelectServerRpc(int characterId, ServerRpcParams serverRpcParams = default)
     {
         for (int i = 0; i < players.Count; i++)
