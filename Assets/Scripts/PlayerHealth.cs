@@ -7,9 +7,9 @@ public class PlayerHealth : NetworkBehaviour
 {
     [Header("Health & Lives")]
     public int maxHealth = 9;
-    public NetworkVariable<int> currentHealth = new NetworkVariable<int>(3, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<int> currentHealth = new NetworkVariable<int>(3, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public int maxLives = 3;
-    public NetworkVariable<int> currentLives = new NetworkVariable<int>(3, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<int> currentLives = new NetworkVariable<int>(3, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     [Header("Invincibility")]
     public float invincibilityDuration = 3f;
@@ -32,15 +32,11 @@ public class PlayerHealth : NetworkBehaviour
 
     private void Start()
     {
-        if (!IsOwner)
-            return;
-
         inputBlocker = movementScriptMono as IPlayerInputBlocker;
 
         if (playerStatsManager.Instance != null)
         {
-            { playerStatsManager.Instance.LoadIntoPlayer(this);}
-            
+            playerStatsManager.Instance.LoadIntoPlayer(this);
         }
 
         // Sync initial state
@@ -58,80 +54,78 @@ public class PlayerHealth : NetworkBehaviour
         OnLivesChanged?.Invoke(currentLives.Value, maxLives);
     }
 
-    // Add this Update for networked debug log
     private void Update()
     {
-         if (!IsOwner)
-            return;
-        // This will print the health and lives for each player object in every editor window
+        // Debugging
         Debug.Log($"[Networked][PlayerId:{playerId}][IsOwner:{IsOwner}] Health: {currentHealth.Value} / {maxHealth} | Lives: {currentLives.Value} / {maxLives}");
     }
 
+    // ========== DAMAGE ==========
     public void TakeDamage(int damage)
     {
-        if (!IsOwner) return; // Only owner can initiate damage
         if (isDead || isInvincible) return;
 
-        TakeDamageServerRpc(damage);
-    }
-
-    [ServerRpc]
-    private void TakeDamageServerRpc(int damage, ServerRpcParams rpcParams = default)
-    {
-        if (isDead || isInvincible) return;
-        currentHealth.Value -= damage;
-        currentHealth.Value = Mathf.Clamp(currentHealth.Value, 0, maxHealth);
-
-        // Notify owner for animation/logic
-        TakeDamageClientRpc(currentHealth.Value);
-
-        if (currentHealth.Value <= 0)
+        if (IsServer)
         {
-            LoseLifeServerRpc();
+            ApplyDamage(damage);
         }
         else
         {
-            // Animation trigger for owner
-            TriggerHurtClientRpc();
+            TakeDamageServerRpc(damage);
         }
-        playerStatsManager.Instance?.SaveFromPlayer(this);
     }
 
-    [ClientRpc]
-    private void TakeDamageClientRpc(int newHealth)
+    [ServerRpc(RequireOwnership = false)]
+    private void TakeDamageServerRpc(int damage, ServerRpcParams rpcParams = default)
     {
-        currentHealth.Value = newHealth;
-        OnHealthChanged?.Invoke(currentHealth.Value, maxHealth);
+        if (!isDead && !isInvincible)
+            ApplyDamage(damage);
+    }
+
+    private void ApplyDamage(int damage)
+    {
+        currentHealth.Value -= damage;
+        currentHealth.Value = Mathf.Clamp(currentHealth.Value, 0, maxHealth);
+
+        if (currentHealth.Value <= 0)
+        {
+            LoseLife();
+        }
+        else
+        {
+            TriggerHurtClientRpc();
+        }
+
+        playerStatsManager.Instance?.SaveFromPlayer(this);
     }
 
     [ClientRpc]
     private void TriggerHurtClientRpc()
     {
-        if (IsOwner)
-        {
-            animator?.SetTrigger("Hurt");
-        }
+        if (animator != null)
+            animator.SetTrigger("Hurt");
     }
 
-    [ServerRpc]
-    private void LoseLifeServerRpc(ServerRpcParams rpcParams = default)
+    // ========== LIVES ==========
+    private void LoseLife()
     {
         currentLives.Value = Mathf.Max(0, currentLives.Value - 1);
         OnLivesChanged?.Invoke(currentLives.Value, maxLives);
 
         if (currentLives.Value <= 0)
         {
-            DieServerRpc(final: true);
+            Die(true);
         }
         else
         {
             StartCoroutine(RespawnAfterDelay(4f));
         }
+
         playerStatsManager.Instance?.SaveFromPlayer(this);
     }
 
-    [ServerRpc]
-    private void DieServerRpc(bool final, ServerRpcParams rpcParams = default)
+    // ========== DEATH ==========
+    private void Die(bool final)
     {
         isDead = true;
         isInvincible = true;
@@ -158,17 +152,17 @@ public class PlayerHealth : NetworkBehaviour
         isInvincible = true;
     }
 
+    // ========== RESPAWN ==========
     private IEnumerator RespawnAfterDelay(float delay)
     {
-        DieServerRpc(final: false);
+        Die(false);
         StartCoroutine(FlashDuringInvincibility());
         yield return new WaitForSeconds(delay);
 
-        RespawnServerRpc();
+        Respawn();
     }
 
-    [ServerRpc]
-    private void RespawnServerRpc(ServerRpcParams rpcParams = default)
+    private void Respawn()
     {
         currentHealth.Value = maxHealth;
         playerCollider.enabled = true;
@@ -183,6 +177,72 @@ public class PlayerHealth : NetworkBehaviour
         playerStatsManager.Instance?.SaveFromPlayer(this);
     }
 
+    // ========== HEALING ==========
+    public void SetHealth(int newHealth)
+    {
+        if (IsServer)
+        {
+            currentHealth.Value = Mathf.Clamp(newHealth, 0, maxHealth);
+            playerStatsManager.Instance?.SaveFromPlayer(this);
+        }
+        else
+        {
+            SetHealthServerRpc(newHealth);
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SetHealthServerRpc(int newHealth, ServerRpcParams rpcParams = default)
+    {
+        currentHealth.Value = Mathf.Clamp(newHealth, 0, maxHealth);
+        playerStatsManager.Instance?.SaveFromPlayer(this);
+    }
+
+    public void AddHealth(int amount)
+    {
+        if (amount <= 0 || isDead) return;
+
+        if (IsServer)
+        {
+            currentHealth.Value = Mathf.Clamp(currentHealth.Value + amount, 0, maxHealth);
+            playerStatsManager.Instance?.SaveFromPlayer(this);
+        }
+        else
+        {
+            AddHealthServerRpc(amount);
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void AddHealthServerRpc(int amount, ServerRpcParams rpcParams = default)
+    {
+        currentHealth.Value = Mathf.Clamp(currentHealth.Value + amount, 0, maxHealth);
+        playerStatsManager.Instance?.SaveFromPlayer(this);
+    }
+
+    public void AddLives(int amount)
+    {
+        if (amount <= 0 || isDead) return;
+
+        if (IsServer)
+        {
+            currentLives.Value = Mathf.Clamp(currentLives.Value + amount, 0, maxLives);
+            playerStatsManager.Instance?.SaveFromPlayer(this);
+        }
+        else
+        {
+            AddLivesServerRpc(amount);
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void AddLivesServerRpc(int amount, ServerRpcParams rpcParams = default)
+    {
+        currentLives.Value = Mathf.Clamp(currentLives.Value + amount, 0, maxLives);
+        playerStatsManager.Instance?.SaveFromPlayer(this);
+    }
+
+    // ========== INVINCIBILITY ==========
     private IEnumerator FlashDuringInvincibility()
     {
         isInvincible = true;
@@ -206,60 +266,6 @@ public class PlayerHealth : NetworkBehaviour
         isInvincible = false;
     }
 
-    private IEnumerator RemoveAfterDeathAnimation()
-    {
-        while (!animator.GetCurrentAnimatorStateInfo(0).IsTag("Death"))
-            yield return null;
-
-        float deathDuration = animator.GetCurrentAnimatorStateInfo(0).length;
-        yield return new WaitForSeconds(deathDuration);
-
-        gameObject.SetActive(false);
-    }
-
-    public void SetHealth(int newHealth)
-    {
-        if (!IsOwner) return;
-        SetHealthServerRpc(newHealth);
-    }
-
-    [ServerRpc]
-    private void SetHealthServerRpc(int newHealth, ServerRpcParams rpcParams = default)
-    {
-        currentHealth.Value = Mathf.Clamp(newHealth, 0, maxHealth);
-        playerStatsManager.Instance?.SaveFromPlayer(this);
-    }
-
-    public void AddHealth(int amount)
-    {
-        if (!IsOwner) return;
-        if (amount <= 0 || isDead) return;
-        AddHealthServerRpc(amount);
-    }
-
-    [ServerRpc]
-    private void AddHealthServerRpc(int amount, ServerRpcParams rpcParams = default)
-    {
-        currentHealth.Value += amount;
-        currentHealth.Value = Mathf.Clamp(currentHealth.Value, 0, maxHealth);
-        playerStatsManager.Instance?.SaveFromPlayer(this);
-    }
-
-    public void AddLives(int amount)
-    {
-        if (!IsOwner) return;
-        if (amount <= 0 || isDead) return;
-        AddLivesServerRpc(amount);
-    }
-
-    [ServerRpc]
-    private void AddLivesServerRpc(int amount, ServerRpcParams rpcParams = default)
-    {
-        currentLives.Value += amount;
-        currentLives.Value = Mathf.Clamp(currentLives.Value, 0, maxLives);
-        playerStatsManager.Instance?.SaveFromPlayer(this);
-    }
-
     private IEnumerator LoadGameOverAfterDeathAnimation()
     {
         while (!animator.GetCurrentAnimatorStateInfo(0).IsTag("Death"))
@@ -271,6 +277,7 @@ public class PlayerHealth : NetworkBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
     }
 
+    // ========== GETTERS ==========
     public bool IsDead() => isDead;
     public bool IsInvincible() => isInvincible;
 }
