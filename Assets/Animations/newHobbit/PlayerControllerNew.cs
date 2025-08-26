@@ -157,10 +157,34 @@ public class PlayerControllerNew : MonoBehaviour, IPlayerInputBlocker, IPlayerCo
     public void Shoot(InputAction.CallbackContext context)
     {
         if (isInputBlocked || !context.performed) return;
-        Attacked?.Invoke();
-        StartCoroutine(DelayedBulletSpawn());
 
+        Attacked?.Invoke();
+
+        Vector3 mousePosition = hobbitCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 shootDirection = (mousePosition - firePoint.position).normalized;
+
+        // Call server to spawn bullet
+        ShootServerRpc(firePoint.position, shootDirection);
     }
+
+    [ServerRpc]
+    private void ShootServerRpc(Vector2 spawnPosition, Vector2 direction)
+    {
+        // Spawn the bullet on the server
+        GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        if (rb != null)
+            rb.linearVelocity = direction * bulletSpeed;
+
+        // Set damage
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        if (bulletScript != null)
+            bulletScript.damage = attackDamage;
+
+        // Spawn over network
+        bullet.GetComponent<NetworkObject>().Spawn();
+    }
+
 
     private IEnumerator DelayedBulletSpawn()
     {
