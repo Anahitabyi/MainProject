@@ -2,6 +2,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 
 public class PlayerSpawnerTest : NetworkBehaviour
 {
@@ -15,6 +16,9 @@ public class PlayerSpawnerTest : NetworkBehaviour
 
     [Header("Chunk Manager")]
     public ChunkGenerator chunkGenerator;
+     [Header("Cinemachine")]
+    public CinemachineCamera cinemachiCamera1;
+    public CinemachineCamera cinemachiCamera2;
 
     [Header("Mode")]
     public bool isOfflineMode = false; // Toggle in inspector for local play
@@ -40,6 +44,7 @@ public class PlayerSpawnerTest : NetworkBehaviour
         // Spawn Melee at lower position
         var meleeGO = Instantiate(meleePrefabOffline, new Vector3(-17, 5, 0), Quaternion.identity);
 
+
         // Assign offline keyboard schemes
         var shooterInput = shooterGO.GetComponent<PlayerInput>();
         if (shooterInput != null)
@@ -54,6 +59,14 @@ public class PlayerSpawnerTest : NetworkBehaviour
         {
             chunkGenerator.players = new Transform[] { shooterGO.transform, meleeGO.transform };
         }
+        // Assign tracking targets for Cinemachine
+        // if (cinemachiCamera1 != null)
+        //     cinemachiCamera1.TrackingTarget = shooterGO.transform;
+
+        // if (cinemachiCamera2 != null)
+        //     cinemachiCamera2.TrackingTarget = meleeGO.transform;
+
+        
     }
 
     // ------------------- Online -------------------
@@ -73,6 +86,12 @@ public class PlayerSpawnerTest : NetworkBehaviour
         // Update ChunkGenerator
         if (chunkGenerator != null)
             chunkGenerator.players = GetAllSpawnedPlayers();
+
+        // Example: assign tracking target to cameras
+        // if (clientId == NetworkManager.Singleton.LocalClientId && cinemachiCamera1 != null)
+        //     cinemachiCamera1.TrackingTarget = playerInstance.transform;
+        // else if (cinemachiCamera2 != null)
+        //     cinemachiCamera2.TrackingTarget = playerInstance.transform;
     }
 
     // ------------------- Helper -------------------
