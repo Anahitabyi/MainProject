@@ -1,14 +1,16 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using Unity.Netcode;
 
-public class CollectKey : MonoBehaviour
+public class CollectKey : NetworkBehaviour
 {
     private KeyTracker keyTracker;
     public AudioSource audioSource;
     public AudioClip collectKeySound;
     public AudioMixerGroup sfxMixerGroup;
 
-    private string keyID;
+    // The unique index for this key 
+    public int keyIndex = 0;
 
     private void Start()
     {
@@ -20,43 +22,41 @@ public class CollectKey : MonoBehaviour
             audioSource.outputAudioMixerGroup = sfxMixerGroup;
         }
 
-        // Get the UniqueID component and fetch the id
-        var uniqueID = GetComponent<UniqueID>();
-        if (uniqueID == null)
-        {
-            Debug.LogError($"No UniqueID component on {gameObject.name}!");
-            keyID = gameObject.name; // fallback
-        }
-        else
-        {
-            keyID = uniqueID.id;
-        }
-
-        // If already collected, destroy key immediately (skip showing it again)
-        if (keyTracker != null && keyTracker.HasKey(keyID))
+        // If already collected, destroy key immediately 
+        if (keyTracker != null && keyTracker.HasKey(keyIndex))
         {
             Destroy(gameObject);
         }
     }
-
-    public void OnTriggerEnter2D(Collider2D other)
+    
+    private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!IsServer) return; // Only server handles collection for sync
+
         if (other.CompareTag("Player"))
         {
-            if (keyTracker != null && !keyTracker.HasKey(keyID))
+            if (keyTracker != null && !keyTracker.HasKey(keyIndex))
             {
-                keyTracker.GotKey(keyID);
+                keyTracker.GotKey(keyIndex);
 
-                if (collectKeySound != null)
-                {
-                    audioSource.PlayOneShot(collectKeySound);
-                    Destroy(gameObject, collectKeySound.length);
-                }
-                else
-                {
-                    Destroy(gameObject);
-                }
+                // Inform all clients to play sound and destroy the key object
+                CollectKeyClientRpc();
             }
+        }
+    }
+
+    // Called on all clients to play the sound and destroy the key
+    [ClientRpc]
+    private void CollectKeyClientRpc()
+    {
+        if (collectKeySound != null)
+        {
+            audioSource.PlayOneShot(collectKeySound);
+            Destroy(gameObject, collectKeySound.length);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 }
