@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using System;
 
 public class PlayerSpawnerTest : NetworkBehaviour
 {
@@ -16,12 +17,13 @@ public class PlayerSpawnerTest : NetworkBehaviour
 
     [Header("Chunk Manager")]
     public ChunkGenerator chunkGenerator;
-     [Header("Cinemachine")]
+    [Header("Cinemachine")]
     public CinemachineCamera cinemachiCamera1;
     public CinemachineCamera cinemachiCamera2;
 
     [Header("Mode")]
     public bool isOfflineMode = false; // Toggle in inspector for local play
+    public static event Action<GameObject[]> OnPlayerUpdated;
 
     private void Start()
     {
@@ -66,7 +68,7 @@ public class PlayerSpawnerTest : NetworkBehaviour
         // if (cinemachiCamera2 != null)
         //     cinemachiCamera2.TrackingTarget = meleeGO.transform;
 
-        
+
     }
 
     // ------------------- Online -------------------
@@ -75,8 +77,8 @@ public class PlayerSpawnerTest : NetworkBehaviour
         if (!IsServer) return;
 
         // Decide which prefab to spawn
-        NetworkObject prefabToSpawn = (clientId == NetworkManager.Singleton.LocalClientId) 
-            ? shooterPrefabOnline 
+        NetworkObject prefabToSpawn = (clientId == NetworkManager.Singleton.LocalClientId)
+            ? shooterPrefabOnline
             : meleePrefabOnline;
 
         // Instantiate and spawn the player prefab
@@ -85,7 +87,12 @@ public class PlayerSpawnerTest : NetworkBehaviour
 
         // Update ChunkGenerator
         if (chunkGenerator != null)
-            chunkGenerator.players = GetAllSpawnedPlayers();
+            chunkGenerator.players = GetAllSpawnedPlayerTransforms();
+
+        var currentPlayers = GetAllSpawnedPlayers();
+        OnPlayerUpdated?.Invoke(currentPlayers);
+        Debug.Log($"[PlayerSpawner] Invoked OnPlayerUpdated with {currentPlayers.Length} players.");
+
 
         // Example: assign tracking target to cameras
         // if (clientId == NetworkManager.Singleton.LocalClientId && cinemachiCamera1 != null)
@@ -95,7 +102,18 @@ public class PlayerSpawnerTest : NetworkBehaviour
     }
 
     // ------------------- Helper -------------------
-    private Transform[] GetAllSpawnedPlayers()
+    private GameObject[] GetAllSpawnedPlayers()
+    {
+        var playersList = new List<GameObject>();
+        foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
+        {
+            var playerObj = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId);
+            if (playerObj != null)
+                playersList.Add(playerObj.gameObject);
+        }
+        return playersList.ToArray();
+    }
+    private Transform[] GetAllSpawnedPlayerTransforms()
     {
         var playersList = new List<Transform>();
         foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
@@ -106,4 +124,6 @@ public class PlayerSpawnerTest : NetworkBehaviour
         }
         return playersList.ToArray();
     }
+    
+
 }

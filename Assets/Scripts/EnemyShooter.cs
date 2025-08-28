@@ -20,6 +20,15 @@ public class EnemyShooter : NetworkBehaviour, IPooledDeathHandler
     private bool isDead = false;
     private GenerateID uniqueID;
     private EnemyHealth health;
+
+    private void OnEnable()
+    {
+        PlayerSpawnerTest.OnPlayerUpdated += SetPlayers;
+           
+    }
+    private void OnDisable() {
+        PlayerSpawnerTest.OnPlayerUpdated -= SetPlayers;
+    }
     private void Awake()
     {
         uniqueID = GetComponent<GenerateID>();

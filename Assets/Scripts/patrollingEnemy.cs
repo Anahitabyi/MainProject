@@ -68,7 +68,7 @@ public class patrollingEnemy : NetworkBehaviour, IPooledDeathHandler
         {
             Flip();
             currentPoint = currentPoint == pointB.transform ? pointA.transform : pointB.transform;
-            Debug.Log($"[patrollingEnemy] {name} switched patrol point to {currentPoint.name}");
+            //Debug.Log($"[patrollingEnemy] {name} switched patrol point to {currentPoint.name}");
         }
     }
 
@@ -77,7 +77,7 @@ public class patrollingEnemy : NetworkBehaviour, IPooledDeathHandler
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
-        Debug.Log($"[patrollingEnemy] {name} flipped. New scale: {transform.localScale}");
+        //Debug.Log($"[patrollingEnemy] {name} flipped. New scale: {transform.localScale}");
     }
 
     void OnTriggerEnter2D(Collider2D collision)

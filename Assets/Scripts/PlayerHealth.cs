@@ -57,7 +57,7 @@ public class PlayerHealth : NetworkBehaviour
     private void Update()
     {
         // Debugging
-        Debug.Log($"[Networked][PlayerId:{playerId}][IsOwner:{IsOwner}] Health: {currentHealth.Value} / {maxHealth} | Lives: {currentLives.Value} / {maxLives}");
+        //Debug.Log($"[Networked][PlayerId:{playerId}][IsOwner:{IsOwner}] Health: {currentHealth.Value} / {maxHealth} | Lives: {currentLives.Value} / {maxLives}");
     }
 
     // ========== DAMAGE ==========
