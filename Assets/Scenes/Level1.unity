@@ -879,8 +879,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  shooterPrefabOnline: {fileID: 8287136516349649123, guid: 2469af7ef6aef0948b0b0a92cadbac6a, type: 3}
-  meleePrefabOnline: {fileID: 2628741166230204564, guid: 3d3dc193a8b53ed4d919b346814a4d72, type: 3}
+  shooterPrefabOnline: {fileID: 2628741166230204564, guid: 3d3dc193a8b53ed4d919b346814a4d72, type: 3}
+  meleePrefabOnline: {fileID: 8287136516349649123, guid: 2469af7ef6aef0948b0b0a92cadbac6a, type: 3}
   shooterPrefabOffline: {fileID: 2215770295304683125, guid: 08e3e22d2a9df8a4096b9b49e7facfa5, type: 3}
   meleePrefabOffline: {fileID: 1347308109912709594, guid: 53af5c04da9323347accef7bd6e5a8ec, type: 3}
   chunkGenerator: {fileID: 756020905}
