@@ -183,6 +183,11 @@ public class ChunkGenerator : NetworkBehaviour
                 shooter.SetPlayers(GetPlayerGameObjects());
             }
         }
+        if (finalChunkSpawned)
+        {
+            SpawnChunkClientRpc(chunkToSpawn.name, new Vector3(positionX, chunkY, 0), currentChunkIndex - 1, chunkWidth, true);
+        }
+
 
         // Background (local only, no need to network)
         if (backgroundPrefab != null)
@@ -297,4 +302,39 @@ public class ChunkGenerator : NetworkBehaviour
         currentChunkIndex = 0;
         finalChunkSpawned = false;
     }
+    [ClientRpc]
+    private void SpawnChunkClientRpc(string prefabName, Vector3 position, int chunkIndex, float width, bool isFinalChunk)
+    {
+        GameObject prefab = FindChunkPrefabByID(prefabName);
+        if (prefab == null) return;
+
+        GameObject chunk = Instantiate(prefab, position, Quaternion.identity, transform);
+        chunk.name = $"Chunk_{chunkIndex}";
+        activeChunks.Add(new SpawnedChunk(chunk, width));
+
+        // If first chunk, set spawn point
+        if (chunkIndex == 0)
+        {
+            Transform spawn = chunk.transform.Find("SpawnPoint");
+            if (spawn != null)
+                FirstSpawnPoint = spawn;
+        }
+
+        // Assign players to enemies (local clients just need references)
+        EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
+        foreach (EnemyShooter shooter in shooters)
+            shooter.SetPlayers(GetPlayerGameObjects());
+
+        // Optional: spawn background locally
+        if (backgroundPrefab != null)
+        {
+            GameObject background = Instantiate(backgroundPrefab);
+            background.transform.position = new Vector3(position.x, backgroundYPosition, -1);
+            activeBackgrounds.Add(background);
+        }
+
+        // If this is the final chunk, mark it
+        if (isFinalChunk) finalChunkSpawned = true;
+    }
+
 }
