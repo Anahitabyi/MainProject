@@ -8,9 +8,10 @@ using UnityEngine.InputSystem;
 using Unity.Netcode;
 
 
-public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerController
+public class PlayerControllerNew2 : NetworkBehaviour, IPlayerInputBlocker, IPlayerController
 {
     public bool isInputBlocked { get; set; } = false;
+    public NetworkVariable<bool> isInputBlockedNet = new NetworkVariable<bool>(false);
     [SerializeField] private ScriptableStats _stats;
     private Rigidbody2D _rb;
     private CapsuleCollider2D _col;
@@ -47,6 +48,7 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
 
     void Update()
     {
+        isInputBlocked = isInputBlockedNet.Value;
         if (NetworkManager.Singleton != null)
         {
             var netObj = GetComponent<NetworkObject>();
@@ -143,6 +145,8 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
     }
     public void MeleeAttack(InputAction.CallbackContext context)
     {
+        
+
         if (isInputBlocked) return;
 
         if (context.performed)
@@ -153,8 +157,17 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
 
     public void PerformAttack()
     {
-        if (isInputBlocked) return;
+        if (!IsOwner) return;
+        // Only the owner can trigger the attack
+        if (NetworkManager.Singleton != null && !GetComponent<NetworkObject>().IsOwner) 
+            return;
 
+        AttackServerRpc();
+    }
+    [ServerRpc]
+    private void AttackServerRpc(ServerRpcParams rpcParams = default)
+    {
+        // Detect enemies locally on the server
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackBoxSize, 0f, enemyLayers);
 
         foreach (Collider2D enemy in hitEnemies)
@@ -165,7 +178,12 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
                 enemyHealth.TakeDamage(attackDamage);
             }
         }
-    }
+
+        // Notify all clients to play attack animation/effects
+        //AttackClientRpc();
+}
+
+
     #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {

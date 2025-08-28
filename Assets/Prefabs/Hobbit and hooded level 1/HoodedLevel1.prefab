@@ -4923,6 +4923,7 @@ GameObject:
   - component: {fileID: 8566690557071521853}
   - component: {fileID: -2695883437766796612}
   - component: {fileID: -399277753827995496}
+  - component: {fileID: -1506336829495543920}
   m_Layer: 7
   m_Name: HoodedLevel1
   m_TagString: Player
@@ -5382,6 +5383,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31363ed2b96dc874ba16cf494888b302, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  isInputBlockedNet:
+    m_InternalValue: 0
   _stats: {fileID: 11400000, guid: 4e88fd37136630d4e92fa58eeefe031f, type: 2}
   IsClimbing: 0
   attackPoint: {fileID: 1633146624456267197}
@@ -5543,3 +5547,16 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
   m_Animator: {fileID: 5508887199227375645}
+--- !u!114 &-1506336829495543920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746070206373877254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac25547f0b608d44af6e45029229bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1

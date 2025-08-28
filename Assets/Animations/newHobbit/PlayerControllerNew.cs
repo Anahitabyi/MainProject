@@ -8,9 +8,10 @@ using UnityEngine.InputSystem;
 using Unity.Netcode;
 
 
-public class PlayerControllerNew : MonoBehaviour, IPlayerInputBlocker, IPlayerController
+public class PlayerControllerNew : NetworkBehaviour, IPlayerInputBlocker, IPlayerController
 {
     public bool isInputBlocked { get; set; } = false;
+    public NetworkVariable<bool> isInputBlockedNet = new NetworkVariable<bool>(false);
     [SerializeField] private ScriptableStats _stats;
     private Rigidbody2D _rb;
     private CapsuleCollider2D _col;
@@ -60,6 +61,7 @@ public class PlayerControllerNew : MonoBehaviour, IPlayerInputBlocker, IPlayerCo
 
     void Update()
     {
+        isInputBlocked = isInputBlockedNet.Value;
         if (NetworkManager.Singleton != null)
         {
             var netObj = GetComponent<NetworkObject>();
@@ -167,23 +169,19 @@ public class PlayerControllerNew : MonoBehaviour, IPlayerInputBlocker, IPlayerCo
         ShootServerRpc(firePoint.position, shootDirection);
     }
 
-    [ServerRpc]
-    private void ShootServerRpc(Vector2 spawnPosition, Vector2 direction)
+    [ServerRpc(RequireOwnership = true)]
+    private void ShootServerRpc(Vector2 spawnPosition, Vector2 direction, ServerRpcParams rpcParams = default)
     {
-        // Spawn the bullet on the server
-        GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        if (rb != null)
-            rb.linearVelocity = direction * bulletSpeed;
+        var bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
+        var rb = bullet.GetComponent<Rigidbody2D>();
+        if (rb) rb.linearVelocity = direction * bulletSpeed;
 
-        // Set damage
-        Bullet bulletScript = bullet.GetComponent<Bullet>();
-        if (bulletScript != null)
-            bulletScript.damage = attackDamage;
+        var b = bullet.GetComponent<Bullet>();
+        if (b) b.damage = attackDamage;
 
-        // Spawn over network
-        bullet.GetComponent<NetworkObject>().Spawn();
+        bullet.GetComponent<NetworkObject>().Spawn(true);
     }
+
 
 
     private IEnumerator DelayedBulletSpawn()

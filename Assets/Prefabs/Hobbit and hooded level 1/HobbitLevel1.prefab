@@ -4864,6 +4864,7 @@ GameObject:
   - component: {fileID: -5026751051491063594}
   - component: {fileID: -1265163528117440524}
   - component: {fileID: -4761450697422356815}
+  - component: {fileID: 7285026424752423942}
   m_Layer: 7
   m_Name: HobbitLevel1
   m_TagString: Player
@@ -5418,6 +5419,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e94800d91876b4aa6283f61fb45862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  isInputBlockedNet:
+    m_InternalValue: 0
   _stats: {fileID: 11400000, guid: 4e88fd37136630d4e92fa58eeefe031f, type: 2}
   IsClimbing: 0
   bulletPrefab: {fileID: 64783981532899760, guid: 6f5aeac0ae4aa7147a4f0d79ff415078, type: 3}
@@ -5429,6 +5433,7 @@ MonoBehaviour:
   shakeMagnitude: 0
   attackDamage: 1
   weaponUIIndicator: {fileID: 0}
+  maxJumps: 2
   climbSpeed: 4
 --- !u!114 &9065381567142841532
 MonoBehaviour:
@@ -5557,6 +5562,19 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
   m_Animator: {fileID: 556701175943789761}
+--- !u!114 &7285026424752423942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6713231506421959016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac25547f0b608d44af6e45029229bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &7761204777486888067
 GameObject:
   m_ObjectHideFlags: 0
