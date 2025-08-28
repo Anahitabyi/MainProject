@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: -8247550861380187285}
   - component: {fileID: -4131380183753948906}
   - component: {fileID: 4356729241435300705}
+  - component: {fileID: -2732569838772028362}
   m_Layer: 11
   m_Name: cat
   m_TagString: Untagged
@@ -124,6 +125,8 @@ MonoBehaviour:
   viewBoxSize: {x: 36.5, y: 9.28}
   patrolSpeed: 3
   shootCooldown: 2
+  direction: {x: 0, y: 0}
+  bombSpeed: 20
 --- !u!114 &1839605134294050893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +139,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d306b58b66e7d3242a32395bd16cc0f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   maxHealth: 3
+  currentHealth:
+    m_InternalValue: 100
   animator: {fileID: 6445001639196853082}
   deathEffectPrefab: {fileID: 50476677937739099, guid: 56dba9852748f9d46975730fbbed3e74, type: 3}
 --- !u!212 &2777192905260212469
@@ -524,3 +530,17 @@ MonoBehaviour:
     TriggerNameHash: 1883569342
     TransitionIndex: 1
   m_Animator: {fileID: 6445001639196853082}
+--- !u!114 &-2732569838772028362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5281825669444538878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 805ea2c0e0944634a893dfef3b836fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombPrefab: {fileID: 2122236317634018336, guid: d1bba228f1a15f34092c50ed82d78134, type: 3}
+  poolSize: 30

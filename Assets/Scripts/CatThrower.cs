@@ -1,13 +1,12 @@
 using UnityEngine;
 using Unity.Netcode;
 
-public class BombThrower : NetworkBehaviour
+public class CatThrower : NetworkBehaviour
 {
-    public float spawnInterval = 5f;
+    /*public float spawnInterval = 5f;
     public float bombSpeed = 20f;
 
-    public enum Direction { Up, Down, Left, Right }
-    public Direction throwDirection = Direction.Down;
+    public Vector2 direction;
 
     private float timer;
 
@@ -20,7 +19,6 @@ public class BombThrower : NetworkBehaviour
 
         if (timer >= spawnInterval)
         {
-            
             // BombPool's Instantiate method
             var bombNetObj = BombPool.Instance.Instantiate(OwnerClientId, transform.position, Quaternion.identity);
             Bomb bomb = bombNetObj.GetComponent<Bomb>();
@@ -35,14 +33,7 @@ public class BombThrower : NetworkBehaviour
     }
 
     private Vector2 GetDirectionVector()
-    {
-        return throwDirection switch
-        {
-            Direction.Up => Vector2.up,
-            Direction.Down => Vector2.down,
-            Direction.Left => Vector2.left,
-            Direction.Right => Vector2.right,
-            _ => Vector2.zero
-        };
-    }
+    { 
+        return Vector2.right * direction.x;
+    }*/
 }
