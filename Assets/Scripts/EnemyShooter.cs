@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class EnemyShooter : MonoBehaviour, IPooledDeathHandler
+public class EnemyShooter : NetworkBehaviour, IPooledDeathHandler
 {
     public GameObject pointA;
     public GameObject pointB;
@@ -28,11 +29,15 @@ public class EnemyShooter : MonoBehaviour, IPooledDeathHandler
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        currentPoint = pointB.transform;
+        if (IsServer)
+        {
+            currentPoint = pointB.transform;
+        }
     }
 
     void Update()
     {
+        if (!IsServer) return;
         if (isDead) return;
 
         target = FindClosestVisiblePlayer();
