@@ -109208,7 +109208,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3820690229941560601, guid: 9639f84fb02290943a71f40c973686a4, type: 3}
   m_PrefabInstance: {fileID: 7585171671367127889}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1886729037}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a53757ee320313747abe55319b794c2e, type: 3}
@@ -111785,6 +111785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bf703cf0bf73d46811ddc461435389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   collectibles:
   - {fileID: 8586473009235065025, guid: 356550df88585cc4f894e6f6e6d3bce2, type: 3}
   - {fileID: 5403728605108032954, guid: a10bc66097fcf334590eb57d3d050a56, type: 3}
@@ -120811,8 +120812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  shooterPrefabOnline: {fileID: 6436377642573848059, guid: 936a2b3cb56d9e9478404d62ba76cf09, type: 3}
-  meleePrefabOnline: {fileID: 2564893317565012847, guid: 519c931ca892e144bab6bb9aec206097, type: 3}
+  characters: []
   shooterPrefabOffline: {fileID: 472219826583142136, guid: 640a04279ac69a14bbb08a9ddd3f9464, type: 3}
   meleePrefabOffline: {fileID: 4426039281350244958, guid: dcb0bf09cfa247f4b899287130c07c0b, type: 3}
   chunkGenerator: {fileID: 0}
@@ -129215,6 +129215,36 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &1886729037 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4724214037178071606, guid: 9639f84fb02290943a71f40c973686a4, type: 3}
+  m_PrefabInstance: {fileID: 7585171671367127889}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1886729039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886729037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 467731170
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1889202925
 GameObject:
   m_ObjectHideFlags: 0
@@ -131684,7 +131714,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4724214037178071606, guid: 9639f84fb02290943a71f40c973686a4, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1886729039}
   m_SourcePrefab: {fileID: 100100000, guid: 9639f84fb02290943a71f40c973686a4, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
