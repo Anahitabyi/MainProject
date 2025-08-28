@@ -1,18 +1,24 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Netcode;
 
-public class RandomCollectibleSpawner : MonoBehaviour
+public class RandomCollectibleSpawner : NetworkBehaviour
 {
     [Header("Collectibles")]
-    public GameObject[] collectibles; // Just drag your 4 collectible prefabs here
+    public NetworkObject[] collectibles; // Prefabs with NetworkObject component
 
     [Header("Spawn Settings")]
     public int collectiblesToSpawn = 3;
     public Transform[] spawnPoints;
 
-    void Start()
+    public override void OnNetworkSpawn()
     {
-        SpawnCollectiblesRandomly();
+        // Only the host should spawn
+        if (IsServer)
+        {
+            SpawnCollectiblesRandomly();
+            Debug.Log("called spawning");
+        }
     }
 
     void SpawnCollectiblesRandomly()
@@ -20,7 +26,7 @@ public class RandomCollectibleSpawner : MonoBehaviour
         if (collectibles.Length == 0 || spawnPoints.Length == 0) return;
 
         // Shuffle collectibles
-        List<GameObject> shuffledCollectibles = new List<GameObject>(collectibles);
+        List<NetworkObject> shuffledCollectibles = new List<NetworkObject>(collectibles);
         Shuffle(shuffledCollectibles);
 
         // Shuffle spawn points
@@ -30,7 +36,13 @@ public class RandomCollectibleSpawner : MonoBehaviour
         // Spawn collectibles
         for (int i = 0; i < collectiblesToSpawn && i < shuffledCollectibles.Count && i < availablePoints.Count; i++)
         {
-            Instantiate(shuffledCollectibles[i], availablePoints[i].position, Quaternion.identity);
+            NetworkObject collectibleInstance = Instantiate(
+                shuffledCollectibles[i],
+                availablePoints[i].position,
+                Quaternion.identity
+            );
+
+            collectibleInstance.Spawn(); // <-- This makes it networked!
         }
     }
 

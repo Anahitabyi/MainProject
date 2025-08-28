@@ -9528,10 +9528,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bf703cf0bf73d46811ddc461435389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   collectibles:
-  - {fileID: 5640497119728267442, guid: 612ea91a8836a334ba49097512c36878, type: 3}
-  - {fileID: 7332282049441059930, guid: 0572e65d1b9adc748afb5f49cc0593ca, type: 3}
-  - {fileID: 7692611730812150688, guid: 83d60f4737c70254987081126ad4abea, type: 3}
+  - {fileID: 9105774893359457501, guid: 4753064c7d38d3a4eaae4cb43eb93aea, type: 3}
+  - {fileID: 5051716188997951688, guid: 83d60f4737c70254987081126ad4abea, type: 3}
+  - {fileID: 3371933196019909841, guid: 996c75c6876dd714ab9b0a0c0407814b, type: 3}
   collectiblesToSpawn: 1
   spawnPoints:
   - {fileID: 4952947033280454830}
