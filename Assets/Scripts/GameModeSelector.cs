@@ -36,4 +36,8 @@ public class GameModeSelector : MonoBehaviour
         }
     }
 
+    public void BackButton()
+    {
+        SceneManager.LoadScene("Signup");
+    }
 }

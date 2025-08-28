@@ -20,6 +20,7 @@ public class PlayerSpawnerTest : NetworkBehaviour
     [Header("Cinemachine")]
     public CinemachineCamera cinemachiCamera1;
     public CinemachineCamera cinemachiCamera2;
+    [SerializeField] private GameObject[] characters;
 
     [Header("Mode")]
     public bool isOfflineMode = false; // Toggle in inspector for local play

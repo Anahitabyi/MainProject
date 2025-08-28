@@ -2,113 +2,57 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CharacterSelectDisplay : NetworkBehaviour
+public class CharacterSelectDisplay : MonoBehaviour
 {
-    public NetworkList<CharacterSelection> players;
     [SerializeField] private PlayCard[] playerCards;
-    public static CharacterSelectDisplay instance { get; private set; }
 
-    private void Awake()
+    private void OnEnable()
     {
-        players = new NetworkList<CharacterSelection>();
-        if (instance != null && instance != this)
+        if (CharacterSelectManager.Instance != null)
         {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            CharacterSelectManager.Instance.players.OnListChanged += HandlePlayerStateChange;
+            HandlePlayerStateChange(default); // initial sync
         }
     }
 
-    public override void OnNetworkSpawn()
+    private void OnDisable()
     {
-        if (IsClient)
-        {
-            players.OnListChanged += handlePlayerStateChange;
-        }
-        if (IsServer)
-        {
-            NetworkManager.Singleton.OnClientConnectedCallback += handleClientConnected;
-            NetworkManager.Singleton.OnClientDisconnectCallback += handleClientDisconnected;
-        }
+        if (CharacterSelectManager.Instance != null)
+            CharacterSelectManager.Instance.players.OnListChanged -= HandlePlayerStateChange;
     }
 
-    private void handleClientConnected(ulong clientId)
+    private void HandlePlayerStateChange(NetworkListEvent<CharacterSelection> e)
     {
-        players.Add(new CharacterSelection(clientId, -1));
-    }
+        var players = CharacterSelectManager.Instance.players;
 
-    private void handleClientDisconnected(ulong clientId)
-    {
+        // update active players
         for (int i = 0; i < players.Count; i++)
-        {
-            if (players[i].clientId == clientId)
-            {
-                players.RemoveAt(i);
-                break;
-            }
-        }
+            playerCards[i].updateDisplay(players[i]);
+
+        // disable unused slots
+        for (int i = players.Count; i < playerCards.Length; i++)
+            playerCards[i].disableDisplay();
     }
 
-    private void handlePlayerStateChange(NetworkListEvent<CharacterSelection> e)
+    public void Select(int characterId)
     {
-        for (int i = 0; i < playerCards.Length; i++)
-        {
-            if (players.Count > 1)
-            {
-                playerCards[i].updateDisplay(players[i]);
-            }
-            else
-            {
-                playerCards[i].disableDisplay();
-            }
-        }
-    }
-
-    public void select(int characterId)
-    {
-        SelectServerRpc(characterId);
+        CharacterSelectManager.Instance.SelectServerRpc(characterId);
     }
     
-    [ServerRpc (RequireOwnership = false)]
-    private void SelectServerRpc(int characterId, ServerRpcParams serverRpcParams = default)
+    public void BackButton()
     {
-        // Prevent duplicate picks
-        for (int i = 0; i < players.Count; i++)
-        {
-            if (players[i].characterId == characterId)
-            {
-                return; // character already chosen, ignore
-            }
-        }
-
-        // Assign to this client
-        for (int i = 0; i < players.Count; i++)
-        {
-            if (players[i].clientId == serverRpcParams.Receive.SenderClientId)
-            {
-                players[i] = new CharacterSelection(players[i].clientId, characterId);
-            }
-        }
+        SceneManager.LoadScene("OnlineOrLocal");
     }
 
-
-    public void backButton()
+    public void StartButton()
     {
-        SceneManager.LoadScene("Signup");
-    }
-
-    public void startButton()
-    {
-        if (!IsHost) 
+        if (!NetworkManager.Singleton.IsHost)
         {
             Debug.Log("Only host can start the game.");
             return;
         }
 
-        foreach (var player in players)
+        foreach (var player in CharacterSelectManager.Instance.players)
         {
             if (player.characterId == -1)
             {
@@ -118,7 +62,6 @@ public class CharacterSelectDisplay : NetworkBehaviour
         }
 
         Debug.Log("Loading MainMenu for all players...");
-        NetworkManager.Singleton.SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene("Level1", LoadSceneMode.Single);
     }
-
 }
