@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Netcode;
 
 public class CatEnemyHealth : EnemyHealth
 {
@@ -9,28 +10,43 @@ public class CatEnemyHealth : EnemyHealth
     {
         Debug.Log("CatEnemy has died!"); // Confirm that Die() is called
 
-        base.Die(); // Call base death logic
+        base.Die(); // Call base death logic (likely handles disabling/spawning etc.)
 
-        if (deathEffectPrefab != null)
+        if (deathEffectPrefab == null)
         {
-            GameObject effect = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
-            Debug.Log("Death effect instantiated."); // Confirm that effect was spawned
+            Debug.LogWarning("No deathEffectPrefab assigned to CatEnemy.");
+            return;
+        }
+
+        if (IsServer)
+        {
+            NetworkObject effect = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity)
+                .GetComponent<NetworkObject>();
+
+            effect.Spawn(); // Sync with clients
+            Debug.Log("Death effect instantiated.");
+
+            float lifetime = 2f; // fallback
 
             Animator anim = effect.GetComponent<Animator>();
-            if (anim != null)
+            if (anim != null && anim.runtimeAnimatorController != null)
             {
-                float animTime = anim.GetCurrentAnimatorStateInfo(0).length;
-                Destroy(effect, animTime);
+                // Grab the first clip length
+                AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
+                if (clips.Length > 0) lifetime = clips[0].length;
             }
             else
             {
-                Destroy(effect, 2f); // Fallback time if Animator not found
-                Debug.LogWarning("No Animator found on death effect. Destroying after 2 seconds.");
+                Debug.LogWarning("No Animator found on death effect. Using fallback lifetime.");
             }
+
+            StartCoroutine(DespawnAfter(effect, lifetime));
         }
-        else
-        {
-            Debug.LogWarning("No deathEffectPrefab assigned to CatEnemy."); // Warning if prefab missing
-        }
+    }
+
+    private System.Collections.IEnumerator DespawnAfter(NetworkObject obj, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (obj != null && obj.IsSpawned) obj.Despawn(true);
     }
 }
