@@ -1,25 +1,30 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class patrollingEnemy : MonoBehaviour, IPooledDeathHandler
+public class patrollingEnemy : NetworkBehaviour, IPooledDeathHandler
 {
+    [Header("Patrol Points")]
     public GameObject pointA;
     public GameObject pointB;
+
+    [Header("Movement & Combat")]
+    public float speed = 5f;
+    public string patrolPairID; // Unique ID for saving
 
     private Rigidbody2D rb;
     private Animator anim;
     private Transform currentPoint;
-
-    public float speed = 5f;
-    private bool isAttacking = false;
     private bool isDead = false;
 
-    [Tooltip("Unique ID of the patrol pair this enemy belongs to")]
-    public string patrolPairID;
+    // Network-synced attack state
+    public NetworkVariable<bool> IsAttacking = new NetworkVariable<bool>(false);
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
+        Debug.Log($"[patrollingEnemy] Start called for {name}");
 
         if (pointA == null || pointB == null)
         {
@@ -31,31 +36,39 @@ public class patrollingEnemy : MonoBehaviour, IPooledDeathHandler
         currentPoint = pointB.transform;
 
         if (!string.IsNullOrEmpty(patrolPairID))
-            Debug.Log($"[Enemy] {name} initialized with patrolPairID = {patrolPairID}");
+            Debug.Log($"[patrollingEnemy] {name} initialized with patrolPairID = {patrolPairID}");
         else
-            Debug.LogWarning($"[Enemy] {name} has no patrolPairID assigned!");
+            Debug.LogWarning($"[patrollingEnemy] {name} has no patrolPairID assigned!");
+
+        Debug.Log($"[patrollingEnemy] Starting position: {transform.position}");
     }
 
     void Update()
     {
+        if (!IsServer) return; // Only server controls movement/logic
         if (isDead) return;
 
-        if (isAttacking)
+        if (IsAttacking.Value)
         {
             rb.linearVelocity = Vector2.zero;
             anim.SetBool("isRunning", false);
             return;
         }
 
+        Patrol();
+    }
+
+    private void Patrol()
+    {
         Vector2 direction = (currentPoint.position - transform.position).normalized;
         rb.linearVelocity = new Vector2(direction.x * speed, rb.linearVelocity.y);
-
         anim.SetBool("isRunning", Mathf.Abs(rb.linearVelocity.x) > 0.1f);
 
         if (Vector2.Distance(transform.position, currentPoint.position) < 0.1f)
         {
             Flip();
             currentPoint = currentPoint == pointB.transform ? pointA.transform : pointB.transform;
+            Debug.Log($"[patrollingEnemy] {name} switched patrol point to {currentPoint.name}");
         }
     }
 
@@ -64,47 +77,48 @@ public class patrollingEnemy : MonoBehaviour, IPooledDeathHandler
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
+        Debug.Log($"[patrollingEnemy] {name} flipped. New scale: {transform.localScale}");
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isDead) return;
+        if (!IsServer || isDead) return;
 
-        if (collision.CompareTag("Player") && !isAttacking)
+        if (collision.CompareTag("Player") && !IsAttacking.Value)
         {
-            isAttacking = true;
+            IsAttacking.Value = true;
             rb.linearVelocity = Vector2.zero;
 
             if (anim != null)
-            {
                 anim.SetTrigger("Attack");
-            }
 
             PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
             if (playerHealth != null)
                 playerHealth.TakeDamage(1);
+
+            Debug.Log($"[patrollingEnemy] {name} started attacking player {collision.name}");
         }
     }
 
     public void EndAttack()
     {
-        if (!isDead)
-        {
-            Debug.Log("EndAttack triggered");
-            isAttacking = false;
-        }
+        if (!IsServer || isDead) return;
+        IsAttacking.Value = false;
+        Debug.Log($"[patrollingEnemy] {name} ended attack");
     }
 
     public void Die()
     {
-        if (isDead) return;
-        isDead = true;
-        isAttacking = false;
+        if (!IsServer || isDead) return;
 
-        if (!string.IsNullOrEmpty(patrolPairID))
+        isDead = true;
+        IsAttacking.Value = false;
+
+        // Save patrol pair state
+        if (!string.IsNullOrEmpty(patrolPairID) && SaveTracker.Instance != null)
         {
             SaveTracker.Instance.MarkPatrolPairDisabled(patrolPairID);
-            Debug.Log($"[Enemy] Marked patrolPairID '{patrolPairID}' as disabled.");
+            Debug.Log($"[patrollingEnemy] Marked patrolPairID '{patrolPairID}' as disabled.");
         }
 
         if (anim != null)
@@ -116,10 +130,19 @@ public class patrollingEnemy : MonoBehaviour, IPooledDeathHandler
         Collider2D col = GetComponent<Collider2D>();
         if (col) col.enabled = false;
 
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb) rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
-        Destroy(gameObject, 1.5f);
+        NetworkObject netObj = GetComponent<NetworkObject>();
+        if (netObj != null)
+        {
+            netObj.Despawn();
+            Debug.Log($"[patrollingEnemy] {name} despawned network object.");
+        }
+        else
+        {
+            Destroy(gameObject, 1.5f);
+            Debug.Log($"[patrollingEnemy] {name} destroyed locally.");
+        }
     }
 
     void OnDrawGizmos()
@@ -132,9 +155,10 @@ public class patrollingEnemy : MonoBehaviour, IPooledDeathHandler
             Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
         }
     }
+
     public void OnDeath()
     {
-        // Called by EnemyHealth when enemy dies
-        Die(); // your existing slime-specific logic
+        Debug.Log($"[patrollingEnemy] OnDeath called for {name}");
+        Die(); // Called by EnemyHealth or other death systems
     }
 }

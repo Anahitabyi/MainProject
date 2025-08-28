@@ -9,17 +9,39 @@ public class enemySpawner : NetworkBehaviour
     [Tooltip("The enemy prefab to spawn (must have NetworkObject)")]
     public NetworkObject enemyPrefab;
 
-    void Start()
+    public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
+
+        // Only spawn on the server/host
+        if (!IsServer)
+        {
+            Debug.Log("[Spawner] Not server, skipping spawn.");
+            return;
+        }
+
+        // If loading from save, skip
         if (GameStateFlags.IsLoadingFromSave)
         {
             Debug.Log("[Spawner] Skipping enemy spawn because we're loading from save.");
             return;
         }
-        if (!IsServer) return; // only server spawns enemies
+
+        SpawnEnemies();
+    }
+
+    private void SpawnEnemies()
+    {
+        Debug.Log($"[Spawner] Starting spawn for {patrolPairs.Length} patrol pairs.");
 
         foreach (GameObject pair in patrolPairs)
         {
+            if (pair == null)
+            {
+                Debug.LogWarning("[Spawner] Encountered a null patrol pair in the array.");
+                continue;
+            }
+
             UniqueID unique = pair.GetComponent<UniqueID>();
             if (unique == null)
             {
@@ -29,7 +51,7 @@ public class enemySpawner : NetworkBehaviour
 
             if (SaveTracker.Instance.IsPatrolPairDisabled(unique.id))
             {
-                Debug.Log($"[Spawner] Skipping patrol pair '{pair.name}' (ID: {unique.id}) because it's marked disabled.");
+                Debug.Log($"[Spawner] Skipping patrol pair '{pair.name}' because it's marked disabled.");
                 continue;
             }
 
@@ -43,17 +65,25 @@ public class enemySpawner : NetworkBehaviour
             }
 
             Vector3 spawnPos = (pointA.position + pointB.position) / 2f;
+
             NetworkObject enemyNetObj = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
 
-            // This is the critical line: make it visible on all clients
-            enemyNetObj.Spawn();
-
-            Debug.Log($"[Spawner] Spawned enemy at {spawnPos} for patrol pair '{pair.name}' (ID: {unique.id})");
-
             patrollingEnemy script = enemyNetObj.GetComponent<patrollingEnemy>();
+            if (script == null)
+            {
+                Debug.LogError($"[Spawner] Enemy prefab does not have a patrollingEnemy component.");
+                Destroy(enemyNetObj.gameObject);
+                continue;
+            }
+
             script.pointA = pointA.gameObject;
             script.pointB = pointB.gameObject;
             script.patrolPairID = unique.id;
+
+            enemyNetObj.Spawn();
+            Debug.Log($"[Spawner] Spawned enemy for patrol pair '{pair.name}' with ID {unique.id}");
         }
+
+        Debug.Log("[Spawner] Finished spawning patrol pair enemies.");
     }
 }
