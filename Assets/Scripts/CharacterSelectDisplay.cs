@@ -71,10 +71,20 @@ public class CharacterSelectDisplay : NetworkBehaviour
     {
         SelectServerRpc(characterId);
     }
-
+    
     [ServerRpc (RequireOwnership = false)]
     private void SelectServerRpc(int characterId, ServerRpcParams serverRpcParams = default)
     {
+        // Prevent duplicate picks
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (players[i].characterId == characterId)
+            {
+                return; // character already chosen, ignore
+            }
+        }
+
+        // Assign to this client
         for (int i = 0; i < players.Count; i++)
         {
             if (players[i].clientId == serverRpcParams.Receive.SenderClientId)
@@ -84,6 +94,7 @@ public class CharacterSelectDisplay : NetworkBehaviour
         }
     }
 
+
     public void backButton()
     {
         SceneManager.LoadScene("Signup");
@@ -91,6 +102,23 @@ public class CharacterSelectDisplay : NetworkBehaviour
 
     public void startButton()
     {
+        if (!IsHost) 
+        {
+            Debug.Log("Only host can start the game.");
+            return;
+        }
+
+        foreach (var player in players)
+        {
+            if (player.characterId == -1)
+            {
+                Debug.Log("Not all players have chosen a character!");
+                return;
+            }
+        }
+
+        Debug.Log("Loading MainMenu for all players...");
         NetworkManager.Singleton.SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
+
 }

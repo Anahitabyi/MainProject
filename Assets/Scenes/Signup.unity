@@ -119,82 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &31701485
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 31701487}
-  - component: {fileID: 31701486}
-  m_Layer: 0
-  m_Name: NetworkManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &31701486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 31701485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 593a2fe42fa9d37498c96f9a383b6521, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NetworkManagerExpanded: 0
-  NetworkConfig:
-    ProtocolVersion: 0
-    NetworkTransport: {fileID: 0}
-    PlayerPrefab: {fileID: 0}
-    Prefabs:
-      NetworkPrefabsLists:
-      - {fileID: 11400000, guid: 549aa6403d4c8724fa4071b1306ad167, type: 2}
-      - {fileID: 11400000, guid: 549aa6403d4c8724fa4071b1306ad167, type: 2}
-    TickRate: 30
-    ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 0
-    ConnectionData: 
-    EnableTimeResync: 0
-    TimeResyncInterval: 30
-    EnsureNetworkVariableLengthSafety: 0
-    EnableSceneManagement: 1
-    ForceSamePrefabs: 1
-    RecycleNetworkIds: 1
-    NetworkIdRecycleDelay: 120
-    RpcHashSize: 0
-    LoadSceneTimeOut: 120
-    SpawnTimeout: 10
-    EnableNetworkLogs: 1
-    NetworkTopology: 0
-    UseCMBService: 0
-    AutoSpawnPlayerPrefabClientSide: 1
-    NetworkMessageMetrics: 1
-    NetworkProfilingMetrics: 1
-    OldPrefabList: []
-  RunInBackground: 1
-  LogLevel: 1
---- !u!4 &31701487
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 31701485}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 337408.7, y: -55072.5, z: -3414.0635}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &141301259
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &338059935
 RectTransform:
   m_ObjectHideFlags: 0
@@ -435,7 +359,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Password Incorrect
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5498ff076488a4241b1619f377c298b3, type: 2}
   m_sharedMaterial: {fileID: 4328658533763593285, guid: 5498ff076488a4241b1619f377c298b3, type: 2}
@@ -1096,6 +1020,22 @@ PrefabInstance:
     - target: {fileID: 2743853175036210132, guid: 9950500f3536ec54f8b79d57ab42a7a8, type: 3}
       propertyPath: m_Name
       value: Main Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4519287963358253897, guid: 9950500f3536ec54f8b79d57ab42a7a8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -1070.525
+      objectReference: {fileID: 0}
+    - target: {fileID: 4519287963358253897, guid: 9950500f3536ec54f8b79d57ab42a7a8, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -323.76715
+      objectReference: {fileID: 0}
+    - target: {fileID: 4519287963358253897, guid: 9950500f3536ec54f8b79d57ab42a7a8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.2625122
+      objectReference: {fileID: 0}
+    - target: {fileID: 4519287963358253897, guid: 9950500f3536ec54f8b79d57ab42a7a8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -26.883545
       objectReference: {fileID: 0}
     - target: {fileID: 4523031708693063662, guid: 9950500f3536ec54f8b79d57ab42a7a8, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2939,4 +2879,3 @@ SceneRoots:
   - {fileID: 440765672}
   - {fileID: 1098229659}
   - {fileID: 1899173660}
-  - {fileID: 31701487}
