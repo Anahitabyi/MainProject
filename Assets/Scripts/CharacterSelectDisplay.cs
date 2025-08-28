@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterSelectDisplay : NetworkBehaviour
 {
@@ -71,7 +72,7 @@ public class CharacterSelectDisplay : NetworkBehaviour
         SelectServerRpc(characterId);
     }
 
-    [ServerRpc]
+    [ServerRpc (RequireOwnership = false)]
     private void SelectServerRpc(int characterId, ServerRpcParams serverRpcParams = default)
     {
         for (int i = 0; i < players.Count; i++)
@@ -81,5 +82,15 @@ public class CharacterSelectDisplay : NetworkBehaviour
                 players[i] = new CharacterSelection(players[i].clientId, characterId);
             }
         }
+    }
+
+    public void backButton()
+    {
+        SceneManager.LoadScene("Signup");
+    }
+
+    public void startButton()
+    {
+        NetworkManager.Singleton.SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 }

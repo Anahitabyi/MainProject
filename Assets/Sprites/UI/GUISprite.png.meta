@@ -257,10 +257,10 @@ TextureImporter:
       name: GUISprite_4
       rect:
         serializedVersion: 2
-        x: 225
-        y: 161
-        width: 45
-        height: 45
+        x: 226
+        y: 183
+        width: 22
+        height: 22
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

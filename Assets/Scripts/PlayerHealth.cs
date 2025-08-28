@@ -34,7 +34,7 @@ public class PlayerHealth : NetworkBehaviour
     {
         inputBlocker = movementScriptMono as IPlayerInputBlocker;
 
-        if (playerStatsManager.Instance != null)
+        if (IsServer && playerStatsManager.Instance != null)
         {
             playerStatsManager.Instance.LoadIntoPlayer(this);
         }
