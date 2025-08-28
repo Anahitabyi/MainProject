@@ -1,12 +1,13 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class enemySpawner : MonoBehaviour
+public class enemySpawner : NetworkBehaviour
 {
     [Tooltip("Assign each patrol pair object (with PointA and PointB inside)")]
     public GameObject[] patrolPairs;
 
-    [Tooltip("The enemy prefab to spawn")]
-    public GameObject enemyPrefab;
+    [Tooltip("The enemy prefab to spawn (must have NetworkObject)")]
+    public NetworkObject enemyPrefab;
 
     void Start()
     {
@@ -15,6 +16,7 @@ public class enemySpawner : MonoBehaviour
             Debug.Log("[Spawner] Skipping enemy spawn because we're loading from save.");
             return;
         }
+        if (!IsServer) return; // only server spawns enemies
 
         foreach (GameObject pair in patrolPairs)
         {
@@ -41,10 +43,14 @@ public class enemySpawner : MonoBehaviour
             }
 
             Vector3 spawnPos = (pointA.position + pointB.position) / 2f;
-            GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+            NetworkObject enemyNetObj = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+
+            // This is the critical line: make it visible on all clients
+            enemyNetObj.Spawn();
+
             Debug.Log($"[Spawner] Spawned enemy at {spawnPos} for patrol pair '{pair.name}' (ID: {unique.id})");
 
-            patrollingEnemy script = enemy.GetComponent<patrollingEnemy>();
+            patrollingEnemy script = enemyNetObj.GetComponent<patrollingEnemy>();
             script.pointA = pointA.gameObject;
             script.pointB = pointB.gameObject;
             script.patrolPairID = unique.id;

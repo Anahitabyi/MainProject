@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.Netcode;
 
-public class ChunkGenerator : MonoBehaviour
+public class ChunkGenerator : NetworkBehaviour
 {
     [System.Serializable]
     public class ChunkData
@@ -23,7 +23,6 @@ public class ChunkGenerator : MonoBehaviour
     [SerializeField] private GameObject backgroundPrefab;
     [SerializeField] private float backgroundYPosition = 0f;
 
-    // THIS IS FILLED RUNTIME BY PlayerSpawnerTest
     [HideInInspector] public Transform[] players;
 
     public Transform FirstSpawnPoint { get; private set; }
@@ -34,10 +33,9 @@ public class ChunkGenerator : MonoBehaviour
     {
         public GameObject chunkObject;
         public float width;
-
         public SpawnedChunk(GameObject obj, float width)
         {
-            this.chunkObject = obj;
+            chunkObject = obj;
             this.width = width;
         }
     }
@@ -47,16 +45,31 @@ public class ChunkGenerator : MonoBehaviour
 
     private int currentChunkIndex = 0;
     private bool finalChunkSpawned = false;
+    private bool useSavedChunks = false;
 
-    private bool useSavedChunks = false; // Prevent auto-gen after load
+    private static int chunkSeed; // Shared seed
+    private static bool seedSet = false;
 
-    void Start()
+    public void Start()
     {
         if (useSavedChunks)
         {
             ClearAllChunks();
             return;
         }
+
+        if (!seedSet)
+        {
+            // Server chooses seed, clients get it synced
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
+            {
+                chunkSeed = System.Environment.TickCount; // or from SaveTracker
+                SetSeedClientRpc(chunkSeed);
+            }
+        }
+
+        // Use the same seed for deterministic shuffling
+        Random.InitState(chunkSeed);
 
         if (SaveTracker.Instance != null)
             SaveTracker.Instance.ClearChunks();
@@ -70,11 +83,19 @@ public class ChunkGenerator : MonoBehaviour
         }
     }
 
+    [ClientRpc]
+    private void SetSeedClientRpc(int seed)
+    {
+        if (!seedSet)
+        {
+            chunkSeed = seed;
+            seedSet = true;
+        }
+    }
+
     void Update()
     {
-        // If multiplayer: only server generates chunks
-        if (NetworkManager.Singleton != null && !NetworkManager.Singleton.IsServer) return;
-
+        // Both server and clients can generate chunks now, since they’re deterministic
         if (useSavedChunks || players == null || players.Length == 0 || finalChunkSpawned) return;
 
         float maxPlayerX = float.MinValue;
@@ -126,21 +147,8 @@ public class ChunkGenerator : MonoBehaviour
 
         if (chunkToSpawn == null) return null;
 
-        GameObject chunk;
-
-        // --- Multiplayer: spawn as NetworkObject if online ---
-        if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
-        {
-            var netObj = Instantiate(chunkToSpawn, new Vector3(positionX, chunkY, 0), Quaternion.identity).GetComponent<NetworkObject>();
-            netObj.Spawn();
-            chunk = netObj.gameObject;
-        }
-        else
-        {
-            // Offline spawn
-            chunk = Instantiate(chunkToSpawn, new Vector3(positionX, chunkY, 0), Quaternion.identity, transform);
-        }
-
+        // Chunks are just local objects (not NetworkObjects!)
+        GameObject chunk = Instantiate(chunkToSpawn, new Vector3(positionX, chunkY, 0), Quaternion.identity, transform);
         chunk.name = "Chunk_" + currentChunkIndex;
         currentChunkIndex++;
 
@@ -163,14 +171,20 @@ public class ChunkGenerator : MonoBehaviour
             );
         }
 
-        // Assign players to enemies
-        EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
-        foreach (EnemyShooter shooter in shooters)
+        // Only server spawns enemies as NetworkObjects
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
         {
-            shooter.SetPlayers(GetPlayerGameObjects());
+            EnemyShooter[] shooters = chunk.GetComponentsInChildren<EnemyShooter>();
+            foreach (EnemyShooter shooter in shooters)
+            {
+                var netObj = shooter.GetComponent<NetworkObject>();
+                if (netObj != null && !netObj.IsSpawned)
+                    netObj.Spawn();
+                shooter.SetPlayers(GetPlayerGameObjects());
+            }
         }
 
-        // Spawn background
+        // Background (local only, no need to network)
         if (backgroundPrefab != null)
         {
             GameObject background = Instantiate(backgroundPrefab);
@@ -185,7 +199,6 @@ public class ChunkGenerator : MonoBehaviour
     {
         List<GameObject> playerList = new List<GameObject>();
         if (players == null) return playerList.ToArray();
-
         foreach (Transform t in players)
         {
             if (t != null)
@@ -204,6 +217,8 @@ public class ChunkGenerator : MonoBehaviour
             list[randomIndex] = temp;
         }
     }
+
+    // (Saved data code unchanged…)
 
     // ------------------- Saved Data -------------------
     public void SpawnFromSavedData(List<ChunkRecord> savedChunks)

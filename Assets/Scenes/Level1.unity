@@ -1871,6 +1871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1fcd0ecbac43f44983230f33a76270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   totalKey: 1
 --- !u!4 &1225730589
 Transform:
