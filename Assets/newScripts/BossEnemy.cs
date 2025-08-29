@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Audio;
 using System;
 using System.Collections;
+using UnityEngine.SceneManagement;
 //using System.Numerics;
     #if UNITY_EDITOR
 using UnityEditor;
@@ -405,8 +406,9 @@ public class BossEnemy : NetworkBehaviour
 
         //PlayAnimationClientRpc(deathAnimationName);
         GetComponent<NetworkObject>().Despawn();
+        NetworkManager.Singleton.SceneManager.LoadScene("Win", LoadSceneMode.Single);
 
-            
+
     }
 
 
