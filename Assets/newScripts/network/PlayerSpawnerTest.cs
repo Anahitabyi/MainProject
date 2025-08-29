@@ -25,6 +25,11 @@ public class PlayerSpawnerTest : NetworkBehaviour
     public bool isOfflineMode = false; // Toggle in inspector for local play
     public static event Action<GameObject[]> OnPlayerUpdated;
 
+    [Header("Spawn Settings")]
+    public Vector3 basePosition = new Vector3(-17, 5, 0); // starting point
+    public Vector3 spacing = new Vector3(2f, 0, 0);       // offset per player
+    public Vector3[] customPositions;                      // optional full list
+
     private void Start()
     {
         Debug.Log($"[Spawner] Starting PlayerSpawnerTest. OfflineMode={isOfflineMode}");
@@ -128,11 +133,14 @@ public class PlayerSpawnerTest : NetworkBehaviour
         OnPlayerUpdated?.Invoke(spawnedPlayers.ToArray());
         Debug.Log($"[Spawner] Finished spawning. Total spawned players: {spawnedPlayers.Count}");
     }
-
-    private Vector3 GetSpawnPositionForClient(int index)
+    public Vector3 GetSpawnPositionForClient(int index)
     {
-        // Example: spread horizontally, adjust as needed
-        return new Vector3(-17 + index * 2f, 5, 0);
+        // If custom positions are set and index is valid, use them
+        if (customPositions != null && index < customPositions.Length)
+            return customPositions[index];
+
+        // Otherwise, calculate using basePosition + spacing * index
+        return basePosition + Vector3.Scale(spacing, new Vector3(index, index, index));
     }
 
     private Transform[] GetAllSpawnedPlayerTransforms()

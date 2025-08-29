@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 4796927026498206926}
   - component: {fileID: 3502746235782372200}
   - component: {fileID: 8086462964765553405}
+  - component: {fileID: 5870976228268444686}
   m_Layer: 7
   m_Name: HobbitLevel3Online
   m_TagString: Player
@@ -1110,3 +1111,17 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   playerInput: {fileID: 4470012744603951834}
   playerIdentifier: {fileID: 508006464671513026}
+--- !u!114 &5870976228268444686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8952025840713766288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac25547f0b608d44af6e45029229bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  group: {fileID: 0}
