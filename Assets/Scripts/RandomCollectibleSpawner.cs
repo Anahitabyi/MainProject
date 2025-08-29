@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.Netcode;
 
-public class RandomCollectibleSpawner : NetworkBehaviour
+public class RandomCollectibleSpawner : MonoBehaviour
 {
     [Header("Collectibles")]
     public NetworkObject[] collectibles; // Prefabs with NetworkObject component
@@ -11,10 +11,10 @@ public class RandomCollectibleSpawner : NetworkBehaviour
     public int collectiblesToSpawn = 3;
     public Transform[] spawnPoints;
 
-    public override void OnNetworkSpawn()
+    public void Start()
     {
         // Only the host should spawn
-        if (IsServer)
+        if (NetworkManager.Singleton.IsServer)
         {
             SpawnCollectiblesRandomly();
             Debug.Log("called spawning");

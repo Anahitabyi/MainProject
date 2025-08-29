@@ -67,7 +67,7 @@ public class newBullet : NetworkBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("CameraBounds"))
             return;
 
-        Debug.Log($"[Bullet] Hit: {collision.gameObject.name}");
+//        Debug.Log($"[Bullet] Hit: {collision.gameObject.name}");
         //Debug.Log("collistion detected");
         if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {

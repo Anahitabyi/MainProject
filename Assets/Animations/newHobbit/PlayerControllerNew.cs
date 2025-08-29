@@ -8,10 +8,11 @@ using UnityEngine.InputSystem;
 using Unity.Netcode;
 
 
-public class PlayerControllerNew : NetworkBehaviour, IPlayerInputBlocker, IPlayerController
+public class PlayerControllerNew : NetworkBehaviour, IPlayerController
 {
     public bool isInputBlocked { get; set; } = false;
-    public NetworkVariable<bool> isInputBlockedNet = new NetworkVariable<bool>(false);
+    //public NetworkVariable<bool> isInputBlockedNet { get; } = new NetworkVariable<bool>();
+
     [SerializeField] private ScriptableStats _stats;
     private Rigidbody2D _rb;
     private CapsuleCollider2D _col;
@@ -49,7 +50,18 @@ public class PlayerControllerNew : NetworkBehaviour, IPlayerInputBlocker, IPlaye
     public int attackDamage = 1;
 
     public WeaponUIIndicator weaponUIIndicator;
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
 
+        if (IsOwner)
+        {
+            // Find the local Cinemachine/Camera on THIS client
+            hobbitCamera = Camera.main; 
+            // Or if you use multiple CinemachineCameras:
+            // hobbitCamera = FindObjectOfType<CinemachineCamera>().GetComponent<Camera>();
+        }
+    }
 
     private void Awake()
     {
@@ -61,7 +73,7 @@ public class PlayerControllerNew : NetworkBehaviour, IPlayerInputBlocker, IPlaye
 
     void Update()
     {
-        isInputBlocked = isInputBlockedNet.Value;
+        //isInputBlocked = isInputBlockedNet.Value;
         if (NetworkManager.Singleton != null)
         {
             var netObj = GetComponent<NetworkObject>();
@@ -158,6 +170,11 @@ public class PlayerControllerNew : NetworkBehaviour, IPlayerInputBlocker, IPlaye
     }
     public void Shoot(InputAction.CallbackContext context)
     {
+        if (hobbitCamera == null)
+    {
+        Debug.LogError("[Shoot] hobbitCamera is null – did OnNetworkSpawn fail to assign it?");
+        return;
+    }
         if (isInputBlocked || !context.performed) return;
 
         Attacked?.Invoke();

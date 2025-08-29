@@ -8,6 +8,7 @@ using NUnit.Framework;
 public class meleePlayerMovement : NetworkBehaviour, IPlayerInputBlocker
 {
     public bool isInputBlocked { get; set; } = false;
+    public NetworkVariable<bool> isInputBlockedNet { get; } = new NetworkVariable<bool>();
     public Animator animator;
     bool isFacingRight = true;
 
@@ -209,8 +210,17 @@ public class meleePlayerMovement : NetworkBehaviour, IPlayerInputBlocker
 
     public void PerformAttack()
     {
-        if (isInputBlocked) return;
+        if (!IsOwner) return;
+        // Only the owner can trigger the attack
+        if (NetworkManager.Singleton != null && !GetComponent<NetworkObject>().IsOwner) 
+            return;
 
+        AttackServerRpc();
+    }
+    [ServerRpc]
+    private void AttackServerRpc(ServerRpcParams rpcParams = default)
+    {
+        // Detect enemies locally on the server
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackBoxSize, 0f, enemyLayers);
 
         foreach (Collider2D enemy in hitEnemies)
@@ -221,6 +231,9 @@ public class meleePlayerMovement : NetworkBehaviour, IPlayerInputBlocker
                 enemyHealth.TakeDamage(attackDamage);
             }
         }
+
+        // Notify all clients to play attack animation/effects
+        //AttackClientRpc();
     }
 
     private void flip()

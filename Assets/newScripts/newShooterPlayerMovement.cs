@@ -51,6 +51,18 @@ public class newShooterPlayerMovement : NetworkBehaviour
     Rigidbody2D rb;
     public NetworkVariable<float> magnitude = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if (IsOwner)
+        {
+            // Find the local Cinemachine/Camera on THIS client
+            hobbitCamera = Camera.main; 
+            // Or if you use multiple CinemachineCameras:
+            // hobbitCamera = FindObjectOfType<CinemachineCamera>().GetComponent<Camera>();
+        }
+    }
 
     void Start()
     {
@@ -67,6 +79,8 @@ public class newShooterPlayerMovement : NetworkBehaviour
 
     void Update()
     {
+        if (!IsOwner)
+            return;
         isInputBlocked = isInputBlockedNet.Value;
         if (isInputBlocked)
         {
@@ -123,6 +137,8 @@ public class newShooterPlayerMovement : NetworkBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
+        if (!IsOwner)
+            return;
         if (isInputBlocked) return;
         moveInput = context.ReadValue<Vector2>();  // Get movement input
         //Debug.Log("Move Input: " + moveInput);
@@ -147,6 +163,8 @@ public class newShooterPlayerMovement : NetworkBehaviour
 
     public void OnShoot(InputAction.CallbackContext context){
         if (!context.performed || isInputBlocked) return;
+        if (!IsOwner)
+            return;
 
         // Get mouse position in world space (owner only)
         Vector3 mousePosition = hobbitCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
@@ -184,6 +202,8 @@ public class newShooterPlayerMovement : NetworkBehaviour
     }
     public void OnNewShoot(InputAction.CallbackContext context)
     {
+        if (!IsOwner)
+            return;
         if (!context.performed || isInputBlocked) return;
 
         // Get mouse position in world space (owner only)

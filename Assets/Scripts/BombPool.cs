@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.Netcode;
 
-public class BombPool : MonoBehaviour, INetworkPrefabInstanceHandler
+public class BombPool : NetworkBehaviour, INetworkPrefabInstanceHandler 
 {
     public static BombPool Instance;
 

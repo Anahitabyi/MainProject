@@ -1182,6 +1182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805ea2c0e0944634a893dfef3b836fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bombPrefab: {fileID: 3958259391947041708, guid: 0d092f199245cff4da7ecea7483f96c0, type: 3}
   poolSize: 30
 --- !u!114 &136001501
@@ -108265,6 +108266,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: player1Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 7398702146149938517, guid: 147174d52237951409994b0420153ff1, type: 3}
+      propertyPath: m_TagString
+      value: MainCamera
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -113574,6 +113579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805ea2c0e0944634a893dfef3b836fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bombPrefab: {fileID: 3958259391947041708, guid: 0d092f199245cff4da7ecea7483f96c0, type: 3}
   poolSize: 30
 --- !u!114 &1347468622
@@ -114488,6 +114494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805ea2c0e0944634a893dfef3b836fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bombPrefab: {fileID: 3958259391947041708, guid: 0d092f199245cff4da7ecea7483f96c0, type: 3}
   poolSize: 30
 --- !u!114 &1475563985
@@ -120476,6 +120483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805ea2c0e0944634a893dfef3b836fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bombPrefab: {fileID: 3958259391947041708, guid: 0d092f199245cff4da7ecea7483f96c0, type: 3}
   poolSize: 30
 --- !u!114 &1584717568
@@ -120808,6 +120816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805ea2c0e0944634a893dfef3b836fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bombPrefab: {fileID: 3958259391947041708, guid: 0d092f199245cff4da7ecea7483f96c0, type: 3}
   poolSize: 30
 --- !u!212 &1614605749
@@ -120944,7 +120953,7 @@ MonoBehaviour:
   chunkGenerator: {fileID: 0}
   cinemachiCamera1: {fileID: 0}
   cinemachiCamera2: {fileID: 0}
-  assignedCamera: {fileID: 0}
+  assignedCamera: {fileID: 6041602559342043692}
   basePosition: {x: -17, y: 5, z: 0}
   spacing: {x: 2, y: 0, z: 0}
   customPositions: []
@@ -121624,6 +121633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805ea2c0e0944634a893dfef3b836fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bombPrefab: {fileID: 3958259391947041708, guid: 0d092f199245cff4da7ecea7483f96c0, type: 3}
   poolSize: 30
 --- !u!212 &1716947456
@@ -128877,6 +128887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805ea2c0e0944634a893dfef3b836fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bombPrefab: {fileID: 3958259391947041708, guid: 0d092f199245cff4da7ecea7483f96c0, type: 3}
   poolSize: 30
 --- !u!212 &1804636618
@@ -130759,6 +130770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805ea2c0e0944634a893dfef3b836fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bombPrefab: {fileID: 3958259391947041708, guid: 0d092f199245cff4da7ecea7483f96c0, type: 3}
   poolSize: 30
 --- !u!212 &2097249270
@@ -131632,6 +131644,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: player2Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 1327864990081933079, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4135620339002320958, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.367314
@@ -131686,6 +131702,11 @@ PrefabInstance:
 --- !u!4 &6041602559342043691 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4135620339002320958, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
+  m_PrefabInstance: {fileID: 6041602559342043690}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &6041602559342043692 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1026711825992941632, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
   m_PrefabInstance: {fileID: 6041602559342043690}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6641507485471799106

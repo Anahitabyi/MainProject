@@ -24,17 +24,19 @@ public class Bullet : NetworkBehaviour
         // Ignore CameraBounds
         if (other.gameObject.layer == LayerMask.NameToLayer("CameraBounds"))
             return;
-
+        if (other.CompareTag("Exclude"))
+        return;
         Debug.Log($"[Bullet] Hit: {other.gameObject.name}");
+        
 
         // Impact effect (optional networked)
-        if (impactEffectPrefab != null)
-        {
-            var impact = Instantiate(impactEffectPrefab, transform.position, Quaternion.identity);
-            impact.Spawn();
-            // Optional: auto-despawn impact after 0.5s
-            Destroy(impact.gameObject, 0.5f);
-        }
+            if (impactEffectPrefab != null)
+            {
+                var impact = Instantiate(impactEffectPrefab, transform.position, Quaternion.identity);
+                impact.Spawn();
+                // Optional: auto-despawn impact after 0.5s
+                Destroy(impact.gameObject, 0.5f);
+            }
         if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
             Debug.Log("detected wall");

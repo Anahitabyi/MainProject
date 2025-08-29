@@ -23,7 +23,7 @@ public class PlayerHealth : NetworkBehaviour
     public Rigidbody2D rb;
     public MonoBehaviour movementScriptMono;
 
-    private IPlayerInputBlocker inputBlocker;
+    //private IPlayerInputBlocker inputBlocker;
     private bool isDead = false;
     private bool isInvincible = false;
 
@@ -33,7 +33,7 @@ public class PlayerHealth : NetworkBehaviour
 
     private void Start()
     {
-        inputBlocker = movementScriptMono as IPlayerInputBlocker;
+        //inputBlocker = movementScriptMono as IPlayerInputBlocker;
 
         if (IsServer && playerStatsManager.Instance != null)
         {
@@ -130,6 +130,10 @@ public class PlayerHealth : NetworkBehaviour
     {
         isDead = true;
         isInvincible = true;
+        // if (IsServer && inputBlocker != null)
+
+        // if (IsServer && inputBlocker != null)
+        // inputBlocker.isInputBlockedNet.Value = true;
 
         DieClientRpc(final);
 
@@ -143,12 +147,12 @@ public class PlayerHealth : NetworkBehaviour
     private void DieClientRpc(bool final)
     {
         animator?.SetTrigger("Die");
-        rb.linearVelocity = Vector2.zero;
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        rb.simulated = false;
-        playerCollider.enabled = false;
+        // rb.linearVelocity = Vector2.zero;
+        // rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        // rb.simulated = false;
+        // playerCollider.enabled = false;
 
-        if (inputBlocker != null) inputBlocker.isInputBlocked = true;
+        //if (inputBlocker != null) inputBlocker.isInputBlocked = true;
         isDead = true;
         isInvincible = true;
     }
@@ -165,15 +169,17 @@ public class PlayerHealth : NetworkBehaviour
 
     private void Respawn()
     {
-        currentHealth.Value = maxHealth;
-        playerCollider.enabled = true;
-        rb.simulated = true;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        // currentHealth.Value = maxHealth;
+        // playerCollider.enabled = true;
+        // rb.simulated = true;
+        // rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        if (inputBlocker != null) inputBlocker.isInputBlocked = false;
+        // if (IsServer && inputBlocker != null)
+        //     inputBlocker.isInputBlockedNet.Value = false;
 
         isDead = false;
         isInvincible = false;
+        SetHealth(maxHealth);
 
         playerStatsManager.Instance?.SaveFromPlayer(this);
     }
