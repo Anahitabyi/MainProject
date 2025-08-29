@@ -1,15 +1,14 @@
+using System;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 using Unity.Cinemachine;
-using System;
 
 public class PlayerSpawnerTest : NetworkBehaviour
 {
-    [Header("Online Prefabs (With Netcode)")]
-    public NetworkObject shooterPrefabOnline;
-    public NetworkObject meleePrefabOnline;
+    [Header("Prefabs (index matches CharacterSelectManager characterId)")]
+    [SerializeField] private GameObject[] characters;
 
     [Header("Offline Prefabs (No Netcode Components)")]
     public GameObject shooterPrefabOffline;
@@ -17,10 +16,10 @@ public class PlayerSpawnerTest : NetworkBehaviour
 
     [Header("Chunk Manager")]
     public ChunkGenerator chunkGenerator;
+
     [Header("Cinemachine")]
     public CinemachineCamera cinemachiCamera1;
     public CinemachineCamera cinemachiCamera2;
-    [SerializeField] private GameObject[] characters;
 
     [Header("Mode")]
     public bool isOfflineMode = false; // Toggle in inspector for local play
@@ -28,92 +27,114 @@ public class PlayerSpawnerTest : NetworkBehaviour
 
     private void Start()
     {
+        Debug.Log($"[Spawner] Starting PlayerSpawnerTest. OfflineMode={isOfflineMode}");
+
         if (isOfflineMode)
         {
             SpawnOfflinePlayers();
         }
         else
         {
-            // Online: listen for connection events
-            NetworkManager.Singleton.OnClientConnectedCallback += SpawnOnlinePlayer;
+            if (!IsServer)
+            {
+                Debug.Log("[Spawner] Not the server. Online spawning disabled for this client.");
+                return;
+            }
+
+            // Spawn immediately on level load
+            SpawnAllSelectedPlayers();
+
+            // Listen for any future client connections (optional)
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+            Debug.Log("[Spawner] Server ready. Spawned players and listening for future connections.");
         }
     }
 
     // ------------------- Offline -------------------
     private void SpawnOfflinePlayers()
     {
-        // Spawn Shooter at top position
-        var shooterGO = Instantiate(shooterPrefabOffline, new Vector3(-17, 7, 0), Quaternion.identity);
-        // Spawn Melee at lower position
-        var meleeGO = Instantiate(meleePrefabOffline, new Vector3(-17, 5, 0), Quaternion.identity);
+        Debug.Log("[Spawner] Spawning offline players...");
 
+        var shooterGO = Instantiate(shooterPrefabOffline, new Vector3(-17, 7, 0), Quaternion.identity);
+        Debug.Log($"[Spawner] Spawned offline Shooter: {shooterGO.name} at {shooterGO.transform.position}");
+
+        var meleeGO = Instantiate(meleePrefabOffline, new Vector3(-17, 5, 0), Quaternion.identity);
+        Debug.Log($"[Spawner] Spawned offline Melee: {meleeGO.name} at {meleeGO.transform.position}");
 
         // Assign offline keyboard schemes
-        var shooterInput = shooterGO.GetComponent<PlayerInput>();
-        if (shooterInput != null)
-            shooterInput.SwitchCurrentControlScheme("KeyboardLeft", Keyboard.current);
+        shooterGO.GetComponent<PlayerInput>()?.SwitchCurrentControlScheme("KeyboardLeft", Keyboard.current);
+        meleeGO.GetComponent<PlayerInput>()?.SwitchCurrentControlScheme("KeyboardRight", Keyboard.current);
 
-        var meleeInput = meleeGO.GetComponent<PlayerInput>();
-        if (meleeInput != null)
-            meleeInput.SwitchCurrentControlScheme("KeyboardRight", Keyboard.current);
-
-        // Assign players to ChunkGenerator
+        // Assign to ChunkGenerator
         if (chunkGenerator != null)
-        {
             chunkGenerator.players = new Transform[] { shooterGO.transform, meleeGO.transform };
-        }
-        // Assign tracking targets for Cinemachine
-        // if (cinemachiCamera1 != null)
-        //     cinemachiCamera1.TrackingTarget = shooterGO.transform;
-
-        // if (cinemachiCamera2 != null)
-        //     cinemachiCamera2.TrackingTarget = meleeGO.transform;
-
-
     }
 
     // ------------------- Online -------------------
-    private void SpawnOnlinePlayer(ulong clientId)
+    private void OnClientConnected(ulong clientId)
+    {
+        Debug.Log($"[Spawner] Client connected: {clientId}. Spawning all selected players...");
+        SpawnAllSelectedPlayers();
+    }
+
+    public void SpawnAllSelectedPlayers()
     {
         if (!IsServer) return;
+        if (CharacterSelectManager.Instance == null)
+        {
+            Debug.LogWarning("[Spawner] CharacterSelectManager.Instance is null! Cannot spawn players.");
+            return;
+        }
 
-        // Decide which prefab to spawn
-        NetworkObject prefabToSpawn = (clientId == NetworkManager.Singleton.LocalClientId)
-            ? shooterPrefabOnline
-            : meleePrefabOnline;
+        Debug.Log($"[Spawner] Spawning {CharacterSelectManager.Instance.players.Count} selected players...");
 
-        // Instantiate and spawn the player prefab
-        var playerInstance = Instantiate(prefabToSpawn, new Vector3(-17, 5, 0), Quaternion.identity);
-        playerInstance.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
+        List<GameObject> spawnedPlayers = new List<GameObject>();
+
+        for (int i = 0; i < CharacterSelectManager.Instance.players.Count; i++)
+        {
+            var player = CharacterSelectManager.Instance.players[i];
+
+            if (player.characterId < 0 || player.characterId >= characters.Length)
+            {
+                Debug.LogWarning($"[Spawner] Invalid characterId {player.characterId} for client {player.clientId}");
+                continue;
+            }
+
+            Vector3 spawnPos = GetSpawnPositionForClient(i);
+            var prefabToSpawn = characters[player.characterId];
+            Debug.Log($"[Spawner] Instantiating prefab '{prefabToSpawn.name}' for client {player.clientId} at {spawnPos}");
+
+            var playerInstance = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
+            var netObj = playerInstance.GetComponent<NetworkObject>();
+
+            if (netObj != null)
+            {
+                netObj.SpawnAsPlayerObject(player.clientId);
+                Debug.Log($"[Spawner] Spawned NetworkObject for client {player.clientId}: {playerInstance.name}");
+            }
+            else
+            {
+                Debug.LogWarning($"[Spawner] No NetworkObject found on prefab {prefabToSpawn.name}! It won't be networked.");
+            }
+
+            spawnedPlayers.Add(playerInstance);
+        }
 
         // Update ChunkGenerator
         if (chunkGenerator != null)
             chunkGenerator.players = GetAllSpawnedPlayerTransforms();
 
-        var currentPlayers = GetAllSpawnedPlayers();
-        OnPlayerUpdated?.Invoke(currentPlayers);
-        Debug.Log($"[PlayerSpawner] Invoked OnPlayerUpdated with {currentPlayers.Length} players.");
-
-
-        // Example: assign tracking target to cameras
-        // if (clientId == NetworkManager.Singleton.LocalClientId && cinemachiCamera1 != null)
-        //     cinemachiCamera1.TrackingTarget = playerInstance.transform;
-        // else if (cinemachiCamera2 != null)
-        //     cinemachiCamera2.TrackingTarget = playerInstance.transform;
+        // Notify listeners
+        OnPlayerUpdated?.Invoke(spawnedPlayers.ToArray());
+        Debug.Log($"[Spawner] Finished spawning. Total spawned players: {spawnedPlayers.Count}");
     }
 
-    // ------------------- Helper -------------------
-    private GameObject[] GetAllSpawnedPlayers()
+    private Vector3 GetSpawnPositionForClient(int index)
     {
-        var playersList = new List<GameObject>();
-        foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
-        {
-            var playerObj = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId);
-            if (playerObj != null)
-                playersList.Add(playerObj.gameObject);
-        }
-        return playersList.ToArray();
+        // Example: spread horizontally, adjust as needed
+        return new Vector3(-17 + index * 2f, 5, 0);
     }
+
     private Transform[] GetAllSpawnedPlayerTransforms()
     {
         var playersList = new List<Transform>();
@@ -121,10 +142,11 @@ public class PlayerSpawnerTest : NetworkBehaviour
         {
             var playerObj = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId);
             if (playerObj != null)
+            {
                 playersList.Add(playerObj.transform);
+                Debug.Log($"[Spawner] Added player transform for client {clientId}: {playerObj.name}");
+            }
         }
         return playersList.ToArray();
     }
-    
-
 }

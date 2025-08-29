@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class enemySpawner : NetworkBehaviour
+public class enemySpawner : MonoBehaviour
 {
     [Tooltip("Assign each patrol pair object (with PointA and PointB inside)")]
     public GameObject[] patrolPairs;
@@ -9,18 +9,18 @@ public class enemySpawner : NetworkBehaviour
     [Tooltip("The enemy prefab to spawn (must have NetworkObject)")]
     public NetworkObject enemyPrefab;
 
-    public override void OnNetworkSpawn()
+    void Start()
     {
-        base.OnNetworkSpawn();
+        Debug.Log("[Spawner] Start called.");
 
-        // Only spawn on the server/host
-        if (!IsServer)
+        // Only spawn on the server
+        if (!NetworkManager.Singleton.IsServer)
         {
             Debug.Log("[Spawner] Not server, skipping spawn.");
             return;
         }
 
-        // If loading from save, skip
+        // Skip if loading from save
         if (GameStateFlags.IsLoadingFromSave)
         {
             Debug.Log("[Spawner] Skipping enemy spawn because we're loading from save.");
