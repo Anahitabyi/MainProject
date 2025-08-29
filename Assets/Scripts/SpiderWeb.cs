@@ -1,13 +1,14 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SpiderWeb : MonoBehaviour
+public class SpiderWeb : NetworkBehaviour
 {
-    private bool hoodedPlayerInContact = false; // Only hooded can destroy it
+    private bool hoodedPlayerInContact = false;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        PlayerIdentifier playerId = collision.collider.GetComponentInParent<PlayerIdentifier>(); // Player identifier to check if the player is hooded
+        PlayerIdentifier playerId = collision.collider.GetComponentInParent<PlayerIdentifier>();
         if (playerId == null) return;
 
         if (playerId.playerType == PlayerIdentifier.PlayerType.Hooded)
@@ -31,10 +32,26 @@ public class SpiderWeb : MonoBehaviour
 
     private void Update()
     {
-        if (hoodedPlayerInContact && Keyboard.current.spaceKey.wasPressedThisFrame) // If hooded attacks the web, it gets destroyed
+        // Any client whose Hooded player is in contact can request destruction
+        if (hoodedPlayerInContact && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            Debug.Log("Hooded player pressed space near web — destroying web!");
-            Destroy(gameObject);
+            DestroyWebServerRpc();
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void DestroyWebServerRpc(ServerRpcParams rpcParams = default)
+    {
+        Debug.Log("Web destroyed on server by Hooded player");
+
+        NetworkObject netObj = GetComponent<NetworkObject>();
+        if (netObj != null)
+        {
+            netObj.Despawn(); // synced destruction across all clients
+        }
+        else
+        {
+            Destroy(gameObject); // fallback
         }
     }
 }

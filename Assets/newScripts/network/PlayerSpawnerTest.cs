@@ -20,8 +20,17 @@ public class PlayerSpawnerTest : NetworkBehaviour
     [Header("Cinemachine")]
     public CinemachineCamera cinemachiCamera1;
     public CinemachineCamera cinemachiCamera2;
+    public Camera assignedCamera;
 
+    //[Header("Mode")]
+    //public bool isOfflineMode = false; // Toggle in inspector for local play
     public static event Action<GameObject[]> OnPlayerUpdated;
+
+    [Header("Spawn Settings")]
+    public Vector3 basePosition = new Vector3(-17, 5, 0); // starting point
+    public Vector3 spacing = new Vector3(2f, 0, 0);       // offset per player
+    public Vector3[] customPositions;                      // optional full list
+
 
     private void Start()
     {
@@ -41,10 +50,10 @@ public class PlayerSpawnerTest : NetworkBehaviour
                 return;
             }
 
-            // Online spawning
+            // Spawn immediately on level load
             SpawnAllSelectedPlayers();
 
-            // Listen for future clients
+            // Listen for any future client connections (optional)
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             Debug.Log("[Spawner] Server ready. Spawned players and listening for future connections.");
         }
@@ -83,7 +92,6 @@ public class PlayerSpawnerTest : NetworkBehaviour
         // --- Notify listeners about spawned players ---
         OnPlayerUpdated?.Invoke(spawnedPlayers.ToArray());
     }
-
 
     // ------------------- Online -------------------
     private void OnClientConnected(ulong clientId)
@@ -131,6 +139,22 @@ public class PlayerSpawnerTest : NetworkBehaviour
             {
                 Debug.LogWarning($"[Spawner] No NetworkObject found on prefab {prefabToSpawn.name}! It won't be networked.");
             }
+            var movementScript = playerInstance.GetComponent<playerMovement>();
+            if (movementScript != null)
+            {
+                movementScript.hobbitCamera = assignedCamera;
+            }
+            var movementScript2 = playerInstance.GetComponent<PlayerControllerNew>();
+            if (movementScript2 != null)
+            {
+                movementScript2.hobbitCamera = assignedCamera;
+            }
+            var movementScript3 = playerInstance.GetComponent<newShooterPlayerMovement>();
+            if (movementScript3 != null)
+            {
+                movementScript3.hobbitCamera = assignedCamera;
+            }
+
 
             spawnedPlayers.Add(playerInstance);
         }
@@ -139,9 +163,14 @@ public class PlayerSpawnerTest : NetworkBehaviour
         if (chunkGenerator != null)
             chunkGenerator.players = GetAllSpawnedPlayerTransforms();
 
+        // Assign Boss + Shooter Device targets
+        AssignBossAndShooterTargets(GetAllSpawnedPlayerTransforms());
+
         // Notify listeners
         OnPlayerUpdated?.Invoke(spawnedPlayers.ToArray());
         Debug.Log($"[Spawner] Finished spawning. Total spawned players: {spawnedPlayers.Count}");
+
+        
     }
     private void DespawnAllPlayers()
     {
@@ -157,12 +186,14 @@ public class PlayerSpawnerTest : NetworkBehaviour
             }
         }
     }
-
-
-    private Vector3 GetSpawnPositionForClient(int index)
+    public Vector3 GetSpawnPositionForClient(int index)
     {
-        // Example: spread horizontally, adjust as needed
-        return new Vector3(-17 + index * 2f, 5, 0);
+        // If custom positions are set and index is valid, use them
+        if (customPositions != null && index < customPositions.Length)
+            return customPositions[index];
+
+        // Otherwise, calculate using basePosition + spacing * index
+        return basePosition + Vector3.Scale(spacing, new Vector3(index, index, index));
     }
 
     private Transform[] GetAllSpawnedPlayerTransforms()
@@ -179,4 +210,35 @@ public class PlayerSpawnerTest : NetworkBehaviour
         }
         return playersList.ToArray();
     }
+    private void AssignBossAndShooterTargets(Transform[] playerTransforms)
+    {
+        // Look for BossEnemy
+        var boss = GameObject.FindFirstObjectByType<BossEnemy>();
+
+
+        if (boss != null)
+        {
+            if (playerTransforms.Length > 0) boss.player1 = playerTransforms[0];
+            if (playerTransforms.Length > 1) boss.player2 = playerTransforms[1];
+            Debug.Log("[Spawner] Assigned players to BossEnemy.");
+        }
+        else
+        {
+            Debug.LogWarning("[Spawner] No BossEnemy found in scene.");
+        }
+
+        // Look for BossShooterDevice
+        var shooter = GameObject.FindFirstObjectByType<BossShooterDevice>();
+        if (shooter != null)
+        {
+            if (playerTransforms.Length > 0) shooter.player1 = playerTransforms[0];
+            if (playerTransforms.Length > 1) shooter.player2 = playerTransforms[1];
+            Debug.Log("[Spawner] Assigned players to BossShooterDevice.");
+        }
+        else
+        {
+            Debug.LogWarning("[Spawner] No BossShooterDevice found in scene.");
+        }
+}
+
 }
