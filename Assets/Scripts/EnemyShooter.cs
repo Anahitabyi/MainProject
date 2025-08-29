@@ -11,6 +11,8 @@ public class EnemyShooter : NetworkBehaviour, IPooledDeathHandler
     public Vector2 viewBoxSize = new Vector2(10f, 5f);
     public float patrolSpeed = 3f;
     public float shootCooldown = 2f;
+    public Vector2 direction;
+    public float bombSpeed = 20f;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -20,6 +22,7 @@ public class EnemyShooter : NetworkBehaviour, IPooledDeathHandler
     private bool isDead = false;
     private GenerateID uniqueID;
     private EnemyHealth health;
+    
 
     private void OnEnable()
     {
@@ -104,15 +107,28 @@ public class EnemyShooter : NetworkBehaviour, IPooledDeathHandler
 
     void Shoot()
     {
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-        Rigidbody2D rbBullet = bullet.GetComponent<Rigidbody2D>();
+        if (!IsServer) return;
 
-        if (rbBullet && target != null)
+        // Spawn at bulletSpawnPoint, not enemy pivot
+        var bombNetObj = BombPool.Instance.Instantiate(OwnerClientId, bulletSpawnPoint.position, Quaternion.identity);
+        if (bombNetObj == null)
         {
-            Vector2 dir = (target.position - bulletSpawnPoint.position).normalized;
-            rbBullet.linearVelocity = dir * 7f;
+            Debug.LogWarning("BombPool returned null!");
+            return;
+        }
+
+        // Spawn on network
+        bombNetObj.GetComponent<NetworkObject>().Spawn();
+
+        Bomb bomb = bombNetObj.GetComponent<Bomb>();
+        if (bomb != null)
+        {
+            Vector2 dir = GetDirectionVector();
+            bomb.SetMovement(dir, bombSpeed);
+            Debug.Log("Bomb spawned and moving");
         }
     }
+
 
     Transform FindClosestVisiblePlayer()
     {
@@ -226,6 +242,11 @@ public class EnemyShooter : NetworkBehaviour, IPooledDeathHandler
 
     return false;
 }
-
-
+    private Vector2 GetDirectionVector()
+    { 
+        if (target != null)
+            return (target.position - bulletSpawnPoint.position).normalized;
+        else
+            return (currentPoint.position - transform.position).normalized; // fallback
     }
+}
