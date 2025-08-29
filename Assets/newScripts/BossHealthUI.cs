@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Netcode;
 
 public class BossHealthUI : MonoBehaviour
 {
     [Header("References")]
-    public BossEnemy boss;       // مرجع به اسکریپت BossEnemy
-    public Slider healthSlider;  // اسلایدر برای نمایش سلامتی
+    public BossEnemy boss;       // Reference to BossEnemy
+    public Slider healthSlider;  // UI slider
 
     void Start()
     {
@@ -13,14 +14,25 @@ public class BossHealthUI : MonoBehaviour
         {
             healthSlider.maxValue = boss.maxHealth;
             healthSlider.value = boss.maxHealth;
+
+            // Subscribe to networked health changes
+            boss.currentHealth.OnValueChanged += OnHealthChanged;
         }
     }
 
-    void Update()
+    private void OnHealthChanged(float previous, float current)
     {
-        if (boss != null && healthSlider != null)
+        if (healthSlider != null)
         {
-            healthSlider.value = Mathf.Clamp(boss.GetCurrentHealth(), 0, boss.maxHealth);
+            healthSlider.value = Mathf.Clamp(current, 0, boss.maxHealth);
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (boss != null)
+        {
+            boss.currentHealth.OnValueChanged -= OnHealthChanged;
         }
     }
 }
