@@ -11,6 +11,7 @@ using Unity.Netcode;
 public class PlayerControllerNew2 : NetworkBehaviour, IPlayerInputBlocker, IPlayerController
 {
     public bool isInputBlocked { get; set; } = false;
+    public NetworkVariable<bool> isInputBlockedNet = new NetworkVariable<bool>(false);
     [SerializeField] private ScriptableStats _stats;
     private Rigidbody2D _rb;
     private CapsuleCollider2D _col;
@@ -47,6 +48,7 @@ public class PlayerControllerNew2 : NetworkBehaviour, IPlayerInputBlocker, IPlay
 
     void Update()
     {
+        isInputBlocked = isInputBlockedNet.Value;
         if (NetworkManager.Singleton != null)
         {
             var netObj = GetComponent<NetworkObject>();
