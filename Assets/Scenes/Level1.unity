@@ -886,6 +886,9 @@ MonoBehaviour:
   chunkGenerator: {fileID: 756020905}
   cinemachiCamera1: {fileID: 0}
   cinemachiCamera2: {fileID: 0}
+  characters:
+  - {fileID: 6713231506421959016, guid: 3d3dc193a8b53ed4d919b346814a4d72, type: 3}
+  - {fileID: 8746070206373877254, guid: 2469af7ef6aef0948b0b0a92cadbac6a, type: 3}
   isOfflineMode: 0
 --- !u!1 &601116191
 GameObject:

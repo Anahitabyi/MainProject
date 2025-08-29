@@ -4,11 +4,6 @@ using Unity.Netcode;
 
 public class GameModeSelector : MonoBehaviour
 {
-    // Assign these scene names in the Inspector
-    [Header("Scene Names")]
-    [SerializeField] private string mainMenuScene = "MainMenu";
-    [SerializeField] private string signupScene = "Signup";
-
     public void ChooseLocalCoop()
     {
         Debug.Log("Starting Local Coop...");
@@ -20,14 +15,29 @@ public class GameModeSelector : MonoBehaviour
         }
 
         // Load the main menu scene
-        SceneManager.LoadScene(mainMenuScene);
+        SceneManager.LoadScene("MainMenu");
     }
 
-    public void ChooseOnline()
+    public void HostGame()
     {
-        Debug.Log("Going to Signup...");
+        if (!NetworkManager.Singleton.IsListening)
+        {
+            NetworkManager.Singleton.StartHost();
+        }
 
-        // Go to signup scene first
-        SceneManager.LoadScene(signupScene);
+        NetworkManager.Singleton.SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
+    }
+
+    public void JoinGame()
+    {
+        if (!NetworkManager.Singleton.IsListening)
+        {
+            NetworkManager.Singleton.StartClient();
+        }
+    }
+
+    public void BackButton()
+    {
+        SceneManager.LoadScene("Signup");
     }
 }
