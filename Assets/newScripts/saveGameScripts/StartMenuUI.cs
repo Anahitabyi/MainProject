@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
-public class StartMenuUI : MonoBehaviour
+public class StartMenuUI : NetworkBehaviour
 {
     public GameObject startOptionsPanel;
     public string firstLevelSceneName = "Level1";
@@ -12,12 +13,34 @@ public class StartMenuUI : MonoBehaviour
 
     private void Start()
     {
-        startOptionsPanel.SetActive(false);
+        if (startOptionsPanel != null)
+            startOptionsPanel.SetActive(false);
     }
 
+    // === Called by UI Button ===
     public void OnStartButtonPressed()
     {
-        startOptionsPanel.SetActive(true);
+        if (IsHost)
+        {
+            // Host tells everyone to show the start options panel
+            ShowStartOptionsClientRpc();
+
+            if (startButton != null)
+                startButton.SetActive(false);
+
+            if (otherButton1 != null)
+                otherButton1.SetActive(false);
+
+            if (otherButton2 != null)
+                otherButton2.SetActive(false);
+        }
+    }
+
+    [ClientRpc]
+    private void ShowStartOptionsClientRpc()
+    {
+        if (startOptionsPanel != null)
+            startOptionsPanel.SetActive(true);
 
         if (startButton != null)
             startButton.SetActive(false);
@@ -29,37 +52,48 @@ public class StartMenuUI : MonoBehaviour
             otherButton2.SetActive(false);
     }
 
+    // === Called by UI Button ===
     public void OnNewGamePressed()
     {
-        // Reset all relevant data
-        playerStatsManager.Instance.ResetAllStats();
-
-        if (SaveTracker.Instance != null)
+        if (IsHost)
         {
-            SaveTracker.Instance.collectedIDs.Clear();
-            SaveTracker.Instance.defeatedEnemyIDs.Clear();
-            SaveTracker.Instance.ClearChunks(); // ✅ Important!
+            ResetGameData();
+            // Load the scene for all players
+            NetworkManager.SceneManager.LoadScene(firstLevelSceneName, LoadSceneMode.Single);
         }
-
-        SaveSystem.DeleteSave();
-        SceneManager.LoadScene(firstLevelSceneName);
     }
 
+    // === Called by UI Button ===
     public void OnLoadGamePressed()
     {
-        if (SaveSystem.SaveExists())
+        if (IsHost)
         {
-            GameSaveController.Instance.LoadFromFile();
-        }
-        else
-        {
-            Debug.Log("No saved game found.");
+            if (SaveSystem.SaveExists())
+            {
+                GameSaveController.Instance.LoadFromFile();
+                NetworkManager.SceneManager.LoadScene(firstLevelSceneName, LoadSceneMode.Single);
+            }
+            else
+            {
+                Debug.Log("No saved game found.");
+            }
         }
     }
 
+    // === Called by UI Button ===
     public void OnBackToStartScreen()
     {
-        startOptionsPanel.SetActive(false);
+        if (IsHost)
+        {
+            BackToStartScreenClientRpc();
+        }
+    }
+
+    [ClientRpc]
+    private void BackToStartScreenClientRpc()
+    {
+        if (startOptionsPanel != null)
+            startOptionsPanel.SetActive(false);
 
         if (startButton != null)
             startButton.SetActive(true);
@@ -69,5 +103,20 @@ public class StartMenuUI : MonoBehaviour
 
         if (otherButton2 != null)
             otherButton2.SetActive(true);
+    }
+
+    private void ResetGameData()
+    {
+        if (playerStatsManager.Instance != null)
+            playerStatsManager.Instance.ResetAllStats();
+
+        if (SaveTracker.Instance != null)
+        {
+            SaveTracker.Instance.collectedIDs.Clear();
+            SaveTracker.Instance.defeatedEnemyIDs.Clear();
+            SaveTracker.Instance.ClearChunks();
+        }
+
+        SaveSystem.DeleteSave();
     }
 }

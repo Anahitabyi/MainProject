@@ -43,17 +43,14 @@ public class BombPool : MonoBehaviour, INetworkPrefabInstanceHandler
         bombGO.transform.position = position;
         bombGO.transform.rotation = rotation;
 
-        bombGO.SetActive(true); // make sure it's active before spawning
-
         NetworkObject netObj = bombGO.GetComponent<NetworkObject>();
         if (netObj == null)
             netObj = bombGO.AddComponent<NetworkObject>();
-
+        bombGO.SetActive(true);
         netObj.Spawn(); // Server owned
 
         return netObj;
     }
-
 
     // Called by Netcode when a prefab is spawned with ownership (client-owned)
     public NetworkObject Instantiate(ulong ownerClientId, Vector3 position, Quaternion rotation)

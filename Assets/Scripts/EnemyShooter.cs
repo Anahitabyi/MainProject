@@ -108,16 +108,14 @@ public class EnemyShooter : NetworkBehaviour, IPooledDeathHandler
     void Shoot()
     {
         if (!IsServer) return;
-
-        // Spawn at bulletSpawnPoint, not enemy pivot
+        
         var bombNetObj = BombPool.Instance.Instantiate(OwnerClientId, bulletSpawnPoint.position, Quaternion.identity);
         if (bombNetObj == null)
         {
             Debug.LogWarning("BombPool returned null!");
             return;
         }
-
-        // Spawn on network
+        
         bombNetObj.GetComponent<NetworkObject>().Spawn();
 
         Bomb bomb = bombNetObj.GetComponent<Bomb>();

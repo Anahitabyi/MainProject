@@ -99137,7 +99137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &699302520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120812,13 +120812,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  characters: []
+  characters:
+  - {fileID: 2595059178286628852, guid: 936a2b3cb56d9e9478404d62ba76cf09, type: 3}
+  - {fileID: 7284990156239117502, guid: 519c931ca892e144bab6bb9aec206097, type: 3}
   shooterPrefabOffline: {fileID: 472219826583142136, guid: 640a04279ac69a14bbb08a9ddd3f9464, type: 3}
   meleePrefabOffline: {fileID: 4426039281350244958, guid: dcb0bf09cfa247f4b899287130c07c0b, type: 3}
   chunkGenerator: {fileID: 0}
   cinemachiCamera1: {fileID: 0}
   cinemachiCamera2: {fileID: 0}
-  isOfflineMode: 0
 --- !u!114 &1635515760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131151,6 +131152,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CursorManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7115861343817166684, guid: 365f457094b88874e894023f0817f1be, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -131429,6 +131434,10 @@ PrefabInstance:
     - target: {fileID: 920957555773016487, guid: 4cd89458f00df474eb38246730d68262, type: 3}
       propertyPath: m_Name
       value: NetworkManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 920957555773016487, guid: 4cd89458f00df474eb38246730d68262, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7281412287941361780, guid: 4cd89458f00df474eb38246730d68262, type: 3}
       propertyPath: m_LocalPosition.x

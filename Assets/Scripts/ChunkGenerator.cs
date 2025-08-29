@@ -116,7 +116,7 @@ public class ChunkGenerator : NetworkBehaviour
         }
     }
 
-    GameObject GenerateChunk()
+    public GameObject GenerateChunk()
     {
         float positionX = 0f;
         if (activeChunks.Count > 0)

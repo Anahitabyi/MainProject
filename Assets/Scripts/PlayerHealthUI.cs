@@ -3,50 +3,48 @@ using UnityEngine.UI;
 
 public class PlayerHealthUI : MonoBehaviour
 {
-    public int playerId = 1;  // Set in Inspector: 1 for Player 1, 2 for Player 2
-    public Slider healthSlider; // Set in Inspector
+    public int playerId = 1;
+    public Slider healthSlider;
 
     private PlayerHealth playerHealth;
 
-    void Start()
+    void Update()
     {
-        PlayerHealth[] players = FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
-
-        // Find the correct PlayerHealth instance by ID
-        foreach (PlayerHealth ph in players)
+        // Lazy init: keep trying until we find the right player
+        if (playerHealth == null)
         {
-            if (ph.playerId == playerId)
+            PlayerHealth[] players = FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
+            foreach (PlayerHealth ph in players)
             {
-                playerHealth = ph;
-                break;
-            }
-        }
+                if (ph.playerId == playerId)
+                {
+                    playerHealth = ph;
 
-        if (playerHealth != null)
-        {
-            playerHealth.OnHealthChanged += UpdateSlider;
-            UpdateSlider(playerHealth.currentHealth.Value, playerHealth.maxHealth);
+                    // subscribe once
+                    playerHealth.currentHealth.OnValueChanged += OnHealthValueChanged;
+
+                    // initialize immediately
+                    healthSlider.maxValue = playerHealth.maxHealth;
+                    healthSlider.value = playerHealth.currentHealth.Value;
+                    break;
+                }
+            }
         }
         else
         {
-            Debug.LogWarning("No PlayerHealth found with ID: " + playerId);
+            // Safety net: keep UI in sync even if event missed
+            healthSlider.value = playerHealth.currentHealth.Value;
         }
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         if (playerHealth != null)
-        {
-            playerHealth.OnHealthChanged -= UpdateSlider;
-        }
+            playerHealth.currentHealth.OnValueChanged -= OnHealthValueChanged;
     }
 
-    private void UpdateSlider(int current, int max)
+    private void OnHealthValueChanged(int oldVal, int newVal)
     {
-        if (healthSlider != null)
-        {
-            healthSlider.maxValue = max;
-            healthSlider.value = current;
-        }
+        healthSlider.value = newVal;
     }
 }

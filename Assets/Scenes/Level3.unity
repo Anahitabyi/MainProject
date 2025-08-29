@@ -16655,12 +16655,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  shooterPrefabOnline: {fileID: 6644306293676413064, guid: cf97e60f0b393574695186c44ae98fec, type: 3}
-  meleePrefabOnline: {fileID: 7356120804105988902, guid: 8b1c1165ece46844b8492280d5425c6d, type: 3}
+  characters:
+  - {fileID: 8952025840713766288, guid: 8b1c1165ece46844b8492280d5425c6d, type: 3}
+  - {fileID: 4601631709164929054, guid: cf97e60f0b393574695186c44ae98fec, type: 3}
   shooterPrefabOffline: {fileID: 472219826583142136, guid: 640a04279ac69a14bbb08a9ddd3f9464, type: 3}
   meleePrefabOffline: {fileID: 4426039281350244958, guid: dcb0bf09cfa247f4b899287130c07c0b, type: 3}
   chunkGenerator: {fileID: 0}
-  isOfflineMode: 0
+  cinemachiCamera1: {fileID: 0}
+  cinemachiCamera2: {fileID: 0}
 --- !u!114 &313994036
 MonoBehaviour:
   m_ObjectHideFlags: 0

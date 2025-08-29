@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
+using Unity.Netcode;
 
 public class CastleDoorOpen : MonoBehaviour
 {
@@ -101,7 +102,7 @@ public class CastleDoorOpen : MonoBehaviour
         }
 
         Debug.Log("Fade complete. Loading scene: " + sceneName);
-        SceneManager.LoadScene(sceneName);
+        NetworkManager.Singleton.SceneManager.LoadScene("Level2", LoadSceneMode.Single);
     }
 
     private IEnumerator ShowMessage(string message, float duration)

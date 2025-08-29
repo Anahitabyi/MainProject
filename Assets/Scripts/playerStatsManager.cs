@@ -72,6 +72,7 @@ public class playerStatsManager : NetworkBehaviour
         player1Stats = new PlayerStats();
         player2Stats = new PlayerStats();
     }
+    
 
     [System.Serializable]
     public class PlayerPositionsData

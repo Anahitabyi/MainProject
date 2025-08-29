@@ -3,7 +3,7 @@ using TMPro;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 
-public class NetworkedLoseMenu : NetworkBehaviour
+public class LoseMenu : NetworkBehaviour
 {
     public TMP_Text[] options; // assign in Inspector
     private int selectedIndex = 0;
@@ -68,6 +68,7 @@ public class NetworkedLoseMenu : NetworkBehaviour
         else if (index == 0)
         {
             Debug.Log("Restart selected - reload scene for everyone");
+            playerStatsManager.Instance.ResetAllStats();
             NetworkManager.Singleton.SceneManager.LoadScene("Level1", LoadSceneMode.Single);
         }
     }
