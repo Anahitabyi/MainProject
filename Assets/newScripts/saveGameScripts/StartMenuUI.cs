@@ -16,8 +16,7 @@ public class StartMenuUI : NetworkBehaviour
         if (startOptionsPanel != null)
             startOptionsPanel.SetActive(false);
     }
-
-    // === Called by UI Button ===
+    
     public void OnStartButtonPressed()
     {
         if (IsHost)
@@ -51,8 +50,7 @@ public class StartMenuUI : NetworkBehaviour
         if (otherButton2 != null)
             otherButton2.SetActive(false);
     }
-
-    // === Called by UI Button ===
+    
     public void OnNewGamePressed()
     {
         if (IsHost)
