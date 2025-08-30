@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -9075128787521978426, guid: 996c75c6876dd714ab9b0a0c0407814b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 149018903069247417, guid: 996c75c6876dd714ab9b0a0c0407814b, type: 3}
       propertyPath: m_Name
       value: Collectible Variant 1 Variant 1
@@ -232,6 +236,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3371933196019909841, guid: 996c75c6876dd714ab9b0a0c0407814b, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 975023016
+      objectReference: {fileID: 0}
     - target: {fileID: 4740316154680502053, guid: 996c75c6876dd714ab9b0a0c0407814b, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -256,7 +264,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7332282049441059930}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efde82564566d274bb013cdda1a9988e, type: 3}
   m_Name: 

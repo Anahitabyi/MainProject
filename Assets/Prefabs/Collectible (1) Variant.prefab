@@ -84,6 +84,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Health
       objectReference: {fileID: 0}
+    - target: {fileID: 8768007580776078294, guid: 31ad1c0a594561546ad3289c47a08803, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3973581243
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -169,9 +173,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7bf89a87c4385540bac962719034203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   type: 3
   scoreValue: 0
-  lifevalue: 0
+  lifeValue: 1
   healthValue: 1
   powerupValue: 1
   powerupDuration: 10
