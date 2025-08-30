@@ -33,7 +33,7 @@ public class OrthoSizeChanger : MonoBehaviour
     {
         if (!skipEffect)
         {
-            StartCoroutine(ChangeOrthoSize());
+            //StartCoroutine(ChangeOrthoSize());
         }
     }
 

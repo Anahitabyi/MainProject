@@ -8,6 +8,7 @@ using Unity.Netcode;
 public class newShooterPlayerMovement : NetworkBehaviour
 {
     public bool isInputBlocked { get; set; } = false;
+    public NetworkVariable<bool> isInputBlockedNet = new NetworkVariable<bool>(false);
 
     public Animator animator;
 
@@ -66,6 +67,7 @@ public class newShooterPlayerMovement : NetworkBehaviour
 
     void Update()
     {
+        isInputBlocked = isInputBlockedNet.Value;
         if (isInputBlocked)
         {
             rb.linearVelocity = Vector2.zero;
@@ -152,6 +154,7 @@ public class newShooterPlayerMovement : NetworkBehaviour
 
     private void Shoot()
     {
+        if (isInputBlocked) return;
         //Debug.Log("shoot started! 2");
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         Vector2 direction = (mousePosition - (Vector2)firePoint.position).normalized;
@@ -174,33 +177,65 @@ public class newShooterPlayerMovement : NetworkBehaviour
         }
         sfx.PlaySound(sfx.attackSound);
     }
-    public void OnNewShoot(InputAction.CallbackContext context){
-        if(context.performed){
-            newShoot();
+    public void OnNewShoot(InputAction.CallbackContext context)
+    {
+        if (!context.performed || isInputBlocked) return;
+
+        // Get mouse position in world space (owner only)
+        Vector3 mousePosition = hobbitCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+        // Call server to spawn bullet
+        NewShootServerRpc(firePoint.position, mousePosition);
+    }
+
+    [ServerRpc(RequireOwnership = true)]
+    private void NewShootServerRpc(Vector3 spawnPosition, Vector3 targetPosition)
+    {
+        // Spawn bullet on server
+        GameObject bulletObject = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
+        newBullet bullet = bulletObject.GetComponent<newBullet>();
+        if (bullet != null)
+        {
+            bullet.InitializeProjectile(targetPosition, trajectoryMaxHeight, bulletSpeed);
+            bullet.InitializeAnimationCurve(trajectoryAnimationCurve);
         }
 
-    }
-    private void newShoot(){
+        // Spawn bullet as NetworkObject for all clients
+        NetworkObject netObj = bulletObject.GetComponent<NetworkObject>();
+        if (netObj != null)
+            netObj.Spawn(true);
 
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()); //this is the target
-        Vector3 direction = (mousePosition - (Vector3)firePoint.position).normalized;
-
-        GameObject bulletObject = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        newBullet bullet = bulletObject.GetComponent<newBullet>();
-        bullet.InitializeProjectile(mousePosition, trajectoryMaxHeight, bulletSpeed);
-        bullet.InitializeAnimationCurve(trajectoryAnimationCurve);
-
-
+        // Optional: impact effect (local only on owner)
         if (impactEffect != null)
         {
-            GameObject flash = Instantiate(impactEffect, firePoint.position, firePoint.rotation, firePoint);
-            //Destroy(flash, 0.5f);
+            GameObject effectObj = Instantiate(impactEffect, spawnPosition, Quaternion.identity);
+            NetworkObject netEffect = effectObj.GetComponent<NetworkObject>();
+            if (netEffect != null)
+                netEffect.Spawn(); // now all clients see it
         }
-        if (impulseSource != null)
-        {
-            impulseSource.GenerateImpulse(-direction * 0.2f);
-        }
-        sfx.PlaySound(sfx.attackSound);
     }
+
+    // private void newShoot(){
+
+    //     Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()); //this is the target
+    //     Vector3 direction = (mousePosition - (Vector3)firePoint.position).normalized;
+
+    //     GameObject bulletObject = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+    //     newBullet bullet = bulletObject.GetComponent<newBullet>();
+    //     bullet.InitializeProjectile(mousePosition, trajectoryMaxHeight, bulletSpeed);
+    //     bullet.InitializeAnimationCurve(trajectoryAnimationCurve);
+
+
+    //     if (impactEffect != null)
+    //     {
+    //         GameObject flash = Instantiate(impactEffect, firePoint.position, firePoint.rotation, firePoint);
+    //         //Destroy(flash, 0.5f);
+    //     }
+    //     if (impulseSource != null)
+    //     {
+    //         impulseSource.GenerateImpulse(-direction * 0.2f);
+    //     }
+    //     sfx.PlaySound(sfx.attackSound);
+    // }
 
 }

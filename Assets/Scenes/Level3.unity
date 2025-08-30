@@ -142,7 +142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &48173846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -669,7 +669,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 40
-    OrthographicSize: 19.7
+    OrthographicSize: 27
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -16663,6 +16663,7 @@ MonoBehaviour:
   chunkGenerator: {fileID: 0}
   cinemachiCamera1: {fileID: 0}
   cinemachiCamera2: {fileID: 0}
+  assignedCamera: {fileID: 730223880}
   isOfflineMode: 0
   basePosition: {x: -12, y: -15, z: 0}
   spacing: {x: 2, y: 0, z: 0}
@@ -27412,18 +27413,20 @@ GameObject:
   - component: {fileID: 575913220}
   - component: {fileID: 575913219}
   - component: {fileID: 575913218}
+  - component: {fileID: 575913226}
   - component: {fileID: 575913221}
   - component: {fileID: 575913223}
   - component: {fileID: 575913222}
   - component: {fileID: 575913225}
   - component: {fileID: 575913224}
+  - component: {fileID: 575913227}
   m_Layer: 11
   m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &575913218
 Animator:
   serializedVersion: 7
@@ -27532,7 +27535,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248ca5afbda104843b8f15bb3ea2e96f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   maxHealth: 100
+  currentHealth:
+    m_InternalValue: 0
   player1: {fileID: 0}
   player2: {fileID: 0}
   timeToSwitchTarget: 10
@@ -27782,6 +27788,60 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0d0df975fa191c741a4ee26072997306, type: 3}
   - {fileID: 8300000, guid: 5e459c3dfd68e1e4cac595000cad801d, type: 3}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
+--- !u!114 &575913226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575913217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 475976873
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &575913227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575913217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 1142107403
+    DestinationState: -1439604630
+    TransitionDuration: 0
+    TriggerNameHash: 1080829965
+    TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 1142107403
+    DestinationState: 141933333
+    TransitionDuration: 0.05
+    TriggerNameHash: -1167671673
+    TransitionIndex: 1
+  m_Animator: {fileID: 575913218}
 --- !u!1 &619072445
 GameObject:
   m_ObjectHideFlags: 0
@@ -28383,7 +28443,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 8.3
+  orthographic size: 8.299999
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -28408,7 +28468,7 @@ Transform:
   m_GameObject: {fileID: 730223878}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.84037495, y: 4.565, z: -10}
+  m_LocalPosition: {x: -0.84037495, y: 4.5649996, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -37239,6 +37299,7 @@ GameObject:
   - component: {fileID: 952165803}
   - component: {fileID: 952165802}
   - component: {fileID: 952165801}
+  - component: {fileID: 952165811}
   - component: {fileID: 952165804}
   - component: {fileID: 952165805}
   - component: {fileID: 952165808}
@@ -37246,13 +37307,14 @@ GameObject:
   - component: {fileID: 952165806}
   - component: {fileID: 952165809}
   - component: {fileID: 952165810}
+  - component: {fileID: 952165812}
   m_Layer: 22
   m_Name: nuclearThrone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &952165801
 Animator:
   serializedVersion: 7
@@ -37359,9 +37421,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3bf57bf1c37bd442be3bf215e1220d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   player1: {fileID: 0}
   player2: {fileID: 0}
-  currentTarget: {fileID: 0}
   zoneCenter: {x: -0.3, y: 0}
   zoneSize: {x: 15.6, y: 35.1}
   deviceAnimator: {fileID: 952165801}
@@ -37774,6 +37836,60 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &952165811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952165800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2508172389
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &952165812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952165800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 2081823275
+    DestinationState: -1234828115
+    TransitionDuration: 0.1
+    TriggerNameHash: -700683835
+    TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 2081823275
+    DestinationState: 1203776827
+    TransitionDuration: 0.1
+    TriggerNameHash: 1080829965
+    TransitionIndex: 1
+  m_Animator: {fileID: 952165801}
 --- !u!1 &968080344
 GameObject:
   m_ObjectHideFlags: 0
@@ -38481,7 +38597,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1230905757
 Transform:
   m_ObjectHideFlags: 0
@@ -38727,7 +38843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &1474124985
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -39522,7 +39638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1922061297
 Transform:
   m_ObjectHideFlags: 0

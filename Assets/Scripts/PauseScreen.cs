@@ -36,7 +36,7 @@ public class PauseMenuManager : NetworkBehaviour
 
     void Update()
     {
-        Debug.Log("PauseMenuManager Update running on " + (IsServer ? "Server" : "Client"));
+        //Debug.Log("PauseMenuManager Update running on " + (IsServer ? "Server" : "Client"));
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("ESC pressed locally");

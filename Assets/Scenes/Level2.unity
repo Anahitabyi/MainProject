@@ -108181,6 +108181,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7221113656925418214, guid: 147174d52237951409994b0420153ff1, type: 3}
   m_PrefabInstance: {fileID: 711130052}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &711130054 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3360178660043591020, guid: 147174d52237951409994b0420153ff1, type: 3}
+  m_PrefabInstance: {fileID: 711130052}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &726320653
 GameObject:
   m_ObjectHideFlags: 0
@@ -120820,6 +120825,7 @@ MonoBehaviour:
   chunkGenerator: {fileID: 0}
   cinemachiCamera1: {fileID: 0}
   cinemachiCamera2: {fileID: 0}
+  assignedCamera: {fileID: 711130054}
   isOfflineMode: 0
   basePosition: {x: -14, y: -1, z: 0}
   spacing: {x: 2, y: 0, z: 0}

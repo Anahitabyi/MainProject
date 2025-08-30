@@ -1,6 +1,6 @@
 using UnityEngine;
-
-public class newBullet : MonoBehaviour
+using Unity.Netcode;
+public class newBullet : NetworkBehaviour
 {
     private AnimationCurve trajectoryAnimationCurve;
     private Vector3 targetPos;
@@ -34,6 +34,7 @@ public class newBullet : MonoBehaviour
 
     void Update()
     {
+        if (!IsServer) return;
         if (trajectoryAnimationCurve == null)
             return;
 
@@ -58,48 +59,58 @@ public class newBullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log("collistion detected");
+        if (!IsServer) return; // ✅ server handles all collisions
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
-            if (explosionPrefab != null)
-                {
-                    Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-                }
-            Destroy(gameObject, 0.1f);
+            SpawnExplosion();
+            NetworkObject.Despawn();
             return;
         }
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            if (explosionPrefab != null)
-            {
-                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            }
-            Destroy(gameObject);
+            SpawnExplosion();
+            NetworkObject.Despawn();
             return;
         }
-        if (collision.gameObject.layer == LayerMask.NameToLayer("NuclearThrone"))
+
+        if (collision.TryGetComponent<BossShooterDevice>(out var shooter))
         {
-            if (collision.TryGetComponent<BossShooterDevice>(out var shooter)) {
-            shooter.TakeDamage(1); // This deals damage to the boss through the shooter
-        }
-            if (explosionPrefab != null)
-            {
-                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            }
-            Destroy(gameObject);
+            shooter.TakeDamage(1);
+            SpawnExplosion();
+            NetworkObject.Despawn();
             return;
         }
-        // Check if we hit something that can take damage
+
         if (collision.TryGetComponent<EnemyHealth>(out var enemy))
         {
-            enemy.TakeDamage(1); // You can adjust damage value
-            Destroy(gameObject);
+            enemy.TakeDamage(1);
+            SpawnExplosion();
+            NetworkObject.Despawn();
+            return;
         }
-        else if (collision.TryGetComponent<BossEnemy>(out var boss))
+
+        if (collision.TryGetComponent<BossEnemy>(out var boss))
         {
-            boss.TakeDamage(1); // Adjust damage if needed
-            Destroy(gameObject);
+            boss.TakeDamage(1);
+            SpawnExplosion();
+            NetworkObject.Despawn();
         }
     }
+
+    private void SpawnExplosion()
+    {
+        if (explosionPrefab != null)
+        {
+            GameObject effect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            var netObj = effect.GetComponent<NetworkObject>();
+            if (netObj != null)
+                netObj.Spawn(true);
+            else
+                Destroy(effect, 1f); // fallback if non-networked prefab
+        }
+    }
+
 
 }

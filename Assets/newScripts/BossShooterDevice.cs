@@ -3,13 +3,25 @@ using Unity.Cinemachine;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Audio;
+using Unity.Netcode;
 
-public class BossShooterDevice : MonoBehaviour
+public class BossShooterDevice : NetworkBehaviour
 {
     [Header("Players")]
     public Transform player1;
     public Transform player2;
-    public Transform currentTarget;
+    public NetworkVariable<NetworkObjectReference> currentTargetNet = new NetworkVariable<NetworkObjectReference>();
+    public Transform currentTarget
+    {
+        get
+        {
+            if (currentTargetNet.Value.TryGet(out NetworkObject netObj))
+                return netObj.transform;
+            return null;
+        }
+    }
+
+
 
     [Header("Zone")]
     public Vector2 zoneCenter = Vector2.zero;
@@ -55,6 +67,11 @@ public class BossShooterDevice : MonoBehaviour
         impulseSource = GetComponent<CinemachineImpulseSource>();
         audioSource = GetComponent<AudioSource>();
         sfx = GetComponent<BossSFX>();
+        if (bossRef != null)
+    {
+        player1 = bossRef.player1;
+        player2 = bossRef.player2;
+    }
 
     }
 
@@ -65,6 +82,8 @@ public class BossShooterDevice : MonoBehaviour
 
     private void CheckAlertZone()
     {
+        if (!IsOwner)
+            return;
         if (hasPlayedAlert) return;
 
         bool player1In = IsPlayerInZone(player1);
@@ -131,6 +150,7 @@ public class BossShooterDevice : MonoBehaviour
 
     }
 
+
     private IEnumerator ShootBulletWaves()
     {
         Transform closest = firePoints[0];
@@ -165,11 +185,35 @@ public class BossShooterDevice : MonoBehaviour
     }
     void SpawnBullet(Vector3 pos, Quaternion rot)
     {
+        if (!IsServer) return; // make sure only the server spawns bullets
+
         GameObject bullet = Instantiate(bulletPrefab, pos, rot);
+        NetworkObject netObj = bullet.GetComponent<NetworkObject>();
+        if (netObj != null)
+        {
+            netObj.Spawn(true);
+        }
+
         BossBullet bossBulletScript = bullet.GetComponent<BossBullet>();
         bossBulletScript.bossEnemy = bossRef;
-
     }
+
+
+    // [ServerRpc]
+    // void SpawnBulletServerRpc(Vector3 pos, Quaternion rot)
+    // {
+    //     GameObject bullet = Instantiate(bulletPrefab, pos, rot);
+    //     NetworkObject netObj = bullet.GetComponent<NetworkObject>();
+    //     if (netObj != null)
+    //     {
+    //         netObj.Spawn(true);
+    //     }
+
+    //     BossBullet bossBulletScript = bullet.GetComponent<BossBullet>();
+    //     // if (bossBulletScript != null)
+    //     //     
+    //     bossBulletScript.bossEnemy = bossRef;
+    // }
     private void OnDrawGizmosSelected()
     {
         Vector2 worldCenter = (Vector2)transform.position + zoneCenter;

@@ -1,6 +1,7 @@
 using UnityEngine;
-
-public class MinionEnemy : MonoBehaviour
+using Unity.Netcode;
+using PlayFab.AuthenticationModels;
+public class MinionEnemy : NetworkBehaviour
 {
     [Header("Stats")]
     public float moveSpeed = 2f;
@@ -29,6 +30,8 @@ public class MinionEnemy : MonoBehaviour
 
     void Update()
     {
+        if (!IsServer)
+            return;
         if (healthScript != null && healthScript.IsDead) return;
         if (targetPlayer == null) return;
 
@@ -71,6 +74,7 @@ public class MinionEnemy : MonoBehaviour
 
     public void DealDamage() // Animation event
     {
+        if (!IsServer) return;
         if (targetPlayer != null && Vector2.Distance(transform.position, targetPlayer.transform.position) <= attackRange)
         {
             PlayerHealth playerHealth = targetPlayer.GetComponent<PlayerHealth>();
@@ -88,6 +92,7 @@ public class MinionEnemy : MonoBehaviour
 
     public void SetPlayers(GameObject[] newPlayers, GameObject bossTarget)
 {
+    if (!IsServer) return;
     players = newPlayers;
 
     // Always choose the player that is NOT the one targeted by the boss
@@ -109,6 +114,7 @@ public class MinionEnemy : MonoBehaviour
     // ✅ Optional trigger-based damage if you still want it
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!IsServer) return;
         PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
         if (playerHealth != null)
         {
