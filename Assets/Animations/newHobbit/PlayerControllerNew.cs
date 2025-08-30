@@ -169,6 +169,11 @@ public class PlayerControllerNew : NetworkBehaviour, IPlayerInputBlocker, IPlaye
     }
     public void Shoot(InputAction.CallbackContext context)
     {
+        if (hobbitCamera == null)
+    {
+        Debug.LogError("[Shoot] hobbitCamera is null – did OnNetworkSpawn fail to assign it?");
+        return;
+    }
         if (isInputBlocked || !context.performed) return;
 
         Attacked?.Invoke();

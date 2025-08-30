@@ -920,6 +920,10 @@ MonoBehaviour:
   chunkGenerator: {fileID: 756020905}
   cinemachiCamera1: {fileID: 0}
   cinemachiCamera2: {fileID: 0}
+  assignedCamera: {fileID: 1177869907}
+  basePosition: {x: -17, y: 5, z: 0}
+  spacing: {x: 2, y: 0, z: 0}
+  customPositions: []
 --- !u!1 &601116191
 GameObject:
   m_ObjectHideFlags: 0
@@ -1060,6 +1064,10 @@ PrefabInstance:
     - target: {fileID: 1327864990081933079, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_Name
       value: player2Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 1327864990081933079, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4135620339002320958, guid: edd81e42c1dee9d47afbd4f3ff6eafc8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1587,6 +1595,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: player1Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 7398702146149938517, guid: 147174d52237951409994b0420153ff1, type: 3}
+      propertyPath: m_TagString
+      value: MainCamera
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1595,6 +1607,11 @@ PrefabInstance:
       addedObject: {fileID: 80039475}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 147174d52237951409994b0420153ff1, type: 3}
+--- !u!20 &1177869907 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3360178660043591020, guid: 147174d52237951409994b0420153ff1, type: 3}
+  m_PrefabInstance: {fileID: 1177869906}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1179712446
 GameObject:
   m_ObjectHideFlags: 0
