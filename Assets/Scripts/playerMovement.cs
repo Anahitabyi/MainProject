@@ -56,7 +56,18 @@ public class playerMovement : NetworkBehaviour, IPlayerInputBlocker
     [Header("Network")]
     public NetworkVariable<float> magnitude1 = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
 
+        if (IsOwner)
+        {
+            // Find the local Cinemachine/Camera on THIS client
+            hobbitCamera = Camera.main; 
+            // Or if you use multiple CinemachineCameras:
+            // hobbitCamera = FindObjectOfType<CinemachineCamera>().GetComponent<Camera>();
+        }
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();

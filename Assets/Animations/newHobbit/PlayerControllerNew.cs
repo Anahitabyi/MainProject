@@ -49,7 +49,18 @@ public class PlayerControllerNew : NetworkBehaviour, IPlayerInputBlocker, IPlaye
     public int attackDamage = 1;
 
     public WeaponUIIndicator weaponUIIndicator;
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
 
+        if (IsOwner)
+        {
+            // Find the local Cinemachine/Camera on THIS client
+            hobbitCamera = Camera.main; 
+            // Or if you use multiple CinemachineCameras:
+            // hobbitCamera = FindObjectOfType<CinemachineCamera>().GetComponent<Camera>();
+        }
+    }
 
     private void Awake()
     {
