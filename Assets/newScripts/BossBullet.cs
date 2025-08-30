@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class BossBullet : MonoBehaviour
+public class BossBullet : NetworkBehaviour
 {
     [Header("Bullet Settings")]
     public float speed = 10f;
@@ -13,36 +14,52 @@ public class BossBullet : MonoBehaviour
     [HideInInspector]
     public BossEnemy bossEnemy;
 
-    private void Start()
+    private float spawnTime;
+
+    public override void OnNetworkSpawn()
     {
-        // Destroy bullet after some time to avoid memory leaks
-        Destroy(gameObject, lifeTime);
+        spawnTime = Time.time;
+
+        if (!IsServer)
+        {
+            // Only server controls bullet movement/collision
+            enabled = false;
+        }
     }
 
-    private void Update()
+    void Update()
     {
-        // Move bullet forward based on facing direction
-         transform.position += transform.up * speed * Time.deltaTime;
+        if (!IsServer) return;
+
+        transform.position += transform.up * speed * Time.deltaTime;
+
+        // Auto-destroy after lifetime
+        if (Time.time - spawnTime >= lifeTime)
+        {
+            NetworkObject.Despawn();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (((1 << collision.gameObject.layer) & playerLayer) != 0)
+        if (!IsServer) return;
+
+        if (collision.CompareTag("Player"))
         {
-            // Try to deal damage to the player
             PlayerHealth player = collision.GetComponent<PlayerHealth>();
             if (player != null && bossEnemy != null)
-        {
-            if(bossEnemy.Registerdamage(collision.transform)){
-                //Debug.Log("pplayer took damage.");
-            player.TakeDamage(damage);
-            
+            {
+                if (bossEnemy.Registerdamage(collision.transform))
+                {
+                    player.TakeDamage(damage); // Make sure PlayerHealth has ServerRpc for damage
+                }
             }
-            
+            NetworkObject.Despawn();
         }
-        Destroy(gameObject);
-
-        // If you want to also destroy bullet on hitting walls/ground, add checks here
+        else if (((1 << collision.gameObject.layer) & playerLayer) != 0)
+        {
+            // Hit wall or other environment
+            NetworkObject.Despawn();
+        }
     }
-}
 }

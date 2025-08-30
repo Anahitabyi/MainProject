@@ -8460,6 +8460,7 @@ GameObject:
   - component: {fileID: 285095555476778174}
   - component: {fileID: 2617708769420790999}
   - component: {fileID: 826056618925062738}
+  - component: {fileID: 8458539129233890822}
   m_Layer: 0
   m_Name: Grid11
   m_TagString: Chunk
@@ -8527,6 +8528,31 @@ MonoBehaviour:
   patrolPairs:
   - {fileID: 2269652787928303601}
   enemyPrefab: {fileID: 5822848822179218078, guid: d65077cd907882645b6449d9426fd233, type: 3}
+--- !u!114 &8458539129233890822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8615260180899430837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 0
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &8955710290494971557
 GameObject:
   m_ObjectHideFlags: 0

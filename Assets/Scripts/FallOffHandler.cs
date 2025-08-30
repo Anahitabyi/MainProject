@@ -31,9 +31,9 @@ public class FallOffHandler : MonoBehaviour
     {
         if (playerHealth == null || chunkGenerator == null) return;
 
-        playerHealth.TakeDamage(playerHealth.currentHealth); // Lose 1 life
+        playerHealth.TakeDamage(playerHealth.currentHealth.Value); // Lose 1 life
 
-        if (playerHealth.currentLives > 0)
+        if (playerHealth.currentLives.Value > 0)
         {
             Transform spawnPoint = chunkGenerator.FirstSpawnPoint;
 

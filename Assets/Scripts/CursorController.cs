@@ -12,6 +12,10 @@ public class CursorController : MonoBehaviour
     {
         Cursor.SetCursor(cursorIdle, cursorHotspot, CursorMode.Auto);
     }
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     void Update()
     {

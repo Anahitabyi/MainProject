@@ -1,19 +1,22 @@
 using UnityEngine;
+using Unity.Netcode;
 using System.Collections.Generic;
 using UnityEngine.Audio;
 using System;
 using System.Collections;
+using UnityEngine.SceneManagement;
 //using System.Numerics;
     #if UNITY_EDITOR
 using UnityEditor;
 #endif
-public class BossEnemy : MonoBehaviour
+public class BossEnemy : NetworkBehaviour
 {
 
 
     [Header("Stats")]
     public float maxHealth = 100f;
-    private float currentHealth;
+    public NetworkVariable<float> currentHealth = new NetworkVariable<float>();
+
 
     [Header("Players")]
     public Transform player1;
@@ -85,11 +88,14 @@ public class BossEnemy : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth;
+        if (!IsServer)
+            return;
+        currentHealth.Value = maxHealth;
         shooterDevice.bossRef = this; // Register boss in device
         audioSource = GetComponent<AudioSource>();
         sfx = GetComponent<BossSFX>();
         startPosition = transform.position;
+        
     }
 
     public void StartAttackWithDelay()
@@ -104,18 +110,15 @@ public class BossEnemy : MonoBehaviour
 
     void Update()
     {
-        if (isDead || !canStartAttacking) //|| //isCloseAttacking)
-        return; // ⛔ Block anything during close attack
+        if (!IsServer || isDead || !canStartAttacking) return;
 
         HandleAttacking();
-        // if (isCloseAttacking)
-        // {
-        //     CloseAttack();
-        // }
     }
 
     void HandleAttacking()
     {
+        if (!IsServer) return; // Only server runs this
+
         Transform bulletTarget = minionsTargetPlayer1 ? player2 : player1;
         float distance = Vector2.Distance(transform.position, bulletTarget.position);
 
@@ -131,25 +134,30 @@ public class BossEnemy : MonoBehaviour
     // 🔔 Called in the middle of the boss attack animation
     public void TriggerShooter()
     {
+        if (!IsServer) return; // only server sets networked variables
+
         if (shooterDevice != null)
         {
-            shooterDevice.currentTarget = minionsTargetPlayer1 ? player2 : player1;
-            damagedPlayersThisWave.Clear();
-            shooterDevice.TriggerAttack();
+            // pick the target
+            GameObject targetPlayer = minionsTargetPlayer1 ? player2.gameObject : player1.gameObject;
 
+            // set networked reference
+            shooterDevice.currentTargetNet.Value = new NetworkObjectReference(targetPlayer.GetComponent<NetworkObject>());
+
+            shooterDevice.TriggerAttack();
         }
     }
+
 
     // 🔔 Called during the boss attack animation
     public void SpawnMinions()
     {
+        if (!IsServer) return;
 
         sfx.PlaySpawnSound();
-        Transform minionTarget = minionsTargetPlayer1 ? player1 : player2;
-        GameObject[] playerObjects = { player1.gameObject, player2.gameObject };
+        List<Vector3> spawnPositions = GenerateSpawnPositions();
 
         bool useFirstMinion = true;
-        List<Vector3> spawnPositions = GenerateSpawnPositions();
 
         foreach (Vector3 pos in spawnPositions)
         {
@@ -157,14 +165,65 @@ public class BossEnemy : MonoBehaviour
             useFirstMinion = !useFirstMinion;
 
             GameObject minion = Instantiate(chosenPrefab, pos, Quaternion.identity);
+
+            NetworkObject netObj = minion.GetComponent<NetworkObject>();
+            if (netObj != null)
+            {
+                netObj.Spawn(true);
+            }
+            else
+            {
+                Debug.LogError("Minion prefab is missing NetworkObject component!");
+            }
+
             MinionEnemy minionScript = minion.GetComponent<MinionEnemy>();
             if (minionScript != null)
             {
-                minionScript.SetPlayers(new[] { player1.gameObject, player2.gameObject }, minionsTargetPlayer1 ? player1.gameObject : player2.gameObject);
+                minionScript.SetPlayers(
+                    new[] { player1.gameObject, player2.gameObject },
+                    minionsTargetPlayer1 ? player1.gameObject : player2.gameObject
+                );
             }
         }
-
     }
+
+    // [ServerRpc]
+    // public void SpawnMinionsServerRpc()
+    // {
+    //     if (!IsServer) return; // Only server runs this
+
+    //     //sfx.PlaySpawnSoundServerRpc(); // optional: trigger sound on all clients
+
+    //     Transform minionTarget = minionsTargetPlayer1 ? player1 : player2;
+    //     GameObject[] playerObjects = { player1.gameObject, player2.gameObject };
+
+    //     bool useFirstMinion = true;
+    //     List<Vector3> spawnPositions = GenerateSpawnPositions();
+
+    //     foreach (Vector3 pos in spawnPositions)
+    //     {
+    //         GameObject chosenPrefab = useFirstMinion ? minionPrefab1 : minionPrefab2;
+    //         useFirstMinion = !useFirstMinion;
+
+    //         GameObject minion = Instantiate(chosenPrefab, pos, Quaternion.identity);
+
+    //         // Spawn as networked object
+    //         NetworkObject netObj = minion.GetComponent<NetworkObject>();
+    //         if (netObj != null)
+    //         {
+    //             netObj.Spawn(true);
+    //         }
+
+    //         // Assign the players for the minion AI
+    //         MinionEnemy minionScript = minion.GetComponent<MinionEnemy>();
+    //         if (minionScript != null)
+    //         {
+    //             minionScript.SetPlayers(playerObjects, minionsTargetPlayer1 ? player1.gameObject : player2.gameObject);
+    //         }
+    //     }
+    // }
+
+
 
     // 🔔 Called at the end of boss attack animation
     public void OnAttackAnimationEnd()
@@ -278,26 +337,63 @@ public class BossEnemy : MonoBehaviour
     {
         if (isDead) return;
 
-        currentHealth -= amount;
-        animator.SetLayerWeight(1, 1f);  // Enable Hurt layer
-        animator.SetTrigger(hurtAnimationName);
-        StartCoroutine(DisableHurtLayerAfterTime());
-
-
+        //currentHealth.Value -= amount;
+        // animator.SetLayerWeight(1, 1f);  // Enable Hurt layer
+        // animator.SetTrigger(hurtAnimationName);
+        // StartCoroutine(DisableHurtLayerAfterTime());
         //Debug.Log("boss health : " + currentHealth);
-        if (currentHealth <= 0)
+        // if (currentHealth.Value <= 0)
+        // {
+        //     Die();
+        // }
+        TakeDamageServerRpc(amount);
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void TakeDamageServerRpc(float amount)
+    {
+        if (isDead) return;
+
+        currentHealth.Value -= amount;
+        // animator.SetLayerWeight(1, 1f);  // Enable Hurt layer
+        // animator.SetTrigger(hurtAnimationName);
+        // StartCoroutine(DisableHurtLayerAfterTime());
+        PlayAnimationHurtClientRpc(hurtAnimationName);
+        if (currentHealth.Value <= 0)
         {
             Die();
         }
     }
+    [ClientRpc]
+    void PlayAnimationHurtClientRpc(String hurtAnimationName)
+    {
+        animator.SetLayerWeight(1, 1f);  // Enable Hurt layer
+        animator.SetTrigger(hurtAnimationName);
+        StartCoroutine(DisableHurtLayerAfterTime());
+    }
+
     private IEnumerator DisableHurtLayerAfterTime()
     {
-            yield return new WaitForSeconds(0.5f); // Adjust based on animation
-            animator.SetLayerWeight(1, 0f); // Turn off Hurt layer
+        yield return new WaitForSeconds(0.5f); // Adjust based on animation
+        animator.SetLayerWeight(1, 0f); // Turn off Hurt layer
     }
 
     void Die()
     {
+        // isDead = true;
+        // isAttacking = false;
+        // isSpawning = false;
+        // if (shooterDevice.deviceAnimator != null)
+        // {
+        //     sfx.PlayDeathSound();
+        //     shooterDevice.deviceAnimator.SetTrigger(shooterDevice.deathTrigger);
+
+        // }
+        // Destroy(gameObject, 3f);
+        
+
+        //networked:
+        if (!IsServer) return;
+
         isDead = true;
         isAttacking = false;
         isSpawning = false;
@@ -305,12 +401,17 @@ public class BossEnemy : MonoBehaviour
         {
             sfx.PlayDeathSound();
             shooterDevice.deviceAnimator.SetTrigger(shooterDevice.deathTrigger);
-            
+
         }
-        Destroy(gameObject, 3f);
-            
+
+        //PlayAnimationClientRpc(deathAnimationName);
+        GetComponent<NetworkObject>().Despawn();
+        NetworkManager.Singleton.SceneManager.LoadScene("Win", LoadSceneMode.Single);
+
+
     }
-    
+
+
 
 
     void OnDrawGizmosSelected()
@@ -320,7 +421,7 @@ public class BossEnemy : MonoBehaviour
     }
     public float GetCurrentHealth()
     {
-        return currentHealth;
+        return currentHealth.Value;
     }
     private IEnumerator DelayedCloseAttack(int seconds)
     {
@@ -368,9 +469,9 @@ public class BossEnemy : MonoBehaviour
     }
     public void SetCurrentHealth(float value)
 {
-    currentHealth = Mathf.Clamp(value, 0, maxHealth);
+    currentHealth.Value = Mathf.Clamp(value, 0, maxHealth);
 
-    if (currentHealth <= 0f)
+    if (currentHealth.Value <= 0f)
     {
         Die(); // Trigger death if health is 0 or less
     }

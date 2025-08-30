@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class newBullet : MonoBehaviour
+public class newBullet : NetworkBehaviour
 {
     private AnimationCurve trajectoryAnimationCurve;
     private Vector3 targetPos;
@@ -34,6 +35,7 @@ public class newBullet : MonoBehaviour
 
     void Update()
     {
+        if (!IsServer) return;
         if (trajectoryAnimationCurve == null)
             return;
 
@@ -53,53 +55,80 @@ public class newBullet : MonoBehaviour
 
         if (t >= 1f)
         {
-            Destroy(gameObject);  // Destroy bullet when it reaches the target
+            if (NetworkObject != null && NetworkObject.IsSpawned)
+                NetworkObject.Despawn();
+            else
+                Destroy(gameObject); // fallback // Destroy bullet when it reaches the target
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!IsServer) return;
+        if (collision.gameObject.layer == LayerMask.NameToLayer("CameraBounds"))
+            return;
+
+//        Debug.Log($"[Bullet] Hit: {collision.gameObject.name}");
         //Debug.Log("collistion detected");
         if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
             if (explosionPrefab != null)
-                {
-                    Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-                }
-            Destroy(gameObject, 0.1f);
+            {
+                var explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                var netObj = explosion.GetComponent<NetworkObject>();
+                if (netObj != null)
+                    netObj.Spawn(true); // spawns across clients
+            }
+            NetworkObject.Despawn();
             return;
         }
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             if (explosionPrefab != null)
             {
-                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                var explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                var netObj = explosion.GetComponent<NetworkObject>();
+                if (netObj != null)
+                    netObj.Spawn(true); // spawns across clients
             }
-            Destroy(gameObject);
+            NetworkObject.Despawn();
             return;
         }
         if (collision.gameObject.layer == LayerMask.NameToLayer("NuclearThrone"))
         {
-            if (collision.TryGetComponent<BossShooterDevice>(out var shooter)) {
-            shooter.TakeDamage(1); // This deals damage to the boss through the shooter
-        }
+            if (collision.TryGetComponent<BossShooterDevice>(out var shooter))
+            {
+                shooter.TakeDamage(1); // This deals damage to the boss through the shooter
+            }
             if (explosionPrefab != null)
             {
-                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                var explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                var netObj = explosion.GetComponent<NetworkObject>();
+                if (netObj != null)
+                    netObj.Spawn(true); // spawns across clients
             }
-            Destroy(gameObject);
+            NetworkObject.Despawn();
             return;
         }
         // Check if we hit something that can take damage
         if (collision.TryGetComponent<EnemyHealth>(out var enemy))
         {
             enemy.TakeDamage(1); // You can adjust damage value
-            Destroy(gameObject);
+            NetworkObject.Despawn();
         }
         else if (collision.TryGetComponent<BossEnemy>(out var boss))
         {
             boss.TakeDamage(1); // Adjust damage if needed
-            Destroy(gameObject);
+            NetworkObject.Despawn(); // fallback
+
         }
+        //NetworkObject.Despawn();
     }
+    //[ClientRpc]
+// private void SpawnExplosionClientRpc(Vector3 position)
+// {
+//     if (explosionPrefab != null)
+//         Instantiate(explosionPrefab, position, Quaternion.identity);
+// }
+
 
 }

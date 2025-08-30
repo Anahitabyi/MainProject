@@ -5,7 +5,7 @@ public class SaveFeedback : MonoBehaviour
 {
     public GameObject panel;         // Assign: SaveFeedbackPanel
     public TMP_Text messageText;     // Assign: child text component
-    public float displayTime = 2f;   // How long to show the message
+    public float displayTime = 1f;   // How long to show the message
 
     public void Show(string message)
     {

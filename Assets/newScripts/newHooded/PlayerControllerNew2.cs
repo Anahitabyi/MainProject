@@ -5,11 +5,14 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
 
-public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerController
+public class PlayerControllerNew2 : NetworkBehaviour, IPlayerInputBlocker, IPlayerController
 {
     public bool isInputBlocked { get; set; } = false;
+    //public NetworkVariable<bool> isInputBlockedNet { get; } = new NetworkVariable<bool>();
+
     [SerializeField] private ScriptableStats _stats;
     private Rigidbody2D _rb;
     private CapsuleCollider2D _col;
@@ -46,6 +49,16 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
 
     void Update()
     {
+        //isInputBlocked = isInputBlockedNet.Value;
+        if (NetworkManager.Singleton != null)
+        {
+            var netObj = GetComponent<NetworkObject>();
+            if (netObj != null && !netObj.IsOwner)
+            {
+                return;
+            }
+        }
+
         _time += Time.deltaTime;
         if (isInputBlocked)
         {
@@ -54,10 +67,49 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
             //animator.SetFloat("magnitude", 0);
             return;
         }
+        if (_isOnLadder)
+        {
+            float climbInput = 0f;
+
+            // W key / Jump key climbs up
+            if (_frameInput.JumpDown)
+                climbInput = 1f;
+
+            // S key / Down arrow key climbs down
+            if (_frameInput.Move.y < 0f)
+                climbInput = _frameInput.Move.y;
+
+            // If any vertical input
+            if (Mathf.Abs(climbInput) > 0.1f)
+            {
+                if (!_isClimbing)
+                    StartClimbing();
+
+                _rb.gravityScale = 0f;
+                _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, climbInput * climbSpeed);
+            }
+            else if (_isClimbing)
+            {
+                // Stop moving on ladder when no input
+                _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 0f);
+            }
+        }
+        else if (_isClimbing)
+        {
+            StopClimbing();
+        }
 
     }
     private void FixedUpdate()
     {
+        if (NetworkManager.Singleton != null)
+        {
+            var netObj = GetComponent<NetworkObject>();
+            if (netObj != null && !netObj.IsOwner)
+            {
+                return;
+            }
+        }
         CheckCollisions();
 
         HandleJump();
@@ -94,6 +146,8 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
     }
     public void MeleeAttack(InputAction.CallbackContext context)
     {
+        
+
         if (isInputBlocked) return;
 
         if (context.performed)
@@ -104,8 +158,17 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
 
     public void PerformAttack()
     {
-        if (isInputBlocked) return;
+        if (!IsOwner) return;
+        // Only the owner can trigger the attack
+        if (NetworkManager.Singleton != null && !GetComponent<NetworkObject>().IsOwner) 
+            return;
 
+        AttackServerRpc();
+    }
+    [ServerRpc]
+    private void AttackServerRpc(ServerRpcParams rpcParams = default)
+    {
+        // Detect enemies locally on the server
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackBoxSize, 0f, enemyLayers);
 
         foreach (Collider2D enemy in hitEnemies)
@@ -116,7 +179,22 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
                 enemyHealth.TakeDamage(attackDamage);
             }
         }
+
+        // Notify all clients to play attack animation/effects
+        //AttackClientRpc();
+}
+
+
+    #if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(attackPoint.position, attackBoxSize);
     }
+    #endif
 
 
     #region Collisions  
@@ -192,6 +270,40 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
     }
 
     #endregion
+    #region Climb
+
+    [SerializeField] private float climbSpeed = 4f;
+    private bool _isOnLadder = false;
+    private bool _isClimbing = false;
+    private float originalGravity;
+    private void StartClimbing()
+    {
+        _isClimbing = true;
+        IsClimbing = true; // This was your public field
+        originalGravity = _rb.gravityScale; // Store original gravity scale
+        _rb.gravityScale = 0f;
+
+    }
+
+    private void StopClimbing()
+    {
+        _isClimbing = false;
+        IsClimbing = false;
+        _rb.gravityScale = originalGravity; // or original gravity
+    }
+    public void SetOnLadder(bool value)
+    {
+        _isOnLadder = value;
+
+        if (!value && _isClimbing)
+        {
+            StopClimbing();
+        }
+    }
+
+
+
+    #endregion  
 
     #region Horizontal  
 
@@ -209,7 +321,6 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
     }
 
     #endregion
-
     #region Gravity  
 
     private void HandleGravity()
@@ -227,11 +338,25 @@ public class PlayerControllerNew2 : MonoBehaviour, IPlayerInputBlocker, IPlayerC
     }
 
     #endregion
+    #region VelocityBoost 
+
+    public void ExecuteBounce(float bouncePower){
+            _endedJumpEarly = false;
+        _timeJumpWasPressed = 0;
+        _bufferedJumpUsable = false;
+        _coyoteUsable = false;
+        _frameVelocity.y = bouncePower;
+        Jumped?.Invoke();
+    }
+    #endregion
+
 
     private void ApplyMovement()
     {
         if (!IsClimbing)
-            _rb.linearVelocity = _frameVelocity;
+    {
+        _rb.linearVelocity = _frameVelocity;
+    }
     }
 
 #if UNITY_EDITOR

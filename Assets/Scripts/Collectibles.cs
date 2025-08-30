@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using Unity.Netcode;
 
-public class Collectible : MonoBehaviour
+public class Collectible : NetworkBehaviour
 {
-    public enum collectibleType
+    public enum CollectibleType
     {
         Food,
         Coin,
@@ -13,9 +14,9 @@ public class Collectible : MonoBehaviour
         Life
     }
 
-    public collectibleType type;
+    public CollectibleType type;
     public int scoreValue = 100;
-    public int lifevalue = 1;
+    public int lifeValue = 1;
     public int healthValue = 1;
     public int powerupValue = 1;
     public float powerupDuration = 10f;
@@ -30,11 +31,11 @@ public class Collectible : MonoBehaviour
 
     void Awake()
     {
-        if (CompareTag("Food")) type = collectibleType.Food;
-        if (CompareTag("Coin")) type = collectibleType.Coin;
-        if (CompareTag("Powerup")) type = collectibleType.Powerup;
-        if (CompareTag("Health")) type = collectibleType.Health;
-        if (CompareTag("Life")) type = collectibleType.Life;
+        if (CompareTag("Food")) type = CollectibleType.Food;
+        if (CompareTag("Coin")) type = CollectibleType.Coin;
+        if (CompareTag("Powerup")) type = CollectibleType.Powerup;
+        if (CompareTag("Health")) type = CollectibleType.Health;
+        if (CompareTag("Life")) type = CollectibleType.Life;
 
         uniqueID = GetComponent<UniqueID>();
     }
@@ -47,38 +48,39 @@ public class Collectible : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!IsServer) return; // ✅ Only server handles collection
         if (!other.CompareTag("Player")) return;
 
         GameObject player = other.gameObject;
         PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
 
-        SaveTracker.Instance?.MarkCollected(uniqueID.id); // ✅ Mark as collected before doing anything
+        SaveTracker.Instance?.MarkCollected(uniqueID.id);
 
         switch (type)
         {
-            case collectibleType.Food:
+            case CollectibleType.Food:
                 playerHealth?.AddHealth(healthValue);
-                PlaySound(healSound);
+                PlaySoundClientRpc();
                 break;
 
-            case collectibleType.Coin:
+            case CollectibleType.Coin:
                 FindFirstObjectByType<ScoreManager>()?.AddScore(scoreValue);
-                PlaySound(coinPickupSound);
+                PlaySoundClientRpc();
                 break;
 
-            case collectibleType.Health:
+            case CollectibleType.Health:
                 playerHealth?.AddHealth(healthValue);
-                PlaySound(healthPickupSound);
+                PlaySoundClientRpc();
                 break;
 
-            case collectibleType.Life:
-                playerHealth?.AddLives(lifevalue);
-                PlaySound(lifePickupSound);
+            case CollectibleType.Life:
+                playerHealth?.AddLives(lifeValue);
+                PlaySoundClientRpc();
                 break;
 
-            case collectibleType.Powerup:
+            case CollectibleType.Powerup:
                 DamageBoostHandler boostHandler = player.GetComponent<DamageBoostHandler>();
                 if (boostHandler == null)
                     boostHandler = player.AddComponent<DamageBoostHandler>();
@@ -88,20 +90,39 @@ public class Collectible : MonoBehaviour
                 player.GetComponent<meleePlayerMovement>()?.weaponUIIndicator?.ShowForDuration(powerupDuration);
                 player.GetComponent<playerMovement>()?.weaponUIIndicator?.ShowForDuration(powerupDuration);
 
-                PlaySound(healSound);
+                PlaySoundClientRpc();
                 break;
         }
 
-        Destroy(gameObject);
+        // ✅ Despawn across network
+        GetComponent<NetworkObject>().Despawn();
     }
 
-    void PlaySound(AudioClip clip)
+    // ------------------- Networking -------------------
+
+    [ClientRpc]
+    private void PlaySoundClientRpc()
     {
-        if (clip == null) return;
-        StartCoroutine(PlaySoundWithMixer(clip));
+        // This runs on all clients
+        AudioClip clip = GetClipForType();
+        if (clip != null)
+            StartCoroutine(PlaySoundWithMixer(clip));
     }
 
-    IEnumerator PlaySoundWithMixer(AudioClip clip)
+    private AudioClip GetClipForType()
+    {
+        return type switch
+        {
+            CollectibleType.Food => healSound,
+            CollectibleType.Coin => coinPickupSound,
+            CollectibleType.Health => healthPickupSound,
+            CollectibleType.Life => lifePickupSound,
+            CollectibleType.Powerup => healSound,
+            _ => null
+        };
+    }
+
+    private IEnumerator PlaySoundWithMixer(AudioClip clip)
     {
         GameObject tempGO = new GameObject("TempAudio");
         AudioSource source = tempGO.AddComponent<AudioSource>();

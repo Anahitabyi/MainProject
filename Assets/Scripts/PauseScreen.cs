@@ -1,10 +1,11 @@
-// === PauseMenuManager.cs ===
+
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Unity.Netcode;
 
-public class PauseMenuManager : MonoBehaviour
+public class PauseMenuManager : NetworkBehaviour
 {
     public GameObject pauseMenuUI;
     public GameObject pausePanel;
@@ -19,6 +20,12 @@ public class PauseMenuManager : MonoBehaviour
     public AudioMixer audioMixer;
     public AudioMixerGroup sfxGroup;
 
+    private void OnEnable()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -29,13 +36,43 @@ public class PauseMenuManager : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log("PauseMenuManager Update running on " + (IsServer ? "Server" : "Client"));
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            TogglePause();
+            Debug.Log("ESC pressed locally");
+            RequestTogglePauseServerRpc();
         }
     }
 
-    public void TogglePause()
+
+    // === Server RPCs (clients request actions) ===
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestTogglePauseServerRpc(ServerRpcParams rpcParams = default)
+    {
+        TogglePauseAllClientRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void RequestResumeServerRpc(ServerRpcParams rpcParams = default)
+    {
+        ResumeAllClientRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void RequestRestartServerRpc(ServerRpcParams rpcParams = default)
+    {
+        RestartAllClientRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void RequestQuitToMenuServerRpc(ServerRpcParams rpcParams = default)
+    {
+        QuitToMenuAllClientRpc();
+    }
+
+    // === Client RPCs (host tells everyone what to do) ===
+    [ClientRpc]
+    private void TogglePauseAllClientRpc()
     {
         if (!isPaused)
         {
@@ -54,7 +91,8 @@ public class PauseMenuManager : MonoBehaviour
         Time.timeScale = isPaused ? 0f : 1f;
     }
 
-    public void Resume()
+    [ClientRpc]
+    private void ResumeAllClientRpc()
     {
         if (resumeToggleClip != null)
             audioSource.PlayOneShot(resumeToggleClip);
@@ -64,37 +102,66 @@ public class PauseMenuManager : MonoBehaviour
         isPaused = false;
     }
 
-    public void RestartLevel()
+    [ClientRpc]
+    private void RestartAllClientRpc()
     {
         if (resumeToggleClip != null)
             audioSource.PlayOneShot(resumeToggleClip);
 
         Time.timeScale = 1f;
-        LoadAndReset();
+
+        if (IsServer) // only host reloads scene
+        {
+            // Unsubscribe first to avoid double-calls
+            SceneManager.sceneLoaded -= OnSceneLoadedRestart;
+            SceneManager.sceneLoaded += OnSceneLoadedRestart;
+
+            NetworkManager.Singleton.SceneManager.LoadScene("Level1", LoadSceneMode.Single);
+        }
     }
 
-    private void LoadAndReset()
+    private void OnSceneLoadedRestart(Scene scene, LoadSceneMode mode)
     {
-        PlayerHealth[] players = GameObject.FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
-        foreach (PlayerHealth p in players)
+        // Reset player stats, scores, trackers
+        LoadAndReset();
+
+        // Spawn players via PlayerSpawnerTest
+        var spawner = FindObjectOfType<PlayerSpawnerTest>();
+        if (spawner != null && spawner.IsServer)
+            spawner.SpawnAllSelectedPlayers();
+
+        // Done, unsubscribe
+        SceneManager.sceneLoaded -= OnSceneLoadedRestart;
+    }
+
+    [ClientRpc]
+    private void QuitToMenuAllClientRpc()
+    {
+        if (resumeToggleClip != null)
+            audioSource.PlayOneShot(resumeToggleClip);
+
+        Time.timeScale = 1f;
+
+        if (IsServer) // only host loads menu scene
         {
-            p.SetHealth(9);
+            NetworkManager.Singleton.SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         }
+    }
 
-        if (ScoreManager.Instance != null)
-            ScoreManager.Instance.ResetScore();
+    // === Local UI buttons call these ===
+    public void Resume()
+    {
+        RequestResumeServerRpc();
+    }
 
-        if (playerStatsManager.Instance != null)
-            playerStatsManager.Instance.ResetAllStats();
+    public void RestartLevel()
+    {
+        RequestRestartServerRpc();
+    }
 
-        if (SaveTracker.Instance != null)
-        SaveTracker.Instance.ClearAll();
-
-        SceneManager.LoadScene("Level1");
-
-        Debug.Log("[Restart] Scene fully loaded: " + SceneManager.GetActiveScene().name);
-
-       
+    public void QuitToMainMenu()
+    {
+        RequestQuitToMenuServerRpc();
     }
 
     public void OpenSettings()
@@ -103,14 +170,6 @@ public class PauseMenuManager : MonoBehaviour
             audioSource.PlayOneShot(SettingsClip);
         pausePanel.SetActive(false);
         settingsPanel.SetActive(true);
-    }
-
-    public void QuitToMainMenu()
-    {
-        if (resumeToggleClip != null)
-            audioSource.PlayOneShot(resumeToggleClip);
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
     }
 
     public void BackToPause()
@@ -123,6 +182,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void SaveGame()
     {
+        Debug.Log("save button clicked!");
         StartCoroutine(DelayedSaveCoroutine());
     }
 
@@ -142,5 +202,39 @@ public class PauseMenuManager : MonoBehaviour
         {
             Debug.LogWarning("GameSaveController not found!");
         }
+    }
+
+    // === Reset player stats & score ===
+    private void LoadAndReset()
+    {
+        PlayerHealth[] players = GameObject.FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
+        foreach (PlayerHealth p in players)
+        {
+            p.SetHealth(9);
+        }
+        Transform spawn = GameObject.Find("PlayerSpawn")?.transform;
+        if (spawn != null)
+        {
+            var meleePlayer = GameObject.FindAnyObjectByType<meleePlayerMovement>()?.gameObject;
+            var rangedPlayer = GameObject.FindAnyObjectByType<playerMovement>()?.gameObject;
+
+            if (meleePlayer != null) meleePlayer.transform.position = spawn.position;
+            if (rangedPlayer != null) rangedPlayer.transform.position = spawn.position;
+        }
+        else
+        {
+            Debug.LogWarning("PlayerSpawn object not found in scene!");
+        }
+        if (ScoreManager.Instance != null)
+            ScoreManager.Instance.ResetScore();
+
+        if (playerStatsManager.Instance != null)
+            playerStatsManager.Instance.ResetAllStats();
+
+        if (SaveTracker.Instance != null)
+            SaveTracker.Instance.ClearAll();
+        
+
+        Debug.Log("[Restart] Scene fully loaded: " + SceneManager.GetActiveScene().name);
     }
 }

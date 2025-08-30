@@ -1,36 +1,54 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class EnemyBullet : MonoBehaviour
+public class EnemyBullet : NetworkBehaviour
 {
     public int damage = 1;
-
     private Rigidbody2D rb;
+    private Vector2 moveDir;
+    private float speed;
 
-    void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        // Rotate to face the direction of movement
-        Vector2 dir = rb.linearVelocity.normalized;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    // Called on the server when bullet is spawned
+    public void Initialize(Vector2 direction, float moveSpeed)
     {
+        moveDir = direction.normalized;
+        speed = moveSpeed;
+
+        // Rotate to face the movement direction
+        float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        if (IsServer)
+            rb.linearVelocity = moveDir * speed;
+    }
+
+    private void FixedUpdate()
+    {
+        if (IsServer)
+            rb.linearVelocity = moveDir * speed; // keep movement consistent
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!IsServer) return; // only handle collisions on server
+
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Bullet hit player!");
             PlayerHealth health = collision.GetComponent<PlayerHealth>();
             if (health != null)
             {
                 health.TakeDamage(damage);
             }
-            Destroy(gameObject);
+            NetworkObject.Despawn(); // networked destroy
         }
-        else if (!collision.isTrigger) // Optional: destroy on hitting anything solid
+        else if (!collision.isTrigger)
         {
-            Destroy(gameObject);
+            NetworkObject.Despawn(); // destroy on hitting solid objects
         }
     }
 }

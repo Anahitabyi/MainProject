@@ -1,107 +1,141 @@
 using UnityEngine;
+using Unity.Netcode;
+using System;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : NetworkBehaviour
 {
-    public bool IsDead => isDead; // Add this line at the class level (public getter)
-
     [Header("Health Settings")]
-    public int maxHealth = 100;               // Maximum health of the enemy
-    protected int currentHealth;              // Current health that changes during gameplay
+    public int maxHealth = 100;
 
-    [Header("Animation")]
-    public Animator animator;                 // Animator to trigger hit and death animations
-    protected bool isDead = false;            // Flag to prevent multiple deaths
+    public NetworkVariable<int> currentHealth = new NetworkVariable<int>(
+        100, 
+        NetworkVariableReadPermission.Everyone, 
+        NetworkVariableWritePermission.Server
+    );
 
-    protected virtual void Start()
+    public int CurrentHealth => currentHealth.Value;
+    protected bool isDead = false;
+    public bool IsDead => isDead;
+
+    public Animator animator;
+
+    private void Start()
     {
-        currentHealth = maxHealth;            // Initialize health at the start
+        if (IsServer)
+            currentHealth.Value = maxHealth;
+
+        // Listen for health changes (optional, for client-side UI)
+        currentHealth.OnValueChanged += OnHealthChanged;
     }
 
-    // Called when the enemy takes damage
-    public virtual void TakeDamage(int damageAmount)
+    private new void OnDestroy()
     {
-        if (isDead) return;                   // If already dead, ignore further damage
+        if (currentHealth != null)
+            currentHealth.OnValueChanged -= OnHealthChanged;
+    }
 
-        currentHealth -= damageAmount;        // Reduce current health by damage amount
-        Debug.Log($"{gameObject.name} took {damageAmount} damage. Current HP: {currentHealth}");
 
-        animator.SetTrigger("Hit");           // Trigger the 'Hit' animation
-        // SaveIfHasID();
-        if (currentHealth <= 0)
+    // Called on both server and clients to apply damage
+    public void TakeDamage(int damage)
+    {
+        if (isDead) return;
+
+        if (IsServer)
         {
-            Die();                            // Call death logic if health reaches 0 or below
+            ApplyDamage(damage);
+        }
+        else
+        {
+            TakeDamageServerRpc(damage);
         }
     }
 
-    // Called when the enemy dies
+    [ServerRpc(RequireOwnership = false)]
+    private void TakeDamageServerRpc(int damage, ServerRpcParams rpcParams = default)
+    {
+        if (!isDead)
+            ApplyDamage(damage);
+    }
+
+    private void ApplyDamage(int damage)
+    {
+        currentHealth.Value -= damage;
+        currentHealth.Value = Mathf.Clamp(currentHealth.Value, 0, maxHealth);
+
+        animator?.SetTrigger("Hit");
+
+        if (currentHealth.Value <= 0)
+            Die();
+    }
+
+    private void OnHealthChanged(int oldVal, int newVal)
+    {
+        // Optional: client-side effects like health bars, flash, etc.
+    }
+
     protected virtual void Die()
     {
+        if (isDead) return;
         isDead = true;
-        Debug.Log($"{gameObject.name} has died.");
 
-        // ✅ Let another script handle special behavior
-        IPooledDeathHandler deathHandler = GetComponent<IPooledDeathHandler>();
-        if (deathHandler != null)
-        {
-            deathHandler.OnDeath(); // Delegates to patrollingEnemy
-        }
-
-        // ✅ Save defeated enemy ID if applicable
-        GenerateID unique = GetComponent<GenerateID>();
-        if (unique != null && SaveTracker.Instance!=null)
-        {
-            Debug.Log("Found the id!");
-            SaveTracker.Instance.MarkEnemyDefeated(unique.Id);
-        }
-
-        animator.SetTrigger("Die");
+        animator?.SetTrigger("Die");
 
         Collider2D col = GetComponent<Collider2D>();
-        if (col) col.enabled = false;
+        if (col != null) col.enabled = false;
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb)
+        if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }
-        // SaveIfHasID();
+
+        // Delegate special behavior if needed
+        IPooledDeathHandler deathHandler = GetComponent<IPooledDeathHandler>();
+        deathHandler?.OnDeath();
+
         Destroy(gameObject, 0.5f);
     }
+
     public void SetHealth(int hp)
-        {
-            currentHealth = hp;
-            isDead = hp <= 0;
-        }
-
-
-
-    private bool hasBeenKilled = false;
-
-public void KillImmediately()
-{
-    if (hasBeenKilled) return;
-    hasBeenKilled = true;
-
-    isDead = true;
-
-    Collider2D col = GetComponent<Collider2D>();
-    if (col) col.enabled = false;
-
-    Rigidbody2D rb = GetComponent<Rigidbody2D>();
-    if (rb)
     {
-        rb.linearVelocity = Vector2.zero;
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        if (IsServer)
+        {
+            currentHealth.Value = Mathf.Clamp(hp, 0, maxHealth);
+            if (currentHealth.Value <= 0) Die();
+        }
+        else
+        {
+            SetHealthServerRpc(hp);
+        }
     }
 
-    Destroy(gameObject);
+    [ServerRpc(RequireOwnership = false)]
+    private void SetHealthServerRpc(int hp, ServerRpcParams rpcParams = default)
+    {
+        currentHealth.Value = Mathf.Clamp(hp, 0, maxHealth);
+        if (currentHealth.Value <= 0) Die();
+    }
+
+    public void KillImmediately()
+    {
+        if (isDead) return;
+        isDead = true;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+
+        Destroy(gameObject);
+    }
 }
 
-public int CurrentHealth => currentHealth;
-
-
-}
 public interface IPooledDeathHandler
 {
     void OnDeath();
