@@ -59,38 +59,45 @@ public class PlayerSpawnerTest : NetworkBehaviour
         }
     }
 
-    // ------------------- Offline -------------------
     private void SpawnOfflinePlayers()
     {
         Debug.Log("[Spawner] Spawning offline players...");
 
         var spawnedPlayers = new List<GameObject>();
 
-        // --- Spawn Shooter ---
-        var shooterGO = Instantiate(shooterPrefabOffline, new Vector3(-17, 7, 0), Quaternion.identity);
+        // --- Spawn Shooter (Player 1) ---
+        var shooterGO = Instantiate(characters[0], new Vector3(-17, 7, 0), Quaternion.identity);
         shooterGO.GetComponent<PlayerInput>()?.SwitchCurrentControlScheme("KeyboardLeft", Keyboard.current);
         spawnedPlayers.Add(shooterGO);
-        Debug.Log($"[Spawner] Spawned offline Shooter: {shooterGO.name} at {shooterGO.transform.position}");
 
-        // --- Spawn Melee ---
-        var meleeGO = Instantiate(meleePrefabOffline, new Vector3(-17, 5, 0), Quaternion.identity);
+        // --- Spawn Melee (Player 2) ---
+        var meleeGO = Instantiate(characters[1], new Vector3(-17, 5, 0), Quaternion.identity);
         meleeGO.GetComponent<PlayerInput>()?.SwitchCurrentControlScheme("KeyboardRight", Keyboard.current);
         spawnedPlayers.Add(meleeGO);
-        Debug.Log($"[Spawner] Spawned offline Melee: {meleeGO.name} at {meleeGO.transform.position}");
 
-        // --- Update ChunkGenerator with player references ---
+        // --- Assign the common camera to their movement scripts ---
+        AssignCameraToPlayerScripts(shooterGO, assignedCamera);
+        AssignCameraToPlayerScripts(meleeGO, assignedCamera);
+
+        // --- Initialize ChunkGenerator ---
         if (chunkGenerator != null)
-        {
-            chunkGenerator.players = new Transform[] { shooterGO.transform, meleeGO.transform };
+            chunkGenerator.InitializeOfflineChunks(new Transform[] { shooterGO.transform, meleeGO.transform });
 
-            // Re-initialize chunk generator for offline mode
-            //chunkGenerator.ClearAllChunks(); // clean old chunks just in case
-            chunkGenerator.Start();           // generates initial chunks and backgrounds
-            Debug.Log("[Spawner] ChunkGenerator initialized for offline mode.");
-        }
-
-        // --- Notify listeners about spawned players ---
+        // Notify listeners
         OnPlayerUpdated?.Invoke(spawnedPlayers.ToArray());
+    }
+
+// Helper method to assign camera to all relevant movement scripts
+    private void AssignCameraToPlayerScripts(GameObject player, Camera cam)
+    {
+        var pm = player.GetComponent<playerMovement>();
+        if (pm != null) pm.hobbitCamera = cam;
+
+        var pc = player.GetComponent<PlayerControllerNew>();
+        if (pc != null) pc.hobbitCamera = cam;
+
+        var nspm = player.GetComponent<newShooterPlayerMovement>();
+        if (nspm != null) nspm.hobbitCamera = cam;
     }
 
     // ------------------- Online -------------------

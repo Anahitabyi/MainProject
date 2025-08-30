@@ -7,6 +7,7 @@ public class PlayerHealthUI : MonoBehaviour
     public Slider healthSlider;
 
     private PlayerHealth playerHealth;
+    
 
     void Update()
     {

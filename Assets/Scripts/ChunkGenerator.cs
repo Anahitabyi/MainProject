@@ -92,6 +92,22 @@ public class ChunkGenerator : NetworkBehaviour
             seedSet = true;
         }
     }
+public void InitializeOfflineChunks(Transform[] playersArray)
+{
+    players = playersArray;
+    useSavedChunks = false; // make sure offline uses normal generation
+    ClearAllChunks();
+
+    unusedChunks = new List<ChunkData>(chunkDataList);
+    ShuffleList(unusedChunks);
+
+    for (int i = 0; i < initialChunks && unusedChunks.Count > 0; i++)
+    {
+        GenerateChunk();
+    }
+
+    Debug.Log("[ChunkGenerator] Offline chunks initialized.");
+}
 
     void Update()
     {
