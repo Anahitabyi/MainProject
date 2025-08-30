@@ -22,8 +22,8 @@ public class PlayerSpawnerTest : NetworkBehaviour
     public CinemachineCamera cinemachiCamera2;
     public Camera assignedCamera;
 
-    [Header("Mode")]
-    public bool isOfflineMode = false; // Toggle in inspector for local play
+    //[Header("Mode")]
+    //public bool isOfflineMode = false; // Toggle in inspector for local play
     public static event Action<GameObject[]> OnPlayerUpdated;
 
     [Header("Spawn Settings")]
@@ -34,6 +34,8 @@ public class PlayerSpawnerTest : NetworkBehaviour
 
     private void Start()
     {
+        bool isOfflineMode = (GameModeSelector.Instance != null && !GameModeSelector.Instance.IsOnline());
+
         Debug.Log($"[Spawner] Starting PlayerSpawnerTest. OfflineMode={isOfflineMode}");
 
         if (isOfflineMode)
@@ -62,19 +64,33 @@ public class PlayerSpawnerTest : NetworkBehaviour
     {
         Debug.Log("[Spawner] Spawning offline players...");
 
+        var spawnedPlayers = new List<GameObject>();
+
+        // --- Spawn Shooter ---
         var shooterGO = Instantiate(shooterPrefabOffline, new Vector3(-17, 7, 0), Quaternion.identity);
+        shooterGO.GetComponent<PlayerInput>()?.SwitchCurrentControlScheme("KeyboardLeft", Keyboard.current);
+        spawnedPlayers.Add(shooterGO);
         Debug.Log($"[Spawner] Spawned offline Shooter: {shooterGO.name} at {shooterGO.transform.position}");
 
+        // --- Spawn Melee ---
         var meleeGO = Instantiate(meleePrefabOffline, new Vector3(-17, 5, 0), Quaternion.identity);
+        meleeGO.GetComponent<PlayerInput>()?.SwitchCurrentControlScheme("KeyboardRight", Keyboard.current);
+        spawnedPlayers.Add(meleeGO);
         Debug.Log($"[Spawner] Spawned offline Melee: {meleeGO.name} at {meleeGO.transform.position}");
 
-        // Assign offline keyboard schemes
-        shooterGO.GetComponent<PlayerInput>()?.SwitchCurrentControlScheme("KeyboardLeft", Keyboard.current);
-        meleeGO.GetComponent<PlayerInput>()?.SwitchCurrentControlScheme("KeyboardRight", Keyboard.current);
-
-        // Assign to ChunkGenerator
+        // --- Update ChunkGenerator with player references ---
         if (chunkGenerator != null)
+        {
             chunkGenerator.players = new Transform[] { shooterGO.transform, meleeGO.transform };
+
+            // Re-initialize chunk generator for offline mode
+            //chunkGenerator.ClearAllChunks(); // clean old chunks just in case
+            chunkGenerator.Start();           // generates initial chunks and backgrounds
+            Debug.Log("[Spawner] ChunkGenerator initialized for offline mode.");
+        }
+
+        // --- Notify listeners about spawned players ---
+        OnPlayerUpdated?.Invoke(spawnedPlayers.ToArray());
     }
 
     // ------------------- Online -------------------
@@ -92,7 +108,7 @@ public class PlayerSpawnerTest : NetworkBehaviour
             Debug.LogWarning("[Spawner] CharacterSelectManager.Instance is null! Cannot spawn players.");
             return;
         }
-
+        DespawnAllPlayers();
         Debug.Log($"[Spawner] Spawning {CharacterSelectManager.Instance.players.Count} selected players...");
 
         List<GameObject> spawnedPlayers = new List<GameObject>();
@@ -155,6 +171,20 @@ public class PlayerSpawnerTest : NetworkBehaviour
         Debug.Log($"[Spawner] Finished spawning. Total spawned players: {spawnedPlayers.Count}");
 
         
+    }
+    private void DespawnAllPlayers()
+    {
+        if (!IsServer) return;
+
+        foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
+        {
+            var playerObj = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId);
+            if (playerObj != null && playerObj.IsSpawned)
+            {
+                Debug.Log($"[Spawner] Despawning old player object for client {clientId}: {playerObj.name}");
+                playerObj.Despawn(true); // true = destroy on all clients
+            }
+        }
     }
     public Vector3 GetSpawnPositionForClient(int index)
     {

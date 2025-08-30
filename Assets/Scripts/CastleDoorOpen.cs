@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
+using Unity.Netcode;
 
 public class CastleDoorOpen : MonoBehaviour
 {
@@ -51,45 +52,27 @@ public class CastleDoorOpen : MonoBehaviour
                 audioSource.PlayOneShot(openDoorClip);
             }
 
-            StartCoroutine(FadeOutAndLoad(nextSceneName));
+            // Only the server tells everyone to fade
+            if (NetworkManager.Singleton.IsServer)
+            {
+                StartFadeClientRpc();
+            }
         }
-
-        // if (keyTracker.getCurrentKey() >= 1) // change this if you require a specific number
-        // {
-            //Debug.Log("Player has at least one key. Opening door...");
-
-           
-            //}
-            //     else
-            //     {
-            //         Debug.Log("Player does not have a key. Playing locked door sound.");
-
-            //         if (lockedDoorClip != null)
-            //             audioSource.PlayOneShot(lockedDoorClip);
-
-            //         if (messageText != null)
-            //             {
-            //                 Debug.Log("Message text is set: " + messageText.name);
-            //                 StartCoroutine(ShowMessage(lockedMessage, messageDuration));
-            //             }
-            //             else
-            //             {
-            //                 Debug.LogWarning("Message text reference is NULL!");
-            //             }
-            //     }
-            // }
-        
-    
     }
 
-    private IEnumerator FadeOutAndLoad(string sceneName)
+    [ClientRpc]
+    private void StartFadeClientRpc()
     {
-        Debug.Log("Starting fade-out transition.");
+        // Run fade on all clients
+        StartCoroutine(FadeOutCoroutine());
+    }
 
+    private IEnumerator FadeOutCoroutine()
+    {
+        fadeImage.gameObject.SetActive(true);
         float elapsed = 0f;
         Color startColor = fadeImage.color;
         startColor.a = 0f;
-
         Color targetColor = startColor;
         targetColor.a = 1f;
 
@@ -100,24 +83,30 @@ public class CastleDoorOpen : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Fade complete. Loading scene: " + sceneName);
-        SceneManager.LoadScene(sceneName);
+        // Only the server actually changes the scene, after letting clients finish their fade
+        if (NetworkManager.Singleton.IsServer)
+        {
+            // Wait a frame to make sure the RPC was processed by clients
+            yield return null;
+            NetworkManager.Singleton.SceneManager.LoadScene(nextSceneName, LoadSceneMode.Single);
+        }
     }
 
+
+
     private IEnumerator ShowMessage(string message, float duration)
-{
-    Debug.Log("Showing locked door message: " + message);
+    {
+        Debug.Log("Showing locked door message: " + message);
 
-    messageText.gameObject.SetActive(true);  // Ensure GameObject is active
-    messageText.text = message;
-    messageText.enabled = true;
+        messageText.gameObject.SetActive(true);  // Ensure GameObject is active
+        messageText.text = message;
+        messageText.enabled = true;
 
-    yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(duration);
 
-    messageText.enabled = false;
-    messageText.gameObject.SetActive(false); // Optional: hide it again
-}
-
+        messageText.enabled = false;
+        messageText.gameObject.SetActive(false); // Optional: hide it again
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

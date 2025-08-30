@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: -4115325061273493041}
   - component: {fileID: -5714940255692236176}
   - component: {fileID: -6104167881239028714}
+  - component: {fileID: 3205137507573192553}
   m_Layer: 11
   m_Name: Slime
   m_TagString: Untagged
@@ -239,7 +240,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cfae6af94978cf4caea71ef39de8e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   maxHealth: 1
+  currentHealth:
+    m_InternalValue: 100
   animator: {fileID: 7792424270498955269}
 --- !u!114 &-3394837348730922011
 MonoBehaviour:
@@ -435,3 +439,15 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
+--- !u!114 &3205137507573192553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822848822179218078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efac07255ca148d4f94671d8ee1deead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
