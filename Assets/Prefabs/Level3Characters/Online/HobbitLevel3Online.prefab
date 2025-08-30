@@ -916,6 +916,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  isInputBlockedNet:
+    m_InternalValue: 0
   animator: {fileID: 1127466986495738114}
   movementSpeed: 5
   audioSource: {fileID: 7035051765978792761}

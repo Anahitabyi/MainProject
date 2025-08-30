@@ -146,9 +146,14 @@ public class newShooterPlayerMovement : NetworkBehaviour
     // }
 
     public void OnShoot(InputAction.CallbackContext context){
-        if(context.performed){
-            Shoot();
-        }
+        if (!context.performed || isInputBlocked) return;
+
+        // Get mouse position in world space (owner only)
+        Vector3 mousePosition = hobbitCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 shootDirection = (mousePosition - (Vector3)firePoint.position).normalized;
+
+        // Call server to spawn the bullet
+        ShootServerRpc(firePoint.position, shootDirection);
 
     }
 
@@ -160,11 +165,11 @@ public class newShooterPlayerMovement : NetworkBehaviour
         Vector2 direction = (mousePosition - (Vector2)firePoint.position).normalized;
 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        if (impactEffect != null)
-        {
-            GameObject flash = Instantiate(impactEffect, firePoint.position, firePoint.rotation);
-            //Destroy(flash, 0.5f);
-        }
+        // if (impactEffect != null)
+        // {
+        //     GameObject flash = Instantiate(impactEffect, firePoint.position, firePoint.rotation);
+        //     //Destroy(flash, 0.5f);
+        // }
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         if (rb != null)
             rb.linearVelocity = direction * bulletSpeed;
@@ -183,37 +188,38 @@ public class newShooterPlayerMovement : NetworkBehaviour
 
         // Get mouse position in world space (owner only)
         Vector3 mousePosition = hobbitCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 shootDirection = (mousePosition - (Vector3)firePoint.position).normalized;
 
-        // Call server to spawn bullet
-        NewShootServerRpc(firePoint.position, mousePosition);
+        // Call server to spawn the bullet
+        ShootServerRpc(firePoint.position, shootDirection);
     }
 
     [ServerRpc(RequireOwnership = true)]
-    private void NewShootServerRpc(Vector3 spawnPosition, Vector3 targetPosition)
+    private void ShootServerRpc(Vector2 spawnPosition, Vector2 direction, ServerRpcParams rpcParams = default)
     {
-        // Spawn bullet on server
-        GameObject bulletObject = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
-        newBullet bullet = bulletObject.GetComponent<newBullet>();
-        if (bullet != null)
+        if (direction == Vector2.zero) direction = Vector2.right; // safety
+
+        // Instantiate bullet on server
+        var bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
+
+        // Set Rigidbody2D velocity
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        if (rb != null)
         {
-            bullet.InitializeProjectile(targetPosition, trajectoryMaxHeight, bulletSpeed);
-            bullet.InitializeAnimationCurve(trajectoryAnimationCurve);
+            rb.linearVelocity = direction * bulletSpeed;
         }
 
-        // Spawn bullet as NetworkObject for all clients
-        NetworkObject netObj = bulletObject.GetComponent<NetworkObject>();
-        if (netObj != null)
-            netObj.Spawn(true);
-
-        // Optional: impact effect (local only on owner)
-        if (impactEffect != null)
+        // Assign damage
+        var b = bullet.GetComponent<Bullet>();
+        if (b != null)
         {
-            GameObject effectObj = Instantiate(impactEffect, spawnPosition, Quaternion.identity);
-            NetworkObject netEffect = effectObj.GetComponent<NetworkObject>();
-            if (netEffect != null)
-                netEffect.Spawn(); // now all clients see it
+            b.damage = attackDamage;
         }
+
+        // Spawn bullet over network
+        bullet.GetComponent<NetworkObject>().Spawn(true);
     }
+
 
     // private void newShoot(){
 

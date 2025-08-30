@@ -21,6 +21,9 @@ public class Bullet : NetworkBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!IsServer) return; // ✅ Only server handles logic
+        // Ignore CameraBounds
+        if (other.gameObject.layer == LayerMask.NameToLayer("CameraBounds"))
+            return;
 
         Debug.Log($"[Bullet] Hit: {other.gameObject.name}");
 
@@ -32,7 +35,31 @@ public class Bullet : NetworkBehaviour
             // Optional: auto-despawn impact after 0.5s
             Destroy(impact.gameObject, 0.5f);
         }
+        if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        {
+            Debug.Log("detected wall");
+            DespawnBullet();
+            return;
+        }
 
+        // Player collision
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            // Optional: apply damage to player if needed
+            DespawnBullet();
+            return;
+        }
+
+        // Boss Shooter device
+        if (other.gameObject.layer == LayerMask.NameToLayer("NuclearThrone"))
+        {
+            if (other.TryGetComponent<BossShooterDevice>(out var shooter))
+            {
+                shooter.TakeDamage(damage);
+            }
+            DespawnBullet();
+            return;
+        }
         // Enemy damage
         var enemy = other.GetComponent<EnemyHealth>();
         if (enemy != null)
