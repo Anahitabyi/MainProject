@@ -1015,8 +1015,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8650778614212181123, guid: f6ed78452ea9e0340a3453d9dbe12bef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 130331384}
   m_SourcePrefab: {fileID: 100100000, guid: f6ed78452ea9e0340a3453d9dbe12bef, type: 3}
+--- !u!1 &130331383 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8650778614212181123, guid: f6ed78452ea9e0340a3453d9dbe12bef, type: 3}
+  m_PrefabInstance: {fileID: 130331382}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &130331384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 130331383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03a8639d4ceaba4a91c4a4cd2cca7bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vcam: {fileID: 0}
+  targetType: 1
 --- !u!1 &132026960
 GameObject:
   m_ObjectHideFlags: 0
@@ -98856,8 +98878,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5032605083745541849, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 632754617}
   m_SourcePrefab: {fileID: 100100000, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
+--- !u!1 &632754616 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5032605083745541849, guid: 3a9e5572af4f7aa488f9e1d33c1321c8, type: 3}
+  m_PrefabInstance: {fileID: 632754615}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &632754617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632754616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03a8639d4ceaba4a91c4a4cd2cca7bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vcam: {fileID: 0}
+  targetType: 0
 --- !u!1 &643013394
 GameObject:
   m_ObjectHideFlags: 0

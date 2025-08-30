@@ -62,6 +62,7 @@ GameObject:
   - component: {fileID: 6827838545181612804}
   - component: {fileID: 5542855718949062824}
   - component: {fileID: 1553989186606975426}
+  - component: {fileID: 684217531671439243}
   m_Layer: 7
   m_Name: HoodedLevel2Online
   m_TagString: Player
@@ -742,6 +743,20 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
   m_Animator: {fileID: 4868453752246472563}
+--- !u!114 &684217531671439243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7284990156239117502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac25547f0b608d44af6e45029229bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  group: {fileID: 0}
 --- !u!1 &7886097582164389990
 GameObject:
   m_ObjectHideFlags: 0
