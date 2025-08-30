@@ -404,7 +404,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1fcd0ecbac43f44983230f33a76270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
   totalKey: 4
 --- !u!4 &75531940
 Transform:
@@ -128251,6 +128250,7 @@ GameObject:
   - component: {fileID: 1825651713}
   - component: {fileID: 1825651715}
   - component: {fileID: 1825651714}
+  - component: {fileID: 1825651717}
   - component: {fileID: 1825651716}
   m_Layer: 0
   m_Name: Door check
@@ -128387,11 +128387,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03091c3affdb67f4ca909dcf9c58b57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   _text: {fileID: 632071625}
   openDoorSound: {fileID: 8300000, guid: 83ba1df484d4cb24d97b1304a83739ab, type: 3}
   lockedDoorSound: {fileID: 8300000, guid: 3d2dd7f16a33dc942aa4da1eb896b3ee, type: 3}
   audioSource: {fileID: 0}
   sfxMixerGroup: {fileID: 7213648414002461419, guid: 185b5f2caa4473145a34c71de93131c3, type: 2}
+--- !u!114 &1825651717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825651712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3732164689
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1850398655
 GameObject:
   m_ObjectHideFlags: 0
