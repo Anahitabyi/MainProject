@@ -8,10 +8,11 @@ using UnityEngine.InputSystem;
 using Unity.Netcode;
 
 
-public class PlayerControllerNew : NetworkBehaviour, IPlayerInputBlocker, IPlayerController
+public class PlayerControllerNew : NetworkBehaviour, IPlayerController
 {
     public bool isInputBlocked { get; set; } = false;
-    public NetworkVariable<bool> isInputBlockedNet = new NetworkVariable<bool>(false);
+    //public NetworkVariable<bool> isInputBlockedNet { get; } = new NetworkVariable<bool>();
+
     [SerializeField] private ScriptableStats _stats;
     private Rigidbody2D _rb;
     private CapsuleCollider2D _col;
@@ -72,7 +73,7 @@ public class PlayerControllerNew : NetworkBehaviour, IPlayerInputBlocker, IPlaye
 
     void Update()
     {
-        isInputBlocked = isInputBlockedNet.Value;
+        //isInputBlocked = isInputBlockedNet.Value;
         if (NetworkManager.Singleton != null)
         {
             var netObj = GetComponent<NetworkObject>();

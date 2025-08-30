@@ -19,6 +19,7 @@ TagManager:
   - Door
   - Gun
   - Chunk
+  - Exclude
   layers:
   - Default
   - TransparentFX
