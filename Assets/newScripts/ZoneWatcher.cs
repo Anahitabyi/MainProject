@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class ZoneWatcher : MonoBehaviour
+public class ZoneWatcher : NetworkBehaviour
 {
     public GameObject player1;
     public GameObject player2;
@@ -29,8 +30,10 @@ public class ZoneWatcher : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (fadePlayed)
+        if (!IsOwner)
             return;
+        if (fadePlayed)
+                return;
 
         if (other.gameObject == player1)
             player1In = true;

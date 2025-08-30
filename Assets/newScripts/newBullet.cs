@@ -121,7 +121,7 @@ public class newBullet : NetworkBehaviour
             NetworkObject.Despawn(); // fallback
 
         }
-        NetworkObject.Despawn();
+        //NetworkObject.Despawn();
     }
     //[ClientRpc]
 // private void SpawnExplosionClientRpc(Vector3 position)

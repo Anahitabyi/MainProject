@@ -624,7 +624,7 @@ MonoBehaviour:
   LateralAdjustment: 0
   FovRange: {x: 1, y: 100}
   DollyRange: {x: -100, y: 100}
-  OrthoSizeRange: {x: 8.3, y: 995.2}
+  OrthoSizeRange: {x: 10, y: 995.2}
 --- !u!114 &168934076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -669,7 +669,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 40
-    OrthographicSize: 27
+    OrthographicSize: 17
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -16665,8 +16665,8 @@ MonoBehaviour:
   cinemachiCamera2: {fileID: 0}
   assignedCamera: {fileID: 730223880}
   isOfflineMode: 0
-  basePosition: {x: -12, y: -15, z: 0}
-  spacing: {x: 2, y: 0, z: 0}
+  basePosition: {x: -13, y: -15, z: 0}
+  spacing: {x: 5, y: 0, z: 0}
   customPositions: []
 --- !u!114 &313994036
 MonoBehaviour:
@@ -27548,7 +27548,7 @@ MonoBehaviour:
   minionPrefab2: {fileID: 3843126104579521023, guid: a807280ec8c7a7c4dadc39d8c9b07fb8, type: 3}
   attacksPerMinionSpawn: 2
   spawnShape: 1
-  minionCount: 6
+  minionCount: 3
   spawnRadius: 9
   spawnCenterOffset: {x: 0, y: -15, z: 0}
   attacksPerCloseAttacks: 10
@@ -28443,7 +28443,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 8.299999
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -28468,7 +28468,7 @@ Transform:
   m_GameObject: {fileID: 730223878}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.5245185, y: 4.5649986, z: -10}
+  m_LocalPosition: {x: -2.4713655, y: 5.499997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -37435,8 +37435,8 @@ MonoBehaviour:
   - {fileID: 738854522}
   - {fileID: 2080297650}
   spreadAngle: 10
-  numberOfWaves: 3
-  delayBetweenWaves: 0.3
+  numberOfWaves: 2
+  delayBetweenWaves: 0.4
   hasFinishedWaves: 0
   bossRef: {fileID: 575913221}
   audioSource: {fileID: 952165810}
@@ -38902,6 +38902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839d9a1ec917913429818fb8fcc97bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   player1: {fileID: 0}
   player2: {fileID: 0}
   sceneFader: {fileID: 1684762055}
@@ -39688,7 +39689,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 3.2549152, y: 17.803308}
+  m_Offset: {x: 4.2558727, y: 17.315437}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -39698,7 +39699,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 44.405346, y: 58.1284}
+  m_Size: {x: 50.55418, y: 59.10414}
   m_EdgeRadius: 0
 --- !u!1 &1968421433
 GameObject:
