@@ -18,6 +18,9 @@ public class LadderZone : MonoBehaviour
                 playerController2.SetOnLadder(true); // Call the new method in PlayerControllerNew
                 Debug.Log("Player entered ladder zone.");
             }
+            PlayerClimb climb = other.GetComponent<PlayerClimb>();
+            if (climb != null)
+                climb.SetOnLadder(true);
         }
     }
 
@@ -37,6 +40,10 @@ public class LadderZone : MonoBehaviour
                 playerController2.SetOnLadder(false); // Call the new method in PlayerControllerNew
                 Debug.Log("Player exited ladder zone.");
             }
+            PlayerClimb climb = other.GetComponent<PlayerClimb>();
+            if (climb != null)
+                climb.SetOnLadder(false);
+            
         }
     }
 }

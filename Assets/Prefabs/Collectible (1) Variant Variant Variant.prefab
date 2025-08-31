@@ -96,6 +96,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 4173873228495403746, guid: b201aad0ec89a17468affcf3cd0e4fda, type: 3}
+    - target: {fileID: 3842531004814582575, guid: 356550df88585cc4f894e6f6e6d3bce2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625832106237950889, guid: 356550df88585cc4f894e6f6e6d3bce2, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 452296538
+      objectReference: {fileID: 0}
     - target: {fileID: 7276030309218859033, guid: 356550df88585cc4f894e6f6e6d3bce2, type: 3}
       propertyPath: m_LocalScale.x
       value: 10
@@ -168,7 +176,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5403728605108032954}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efde82564566d274bb013cdda1a9988e, type: 3}
   m_Name: 
