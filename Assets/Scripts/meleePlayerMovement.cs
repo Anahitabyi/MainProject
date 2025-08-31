@@ -98,7 +98,7 @@ public class meleePlayerMovement : NetworkBehaviour, IPlayerInputBlocker
             {
             
                     magnitude2.Value = localMag;
-                    Debug.Log("magnitude: " + magnitude2.Value);
+//                    Debug.Log("magnitude: " + magnitude2.Value);
                     animator.SetFloat("magnitude", magnitude2.Value);
                 // else if (playerIdentifier.playerType == PlayerIdentifier.PlayerType.Hooded)
                 // {

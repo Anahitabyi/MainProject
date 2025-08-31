@@ -1,13 +1,15 @@
 using UnityEngine;
 using Unity.Netcode;
+using System.Collections.Generic;
 
-public class KeyTracker : NetworkBehaviour
+public class KeyTracker : MonoBehaviour
 {
     public static KeyTracker Instance { get; private set; }
-    
+
     public int totalKey = 4;
-    
-    private NetworkVariable<int> keyBitmask = new NetworkVariable<int>(0);
+
+    // Use a HashSet to store collected key indices
+    private HashSet<int> collectedKeys = new HashSet<int>();
 
     private void Awake()
     {
@@ -22,7 +24,7 @@ public class KeyTracker : NetworkBehaviour
 
     public void GotKey(int keyIndex)
     {
-        if (!IsServer)
+        if (!NetworkManager.Singleton.IsServer)
         {
             Debug.LogWarning("GotKey should only be called on the server!");
             return;
@@ -34,39 +36,31 @@ public class KeyTracker : NetworkBehaviour
             return;
         }
 
-        int mask = 1 << keyIndex;
-        if ((keyBitmask.Value & mask) == 0)
+        if (collectedKeys.Add(keyIndex)) // Returns true if the key was newly added
         {
-            keyBitmask.Value |= mask;
             Debug.Log($"Key collected: {keyIndex}. Total keys collected: {GetCurrentKeyCount()}");
         }
+        Debug.Log($"Total keys collected so far: {GetCurrentKeyCount()}");
     }
 
     public bool HasKey(int keyIndex)
     {
-        int mask = 1 << keyIndex;
-        return (keyBitmask.Value & mask) != 0;
+        return collectedKeys.Contains(keyIndex);
     }
 
     public int GetCurrentKeyCount()
     {
-        int count = 0;
-        int bits = keyBitmask.Value;
-        for (int i = 0; i < totalKey; i++)
-        {
-            if ((bits & (1 << i)) != 0)
-                count++;
-        }
-        return count;
+        return collectedKeys.Count;
     }
 
     public void ResetKeys()
     {
-        if (!IsServer)
+        if (!NetworkManager.Singleton.IsServer)
         {
             Debug.LogWarning("ResetKeys should only be called on the server!");
             return;
         }
-        keyBitmask.Value = 0;
+        collectedKeys.Clear();
+        Debug.Log("All keys have been reset.");
     }
 }

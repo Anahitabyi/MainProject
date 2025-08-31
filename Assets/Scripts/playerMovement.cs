@@ -4,10 +4,10 @@ using UnityEngine.InputSystem;
 using Unity.Netcode;
 using NUnit.Framework;
 
-public class playerMovement : NetworkBehaviour, IPlayerInputBlocker
+public class playerMovement : NetworkBehaviour
 {
-    public bool isInputBlocked { get; set; } = false;
-    public NetworkVariable<bool> isInputBlockedNet { get; } = new NetworkVariable<bool>();
+    //public bool isInputBlocked { get; set; } = false;
+    //public NetworkVariable<bool> isInputBlockedNet { get; } = new NetworkVariable<bool>();
 
     public Animator animator;
     bool isFacingRight = true;
@@ -80,13 +80,13 @@ public class playerMovement : NetworkBehaviour, IPlayerInputBlocker
     void Update()
     {
             
-        if (isInputBlocked)
-        {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-            animator.SetFloat("Yvelocity", rb.linearVelocity.y);
-            animator.SetFloat("magnitude", 0);
-            return;
-        }
+        // if (isInputBlocked)
+        // {
+        //     rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+        //     animator.SetFloat("Yvelocity", rb.linearVelocity.y);
+        //     animator.SetFloat("magnitude", 0);
+        //     return;
+        // }
 
         rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
 
@@ -114,7 +114,7 @@ public class playerMovement : NetworkBehaviour, IPlayerInputBlocker
                 if (playerIdentifier.playerType == PlayerIdentifier.PlayerType.Hobbit)
                 {
                     magnitude1.Value = localMag;
-                    Debug.Log("magnitude: " + magnitude1.Value);
+//                    Debug.Log("magnitude: " + magnitude1.Value);
                     animator.SetFloat("magnitude", magnitude1.Value);
                 }
                 // else if (playerIdentifier.playerType == PlayerIdentifier.PlayerType.Hooded)
@@ -173,13 +173,13 @@ public class playerMovement : NetworkBehaviour, IPlayerInputBlocker
 
     public void Move(InputAction.CallbackContext context)
     {
-        if (isInputBlocked) return;
+        //if (isInputBlocked) return;
         horizontalMovement = context.ReadValue<Vector2>().x;
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isInputBlocked) return;
+       // if (isInputBlocked) return;
 
         if (context.performed)
         {
@@ -230,7 +230,7 @@ public class playerMovement : NetworkBehaviour, IPlayerInputBlocker
 
     public void flip()
     {
-        if (isInputBlocked) return;
+       // if (isInputBlocked) return;
 
         if ((isFacingRight && horizontalMovement < 0) || (!isFacingRight && horizontalMovement > 0))
         {
@@ -243,7 +243,7 @@ public class playerMovement : NetworkBehaviour, IPlayerInputBlocker
 
     public void Shoot(InputAction.CallbackContext context)
     {
-        if (isInputBlocked || !context.performed) return;
+        //if (isInputBlocked || !context.performed) return;
 
         animator.SetTrigger("shoot");
         StartCoroutine(DelayedBulletSpawn());
