@@ -1,10 +1,11 @@
 using System.Collections;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
-public class OpenDoor : MonoBehaviour
+public class OpenDoor : NetworkBehaviour
 {
     public TMP_Text _text;
     private KeyTracker keyTracker;
@@ -32,15 +33,17 @@ public class OpenDoor : MonoBehaviour
 
     private void Update()
     {
+        if (!IsOwner) return; // Only the player controlling the object can send input
+
         if (_playerInTrigger && Input.GetKeyDown(KeyCode.Return))
         {
-            OpenLockedDoor();
+            TryOpenDoorServerRpc();
         }
     }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && IsOwner)
         {
             _playerInTrigger = true;
             UpdateButtonText();
@@ -49,7 +52,7 @@ public class OpenDoor : MonoBehaviour
 
     public void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && IsOwner)
         {
             _playerInTrigger = false;
 
@@ -74,11 +77,12 @@ public class OpenDoor : MonoBehaviour
         }
     }
 
-    public void OpenLockedDoor()
+    [ServerRpc(RequireOwnership = false)]
+    private void TryOpenDoorServerRpc(ServerRpcParams rpcParams = default)
     {
         if (keyTracker == null)
         {
-            Debug.LogWarning("KeyTracker instance not found!");
+            Debug.LogWarning("KeyTracker instance not found on server!");
             return;
         }
 
@@ -86,28 +90,43 @@ public class OpenDoor : MonoBehaviour
 
         if (currentKeyCount >= requiredKeys)
         {
-            if (openDoorSound != null)
-            {
-                audioSource.PlayOneShot(openDoorSound);
-                StartCoroutine(WaitAndLoadScene(openDoorSound.length));
-            }
-            else
-            {
-                SceneManager.LoadScene("Level3");
-            }
+            // Open the door and notify clients
+            OpenDoorClientRpc();
         }
         else
         {
-            if (lockedDoorSound != null)
-                audioSource.PlayOneShot(lockedDoorSound);
-
-            string message = $"Insufficient keys! {currentKeyCount}/{requiredKeys} acquired";
-
-            if (subtitleCoroutine != null)
-                StopCoroutine(subtitleCoroutine);
-
-            subtitleCoroutine = StartCoroutine(ShowSubtitle(message, 2f));
+            // Notify the client that keys are insufficient
+            ShowLockedDoorClientRpc(currentKeyCount);
         }
+    }
+
+    [ClientRpc]
+    private void OpenDoorClientRpc()
+    {
+        if (openDoorSound != null)
+        {
+            audioSource.PlayOneShot(openDoorSound);
+            StartCoroutine(WaitAndLoadScene(openDoorSound.length));
+        }
+        else
+        {
+            if (IsServer)
+                NetworkManager.Singleton.SceneManager.LoadScene("Level3", LoadSceneMode.Single);
+        }
+    }
+
+    [ClientRpc]
+    private void ShowLockedDoorClientRpc(int currentKeyCount)
+    {
+        if (lockedDoorSound != null)
+            audioSource.PlayOneShot(lockedDoorSound);
+
+        string message = $"Insufficient keys! {currentKeyCount}/{requiredKeys} acquired";
+
+        if (subtitleCoroutine != null)
+            StopCoroutine(subtitleCoroutine);
+
+        subtitleCoroutine = StartCoroutine(ShowSubtitle(message, 2f));
     }
 
     private IEnumerator ShowSubtitle(string message, float duration)
@@ -125,6 +144,7 @@ public class OpenDoor : MonoBehaviour
     private IEnumerator WaitAndLoadScene(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        SceneManager.LoadScene("Level3");
+        if (IsServer)
+            NetworkManager.Singleton.SceneManager.LoadScene("Level3", LoadSceneMode.Single);
     }
 }
