@@ -61,8 +61,7 @@ public class BombPool : NetworkBehaviour, INetworkPrefabInstanceHandler
 
     // Called by Netcode when despawning
     public void Destroy(NetworkObject networkObject)
-    {
-        if (!IsServer) return;
+    { 
         ReturnBomb(networkObject.gameObject);
     }
 }

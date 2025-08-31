@@ -31,7 +31,7 @@ public class GameModeSelector : MonoBehaviour
             NetworkManager.Singleton.StartHost(); // still use host but no real clients will join
         }
 
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Level1");
     }
 
     public void HostGame()

@@ -345,7 +345,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: restarting is not advised. proceed with caution. =)
+  m_text: to interact with the environment, press enter.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5aefb0d32d67bd948b22cd5007d6c6c3, type: 2}
   m_sharedMaterial: {fileID: -3002358328772098062, guid: 5aefb0d32d67bd948b22cd5007d6c6c3, type: 2}

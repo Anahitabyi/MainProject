@@ -918,8 +918,8 @@ MonoBehaviour:
   shooterPrefabOffline: {fileID: 2215770295304683125, guid: 08e3e22d2a9df8a4096b9b49e7facfa5, type: 3}
   meleePrefabOffline: {fileID: 1347308109912709594, guid: 53af5c04da9323347accef7bd6e5a8ec, type: 3}
   chunkGenerator: {fileID: 756020905}
-  cinemachiCamera1: {fileID: 0}
-  cinemachiCamera2: {fileID: 0}
+  cinemachiCamera1: {fileID: 1239639577}
+  cinemachiCamera2: {fileID: 61388476}
   assignedCamera: {fileID: 1177869907}
   basePosition: {x: -17, y: 5, z: 0}
   spacing: {x: 2, y: 0, z: 0}

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 using Unity.Netcode;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : NetworkBehaviour
 {
@@ -280,7 +281,7 @@ public class PlayerHealth : NetworkBehaviour
         float deathDuration = animator.GetCurrentAnimatorStateInfo(0).length;
         yield return new WaitForSeconds(deathDuration);
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
+        NetworkManager.Singleton.SceneManager.LoadScene("Lose", LoadSceneMode.Single);
     }
 
     // ========== GETTERS ==========
