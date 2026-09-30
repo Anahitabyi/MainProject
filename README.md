@@ -36,8 +36,10 @@ Dynamic environment with randomly generated chunks and enemy spawns:
 ---
 
 ## Key Features
-* **Online Multiplayer:** Real-time multiplayer architecture implemented using Unity Netcode.
-* **Unique Abilities:** Each player has distinct mechanics to solve challenges cooperatively.
+* **Online Multiplayer:** Real-time cooperative gameplay architecture implemented using Unity Netcode.
+* **Distinct Player Roles:**
+    * **Melee Character:** Equipped with a sword for close-range combat and has higher attack power.
+    * **Shooter Character:** Equipped with a ranged weapon and possesses a double-jump ability for better mobility.
 
 ---
 
