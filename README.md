@@ -10,28 +10,24 @@ A two-player cooperative game featuring three distinct levels, where each player
 ### Level 1: Procedural Platformer
 Dynamic environment with randomly generated chunks and enemy spawns:
 
-![Level 1 Gameplay](<Screenshot_20260930-183738_Video Player.jpg>)
-
-
-![Level 1 Gameplay](<Screenshot_20260930-183828_Video Player.jpg>)
+| | |
+| :---: | :---: |
+| ![Level 1](<Screenshot_20260930-183738_Video Player.jpg>) | ![Level 1](<Screenshot_20260930-183828_Video Player.jpg>) |
 
 
 ### Level 2: Puzzle Platformer
 
-![Level 2 Gameplay](<Screenshot_20260930-184218_Video Player.jpg>) 
-
-![Level 2 Gameplay](<Screenshot_20260930-184328_Video Player.jpg>)
-
-![Level 2 Gameplay](<Screenshot_20260930-184729_Video Player.jpg>)
+|  |  |  |
+| :---: | :---: | :---: |
+| ![Level 2](<Screenshot_20260930-184218_Video Player.jpg>) | ![Level 2](<Screenshot_20260930-184328_Video Player.jpg>) | ![Level 2](<Screenshot_20260930-184729_Video Player.jpg>) |
 
 
 ### Level 3: Top-Down Boss Fight
 
 
-![Level 3 Gameplay](<Screenshot_20260930-183344_Video Player.jpg>)
-
-
-![Level 3 Gameplay](<Screenshot_20260930-183540_Video Player.jpg>)
+|  | |
+| :---: | :---: |
+| ![Level 3](<Screenshot_20260930-183344_Video Player.jpg>) | ![Level 3](<Screenshot_20260930-183540_Video Player.jpg>) |
 
 ---
 
